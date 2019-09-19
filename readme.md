@@ -12,6 +12,6 @@ Thiết kế màng hình trang chủ, trang chọn bài, trang làm bài
 Tuần này ( 20/9 -26/9 ): Làm trang danh sách course và trang danh sách task
 
 Khó khăn: 
-- chưa chắc chắn về database
-
+- Chưa chắc chắn về database
+- Plan chưa rõ ràng
 
