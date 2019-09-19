@@ -1,0 +1,32 @@
+{
+  "connection": "default",
+  "collectionName": "courses",
+  "info": {
+    "name": "course",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "background_image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload"
+    },
+    "detail": {
+      "type": "richtext"
+    },
+    "tasks": {
+      "collection": "task"
+    }
+  }
+}
