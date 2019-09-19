@@ -1,0 +1,8 @@
+version: "2.1"
+
+services:
+  hocode-server:
+    image: hocode-server
+    build: .
+    ports:
+      - 8080:8080
