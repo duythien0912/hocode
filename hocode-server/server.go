@@ -1,86 +1,41 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
+	"github.com/duythien0912/hocode/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/labstack/gommon/log"
+	"gopkg.in/mgo.v2"
 )
 
 func main() {
 
 	e := echo.New()
+	e.Logger.SetLevel(log.ERROR)
 
 	// Root level middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 
-	e.GET("/", getHome)
-	e.GET("/health_check", gethealthCheck)
-	e.POST("/users", saveUser)
-	e.GET("/users/:id", getUser)
-	e.PUT("/users/:id", updateUser)
-	e.DELETE("/users/:id", deleteUser)
-	e.GET("/show", show)
+	// mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode
+	db, err := mgo.Dial("mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode")
+	if err != nil {
+		e.Logger.Fatal(err)
+	} else {
+		log.Info("Connect mongodb success")
+	}
+
+	// Initialize handler
+	h := &handler.Handler{DB: db}
+
+	e.GET("/", h.Gethome)
+	e.GET("/health_check", h.HealthCheck)
+	e.POST("/users", h.SaveUser)
+	e.GET("/users/:id", h.GetUser)
+	e.PUT("/users/:id", h.UpdateUser)
+	e.DELETE("/users/:id", h.DeleteUser)
+	e.GET("/show", h.Show)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
-
-func getHome(c echo.Context) error {
-	return c.HTML(http.StatusOK, fmt.Sprintf(index, ""))
-}
-
-func gethealthCheck(c echo.Context) error {
-	return c.String(http.StatusOK, "Server Ok")
-}
-
-func saveUser(c echo.Context) error {
-	return c.String(http.StatusOK, "saveUser")
-}
-
-// e.GET("/users/:id", getUser)
-func getUser(c echo.Context) error {
-	// User ID from path `users/:id`
-	id := c.Param("id")
-	return c.String(http.StatusOK, id)
-}
-
-func updateUser(c echo.Context) error {
-	return c.String(http.StatusOK, "updateUser")
-}
-
-func deleteUser(c echo.Context) error {
-	return c.String(http.StatusOK, "deleteUser")
-}
-
-//e.GET("/show", show)
-func show(c echo.Context) error {
-	// Get team and member from the query string
-	team := c.QueryParam("team")
-	member := c.QueryParam("member")
-	return c.String(http.StatusOK, "team:"+team+", member:"+member)
-}
-
-var index = `
-	<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>Upstream Server</title>
-		<style>
-			h1, p {
-				font-weight: 300;
-			}
-		</style>
-	</head>
-	<body>
-		<h1>
-			Hocode server %s
-		</h1>
-	</body>
-	</html
-`
