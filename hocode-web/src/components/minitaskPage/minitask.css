@@ -1,0 +1,68 @@
+*{
+    box-sizing: border-box;
+}
+.fit{
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom:0;
+}
+.layout-code{
+    display: flex;
+    flex-direction: column;
+    
+}
+.layout-code-header{
+    display: flex;
+}
+.layout-code-body{
+    position: relative;
+    flex-grow: 1;
+    
+}
+
+.split-panel{
+    overflow: hidden;
+}
+.stretch{
+    display: flex;
+    align-items: stretch;
+}
+.split-panel-first{
+  
+    overflow: hidden;
+}
+.split-panel-second{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.coding-area{
+    flex-grow:1;
+}
+.splitHorizontal{
+    display: flex;
+}
+
+.splitHorizontal .gutter{
+    background: red;
+    cursor: ew-resize;
+}
+
+.splitVertical{
+    height: 100%;
+}
+.splitVertical .gutter{
+    background: red;
+    cursor: n-resize;
+}
+
+.codeEditor{
+    overflow: hidden;
+}
+.testList{
+    overflow: hidden;
+}
