@@ -31,11 +31,28 @@ func main() {
 
 	e.GET("/", h.Gethome)
 	e.GET("/health_check", h.HealthCheck)
-	e.POST("/users", h.SaveUser)
+
 	e.GET("/users/:id", h.GetUser)
+	e.POST("/users", h.SaveUser)
 	e.PUT("/users/:id", h.UpdateUser)
 	e.DELETE("/users/:id", h.DeleteUser)
+
 	e.GET("/show", h.Show)
+
+	e.GET("/courses", h.Courses)
+	e.GET("/courses/:id", h.CourseByID)
+	e.POST("/courses", h.CreateCourse)
+
+	e.GET("/task", h.Task)
+	e.POST("/task", h.CreateTask)
+	e.GET("/task/:id", h.TaskByID)
+
+	e.GET("/minitasks", h.Minitasks)
+	e.GET("/minitasks", h.CreateMinitast)
+	e.GET("/minitasks/:id", h.MinitasksByID)
+
+	e.GET("/profile", h.Profile)
+	e.GET("/profile", h.CreateProfile)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
