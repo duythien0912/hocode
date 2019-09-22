@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0f93af70.chunk.css",
+    "main.js": "/static/js/main.3d0f6a6c.chunk.js",
+    "main.js.map": "/static/js/main.3d0f6a6c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e9956a72.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e9956a72.js.map",
+    "static/js/2.bde5acc3.chunk.js": "/static/js/2.bde5acc3.chunk.js",
+    "static/js/2.bde5acc3.chunk.js.map": "/static/js/2.bde5acc3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.963097817d3f1994a8dfca3b3696e446.js": "/precache-manifest.963097817d3f1994a8dfca3b3696e446.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.0f93af70.chunk.css.map": "/static/css/main.0f93af70.chunk.css.map",
+    "static/media/chuahoanthanh.svg": "/static/media/chuahoanthanh.00020209.svg",
+    "static/media/hoanthanh.svg": "/static/media/hoanthanh.d29f1779.svg",
+    "static/media/logo.png": "/static/media/logo.878e120a.png",
+    "static/media/padlock-unlock.svg": "/static/media/padlock-unlock.7aa1b12f.svg",
+    "static/media/user.svg": "/static/media/user.316d47a9.svg"
+  }
+}
