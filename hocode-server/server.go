@@ -58,7 +58,7 @@ func main() {
 
 	// e.Static("/", "static")
 	// e.GET("/", h.Gethome)
-	e.File("/", "static/index.html")
+	e.File("/api", "static/index.html")
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
