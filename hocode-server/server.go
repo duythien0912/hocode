@@ -11,7 +11,7 @@ import (
 func main() {
 
 	e := echo.New()
-	e.Logger.SetLevel(log.ERROR)
+	// e.Logger.SetLevel(log.ERROR)
 
 	// Root level middleware
 	e.Use(middleware.Logger())
@@ -29,7 +29,6 @@ func main() {
 	// Initialize handler
 	h := &handler.Handler{DB: db}
 
-	e.GET("/", h.Gethome)
 	e.GET("/health_check", h.HealthCheck)
 
 	e.GET("/users/:id", h.GetUser)
@@ -41,18 +40,25 @@ func main() {
 
 	e.GET("/courses", h.Courses)
 	e.GET("/courses/:id", h.CourseByID)
+	e.GET("/courses/:id/tasks", h.TaskByCoursesID)
 	e.POST("/courses", h.CreateCourse)
 
-	e.GET("/task", h.Task)
-	e.POST("/task", h.CreateTask)
-	e.GET("/task/:id", h.TaskByID)
+	e.GET("/tasks", h.Task)
+	e.GET("/tasks/:id", h.TaskByID)
+	e.POST("/tasks", h.CreateTask)
 
 	e.GET("/minitasks", h.Minitasks)
-	e.GET("/minitasks", h.CreateMinitast)
 	e.GET("/minitasks/:id", h.MinitasksByID)
+	e.POST("/minitasks", h.CreateMinitast)
 
 	e.GET("/profile", h.Profile)
-	e.GET("/profile", h.CreateProfile)
+	e.POST("/profile", h.CreateProfile)
+
+	// e.Use(middleware.Static("/static"))
+
+	// e.Static("/", "static")
+	// e.GET("/", h.Gethome)
+	e.File("/", "static/index.html")
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

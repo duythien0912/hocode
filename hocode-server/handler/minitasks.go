@@ -19,7 +19,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("minitask").
+	if err = db.DB("hocode").C("minitasks").
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
@@ -39,9 +39,10 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("minitask").
-		Find(bson.M{}).
-		Select(bson.M{"id": id}).
+	if err = db.DB("hocode").C("minitasks").
+		FindId(bson.ObjectIdHex(id)).
+		// Find(bson.M{}).
+		// Select(bson.M{"id": id}).
 		One(&mtf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -72,7 +73,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
-	if err = db.DB("hocode").C("minitask").Insert(mtn); err != nil {
+	if err = db.DB("hocode").C("minitasks").Insert(mtn); err != nil {
 		return echo.ErrInternalServerError
 	}
 

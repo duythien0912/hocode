@@ -19,7 +19,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("task").
+	if err = db.DB("hocode").C("tasks").
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
@@ -40,9 +40,10 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("task").
-		Find(bson.M{}).
-		Select(bson.M{"id": id}).
+	if err = db.DB("hocode").C("tasks").
+		FindId(bson.ObjectIdHex(id)).
+		// Find(bson.M{}).
+		// Select(bson.M{"id": id}).
 		One(&tf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -73,7 +74,7 @@ func (h *Handler) CreateTask(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
-	if err = db.DB("hocode").C("task").Insert(tn); err != nil {
+	if err = db.DB("hocode").C("tasks").Insert(tn); err != nil {
 		return echo.ErrInternalServerError
 	}
 

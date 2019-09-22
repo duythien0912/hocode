@@ -52,8 +52,9 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("hocode").C("course").
-		Find(bson.M{}).
-		Select(bson.M{"id": id}).
+		FindId(bson.ObjectIdHex(id)).
+		// Find(bson.M{}).
+		// Select(bson.M{"id": id}).
 		One(&course); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -63,6 +64,31 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 	}
 
 	return c.JSON(http.StatusOK, course)
+}
+
+// http://localhost:8080/courses/5d86e07bfe6e2b157bd3b259/tasks
+func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
+	ta := []*model.Task{}
+	page, _ := strconv.Atoi(c.QueryParam("page"))
+	limit, _ := strconv.Atoi(c.QueryParam("limit"))
+
+	id := c.Param("id")
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if err = db.DB("hocode").C("tasks").
+		Find(bson.M{"course_id": id}).
+		// Find(bson.M{}).
+		// Select(bson.M{"course_id": id}).
+		Skip((page - 1) * limit).
+		Limit(limit).
+		// Sort("-timestamp").
+		All(&ta); err != nil {
+		return
+	}
+
+	return c.JSON(http.StatusOK, ta)
 }
 
 // {
