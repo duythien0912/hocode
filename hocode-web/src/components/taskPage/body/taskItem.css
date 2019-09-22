@@ -1,0 +1,9 @@
+.unlock:hover .hidden{
+    display: block !important;
+}
+.unlock:hover{
+    width: 50px;
+}
+.unlock{
+    transition: 2s;
+}

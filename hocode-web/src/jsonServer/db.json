@@ -1,0 +1,21 @@
+{
+    "courses": [
+      { "id": "432sd1213", "name": "Certificate", "task_solved": {"taskCount":60,"tasks_complete":5},"background_image": "https://loremflickr.com/500/500/training" }
+    ],
+    "tasks": [
+      { "id": "342432321dsa", "name": "Khởi hành","background_image":"https://loremflickr.com/500/500/sea", "courseId": "432sd1213" },
+      { "id": "654vfd", "name": "vùng đất silicon","background_image":"https://loremflickr.com/500/500/moutain", "courseId": "432sd1213" },
+      { "id": "34fdsdjk4", "name": "Trí tuệ","background_image":"https://loremflickr.com/500/500/city", "courseId": "432sd1213" }
+     
+    ],
+    "minitasks": [
+        { "id": "98dsfds", "name": "Cộng hai số", "point_unlock": 0,"status":"hoanthanh","vitri":false, "taskId":"342432321dsa"},
+        { "id": "432432fdn", "name": "Tam giác ", "point_unlock": 100,"status":"chuahoanthanh","vitri":true,"taskId":"342432321dsa"},
+        { "id": "098nbv", "name": "Số lớn nhất", "point_unlock": 200,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
+        { "id": "9dc123", "name": "Số bé nhất", "point_unlock": 150,"status":"chuahoanthanh","vitri":false,"taskId":"654vfd"},
+        { "id": "9dc1vv23", "name": "Thế kỷ", "point_unlock": 350,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"},
+        { "id": "9dc1dd23", "name": "Chuỗi con tăng chung", "point_unlock": 400,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
+        { "id": "9dc1ss23", "name": "Đường đi", "point_unlock": 600,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"}
+      ],
+    "profile": { "name": "typicode","avatar":"https://loremflickr.com/500/500/paris" }
+  }
