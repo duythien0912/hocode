@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upstream Server</title>
+    <style>
+        h1,
+        p {
+            font-weight: 300;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Hocode server
+    </h1>
+    <div>
+        <h1>Resources</h1>
+
+        <ul>
+
+            <li>
+                <a href="courses">/courses</a>
+                <sup>1x</sup>
+            </li>
+
+            <li>
+                <a href="courses/5d86e07bfe6e2b157bd3b259">/courses/5d86e07bfe6e2b157bd3b259</a>
+                <sup>1x</sup>
+            </li>
+
+            <li>
+                <p>e.GET("/courses/:id/tasks", h.TaskByCoursesID)<p>
+                        <a href="courses/5d86e07bfe6e2b157bd3b259/tasks">/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+                        <sup>3x</sup>
+            </li>
+
+            <li>
+                <a href="tasks">/tasks</a>
+                <sup>1x</sup>
+            </li>
+
+            <li>
+                <a href="tasks/:id">/tasks/:id</a>
+                <sup>1x</sup>
+            </li>
+
+
+            <li>
+                <a href="minitasks">/minitasks</a>
+                <sup>1x</sup>
+            </li>
+
+            <li>
+                <a href="profile">/profile</a>
+                <sup>object</sup>
+            </li>
+
+        </ul>
+
+    </div>
+</body>
+
+</html>
