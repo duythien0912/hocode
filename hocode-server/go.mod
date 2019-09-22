@@ -3,7 +3,6 @@ module github.com/duythien0912/hocode
 go 1.12
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/githubnemo/CompileDaemon v1.0.0 // indirect
 	github.com/howeyc/fsnotify v0.9.0 // indirect

@@ -54,11 +54,32 @@ func main() {
 	e.GET("/profile", h.Profile)
 	e.POST("/profile", h.CreateProfile)
 
-	// e.Use(middleware.Static("/static"))
+	r := e.Group("/api/v1")
 
+	r.GET("/courses", h.Courses)
+	r.GET("/courses/:id", h.CourseByID)
+	r.GET("/courses/:id/tasks", h.TaskByCoursesID)
+	r.POST("/courses", h.CreateCourse)
+
+	r.GET("/tasks", h.Task)
+	r.GET("/tasks/:id", h.TaskByID)
+	r.POST("/tasks", h.CreateTask)
+
+	r.GET("/minitasks", h.Minitasks)
+	r.GET("/minitasks/:id", h.MinitasksByID)
+	r.POST("/minitasks", h.CreateMinitast)
+
+	r.GET("/profile", h.Profile)
+	r.POST("/profile", h.CreateProfile)
+	r.File("", "static/index.html")
+
+	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")
 	// e.GET("/", h.Gethome)
-	e.File("/api", "static/index.html")
+	// e.Static("/*", "../hocode-web/build")
+	// e.File("/*", "../hocode-web/build/index.html")
+	// e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.File("*", "static/index.html")
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo"
 )
 
@@ -18,6 +20,8 @@ func (h *Handler) Gethome(c echo.Context) (err error) {
 	//     }
 	// }
 
-	return c.File("index.html")
+	// c.File("index.html")
+
+	return c.HTML(http.StatusOK, "index.html")
 
 }
