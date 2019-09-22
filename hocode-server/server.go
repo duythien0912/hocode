@@ -71,7 +71,6 @@ func main() {
 
 	r.GET("/profile", h.Profile)
 	r.POST("/profile", h.CreateProfile)
-	r.File("", "static/index.html")
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")
