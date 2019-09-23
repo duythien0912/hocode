@@ -1,0 +1,7 @@
+/usercode/file.java:1: error: unclosed character literal
+print 'Hello!'
+      ^
+/usercode/file.java:1: error: unclosed character literal
+print 'Hello!'
+             ^
+2 errors

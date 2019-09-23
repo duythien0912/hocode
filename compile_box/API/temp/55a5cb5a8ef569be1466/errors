@@ -1,0 +1,4 @@
+  File "/usercode/file.py", line 1
+    print 'Hello!'a
+                  ^
+SyntaxError: invalid syntax

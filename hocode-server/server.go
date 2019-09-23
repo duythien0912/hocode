@@ -72,6 +72,9 @@ func main() {
 	r.GET("/profile", h.Profile)
 	r.POST("/profile", h.CreateProfile)
 
+	// r.GET("/rungolang", h.RunGolang)
+	r.POST("/rungolang", h.RunGolang)
+
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")
 	// e.GET("/", h.Gethome)
