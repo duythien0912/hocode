@@ -5,7 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "type": "node",
+            "request": "launch",
+            "name": "Node Server",
+            "runtimeExecutable": "node",
+            "program": "${workspaceFolder}/compile_box/API/app.js",
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Go Server",
             "type": "go",
             "request": "launch",
             "mode": "auto",

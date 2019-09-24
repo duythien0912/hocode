@@ -1,19 +1,19 @@
 
 var LANGS = {
-    "C#": [10, "text/x-csharp"],
-    "C/C++": [7, "text/x-c++src"],
-    "Clojure": [2, "text/x-clojure"],
-    "Java": [8, "text/x-java"],
-    "Go": [6, "text/x-go"],
-    "Plain JavaScript": [4, "text/javascript"],
-    "PHP": [3, "text/x-php"],
     "Python": [0, "text/x-python"],
     "Ruby": [1, "text/x-ruby"],
+    "Clojure": [2, "text/x-clojure"],
+    "PHP": [3, "text/x-php"],
+    "Plain JavaScript": [4, "text/javascript"],
     "Scala": [5, "text/x-scala"],
+    "Go": [6, "text/x-go"],
+    "C/C++": [7, "text/x-c++src"],
+    "Java": [8, "text/x-java"],
     "VB.NET": [9, "text/x-vb"],
+    "C#": [10, "text/x-csharp"],
     "Bash": [11, "text/x-bash"],
-    "Objective-C": [12,"text/x-objectivec"],
-    "MySQL": [13,"text/x-sql"],
+    "Objective-C": [12, "text/x-objectivec"],
+    "MySQL": [13, "text/x-sql"],
     "Perl": [14, "text/x-perl"],
     "Rust": [15, "text/rust"],
 }
@@ -21,8 +21,8 @@ var LANGS = {
 
 
 var Codes = {
-    "Perl" : "use strict;\nuse warnings\n;use v5.14; say 'Hello';",
-    "MySQL":"create table myTable(name varchar(10));\ninsert into myTable values(\"Hello\");\nselect * from myTable;",
+    "Perl": "use strict;\nuse warnings\n;use v5.14; say 'Hello';",
+    "MySQL": "create table myTable(name varchar(10));\ninsert into myTable values(\"Hello\");\nselect * from myTable;",
     "Java": "/* package whatever; // don't place package name! */\n\nimport java.io.*;\n\nclass myCode\n{\n\tpublic static void main (String[] args) throws java.lang.Exception\n\t{\n\t\t\n\t\tSystem.out.println(\"Hello\");\n\t}\n}",
     "C/C++": "#include <iostream>\nusing namespace std;\n\nint main() {\n\tcout<<\"Hello\";\n\treturn 0;\n}",
     "C#": "using System;\n\npublic class Test\n{\n\tpublic static void Main()\n\t{\n\t\t\tConsole.WriteLine(\"Hello\");\n\t}\n}",
