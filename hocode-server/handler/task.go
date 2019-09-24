@@ -10,6 +10,14 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// Task godoc
+// @Summary List Task
+// @Description get tasks <a href="/tasks?page=1&limit=5">/tasks?page=1&limit=5</a>
+// @Tags Tasks
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} model.Task
+// @Router /tasks [get]
 func (h *Handler) Task(c echo.Context) (err error) {
 
 	ta := []*model.Task{}
@@ -32,6 +40,15 @@ func (h *Handler) Task(c echo.Context) (err error) {
 
 }
 
+// TaskByID godoc
+// @Summary Get Task By ID
+// @Description get task by ID <a href="/tasks/5d86f268fe6e2b31c0673b02">/tasks/5d86f268fe6e2b31c0673b02</a>
+// @Tags Tasks
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Task ID"
+// @Success 200 {object} model.Task
+// @Router /tasks/{id} [get]
 func (h *Handler) TaskByID(c echo.Context) (err error) {
 
 	tf := &model.Task{}
@@ -55,6 +72,15 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, tf)
 }
 
+// CreateTask godoc
+// @Summary Create Task
+// @Description Create Task
+// @Tags Tasks
+// @Accept  json
+// @Produce  json
+// @Param  task body model.Task true "Create Task"
+// @Success 200 {object} model.Task
+// @Router /tasks [post]
 func (h *Handler) CreateTask(c echo.Context) (err error) {
 
 	tn := &model.Task{

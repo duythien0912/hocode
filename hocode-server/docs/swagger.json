@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server Petstore server.",
-        "title": "Swagger Example API",
+        "description": "This is a server Api Hocode.",
+        "title": "Hocode API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -15,7 +15,503 @@
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
-    "basePath": "/v2",
-    "paths": {}
+    "host": "hocode.appspot.com",
+    "basePath": "/api/v1",
+    "paths": {
+        "/courses": {
+            "get": {
+                "description": "get courses \u003ca href=\"/courses?page=1\u0026limit=5\"\u003e/courses?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "List Courses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Course"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Course",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Create Course",
+                "parameters": [
+                    {
+                        "description": "Create Course",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Course"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Course"
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "description": "get courses by ID \u003ca href=\"/courses/5d86e07bfe6e2b157bd3b259\"\u003e/courses/5d86e07bfe6e2b157bd3b259\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Get Course By ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Course ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Course"
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}/tasks": {
+            "get": {
+                "description": "Get Task By Courses ID \u003ca href=\"/courses/5d86e07bfe6e2b157bd3b259/tasks\"\u003e/courses/5d86e07bfe6e2b157bd3b259/tasks\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Get Task By Courses ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Course ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Task"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health_check": {
+            "get": {
+                "description": "Health Check Server",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Health Check Server",
+                "responses": {
+                    "200": {
+                        "description": "Server Ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/minitasks": {
+            "get": {
+                "description": "get List Minitasks \u003ca href=\"/minitasks?page=1\u0026limit=5\"\u003e/minitasks?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Minitasks"
+                ],
+                "summary": "List Minitasks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.MiniTask"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/minitasks/{id}": {
+            "get": {
+                "description": "get Minitasks by ID \u003ca href=\"/minitasks/5d86f268fe6e2b31c0673b02\"\u003e/minitasks/5d86f268fe6e2b31c0673b02\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Minitasks"
+                ],
+                "summary": "Get Minitasks By ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Minitask ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.MiniTask"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks": {
+            "get": {
+                "description": "get tasks \u003ca href=\"/tasks?page=1\u0026limit=5\"\u003e/tasks?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "List Task",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Task"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MiniTask",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Minitasks"
+                ],
+                "summary": "Create Minitast",
+                "parameters": [
+                    {
+                        "description": "Create MiniTask",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.MiniTask"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.MiniTask"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "description": "get task by ID \u003ca href=\"/tasks/5d86f268fe6e2b31c0673b02\"\u003e/tasks/5d86f268fe6e2b31c0673b02\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get Task By ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Task"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "get users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "List users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.User"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "post": {
+                "description": "update accounts by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update account",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete accounts by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Course": {
+            "type": "object",
+            "properties": {
+                "background_image": {
+                    "type": "string"
+                },
+                "course_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "task_solved": {
+                    "description": "Name            string     json:\"name\" bson:\"name\"",
+                    "type": "object",
+                    "$ref": "#/definitions/model.TaskSolved"
+                }
+            }
+        },
+        "model.MiniTask": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "mini_task_name": {
+                    "type": "string"
+                },
+                "point_unlock": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                },
+                "vitri": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.Task": {
+            "type": "object",
+            "properties": {
+                "background_image": {
+                    "type": "string"
+                },
+                "course_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "minitasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MiniTask"
+                    }
+                },
+                "task_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TaskSolved": {
+            "type": "object",
+            "properties": {
+                "task_count": {
+                    "description": "ID            bson.ObjectId json:\"id\" bson:\"_id,omitempty\"",
+                    "type": "integer"
+                },
+                "tasks_complete": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

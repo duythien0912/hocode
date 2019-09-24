@@ -8,6 +8,21 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+// @title Hocode API
+// @version 1.0
+// @description This is a server Api Hocode.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host hocode.appspot.com
+// @BasePath /api/v1
+
 func main() {
 
 	e := echo.New()
@@ -81,6 +96,15 @@ func main() {
 	// e.Static("/*", "../hocode-web/build")
 	// e.File("/*", "../hocode-web/build/index.html")
 	// e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.File("/swagger.json", "docs/swagger.json")
+
+	e.File("/", "static/docs.html")
+
+	e.File("/docs", "static/dist/index.html")
+	e.File("/swagger-ui.css", "static/dist/swagger-ui.css")
+	e.File("/swagger-ui-bundle.js", "static/dist/swagger-ui-bundle.js")
+	e.File("/swagger-ui-standalone-preset.js", "static/dist/swagger-ui-standalone-preset.js")
+
 	e.File("*", "static/index.html")
 
 	e.Logger.Fatal(e.Start(":8080"))

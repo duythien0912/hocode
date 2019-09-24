@@ -1,16 +1,344 @@
-basePath: /v2
-host: petstore.swagger.io
+basePath: /api/v1
+definitions:
+  model.Course:
+    properties:
+      background_image:
+        type: string
+      course_name:
+        type: string
+      id:
+        type: string
+      task_solved:
+        $ref: '#/definitions/model.TaskSolved'
+        description: Name            string     json:"name" bson:"name"
+        type: object
+    type: object
+  model.MiniTask:
+    properties:
+      id:
+        type: string
+      mini_task_name:
+        type: string
+      point_unlock:
+        type: integer
+      status:
+        type: string
+      task_id:
+        type: string
+      vitri:
+        type: boolean
+    type: object
+  model.Task:
+    properties:
+      background_image:
+        type: string
+      course_id:
+        type: string
+      id:
+        type: string
+      minitasks:
+        items:
+          $ref: '#/definitions/model.MiniTask'
+        type: array
+      task_name:
+        type: string
+    type: object
+  model.TaskSolved:
+    properties:
+      task_count:
+        description: ID            bson.ObjectId json:"id" bson:"_id,omitempty"
+        type: integer
+      tasks_complete:
+        type: integer
+    type: object
+  model.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      token:
+        type: string
+    type: object
+host: hocode.appspot.com
 info:
   contact:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
+  description: This is a server Api Hocode.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: Hocode API
   version: "1.0"
-paths: {}
+paths:
+  /courses:
+    get:
+      consumes:
+      - application/json
+      description: get courses <a href="/courses?page=1&limit=5">/courses?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Course'
+            type: array
+      summary: List Courses
+      tags:
+      - Courses
+    post:
+      consumes:
+      - application/json
+      description: Create Course
+      parameters:
+      - description: Create Course
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Course'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Course'
+            type: object
+      summary: Create Course
+      tags:
+      - Courses
+  /courses/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get courses by ID <a href="/courses/5d86e07bfe6e2b157bd3b259">/courses/5d86e07bfe6e2b157bd3b259</a>
+      parameters:
+      - description: Course ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Course'
+            type: object
+      summary: Get Course By ID
+      tags:
+      - Courses
+  /courses/{id}/tasks:
+    get:
+      consumes:
+      - application/json
+      description: Get Task By Courses ID <a href="/courses/5d86e07bfe6e2b157bd3b259/tasks">/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+      parameters:
+      - description: Course ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Task'
+            type: array
+      summary: Get Task By Courses ID
+      tags:
+      - Courses
+  /health_check:
+    get:
+      consumes:
+      - application/json
+      description: Health Check Server
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Server Ok
+          schema:
+            type: string
+      summary: Health Check Server
+  /minitasks:
+    get:
+      consumes:
+      - application/json
+      description: get List Minitasks <a href="/minitasks?page=1&limit=5">/minitasks?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MiniTask'
+            type: array
+      summary: List Minitasks
+      tags:
+      - Minitasks
+  /minitasks/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get Minitasks by ID <a href="/minitasks/5d86f268fe6e2b31c0673b02">/minitasks/5d86f268fe6e2b31c0673b02</a>
+      parameters:
+      - description: Minitask ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MiniTask'
+            type: object
+      summary: Get Minitasks By ID
+      tags:
+      - Minitasks
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: get tasks <a href="/tasks?page=1&limit=5">/tasks?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Task'
+            type: array
+      summary: List Task
+      tags:
+      - Tasks
+    post:
+      consumes:
+      - application/json
+      description: Create MiniTask
+      parameters:
+      - description: Create MiniTask
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.MiniTask'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MiniTask'
+            type: object
+      summary: Create Minitast
+      tags:
+      - Minitasks
+  /tasks/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get task by ID <a href="/tasks/5d86f268fe6e2b31c0673b02">/tasks/5d86f268fe6e2b31c0673b02</a>
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Task'
+            type: object
+      summary: Get Task By ID
+      tags:
+      - Tasks
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+      summary: List users
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete accounts by ID
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+          schema:
+            type: string
+      summary: Delete user
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: update accounts by ID
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+            type: object
+      summary: Update user
+      tags:
+      - users
 swagger: "2.0"

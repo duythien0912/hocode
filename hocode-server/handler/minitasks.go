@@ -10,6 +10,14 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// Minitasks godoc
+// @Summary List Minitasks
+// @Description get List Minitasks <a href="/minitasks?page=1&limit=5">/minitasks?page=1&limit=5</a>
+// @Tags Minitasks
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} model.MiniTask
+// @Router /minitasks [get]
 func (h *Handler) Minitasks(c echo.Context) (err error) {
 
 	mta := []*model.MiniTask{}
@@ -31,6 +39,15 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, mta)
 }
 
+// MinitasksByID godoc
+// @Summary Get Minitasks By ID
+// @Description get Minitasks by ID <a href="/minitasks/5d86f268fe6e2b31c0673b02">/minitasks/5d86f268fe6e2b31c0673b02</a>
+// @Tags Minitasks
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Minitask ID"
+// @Success 200 {object} model.MiniTask
+// @Router /minitasks/{id} [get]
 func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 
 	mtf := &model.MiniTask{}
@@ -54,6 +71,15 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, mtf)
 }
 
+// CreateMinitast godoc
+// @Summary Create Minitast
+// @Description Create MiniTask
+// @Tags Minitasks
+// @Accept  json
+// @Produce  json
+// @Param  task body model.MiniTask true "Create MiniTask"
+// @Success 200 {object} model.MiniTask
+// @Router /tasks [post]
 func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	mtn := &model.MiniTask{

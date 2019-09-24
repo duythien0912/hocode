@@ -21,6 +21,15 @@ import (
 // }
 
 // http://localhost:8080/courses?page=1&limit=5
+
+// Courses godoc
+// @Summary List Courses
+// @Description get courses <a href="/courses?page=1&limit=5">/courses?page=1&limit=5</a>
+// @Tags Courses
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} model.Course
+// @Router /courses [get]
 func (h *Handler) Courses(c echo.Context) (err error) {
 
 	courses := []*model.Course{}
@@ -44,6 +53,16 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 }
 
 // http://localhost:8080/courses/5d86e07bfe6e2b157bd3b259
+
+// CourseByID godoc
+// @Summary Get Course By ID
+// @Description get courses by ID <a href="/courses/5d86e07bfe6e2b157bd3b259">/courses/5d86e07bfe6e2b157bd3b259</a>
+// @Tags Courses
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Course ID"
+// @Success 200 {object} model.Course
+// @Router /courses/{id} [get]
 func (h *Handler) CourseByID(c echo.Context) (err error) {
 	course := &model.Course{}
 
@@ -67,6 +86,16 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 }
 
 // http://localhost:8080/courses/5d86e07bfe6e2b157bd3b259/tasks
+
+// TaskByCoursesID godoc
+// @Summary Get Task By Courses ID
+// @Description Get Task By Courses ID <a href="/courses/5d86e07bfe6e2b157bd3b259/tasks">/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+// @Tags Courses
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Course ID"
+// @Success 200 {array} model.Task
+// @Router /courses/{id}/tasks [get]
 func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	ta := []*model.Task{}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
@@ -100,6 +129,16 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 //     "background_image": "https://loremflickr.com/500/500"
 // }
 // POST http://localhost:8080/courses
+
+// CreateCourse godoc
+// @Summary Create Course
+// @Description Create Course
+// @Tags Courses
+// @Accept  json
+// @Produce  json
+// @Param  course body model.Course true "Create Course"
+// @Success 200 {object} model.Course
+// @Router /courses [post]
 func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
 	pn := &model.Course{
