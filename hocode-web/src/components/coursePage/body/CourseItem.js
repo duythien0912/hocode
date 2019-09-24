@@ -9,6 +9,7 @@ const styles = {
      overflow:'hidden',
      background: '#EEEEEE',
      cursor:'pointer',
+     marginBottom:'40px'
  },
 };
 class CourseItem extends Component {
