@@ -65,7 +65,7 @@ app.post('/compile', bruteforce.prevent, function (req, res) {
         arr.compilerArray[language][2],
         arr.compilerArray[language][3],
         arr.compilerArray[language][4],
-        stdin
+        stdin,
     );
 
 

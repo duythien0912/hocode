@@ -4,7 +4,7 @@
 ############################################################
 
 FROM chug/ubuntu14.04x64 
-MAINTAINER ASAD MEMON, OSMAN ALI
+# MAINTAINER ASAD MEMON, OSMAN ALI
 
 # Update the repository sources list
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
@@ -38,13 +38,17 @@ RUN apt-get install -y python
 # RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 # RUN apt-get install -y oracle-java8-installer
 
+RUN apt-get install default-jdk -y \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
 
 # RUN apt-get install -y gobjc
 # RUN apt-get install -y gnustep-devel &&  sed -i 's/#define BASE_NATIVE_OBJC_EXCEPTIONS     1/#define BASE_NATIVE_OBJC_EXCEPTIONS     0/g' /usr/include/GNUstep/GNUstepBase/GSConfig.h
 
 
 # RUN apt-get install -y scala
-# RUN apt-get install -y mysql-server
+RUN apt-get install -y mysql-server
 # RUN apt-get install -y perl
 
 # RUN apt-get install -y curl
@@ -52,44 +56,7 @@ RUN apt-get install -y python
 #     curl https://sh.rustup.rs -sSf | HOME=/opt/rust sh -s -- --no-modify-path -y && \
 #     chmod -R 777 /opt/rust
 
-# RUN apt-get install -y sudo
-# RUN apt-get install -y bc
-
-# RUN echo "mysql ALL = NOPASSWD: /usr/sbin/service mysql start" | cat >> /etc/sudoers
-
-
-
-# RUN add-apt-repository -y ppa:webupd8team/java
-# RUN apt-get update
-# RUN apt-get install -y wget
-# # RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-# # RUN apt-get install -y oracle-java7-installer
-# RUN wget https://d3pxv6yz143wms.cloudfront.net/8.212.04.2/java-1.8.0-amazon-corretto-jdk_8.212.04-2_amd64.deb && \
-#     apt-get update &&  apt-get install java-common && apt-get install -y --no-install-recommends apt-utils && \
-#     dpkg --install java-1.8.0-amazon-corretto-jdk_8.212.04-2_amd64.deb
-# New java 11 did't test
-# RUN apt-get update -q \
-#  && apt-get upgrade -q -y \
-#  && apt-get install -q -y \
-#         binutils \
-#         openjdk-11-jdk-headless
-
-# Install Java
-
-
-RUN apt-get install -y mysql-server
-
 RUN apt-get install -y sudo
 RUN apt-get install -y bc
 
 RUN echo "mysql ALL = NOPASSWD: /usr/sbin/service mysql start" | cat >> /etc/sudoers
-
-# RUN apt-get install -y software-properties-common
-# RUN apt-get install -y python-software-properties
-# RUN apt-get install -y libpam-systemd
-RUN apt-get install default-jdk -y \
-    --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
-
-# RUN javac -h
-# RUN java -h
