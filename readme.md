@@ -8,6 +8,12 @@ https://hocode-11412.web.app/
 
 https://hocode.appspot.com
 
+## Link Server Chạy code: 
+
+http://34.66.126.232
+
+note: Hiện chỉ chạy được code python và java ( mã 0,8 )
+
 ## Link GitHub: 
 
 https://github.com/duythien0912/hocode
