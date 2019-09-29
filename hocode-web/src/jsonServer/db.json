@@ -1,21 +1,101 @@
 {
-    "courses": [
-      { "id": "432sd1213", "name": "Certificate", "task_solved": {"taskCount":60,"tasks_complete":5},"background_image": "https://loremflickr.com/500/500/training" }
-    ],
-    "tasks": [
-      { "id": "342432321dsa", "name": "Khởi hành","background_image":"https://loremflickr.com/500/500/sea", "courseId": "432sd1213" },
-      { "id": "654vfd", "name": "vùng đất silicon","background_image":"https://loremflickr.com/500/500/moutain", "courseId": "432sd1213" },
-      { "id": "34fdsdjk4", "name": "Trí tuệ","background_image":"https://loremflickr.com/500/500/city", "courseId": "432sd1213" }
-     
-    ],
-    "minitasks": [
-        { "id": "98dsfds", "name": "Cộng hai số", "point_unlock": 0,"status":"hoanthanh","vitri":false, "taskId":"342432321dsa"},
-        { "id": "432432fdn", "name": "Tam giác ", "point_unlock": 100,"status":"chuahoanthanh","vitri":true,"taskId":"342432321dsa"},
-        { "id": "098nbv", "name": "Số lớn nhất", "point_unlock": 200,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc123", "name": "Số bé nhất", "point_unlock": 150,"status":"chuahoanthanh","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc1vv23", "name": "Thế kỷ", "point_unlock": 350,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"},
-        { "id": "9dc1dd23", "name": "Chuỗi con tăng chung", "point_unlock": 400,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc1ss23", "name": "Đường đi", "point_unlock": 600,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"}
-      ],
-    "profile": { "name": "typicode","avatar":"https://loremflickr.com/500/500/paris" }
-  }
+  "courses": [
+    {
+      "id": "432sd1213",
+      "name": "Certificate",
+      "task_solved": {
+        "taskCount": 60,
+        "tasks_complete": 5
+      },
+      "background_image": "https://loremflickr.com/500/500/training"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "342432321dsa",
+      "name": "Khởi hành",
+      "background_image": "https://loremflickr.com/500/500/sea",
+      "courseId": "432sd1213"
+    },
+    {
+      "id": "654vfd",
+      "name": "vùng đất silicon",
+      "background_image": "https://loremflickr.com/500/500/moutain",
+      "courseId": "432sd1213"
+    },
+    {
+      "id": "34fdsdjk4",
+      "name": "Trí tuệ",
+      "background_image": "https://loremflickr.com/500/500/city",
+      "courseId": "432sd1213"
+    }
+  ],
+  "minitasks": [
+    {
+      "id": "98dsfds",
+      "name": "Cộng hai số",
+      "point_unlock": 0,
+      "status": "hoanthanh",
+      "vitri": false,
+      "taskId": "342432321dsa"
+    },
+    {
+      "id": "432432fdn",
+      "name": "Tam giác ",
+      "point_unlock": 100,
+      "status": "chuahoanthanh",
+      "vitri": true,
+      "taskId": "342432321dsa"
+    },
+    {
+      "id": "098nbv",
+      "name": "Số lớn nhất",
+      "point_unlock": 200,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc123",
+      "name": "Số bé nhất",
+      "point_unlock": 150,
+      "status": "chuahoanthanh",
+      "vitri": false,
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc1vv23",
+      "name": "Thế kỷ",
+      "point_unlock": 350,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "taskId": "34fdsdjk4"
+    },
+    {
+      "id": "9dc1dd23",
+      "name": "Chuỗi con tăng chung",
+      "point_unlock": 400,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc1ss23",
+      "name": "Đường đi",
+      "point_unlock": 600,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "taskId": "34fdsdjk4"
+    }
+  ],
+  "profile": {
+    "name": "typicode",
+    "avatar": "https://loremflickr.com/500/500/paris"
+  },
+  "minitaskdesc": [
+    {
+      "id": 1,
+      "desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n"
+    }
+  ]
+}

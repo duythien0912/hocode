@@ -1,0 +1,33 @@
+.md_desc{
+    width: 100%;
+    font-size: 14px;
+
+}
+
+.md_desc pre{
+    font-family: Operator Mono SSm A,Operator Mono SSm B,monospace;
+    font-size: .85em;
+    overflow: auto;
+    word-wrap: normal;
+    padding: 16px;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    overflow: auto;
+}
+
+.md_desc .md_heading{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+
+
+  
+
+.md_code{
+    background: gainsboro;
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 12px;
+
+}

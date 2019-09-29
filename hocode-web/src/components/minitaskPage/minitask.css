@@ -30,7 +30,8 @@
     align-items: stretch;
 }
 .split-panel-first{
-  
+    padding: 10px;
+    background: #f5f5f5;
     overflow: hidden;
 }
 .split-panel-second{
@@ -42,13 +43,15 @@
 
 .coding-area{
     flex-grow:1;
+    background: #f5f5f5;
+
 }
 .splitHorizontal{
     display: flex;
 }
 
 .splitHorizontal .gutter{
-    background: red;
+    background: #ffffff;
     cursor: ew-resize;
 }
 
@@ -56,12 +59,15 @@
     height: 100%;
 }
 .splitVertical .gutter{
-    background: red;
+    background: #ffffff;
     cursor: n-resize;
 }
 
 .codeEditor{
-    overflow: hidden;
+   overflow: hidden;
+   position: relative;
+   top:0;
+   left: 0;
 }
 .testList{
     overflow: hidden;

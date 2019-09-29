@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import Split from "react-split";
-
+import MiniTaskDesc from './body/MiniTaskDesc';
+import MiniTaskHeader from './header/MiniTaskHeader';
+import CodeEditor from './body/CodeEditor';
+import ResultPanel from './body/ResultPanel'
 import "./minitask.css";
 import MediaQuery from "react-responsive";
+
 class MiniTaskPage extends Component {
   render() {
     return (
@@ -11,7 +15,7 @@ class MiniTaskPage extends Component {
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
-          giang dep trai
+          <MiniTaskHeader/>
           </div>
 
           <div className="layout-code-body">
@@ -32,9 +36,7 @@ class MiniTaskPage extends Component {
                     cursor="col-resize"
                   >
                     <div className="split-panel-first ">
-                      nihil corporis beatae rem animi ratione? Numquam possimus
-                      aliquam cumque deserunt, consectetur sequi temporibus.
-                      Temporibus ex dolorum quibusdam sequi atque.
+                    <MiniTaskDesc/>
                     </div>
                     <div className="split-panel-second ">
                       <div className="coding-area">
@@ -50,13 +52,16 @@ class MiniTaskPage extends Component {
                           direction="vertical"
                           cursor="row-resize"
                         >
-                          <div className="codeEditor">editor</div>
-                          <div className="testList">list test</div>
+                          <div className="codeEditor">
+                          <CodeEditor/>
+                          <div style={{position:'absolute',bottom:0,right:0,zIndex:9,padding:10 }}><button>Reset code</button></div>
+                          </div>
+                          <div className="testList"><ResultPanel/></div>
                         </Split>
                       </div>
                       <div
                         className="runtest-area"
-                        style={{ height: "40px", minHeight: "40px" }}
+                        style={{  minHeight: "40px",padding:'20px' }}
                       >
                         Lorem ipsum dolor, sit amet consectetur adipisicing
                         elit. Nobis sed, nihil corporis beatae rem animi
