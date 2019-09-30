@@ -20,11 +20,11 @@ code file
 ```java
 public class Solution {
 
- public Solution() {}
+    public Solution() {}
 
- public int testthing() {
-  return 3;
- }
+    public int testthing() {
+        return 3;
+    }
 
 }
 ```
@@ -37,16 +37,13 @@ import org.junit.runners.JUnit4;
 
 public class TestFixture {
 
- public TestFixture() {}
+    public TestFixture() {}
 
- @Test
- public void myTestFunction() {
-
-  Solution s = new Solution();
-
-  assertEquals("wow", 3, s.testthing());
-
- }
+    @Test
+    public void myTestFunction() {
+        Solution s = new Solution();
+        assertEquals("wow", 3, s.testthing());
+    }
 }
 ```
 
