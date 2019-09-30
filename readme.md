@@ -14,6 +14,40 @@ http://34.70.250.155
 
 Lưu ý: Chạy post tới http://34.70.250.155 với body có khi truy cập vào trang trên
 
+code
+```java
+public class Solution {
+
+ public Solution() {}
+
+ public int testthing() {
+  return 3;
+ }
+
+}
+```
+
+test
+```java
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.runners.JUnit4;
+
+public class TestFixture {
+
+ public TestFixture() {}
+
+ @Test
+ public void myTestFunction() {
+
+  Solution s = new Solution();
+
+  assertEquals("wow", 3, s.testthing());
+
+ }
+}
+```
+
 Format trả về
 
 ```json
