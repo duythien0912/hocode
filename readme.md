@@ -14,7 +14,9 @@ http://34.70.250.155
 
 Lưu ý: Chạy post tới http://34.70.250.155 với body có khi truy cập vào trang trên
 
-code
+Body ở trên tương đương với code dưới đây
+
+code file
 ```java
 public class Solution {
 
@@ -27,7 +29,7 @@ public class Solution {
 }
 ```
 
-test
+test file
 ```java
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
