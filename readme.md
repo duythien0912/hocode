@@ -94,5 +94,5 @@ https://drive.google.com/file/d/1bxAf-DkMB73kY1Pk1cd5VJl3A9Rh-nRl/view
 ## Tuần 2 ( 20/9 - 26/9 ) : 
 - Làm trang danh sách course và trang danh sách task (done) 
 
-## Tuần 3 ( 27/9 - 3/9 ) : 
+## Tuần 3 ( 27/9 - 03/9 ) : 
 - Làm bài tập và server chạy code
