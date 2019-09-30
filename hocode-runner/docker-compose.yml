@@ -1,0 +1,785 @@
+version: '2'
+services:
+  base-runner:
+    image: codewars/base-runner
+    entrypoint: ''
+    command: bash
+
+  node-runner:
+    image: codewars/node-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks/javascript:/runner/frameworks/javascript
+      - ./test:/runner/test
+      - ./tsconfig.json:/runner/tsconfig.json
+
+    entrypoint: ''
+    user: root
+    command: bash
+
+  solidity-runner:
+    image: codewars/solidity-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks/solidity:/runner/frameworks/solidity
+      - ./test:/runner/test
+
+    entrypoint: ''
+    user: root
+    command: bash
+
+  jvm-runner:
+    image: codewars/jvm-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  java-runner:
+    image: codewars/java-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  gradle-runner:
+    image: codewars/gradle-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  ruby-runner:
+    image: codewars/ruby-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+      - ./sample_data:/runner/sample_data
+    entrypoint: ''
+    user: root
+    command: bash
+
+  python-runner:
+    image: codewars/python-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  func-runner:
+    image: codewars/func-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  haskell-runner:
+    image: codewars/haskell-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  systems-runner:
+    image: codewars/systems-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  erlang-runner:
+    image: codewars/erlang-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  alt-runner:
+    image: codewars/alt-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  dotnet-runner:
+    image: codewars/dotnet-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./templates:/runner/templates
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  dart-runner:
+    image: codewars/dart-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  rust-runner:
+    image: codewars/rust-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  julia-runner:
+    image: codewars/julia-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  crystal-runner:
+    image: codewars/crystal-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  swift-runner:
+    image: codewars/swift-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  objc-runner:
+    image: codewars/objc-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  go-runner:
+    image: codewars/go-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  chapel-runner:
+    image: codewars/chapel-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  nim-runner:
+    image: codewars/nim-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  esolangs-runner:
+    image: codewars/esolangs-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  r-runner:
+    image: codewars/r-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    command: bash
+
+  # LANGUAGE SPECIFIC HELPERS
+  javascript_test:
+    image: codewars/node-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks/javascript/chai-display.js:/runner/frameworks/javascript/chai-display.js
+      - ./frameworks/javascript/cw-2.js:/runner/frameworks/javascript/cw-2.js
+      - ./frameworks/javascript/display.js:/runner/frameworks/javascript/display.js
+      - ./frameworks/javascript/karma-coderunner-reporter.js:/runner/frameworks/javascript/karma-coderunner-reporter.js
+      - ./frameworks/javascript/mocha-reporter.js:/runner/frameworks/javascript/mocha-reporter.js
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 --recursive test/runners/javascript/'
+
+  coffeescript:
+    image: codewars/node-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l coffeescript'
+
+  coffeescript_test:
+    image: codewars/node-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/coffeescript_spec.js'
+
+  typescript:
+    image: codewars/node-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+      - ./tsconfig.json:/runner/tsconfig.json
+    entrypoint: 'node run -l typescript'
+
+  typescript_test:
+    image: codewars/node-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 10000 test/runners/typescript_spec.js'
+
+  python:
+    image: codewars/python-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l python'
+
+  python_test:
+    image: codewars/python-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/python_spec.js'
+
+  python3:
+    image: codewars/python-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l python3'
+
+  python3_test:
+    image: codewars/python-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/python3_spec.js'
+
+  ruby:
+    image: codewars/ruby-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l ruby'
+
+  ruby_test:
+    image: codewars/ruby-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/ruby_spec.js'
+
+  sql_test:
+    image: codewars/ruby-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/sql_spec.js'
+
+  shell_test:
+    image: codewars/ruby-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/shell_spec.js'
+
+  haskell:
+    image: codewars/haskell-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l haskell'
+
+  haskell_test:
+    image: codewars/haskell-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/haskell_spec.js'
+
+  java:
+    image: codewars/jvm-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l java'
+
+  java_test:
+    image: codewars/java-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 15000 test/runners/java_spec.js'
+
+  clojure:
+    image: codewars/jvm-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l clojure'
+
+  clojure_test:
+    image: codewars/jvm-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/clojure_spec.js'
+
+  php:
+    image: codewars/alt-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l php'
+
+  php_test:
+    image: codewars/alt-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/php_spec.js'
+
+  cpp:
+    image: codewars/systems-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l cpp'
+
+  cpp_test:
+    image: codewars/systems-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/cpp_spec.js'
+
+  c:
+    image: codewars/systems-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l c'
+
+  c_test:
+    image: codewars/systems-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/c_spec.js'
+
+  csharp:
+    image: codewars/dotnet-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./templates:/runner/templates
+      - ./test:/runner/test
+    entrypoint: 'node run -l csharp'
+
+  csharp_test:
+    image: codewars/dotnet-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./templates:/runner/templates
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/csharp_spec.js'
+
+  fsharp:
+    image: codewars/dotnet-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l fsharp'
+
+  fsharp_test:
+    image: codewars/dotnet-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 7000 test/runners/fsharp_spec.js'
+
+  elixir:
+    image: codewars/erlang-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l elixir'
+
+  elixir_test:
+    image: codewars/erlang-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/elixir_spec.js'
+
+  erlang:
+    image: codewars/erlang-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l erlang'
+
+  erlang_test:
+    image: codewars/erlang-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/erlang_spec.js'
+
+  rust_test:
+    image: codewars/rust-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/rust_spec.js'
+
+  dart_test:
+    image: codewars/dart-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/dart_spec.js'
+
+  kotlin:
+    image: codewars/jvm-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l kotlin'
+
+  kotlin_test:
+    image: codewars/jvm-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/kotlin_spec.js'
+
+  crystal:
+    image: codewars/crystal-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l crystal'
+
+  crystal_test:
+    image: codewars/crystal-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/crystal_spec.js'
+
+  ocaml-runner:
+    image: codewars/ocaml-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l ocaml'
+
+  ocaml_test:
+    image: codewars/ocaml-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'bash /home/codewarrior/run_ocaml.sh mocha -t 5000 test/runners/ocaml_spec.js'
+
+  swift:
+    image: codewars/swift-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'node run -l swift'
+
+  swift_test:
+    image: codewars/swift-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/swift_spec.js'
+
+  objc:
+    image: codewars/objc-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks/objc/objc:/usr/include/GNUstep/objc
+      - ./frameworks/objc/CW:/usr/include/GNUstep/CW
+    entrypoint: 'node run -l obcj'
+
+  objc_test:
+    image: codewars/objc-runner
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks/objc/objc:/usr/include/GNUstep/objc
+      - ./frameworks/objc/CW:/usr/include/GNUstep/CW
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/objc_spec.js'
+
+  go:
+    image: codewars/go-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./frameworks:/runner/frameworks
+    entrypoint: 'node run -l go'
+
+  go_test:
+    image: codewars/go-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: ''
+    entrypoint: 'mocha -t 5000 test/runners/go_spec.js'
+
+  nim:
+    image: codewars/nim-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./frameworks:/runner/frameworks
+    entrypoint: 'node run -l nim'
+
+  nim_test:
+    image: codewars/nim-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/nim_spec.js'
+
+  r:
+    image: codewars/r-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./frameworks:/runner/frameworks
+    entrypoint: 'node run -l r'
+
+  r_test:
+    image: codewars/r-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/r_spec.js'
+
+  powershell-runner:
+    image: codewars/powershell-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'powershell'
+
+  powershell_test:
+    image: codewars/powershell-runner
+    volumes:
+      - ./lib:/runner/lib
+      - ./examples:/runner/examples
+      - ./frameworks:/runner/frameworks
+      - ./test:/runner/test
+    entrypoint: 'mocha -t 5000 test/runners/powershell_spec.js'

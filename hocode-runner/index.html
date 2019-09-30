@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <pre id="json">
+</pre>
+    <script>
+        var data = {
+            "code": `public class Solution {
+    public Solution(){}
+    public int testthing(){return 3;}
+    }`,
+            "test": `import static org.junit.Assert.assertEquals;
+    import org.junit.Test;
+    import org.junit.runners.JUnit4;
+    public class TestFixture {
+    public TestFixture(){}
+    @Test
+    public void myTestFunction(){
+    Solution s = new Solution();
+    assertEquals("wow", 3, s.testthing());
+    }}`,
+        }
+
+        document.getElementById("json").innerHTML = JSON.stringify(data, undefined, 2);
+
+        ;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+xctest:
+  algorithms:
+    initial: |-
+      // return the two oldest/oldest ages within the array of ages passed in.
+      // it should return the two ages as a sorted array, youngest age first
+      func twoOldestAges(ages: [Int]) -> [Int] { // TODO: complete
+      }
+
+    answer: |-
+      func twoOldestAges(ages: [Int]) -> [Int] {
+          var oldest = 0
+          var nextOldest = 0
+          for age in ages {
+              if age > oldest {
+                  oldest = age
+              } else if age > nextOldest {
+                  nextOldest = age
+              }
+          }
+          return [nextOldest, oldest]
+      }
+
+    fixture: |-
+      import XCTest
+
+      class TwoOldestAgesTest: XCTestCase {
+          static var allTests = [
+              ("testReturnSecondOldestFirst", testReturnSecondOldestFirst),
+              ("testReturnOldestSecond", testReturnOldestSecond),
+          ]
+          func testReturnSecondOldestFirst() {
+              let r1 = twoOldestAges(ages: [1,5,87,45,8,8])
+              XCTAssertEqual(r1[0], 45)
+              let r2 = twoOldestAges(ages: [6,5,83,5,3,18])
+              XCTAssertEqual(r2[0], 18)
+          }
+          func testReturnOldestSecond() {
+              let r1 = twoOldestAges(ages: [1,5,87,45,8,8])
+              XCTAssertEqual(r1[1], 87)
+              let r2 = twoOldestAges(ages: [6,5,83,5,3,18])
+              XCTAssertEqual(r2[1], 83)
+          }
+      }
+
+      _XCTMain([
+          testCase(TwoOldestAgesTest.allTests)
+      ])
+
+  bug fixes:
+    initial: |-
+      func add(_ a: Int, _ b: Int) -> Int {
+          a + b
+      }
+
+    answer: |-
+      func add(_ a: Int, _ b: Int) -> Int {
+          return a + b
+      }
+
+    fixture: |-
+      import XCTest
+
+      class AddTest: XCTestCase {
+          static var allTests = [
+              ("testAdd", testAdd),
+          ]
+          func testAdd() {
+              XCTAssertEqual(add(1, 1), 2)
+          }
+      }
+
+      _XCTMain([
+          testCase(AddTest.allTests)
+      ])
+
+
+  refactoring:
+    initial: |-
+      // refactor this method into a Person class with its own greet method
+      // let p = Person("foo")
+      // p.name == "foo"
+      // p.greet("bar") == "Hello bar, my name is foo"
+      func greet(other: String, name: String) -> String {
+          return "Hello \(other), my name is \(name)"
+      }
+
+    answer: |-
+      class Person {
+          let name: String
+          init(_ name: String) {
+              self.name = name
+          }
+          func greet(_ other: String) -> String {
+              return "Hello \(other), my name is \(self.name)"
+          }
+      }
+
+    fixture: |-
+      import XCTest
+      class PersonTest: XCTestCase {
+          static var allTests = [
+              ("testName", testName),
+              ("testGreet", testGreet),
+          ]
+          func testName() {
+              let jack = Person("Jack")
+              XCTAssertEqual(jack.name, "Jack")
+          }
+          func testGreet() {
+              let jack = Person("Jack")
+              XCTAssertEqual(jack.greet("Jill"), "Hello Jill, my name is Jack")
+              XCTAssertEqual(jack.greet("Jane"), "Hello Jane, my name is Jack")
+          }
+      }
+
+      _XCTMain([
+          testCase(PersonTest.allTests)
+      ])
+
+  reference:
+    initial: |-
+      // create an array called websites that has "codewars" as its only value
+
+    answer: |-
+      let websites = ["codewars"]
+
+    fixture: |-
+      import XCTest
+
+      class WebsitesTest: XCTestCase {
+          static var allTests = [
+              ("testDefined", testDefined),
+          ]
+          func testDefined() {
+              XCTAssertEqual(websites[0], "codewars")
+          }
+      }
+
+      _XCTMain([
+          testCase(WebsitesTest.allTests)
+      ])

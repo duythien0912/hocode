@@ -1,0 +1,39 @@
+plugins {
+  id 'java'
+  id 'groovy'
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'junit:junit:4.12'
+  compileOnly 'org.projectlombok:lombok:1.16.18'
+  compile 'org.mockito:mockito-core:2.7.19'
+  compile 'org.assertj:assertj-core:3.8.0'
+  compile 'org.xerial:sqlite-jdbc:3.19.3'
+
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+  reports {
+    html.enabled = false
+    junitXml.enabled = false
+  }
+  testLogging {
+      // TODO: Refactor so that we use Gradle to customize output, instead of custom test listener
+      // SEE: https://stackoverflow.com/questions/3963708/gradle-how-to-display-test-results-in-the-console-in-real-time
+      // SEE: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
+      // Show standard streams so that we can parse STDOUT/ERR output.
+      showStandardStreams = true
+      showExceptions = true
+      showStackTraces = true
+  }
+}

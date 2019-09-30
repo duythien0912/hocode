@@ -1,0 +1,46 @@
+FROM codewars/base-runner
+
+# based on the Dockerfile for https://hub.docker.com/_/rust/
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --default-toolchain 1.15.1; \
+    chmod -R a+w $RUSTUP_HOME $CARGO_HOME;
+
+RUN ln -s /home/codewarrior /workspace
+ENV NPM_CONFIG_LOGLEVEL warn
+
+WORKDIR /runner
+COPY package.json package.json
+RUN npm install --production
+
+COPY *.js ./
+COPY lib/*.js lib/
+COPY lib/*.sh lib/
+COPY lib/utils lib/utils
+COPY lib/runners/rust.js lib/runners/
+COPY examples/rust.yml examples/
+COPY test/runner.js test/
+COPY test/runners/rust_spec.js test/runners/
+
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
+
+COPY frameworks/rust/skeleton /workspace/rust
+RUN chown -R codewarrior:codewarrior /workspace/rust
+
+USER codewarrior
+ENV USER=codewarrior \
+    HOME=/home/codewarrior \
+# set RUSTFLAGS (for backward compatibility) here
+# compiling with different RUSTFLAGS for submitted solution causes downloaded crates to be recompiled
+    RUSTFLAGS='-Adead_code -Aunused_imports -Aunused_variables -Anon_snake_case'
+# download and compile crates
+RUN set -ex; \
+    cd /workspace/rust; \
+    cargo build; \
+    rm src/lib.rs
+
+RUN mocha -t 10000 test/runners/rust_spec.js
+
+ENTRYPOINT ["./entrypoint.sh"]

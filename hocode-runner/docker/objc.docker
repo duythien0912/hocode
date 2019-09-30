@@ -1,0 +1,204 @@
+FROM codewars/base-runner
+
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends software-properties-common; \
+    add-apt-repository ppa:ubuntu-toolchain-r/test; \
+    add-apt-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'; \
+    wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -; \
+    apt-key update; \
+    apt-get update; \
+# Install pre-requisities
+    apt-get install -y --no-install-recommends \
+      cmake \
+      clang-3.9 \
+      lldb-3.9 \
+      llvm \
+      build-essential \
+      gobjc \
+      gobjc++ \
+      libblocksruntime-dev \
+      libkqueue-dev \
+      libpthread-workqueue-dev \
+      libxml2-dev \
+      libjpeg-dev \
+      libtiff-dev \
+      libpng12-dev \
+      libcups2-dev \
+      libfreetype6-dev \
+      libcairo2-dev \
+      libxt-dev \
+      libgl1-mesa-dev \
+      libdispatch-dev \
+      git \
+      libxslt1-dev \
+      libffi-dev \
+      libssl-dev \
+      libgnutls-dev \
+      libgmp3-dev \
+      libjpeg-dev \
+      libtiff-dev \
+      libpng-dev \
+      libgif-dev \
+      libx11-dev \
+      libcairo2-dev \
+      libxft-dev \
+      libxmu-dev \
+      libsqlite3-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    ln -s /usr/bin/clang-3.9 /usr/bin/clang; \
+    ln -s /usr/bin/clang++-3.9 /usr/bin/clang++;
+
+# Set clang as compiler
+ENV CC=clang CXX=clang++
+
+# Install dependencies
+RUN set -ex; \
+    mkdir /source; \
+# Install ICU
+    cd /source; \
+    mkdir icu; \
+    wget -qO- http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz | tar xz -C icu --strip-components=1; \
+    cd /source/icu/source; \
+    ./configure; \
+    make; \
+    make install; \
+    rm -rf /source/icu; \
+# Install gnustep-makefile
+    cd /source; \
+    mkdir make; \
+    wget -qO- ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-2.6.7.tar.gz | tar xz -C make --strip-components=1; \
+    cd /source/make; \
+    ./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-nonfragile-abi --enable-objc-arc; \
+    make; \
+    make install; \
+# Install libobjc2
+    cd /source; \
+    mkdir libobjc2; \
+    wget -qO- https://github.com/gnustep/libobjc2/archive/v1.8.1.tar.gz | tar xz -C libobjc2 --strip-components=1; \
+    cd /source/libobjc2; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    cmake . -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    make -f Makefile; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    make -f Makefile install; \
+    rm -rf /source/libobjc2; \
+# Install libdispatch
+    cd /source; \
+    git clone https://github.com/nickhutchinson/libdispatch; \
+    cd libdispatch; \
+    git checkout bd1808980b04830cbbd79c959b8bc554085e38a1; \
+    git clean -dfx; \
+    cd /source/libdispatch; \
+    ./configure; \
+    make; \
+    make install; \
+    rm -rf /source/libdispatch; \
+# add /usr/local/lib to libs search paths
+    echo "/usr/local/lib" > /etc/ld.so.conf.d/my.conf; \
+    ldconfig; \
+    export LDFLAGS="-L/usr/local/lib -ldispatch"; \
+    export OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-1.8.1"; \
+# Install gnustep-makefile again
+    cd /source/make; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    ./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-nonfragile-abi --enable-objc-arc; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    make; \
+    make install; \
+    rm -rf /source/make; \
+# Install gnustep-base
+    cd /source; \
+    mkdir base; \
+    wget -qO- ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-1.24.9.tar.gz | tar xz -C base --strip-components=1; \
+    cd /source/base; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    ./configure --disable-mixedabi; \
+    make; \
+    make install; \
+    rm -rf /source/base; \
+# Install gnustep-gui
+    cd /source; \
+    mkdir gui; \
+    wget -qO- ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-gui-0.25.0.tar.gz | tar xz -C gui --strip-components=1; \
+    cd /source/gui; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    ./configure; \
+    make; \
+    make install; \
+    rm -rf /source/gui; \
+# Install gnustep-backend
+    cd /source; \
+    mkdir back; \
+    wget -qO- ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-back-0.25.0.tar.gz | tar xz -C back --strip-components=1; \
+    cd /source/back; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    ./configure; \
+    make; \
+    make install; \
+    rm -rf /source/back; \
+# Install UnitKit
+    cd /source; \
+    git clone https://github.com/etoile/UnitKit; \
+    cd UnitKit; \
+    git clean -dfx; \
+    cd /source/UnitKit; \
+    wget -q https://raw.githubusercontent.com/etoile/Etoile/master/etoile.make; \
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh; \
+    make; \
+    make install; \
+    make test=yes; \
+    ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle; \
+    rm -rf /source/UnitKit /source;
+
+RUN ln -s /home/codewarrior /workspace
+ENV NPM_CONFIG_LOGLEVEL=warn
+
+WORKDIR /runner
+COPY package.json package.json
+RUN set -ex; \
+    npm install --production; \
+    rm -rf /tmp/npm-*;
+
+COPY *.js ./
+COPY lib/*.js lib/
+COPY lib/*.sh lib/
+COPY lib/utils lib/utils
+COPY lib/runners/objc.js lib/runners/
+COPY examples/objc.yml examples/
+COPY test/runner.js test/
+COPY test/runners/objc_spec.js test/runners/
+COPY frameworks/objc /usr/local/include
+
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
+
+USER codewarrior
+# Set environment variables
+ENV USER=codewarrior \
+    HOME=/home/codewarrior \
+    \
+    GNUSTEP_FLATTENED=yes \
+    GNUSTEP_HOST=x86_64-unknown-linux-gnu \
+    GNUSTEP_HOST_CPU=x86_64 \
+    GNUSTEP_HOST_OS=linux-gnu \
+    GNUSTEP_HOST_VENDOR=unknown \
+    GNUSTEP_IS_FLATTENED=yes \
+    GNUSTEP_SYSTEM_ROOT=/usr/GNUstep/System \
+    GNUSTEP_NETWORK_ROOT=/usr/GNUstep/Network \
+    GNUSTEP_LOCAL_ROOT=/usr/GNUstep/Local \
+    GNUSTEP_MAKEFILES=/usr/GNUstep/System/Library/Makefiles \
+    GNUSTEP_PATHLIST=/usr/GNUstep/System:/usr/GNUstep/Network:/usr/GNUstep/Local \
+    GNUSTEP_USER_ROOT=/home/codewarrior/GNUstep \
+    \
+    GUILE_LOAD_PATH=/usr/GNUstep/Local/Library/Libraries/Guile:/usr/GNUstep/System/Library/Libraries/Guile \
+    LDFLAGS="-L/usr/local/lib -ldispatch" \
+    LD_LIBRARY_PATH=/usr/GNUstep/Local/Library/Libraries:/usr/GNUstep/System/Library/Libraries \
+    LIBRARY_COMBO=gnu-gnu-gnu \
+    OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-1.8.1" \
+    PATH=/usr/GNUstep/Local/Tools:/usr/GNUstep/System/Tools:$PATH
+
+RUN mocha -t 5000 test/runners/objc_spec.js
+
+ENTRYPOINT ["./entrypoint.sh"]

@@ -1,0 +1,5 @@
+
+            public class Solution {
+              public Solution(){}
+              public int testthing(){return 3;}
+            }
