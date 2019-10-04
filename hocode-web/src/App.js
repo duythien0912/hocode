@@ -14,7 +14,7 @@ function App() {
         <Route path="/reactmde" exact component={ReactMde}/>
         <Route path="/courses" exact component={CoursePage} />
         <Route path="/courses/:courseId/tasks" component={TaskPage} />
-        <Route path="/tasks/:taskId" component={MiniTaskPage} />
+        <Route path="/tasks/:minitaskId" component={MiniTaskPage} />
         <Route render={() => <div>404 Page Not Found</div>} />
         </Switch>
       </div>

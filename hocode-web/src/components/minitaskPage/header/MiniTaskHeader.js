@@ -12,13 +12,18 @@ class MiniTaskHeader extends Component {
         </label>
         <div className="logo">
           <a href="/giang">
-           sss
+          <img
+              src={process.env.PUBLIC_URL + '/logo.png'}
+              alt=""
+              style={{ height: "40px" }}
+            ></img>
           </a>
         </div>
+        <div className="minitaskName_mobi">{this.props.minitaskName}</div> {/*minitask name */}
         <div className="nav-wrapper">
           <div className="left-menu" style={{display:'flex'}}>
             <a href="/dsa">Quay lại</a>
-            <div style={{display:'flex',justifyContent:'center',flexGrow:1}}>
+            <div className="miniTask_name" style={{display:'flex',justifyContent:'center',flexGrow:1}}>
               <div>Cộng 2 số</div>
             </div>
           </div>
@@ -26,7 +31,7 @@ class MiniTaskHeader extends Component {
           <div className="right-menu">
             <div className="code-point">2000</div>
             <div className="nav-name">
-              <div className="nameMenu">giang</div>
+              <div className="nameMenu">Giang</div>
               <ul className="nameSubmenu">
                   <li><a href="giang">Thông tin cá nhân</a></li>
                   <li><a href="giang">Đăng xuất</a></li>

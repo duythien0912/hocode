@@ -48,6 +48,7 @@
 }
 .splitHorizontal{
     display: flex;
+    width: 100%;
 }
 
 .splitHorizontal .gutter{
@@ -71,4 +72,38 @@
 }
 .testList{
     overflow: hidden;
+}
+.codeEditor .reset_code button{
+   background: #8291a3;    
+   border: none;
+   color: white;
+   padding: 3px 5px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   border-radius: 4px;
+   
+}
+
+.execute_btn{
+    background: #2680EB;    
+    border: none;
+    color: #FFFFFF;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 12px;
+}
+.submitCode_btn{
+    background: #4DBF9D;    
+    border: none;
+    color: #FFFFFF;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 12px;
 }

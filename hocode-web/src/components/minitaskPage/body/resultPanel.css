@@ -6,3 +6,7 @@ flex-grow: 0;
 .testList .PrivateTabIndicator-colorSecondary-29{
     background: #AEA8A8;
 }
+
+.testList .MuiTabs-flexContainer{
+    height: 100%;
+}

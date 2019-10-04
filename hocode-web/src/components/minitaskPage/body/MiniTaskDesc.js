@@ -28,6 +28,7 @@ class MiniTaskDesc extends Component {
       const MiniTaskDesc = res.data[0].desc;
       this.setState({ MiniTaskDesc });
     });
+
   }
   render() {
     const { classes } = this.props;
@@ -36,10 +37,10 @@ class MiniTaskDesc extends Component {
         <div>
           <div>300</div>
         </div>
-        <div className="md_desc" style={{ padding: "16px" }}>
-          <ReactMarkdown
+        <div className="md_desc" style={{ padding: "16px" }}> {/* minitask description */}
+          <ReactMarkdown 
             escapeHtml={false}
-            source={this.state.MiniTaskDesc}
+            source={this.props.minitask_desc} 
             renderers={{
               linkReference: reference => {
                 if (!reference.href) {

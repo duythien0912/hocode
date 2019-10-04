@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
+import {  Link } from "react-router-dom";
 import "./taskItem.css";
 const styles = {
   TaskItem: {
@@ -23,8 +24,8 @@ class TaskItem extends Component {
     //miniItemStatus
     if (minitask.status === "hoanthanh" ) {
       return (
-        <a
-          href="giang"
+        <Link
+          to={`/tasks/${minitask.id}`}
           style={{
             display: "flex",
             textDecoration: "none",
@@ -35,7 +36,7 @@ class TaskItem extends Component {
           <div></div>
           <div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div>
           <div style={{width:'1em'}}><img style={{width:'100%'}} src={require('../icons/hoanthanh.svg')} alt="Kiwi standing on oval"/></div>
-        </a>
+        </Link>
       );
     } else if (minitask.status === "chuahoanthanh" && minitask.vitri===true) {
       return (

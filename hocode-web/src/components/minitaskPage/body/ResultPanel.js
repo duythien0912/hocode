@@ -8,6 +8,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Grid from "@material-ui/core/Grid";
 import "./resultPanel.css";
 
 function TabPanel(props) {
@@ -22,7 +23,9 @@ function TabPanel(props) {
       aria-labelledby={`nav-tab-${index}`}
       {...other}
     >
-      <div style={{ padding: "10px" }}>{children}</div>
+      <div style={{ padding: "10px 20px", background: "#f5f5f5" }}>
+        {children}
+      </div>
     </Typography>
   );
 }
@@ -43,6 +46,7 @@ function a11yProps(index) {
 function LinkTab(props) {
   return (
     <Tab
+      style={{ minHeight: "100%" }}
       component="a"
       onClick={event => {
         event.preventDefault();
@@ -59,17 +63,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ResultPanel() {
+export default function ResultPanel(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-
+  const unit_tests = props.unit_tests || [];
+  const result = props.result;
   return (
-    <div className={classes.root} style={{ width: "100%", height: "100%", display:'flex',flexDirection:'column'}}>
+    <div
+      className={classes.root}
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column"
+      }}
+    >
       <Tabs
+        style={{ minHeight: "30px" }}
         variant="fullWidth"
         value={value}
         onChange={handleChange}
@@ -85,78 +99,67 @@ export default function ResultPanel() {
           width: "100%",
           height: "100%",
           overflowY: "auto",
-          overflowX: "hidden"
+          overflowX: "hidden",
+          background: "#f5f5f5"
         }}
       >
         <TabPanel value={value} index={0}>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>
-                Expansion Panel 1
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>
-                Expansion Panel 1
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>
-                Expansion Panel 1
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          {result!=={} ? (
+            <div>có result</div> /*chưa sửa đc */
+          ) : (
+            <React.Fragment>
+              <div>1/6 sample tests passed.</div>
+              {unit_tests.map((unit_test, index) => {
+                // unit_tests
+                return (
+                  <ExpansionPanel key={unit_test.id}>
+                    <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <div style={{ display: "flex", width: "100%" }}>
+                        <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
+                        <div style={{ width: "1em" }}>
+                          <img
+                            style={{ width: "100%" }}
+                            src={process.env.PUBLIC_URL + "/logo.png"}
+                            alt="Kiwi standing on oval"
+                          />
+                        </div>
+                      </div>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <div>
+                        <Grid container>
+                          <Grid item>Input: </Grid>
+                          <Grid item style={{ marginLeft: 10 }}>
+                            {unit_test.inputs.map((input, index) => (
+                              <div key={index}>
+                                param{index + 1}: {input}
+                              </div>
+                            ))}{" "}
+                            {/*dùng key ở đây nguy hiểm */}
+                          </Grid>
+                        </Grid>
+                        <Grid container>
+                          <Grid item>Output: </Grid>
+                        </Grid>
+                        <Grid container>
+                          <Grid item>
+                            Output mong đợi: {unit_test.expected_output}
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                );
+              })}
+            </React.Fragment>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+          Chưa run test
         </TabPanel>
       </div>
     </div>

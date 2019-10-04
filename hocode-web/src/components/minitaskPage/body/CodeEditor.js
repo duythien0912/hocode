@@ -54,6 +54,7 @@ class CodeEditor extends Component {
           extraKeys:{"Ctrl-Space":"autocomplete"}
           
         }}
+        MarkText={{from:{line:0,ch:1}, to:{line:3,ch:1}, css: "font-size:5px"}}
         onBeforeChange={(editor, data, value) => {
           this.setState({userCode:value});
         }}
