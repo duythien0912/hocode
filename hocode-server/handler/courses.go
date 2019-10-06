@@ -24,7 +24,7 @@ import (
 
 // Courses godoc
 // @Summary List Courses
-// @Description get courses <a href="/courses?page=1&limit=5">/courses?page=1&limit=5</a>
+// @Description get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
 // @Tags Courses
 // @Accept  json
 // @Produce  json
@@ -89,7 +89,7 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 
 // TaskByCoursesID godoc
 // @Summary Get Task By Courses ID
-// @Description Get Task By Courses ID <a href="/courses/5d86e07bfe6e2b157bd3b259/tasks">/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+// @Description Get Task By Courses ID <a href="/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks">/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
 // @Tags Courses
 // @Accept  json
 // @Produce  json

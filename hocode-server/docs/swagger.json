@@ -20,7 +20,7 @@
     "paths": {
         "/courses": {
             "get": {
-                "description": "get courses \u003ca href=\"/courses?page=1\u0026limit=5\"\u003e/courses?page=1\u0026limit=5\u003c/a\u003e",
+                "description": "get courses \u003ca href=\"/api/v1/courses?page=1\u0026limit=5\"\u003e/api/v1/courses?page=1\u0026limit=5\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -113,7 +113,7 @@
         },
         "/courses/{id}/tasks": {
             "get": {
-                "description": "Get Task By Courses ID \u003ca href=\"/courses/5d86e07bfe6e2b157bd3b259/tasks\"\u003e/courses/5d86e07bfe6e2b157bd3b259/tasks\u003c/a\u003e",
+                "description": "Get Task By Courses ID \u003ca href=\"/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks\"\u003e/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -168,7 +168,7 @@
         },
         "/minitasks": {
             "get": {
-                "description": "get List Minitasks \u003ca href=\"/minitasks?page=1\u0026limit=5\"\u003e/minitasks?page=1\u0026limit=5\u003c/a\u003e",
+                "description": "get List Minitasks \u003ca href=\"/api/v1/minitasks?page=1\u0026limit=5\"\u003e/api/v1/minitasks?page=1\u0026limit=5\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -186,65 +186,6 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/model.MiniTask"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/minitasks/{id}": {
-            "get": {
-                "description": "get Minitasks by ID \u003ca href=\"/minitasks/5d86f268fe6e2b31c0673b02\"\u003e/minitasks/5d86f268fe6e2b31c0673b02\u003c/a\u003e",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Minitasks"
-                ],
-                "summary": "Get Minitasks By ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Minitask ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/model.MiniTask"
-                        }
-                    }
-                }
-            }
-        },
-        "/tasks": {
-            "get": {
-                "description": "get tasks \u003ca href=\"/tasks?page=1\u0026limit=5\"\u003e/tasks?page=1\u0026limit=5\u003c/a\u003e",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "List Task",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Task"
                             }
                         }
                     }
@@ -285,9 +226,102 @@
                 }
             }
         },
+        "/minitasks/{id}": {
+            "get": {
+                "description": "get Minitasks by ID \u003ca href=\"/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe\"\u003e/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Minitasks"
+                ],
+                "summary": "Get Minitasks By ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Minitask ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.MiniTask"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks": {
+            "get": {
+                "description": "get tasks \u003ca href=\"/api/v1/tasks?page=1\u0026limit=5\"\u003e/api/v1/tasks?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "List Task",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Task"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create Task",
+                "parameters": [
+                    {
+                        "description": "Create Task",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Task"
+                        }
+                    }
+                }
+            }
+        },
         "/tasks/{id}": {
             "get": {
-                "description": "get task by ID \u003ca href=\"/tasks/5d86f268fe6e2b31c0673b02\"\u003e/tasks/5d86f268fe6e2b31c0673b02\u003c/a\u003e",
+                "description": "get task by ID \u003ca href=\"/api/v1/tasks/5d86f268fe6e2b31c0673b02\"\u003e/api/v1/tasks/5d86f268fe6e2b31c0673b02\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -438,13 +472,33 @@
                 }
             }
         },
+        "model.Input": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
         "model.MiniTask": {
             "type": "object",
             "properties": {
                 "id": {
                     "type": "string"
                 },
+                "level": {
+                    "type": "string"
+                },
+                "mini_task_desc": {
+                    "type": "string"
+                },
                 "mini_task_name": {
+                    "type": "string"
+                },
+                "name_func": {
                     "type": "string"
                 },
                 "point_unlock": {
@@ -455,6 +509,15 @@
                 },
                 "task_id": {
                     "type": "string"
+                },
+                "template_code": {
+                    "type": "string"
+                },
+                "unit_tests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.UnitTest"
+                    }
                 },
                 "vitri": {
                     "type": "boolean"
@@ -493,6 +556,21 @@
                 },
                 "tasks_complete": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.UnitTest": {
+            "type": "object",
+            "properties": {
+                "expected_output": {
+                    "type": "string"
+                },
+                "inputs": {
+                    "description": "ID             bson.ObjectId json:\"id\" bson:\"_id,omitempty\"",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Input"
+                    }
                 }
             }
         },

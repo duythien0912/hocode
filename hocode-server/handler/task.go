@@ -12,7 +12,7 @@ import (
 
 // Task godoc
 // @Summary List Task
-// @Description get tasks <a href="/tasks?page=1&limit=5">/tasks?page=1&limit=5</a>
+// @Description get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
 // @Tags Tasks
 // @Accept  json
 // @Produce  json
@@ -31,9 +31,22 @@ func (h *Handler) Task(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
+
 		// Sort("-timestamp").
 		All(&ta); err != nil {
 		return
+	}
+
+	for i := 0; i < len(ta); i++ {
+		mta := []*model.MiniTask{}
+
+		db.DB("hocode").C("minitasks").
+			Find(bson.M{
+				"task_id": ta[i].ID.Hex(),
+			}).
+			All(&mta)
+		ta[i].Minitasks = mta
+
 	}
 
 	return c.JSON(http.StatusOK, ta)
@@ -42,7 +55,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 
 // TaskByID godoc
 // @Summary Get Task By ID
-// @Description get task by ID <a href="/tasks/5d86f268fe6e2b31c0673b02">/tasks/5d86f268fe6e2b31c0673b02</a>
+// @Description get task by ID <a href="/api/v1/tasks/5d86f268fe6e2b31c0673b02">/api/v1/tasks/5d86f268fe6e2b31c0673b02</a>
 // @Tags Tasks
 // @Accept  json
 // @Produce  json
@@ -68,6 +81,15 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 
 		return
 	}
+
+	mta := []*model.MiniTask{}
+
+	db.DB("hocode").C("minitasks").
+		Find(bson.M{
+			"task_id": id,
+		}).
+		All(&mta)
+	tf.Minitasks = mta
 
 	return c.JSON(http.StatusOK, tf)
 }
