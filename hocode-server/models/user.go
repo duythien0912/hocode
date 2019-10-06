@@ -9,7 +9,7 @@ type (
 		ID       bson.ObjectId `json:"id" bson:"_id,omitempty"`
 		Email    string        `json:"email" bson:"email"`
 		Password string        `json:"password,omitempty" bson:"password"`
-		Token    string        `json:"token,omitempty" bson:"-"`
+		Token    string        `json:"token,omitempty" bson:"token"`
 		// Company []company      `json:"company,omitempty" bson:"company,omitempty"`
 	}
 )

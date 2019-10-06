@@ -1,21 +1,334 @@
 {
-    "courses": [
-      { "id": "432sd1213", "name": "Certificate", "task_solved": {"taskCount":60,"tasks_complete":5},"background_image": "https://loremflickr.com/500/500" }
-    ],
-    "tasks": [
-      { "id": "342432321dsa", "name": "Khởi hành","background_image":"https://loremflickr.com/500/500", "courseId": "432sd1213" },
-      { "id": "654vfd", "name": "vùng đất silicon","background_image":"https://loremflickr.com/500/500", "courseId": "432sd1213" },
-      { "id": "34fdsdjk4", "name": "Trí tuệ","background_image":"https://loremflickr.com/500/500", "courseId": "432sd1213" }
-     
-    ],
-    "minitasks": [
-        { "id": "98dsfds", "name": "cộng hai số", "point_unlock": 0,"status":"hoanthanh","vitri":false, "taskId":"342432321dsa"},
-        { "id": "432432fdn", "name": "tam giác ", "point_unlock": 100,"status":"chuahoanthanh","vitri":true,"taskId":"342432321dsa"},
-        { "id": "098nbv", "name": "số lớn nhất", "point_unlock": 200,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc123", "name": "số bé nhất", "point_unlock": 150,"status":"chuahoanthanh","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc1vv23", "name": "thế kỷ", "point_unlock": 350,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"},
-        { "id": "9dc1dd23", "name": "chuỗi con tăng chung", "point_unlock": 400,"status":"yeucaumokhoa","vitri":false,"taskId":"654vfd"},
-        { "id": "9dc1ss23", "name": "đường đi", "point_unlock": 600,"status":"yeucaumokhoa","vitri":false,"taskId":"34fdsdjk4"}
+  "courses": [
+    {
+      "id": "432sd1213",
+      "name": "Certificate",
+      "task_solved": {
+        "taskCount": 60,
+        "tasks_complete": 5
+      },
+      "background_image": "https://loremflickr.com/500/500/training"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "342432321dsa",
+      "name": "Khởi hành",
+      "background_image": "https://loremflickr.com/500/500/sea",
+      "courseId": "432sd1213"
+    },
+    {
+      "id": "654vfd",
+      "name": "vùng đất silicon",
+      "background_image": "https://loremflickr.com/500/500/moutain",
+      "courseId": "432sd1213"
+    },
+    {
+      "id": "34fdsdjk4",
+      "name": "Trí tuệ",
+      "background_image": "https://loremflickr.com/500/500/city",
+      "courseId": "432sd1213"
+    }
+  ],
+  "minitasks": [
+    {
+      "id": "98dsfds",
+      "name": "Cộng hai số",
+      "name_func": "conghaiso",
+      "point_unlock": 0,
+      "status": "hoanthanh",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "giang đệp trai",
+      "user_code": "dsadsa",
+      "unit_tests": [
+        {
+          "id": "dsadasdadsada",
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "id": "dsadasdsaewqdadsada",
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
       ],
-    "profile": { "name": "typicode","avatar":"https://loremflickr.com/200/200/account" }
-  }
+      "taskId": "342432321dsa"
+    },
+    {
+      "id": "432432fdn",
+      "name": "Tam giác ",
+      "name_func": "tamgiac",
+      "point_unlock": 100,
+      "status": "chuahoanthanh",
+      "vitri": true,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "342432321dsa"
+    },
+    {
+      "id": "098nbv",
+      "name": "Số lớn nhất",
+      "name_func": "solonnhat",
+      "point_unlock": 200,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc123",
+      "name": "Số bé nhất",
+      "name_func": "sobenhat",
+      "point_unlock": 150,
+      "status": "chuahoanthanh",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc1vv23",
+      "name": "Thế kỷ",
+      "name_func": "theky",
+      "point_unlock": 350,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "34fdsdjk4"
+    },
+    {
+      "id": "9dc1dd23",
+      "name": "Chuỗi con tăng chung",
+      "name_func": "chuoicontangchung",
+      "point_unlock": 400,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "654vfd"
+    },
+    {
+      "id": "9dc1ss23",
+      "name": "Đường đi",
+      "name_func": "duongdi",
+      "point_unlock": 600,
+      "status": "yeucaumokhoa",
+      "vitri": false,
+      "minitask_desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n",
+      "level": "hard",
+      "template_code": "",
+      "user_code": "",
+      "unit_tests": [
+        {
+          "inputs": [
+            {
+              "value": 1,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "3"
+        },
+        {
+          "inputs": [
+            {
+              "value": 2,
+              "type": "int"
+            },
+            {
+              "value": 2,
+              "type": "int"
+            }
+          ],
+          "expected_output": "4"
+        }
+      ],
+      "taskId": "34fdsdjk4"
+    }
+  ],
+  "profile": {
+    "name": "typicode",
+    "avatar": "https://loremflickr.com/500/500/paris"
+  },
+  "minitaskdesc": [
+    {
+      "id": 1,
+      "desc": "\nViết hàm trả về tổng của hai số.\n### ví dụ\nVới `param1 = 1` và `param2 = 2`, thì output sẽ là `add(param1, param2) = 3`\n### Input/Output\n\n- **[Thời gian thực thi tối đa] 3s (java)**\n- **[input] integer param1**  \n     *ràng buộc:*  \n     `-1000 ≤ param1 ≤ 1000`  \n- **[input] integer param2**  \n     *ràng buộc:*  \n     `-1000 ≤ param2 ≤ 1000`\n- **[output] integer**  \n     - Tổng của 2 input\n\n[Java] Syntax Tips  \n```\n// Prints help message to the console  \n// Returns a string  \n//   \n// Globals declared here will cause a compilation error,  \n// declare variables inside the function instead!  \nString helloWorld(String name) {  \n    System.out.println(\"This prints to the console when you Run Tests\");  \n    return \"Hello, \" + name;  \n}  \n``` \n"
+    }
+  ]
+}

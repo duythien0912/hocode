@@ -5,6 +5,7 @@ go 1.12
 require (
 	cloud.google.com/go v0.46.3 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/githubnemo/CompileDaemon v1.0.0 // indirect
 	github.com/go-openapi/jsonreference v0.19.3 // indirect

@@ -13,11 +13,24 @@ definitions:
         description: Name            string     json:"name" bson:"name"
         type: object
     type: object
+  model.Input:
+    properties:
+      type:
+        type: string
+      value:
+        type: string
+    type: object
   model.MiniTask:
     properties:
       id:
         type: string
+      level:
+        type: string
+      mini_task_desc:
+        type: string
       mini_task_name:
+        type: string
+      name_func:
         type: string
       point_unlock:
         type: integer
@@ -25,6 +38,12 @@ definitions:
         type: string
       task_id:
         type: string
+      template_code:
+        type: string
+      unit_tests:
+        items:
+          $ref: '#/definitions/model.UnitTest'
+        type: array
       vitri:
         type: boolean
     type: object
@@ -50,6 +69,16 @@ definitions:
         type: integer
       tasks_complete:
         type: integer
+    type: object
+  model.UnitTest:
+    properties:
+      expected_output:
+        type: string
+      inputs:
+        description: ID             bson.ObjectId json:"id" bson:"_id,omitempty"
+        items:
+          $ref: '#/definitions/model.Input'
+        type: array
     type: object
   model.User:
     properties:
@@ -80,7 +109,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get courses <a href="/courses?page=1&limit=5">/courses?page=1&limit=5</a>
+      description: get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
       produces:
       - application/json
       responses:
@@ -142,7 +171,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get Task By Courses ID <a href="/courses/5d86e07bfe6e2b157bd3b259/tasks">/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+      description: Get Task By Courses ID <a href="/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks">/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
       parameters:
       - description: Course ID
         in: path
@@ -178,7 +207,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get List Minitasks <a href="/minitasks?page=1&limit=5">/minitasks?page=1&limit=5</a>
+      description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
       produces:
       - application/json
       responses:
@@ -191,45 +220,6 @@ paths:
       summary: List Minitasks
       tags:
       - Minitasks
-  /minitasks/{id}:
-    get:
-      consumes:
-      - application/json
-      description: get Minitasks by ID <a href="/minitasks/5d86f268fe6e2b31c0673b02">/minitasks/5d86f268fe6e2b31c0673b02</a>
-      parameters:
-      - description: Minitask ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.MiniTask'
-            type: object
-      summary: Get Minitasks By ID
-      tags:
-      - Minitasks
-  /tasks:
-    get:
-      consumes:
-      - application/json
-      description: get tasks <a href="/tasks?page=1&limit=5">/tasks?page=1&limit=5</a>
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/model.Task'
-            type: array
-      summary: List Task
-      tags:
-      - Tasks
     post:
       consumes:
       - application/json
@@ -253,11 +243,73 @@ paths:
       summary: Create Minitast
       tags:
       - Minitasks
+  /minitasks/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get Minitasks by ID <a href="/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe">/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe</a>
+      parameters:
+      - description: Minitask ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MiniTask'
+            type: object
+      summary: Get Minitasks By ID
+      tags:
+      - Minitasks
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Task'
+            type: array
+      summary: List Task
+      tags:
+      - Tasks
+    post:
+      consumes:
+      - application/json
+      description: Create Task
+      parameters:
+      - description: Create Task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.Task'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Task'
+            type: object
+      summary: Create Task
+      tags:
+      - Tasks
   /tasks/{id}:
     get:
       consumes:
       - application/json
-      description: get task by ID <a href="/tasks/5d86f268fe6e2b31c0673b02">/tasks/5d86f268fe6e2b31c0673b02</a>
+      description: get task by ID <a href="/api/v1/tasks/5d86f268fe6e2b31c0673b02">/api/v1/tasks/5d86f268fe6e2b31c0673b02</a>
       parameters:
       - description: Task ID
         in: path

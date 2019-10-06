@@ -12,7 +12,7 @@ import (
 
 // Minitasks godoc
 // @Summary List Minitasks
-// @Description get List Minitasks <a href="/minitasks?page=1&limit=5">/minitasks?page=1&limit=5</a>
+// @Description get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
 // @Tags Minitasks
 // @Accept  json
 // @Produce  json
@@ -41,7 +41,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 
 // MinitasksByID godoc
 // @Summary Get Minitasks By ID
-// @Description get Minitasks by ID <a href="/minitasks/5d86f268fe6e2b31c0673b02">/minitasks/5d86f268fe6e2b31c0673b02</a>
+// @Description get Minitasks by ID <a href="/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe">/api/v1/minitasks/5d995ae8fe6e2b0ca40b22fe</a>
 // @Tags Minitasks
 // @Accept  json
 // @Produce  json
@@ -79,7 +79,7 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 // @Produce  json
 // @Param  task body model.MiniTask true "Create MiniTask"
 // @Success 200 {object} model.MiniTask
-// @Router /tasks [post]
+// @Router /minitasks [post]
 func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	mtn := &model.MiniTask{
@@ -90,7 +90,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 	}
 
 	// Validation
-	if mtn.MiniTaskName == "" || mtn.TaskId == "" || mtn.Status == "" {
+	if mtn.MiniTaskName == "" || mtn.TaskId == "" || mtn.Status == "" || mtn.NameFunc == "" || mtn.MinitaskDesc == "" || mtn.TemplateCode == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid to or message fields"}
 	}
 
