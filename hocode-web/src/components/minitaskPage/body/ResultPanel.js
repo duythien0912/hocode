@@ -93,11 +93,11 @@ export default function ResultPanel(props) {
     if (result.passedQuantity !== undefined) { // if result is not {},  in test panel show description of tests after run code
       return (
         <React.Fragment>
-          <div>1/6 sample tests passed.</div>
+          <div>1/2 sample tests passed.</div>
           {unit_tests.map((unit_test, index) => {
             // unit_tests
             return (
-              <ExpansionPanel key={unit_test.id}>
+              <ExpansionPanel key={index}>
                 <ExpansionPanelSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
@@ -121,7 +121,7 @@ export default function ResultPanel(props) {
                       <Grid item style={{ marginLeft: 10 }}>
                         {unit_test.inputs.map((input, index) => (
                           <div key={index}>
-                            param{index + 1}: {input}
+                            param{index + 1}: {input.value}
                           </div>
                         ))}{" "}
                         {/*dùng key ở đây nguy hiểm */}
@@ -149,7 +149,7 @@ export default function ResultPanel(props) {
           {unit_tests.map((unit_test, index) => {
             // unit_tests
             return (
-              <ExpansionPanel key={unit_test.id}>
+              <ExpansionPanel key={index}>
                 <ExpansionPanelSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
@@ -166,7 +166,7 @@ export default function ResultPanel(props) {
                       <Grid item style={{ marginLeft: 10 }}>
                         {unit_test.inputs.map((input, index) => (
                           <div key={index}>
-                            param{index + 1}: {input}
+                            param{index + 1}: {input.value}
                           </div>
                         ))}{" "}
                         {/*dùng key ở đây nguy hiểm */}

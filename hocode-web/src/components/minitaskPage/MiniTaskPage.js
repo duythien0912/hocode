@@ -7,25 +7,72 @@ import ResultPanel from "./body/ResultPanel";
 import "./minitask.css";
 import MediaQuery from "react-responsive";
 import axios from 'axios';
+
 class MiniTaskPage extends Component {
   constructor(props){
     super(props);
     this.state={
       minitask: {},
       result:{
-      
-      }
+       passedQuantity: 1,
+       testQuantity:2,
+        tests:[{inputs:["1","2"],output:"3",expected_output:"3",testStatus:"pass"},{inputs:["2","2"],output:"2",expected_output:"4",testStatus:"fail"}],
+        status: 'fail'
+      },
+      userCode:'',
     }
+    this.executeCode = this.executeCode.bind(this);
+    this.updateUserCode = this.updateUserCode.bind(this);
   }
   componentDidMount(){
     const { match: { params } } = this.props;
     axios.get(`/minitasks/${params.minitaskId}`)
     .then(res => { 
       const minitask = res.data;
-      this.setState({minitask});
+      
+      this.setState((state, props) => ({
+        minitask: minitask
+      }));
+      if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
+        this.setState((state, props) => ({
+          userCode: minitask.user_code
+        }));
+      }
+      else{ 
+        this.setState((state, props) => ({
+          userCode: minitask.template_code
+        }));
+      }
+      
     })
 
    // setTimeout(()=>{console.log(this.state.minitask.minitask_desc)},2000)
+  }
+  updateUserCode(value){ // is props of <codeEditor/> to update usercode wwhen edit in editor
+    this.setState({userCode:value})
+  }
+  executeCode(){
+    const {minitask}= this.state;
+    //console.log(this.state.userCode);
+    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n  `
+    
+    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`
+    
+    if(this.state.minitask.id !== undefined){
+      minitask.unit_tests.forEach((unit_test,index) => {
+        let inputs = '';
+        unit_test.inputs.forEach(input=>{ 
+          inputs+=`${input.value},`
+        })
+        let inputsFormat = inputs.substring(0,inputs.length-1);
+        junit4 += ` assertEquals("test ${index+1}", ${unit_test.expected_output}, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
+      });
+      junit4 += ` }}`;
+      
+    }
+    
+    console.log(junit4);
+    console.log(code);
   }
   render() {
     const {minitask}=this.state;
@@ -73,7 +120,7 @@ class MiniTaskPage extends Component {
                           cursor="row-resize"
                         >
                           <div className="codeEditor">
-                            <CodeEditor />
+                            <CodeEditor userCode={this.state.userCode} updateUserCode={this.updateUserCode}/>
                             <div
                               className="reset_code"
                               style={{
@@ -104,7 +151,7 @@ class MiniTaskPage extends Component {
                       >
                         <div style={{marginLeft:20, color:'#4DBF9D'}}>300/300</div>
                         <div style={{marginLeft:30}}>
-                          <button className="execute_btn" style={{display:'flex',alignItems:'center'}}>
+                          <button className="execute_btn" style={{display:'flex',alignItems:'center'}} onClick={this.executeCode}>
                             Thực thi{" "}
                             <img
                               src={require('./play-button.svg')}

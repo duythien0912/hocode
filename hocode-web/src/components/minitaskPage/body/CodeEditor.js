@@ -24,20 +24,14 @@ import "codemirror/addon/hint/css-hint.js"
 
 
 
+
 class CodeEditor extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userCode:''
-    }
-
-  }
-
+ 
   render() {
     return (
       <CodeMirror
       value={
-        this.state.userCode
+        this.props.userCode
       }
         options={{
           mode: "javascript",
@@ -56,7 +50,7 @@ class CodeEditor extends Component {
         }}
         MarkText={{from:{line:0,ch:1}, to:{line:3,ch:1}, css: "font-size:5px"}}
         onBeforeChange={(editor, data, value) => {
-          this.setState({userCode:value});
+          this.props.updateUserCode(value); // update state usercode in component minitaskpage
         }}
         onChange={(editor, data, value) => {
          
