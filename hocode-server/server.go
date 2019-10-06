@@ -46,7 +46,8 @@ func main() {
 
 	e.GET("/health_check", h.HealthCheck)
 
-	e.GET("/users/:id", h.GetUser)
+	e.GET("/users", h.GetUser)
+	e.GET("/users/:id", h.GetUserByID)
 	e.POST("/users", h.SaveUser)
 	e.PUT("/users/:id", h.UpdateUser)
 	e.DELETE("/users/:id", h.DeleteUser)
@@ -86,9 +87,15 @@ func main() {
 
 	r.GET("/profile", h.Profile)
 	r.POST("/profile", h.CreateProfile)
+	r.POST("/login", h.Login)
+	r.POST("/signup", h.SignUp)
 
 	// r.GET("/rungolang", h.RunGolang)
 	r.POST("/rungolang", h.RunGolang)
+
+	ra := e.Group("/auth")
+	ra.Use(middleware.JWT([]byte("secret")))
+	ra.GET("", h.TestAuth)
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")
