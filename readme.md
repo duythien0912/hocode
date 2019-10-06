@@ -70,6 +70,43 @@ stdout:
 <COMPLETEDIN::>34ms
 ```
 
+## Ví Dụ:
+API Cộng 2 số
+
+body:
+```json
+{
+  "code": "public class Solution {\n public Solution() {}\n public int conghaiso(int x,int y) { return x+y; }\n }",
+  "test": "import static org.junit.Assert.assertEquals;\nimport org.junit.Test;\nimport org.junit.runners.JUnit4;\npublic class TestFixture {\npublic TestFixture() {}\n@Test\npublic void myTestFunction() {\nSolution s = new Solution();\nassertEquals(\"sum 4\", 4, s.conghaiso(2,2));\nassertEquals(\"sum 3\", 3, s.conghaiso(1,2));\n}\n}"
+}
+```
+
+code:
+```java
+public class Solution {
+    public Solution() {}
+    public int conghaiso(int x,int y) { return x+y; }
+}
+```
+
+test:
+```java
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.runners.JUnit4;
+
+public class TestFixture {
+    public TestFixture() {}
+    @Test
+    public void myTestFunction() {
+        Solution s = new Solution();
+        assertEquals("conghaiso 2,2", 4, s.conghaiso(2, 2));
+        assertEquals("conghaiso 1,2", 3, s.conghaiso(1, 2));
+        assertEquals("conghaiso 100,101", 201, s.conghaiso(100, 101));
+    }
+}
+```
+
 ## Link GitHub: 
 
 https://github.com/duythien0912/hocode
