@@ -13,9 +13,7 @@ class MiniTaskPage extends Component {
     this.state={
       minitask: {},
       result:{
-        passedQuantity: 1,
-        testQuantity:2,
-        tests:[{inputs:["1","2"],output:"3",expected_output:"3",testStatus:"pass"},{inputs:["2","2"],output:"2",expected_output:"4",testStatus:"fail"}],
+      
       }
     }
   }
@@ -89,7 +87,7 @@ class MiniTaskPage extends Component {
                               <button style={{ fontSize:10, padding:"6px 8px"}}>Reset code</button>
                             </div>
                           </div>
-                          <div className="testList">
+                          <div className="resultPanel">
                             <ResultPanel unit_tests={minitask.unit_tests} result={this.state.result}/>
                           </div>
                         </Split>

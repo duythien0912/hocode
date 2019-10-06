@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.d7932318.chunk.css",
-    "main.js": "/static/js/main.b1eb57a1.chunk.js",
-    "main.js.map": "/static/js/main.b1eb57a1.chunk.js.map",
+    "main.css": "/static/css/main.95f32698.chunk.css",
+    "main.js": "/static/js/main.852d34b1.chunk.js",
+    "main.js.map": "/static/js/main.852d34b1.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.e9956a72.js",
     "runtime-main.js.map": "/static/js/runtime-main.e9956a72.js.map",
-    "static/css/2.ed5ff20a.chunk.css": "/static/css/2.ed5ff20a.chunk.css",
-    "static/js/2.81a3b9aa.chunk.js": "/static/js/2.81a3b9aa.chunk.js",
-    "static/js/2.81a3b9aa.chunk.js.map": "/static/js/2.81a3b9aa.chunk.js.map",
+    "static/css/2.be47ec4c.chunk.css": "/static/css/2.be47ec4c.chunk.css",
+    "static/js/2.d02e7a38.chunk.js": "/static/js/2.d02e7a38.chunk.js",
+    "static/js/2.d02e7a38.chunk.js.map": "/static/js/2.d02e7a38.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.663a40e224730a7be51a91222ae1d971.js": "/precache-manifest.663a40e224730a7be51a91222ae1d971.js",
+    "precache-manifest.a092fb9fe24da250925bcd4759ffcc2d.js": "/precache-manifest.a092fb9fe24da250925bcd4759ffcc2d.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.ed5ff20a.chunk.css.map": "/static/css/2.ed5ff20a.chunk.css.map",
-    "static/css/main.d7932318.chunk.css.map": "/static/css/main.d7932318.chunk.css.map",
+    "static/css/2.be47ec4c.chunk.css.map": "/static/css/2.be47ec4c.chunk.css.map",
+    "static/css/main.95f32698.chunk.css.map": "/static/css/main.95f32698.chunk.css.map",
     "static/media/chuahoanthanh.svg": "/static/media/chuahoanthanh.00020209.svg",
     "static/media/hoanthanh.svg": "/static/media/hoanthanh.d29f1779.svg",
     "static/media/logo.png": "/static/media/logo.b54be03d.png",
     "static/media/padlock-unlock.svg": "/static/media/padlock-unlock.7aa1b12f.svg",
+    "static/media/play-button.svg": "/static/media/play-button.ed158ac8.svg",
     "static/media/user.svg": "/static/media/user.316d47a9.svg"
   }
 }

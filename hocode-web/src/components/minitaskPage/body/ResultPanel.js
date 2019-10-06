@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ResultPanel(props) {
+  //result panel is called in minitask page
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -72,6 +73,119 @@ export default function ResultPanel(props) {
   }
   const unit_tests = props.unit_tests || [];
   const result = props.result;
+  function renderResultPanel(result) {
+    if (result.passedQuantity !== undefined) {
+      if (result.status === "pass") {
+        return <div>Đã thành công</div>;
+      } else {
+        return (
+          <React.Fragment>
+            <div>Đã pass được 0/2 test</div>
+            <div>Mô tả error: đasadasdsadasdsa</div>
+          </React.Fragment>
+        );
+      }
+    } else {
+      return <div>chưa test</div>;
+    }
+  }
+  function renderTestsPanel(result) {
+    if (result.passedQuantity !== undefined) { // if result is not {},  in test panel show description of tests after run code
+      return (
+        <React.Fragment>
+          <div>1/6 sample tests passed.</div>
+          {unit_tests.map((unit_test, index) => {
+            // unit_tests
+            return (
+              <ExpansionPanel key={unit_test.id}>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <div style={{ display: "flex", width: "100%" }}>
+                    <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
+                    <div style={{ width: "1em" }}>
+                      <img
+                        style={{ width: "100%" }}
+                        src={process.env.PUBLIC_URL + "/logo.png"}
+                        alt="Kiwi standing on oval"
+                      />
+                    </div>
+                  </div>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <div>
+                    <Grid container>
+                      <Grid item>Input: </Grid>
+                      <Grid item style={{ marginLeft: 10 }}>
+                        {unit_test.inputs.map((input, index) => (
+                          <div key={index}>
+                            param{index + 1}: {input}
+                          </div>
+                        ))}{" "}
+                        {/*dùng key ở đây nguy hiểm */}
+                      </Grid>
+                    </Grid>
+                    <Grid container>
+                      <Grid item>Output: </Grid>
+                    </Grid>
+                    <Grid container>
+                      <Grid item>
+                        Output mong đợi: {unit_test.expected_output}
+                      </Grid>
+                    </Grid>
+                  </div>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            );
+          })}
+        </React.Fragment>
+      );
+    } else { // if result is {}
+      return (
+        <React.Fragment>
+      
+          {unit_tests.map((unit_test, index) => {
+            // unit_tests
+            return (
+              <ExpansionPanel key={unit_test.id}>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <div style={{ display: "flex", width: "100%" }}>
+                    <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
+                  </div>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <div>
+                    <Grid container>
+                      <Grid item>Input: </Grid>
+                      <Grid item style={{ marginLeft: 10 }}>
+                        {unit_test.inputs.map((input, index) => (
+                          <div key={index}>
+                            param{index + 1}: {input}
+                          </div>
+                        ))}{" "}
+                        {/*dùng key ở đây nguy hiểm */}
+                      </Grid>
+                    </Grid>
+                    <Grid container>
+                      <Grid item>
+                        Output mong đợi: {unit_test.expected_output}
+                      </Grid>
+                    </Grid>
+                  </div>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            );
+          })}
+        </React.Fragment>
+      );
+    }
+  }
   return (
     <div
       className={classes.root}
@@ -104,62 +218,10 @@ export default function ResultPanel(props) {
         }}
       >
         <TabPanel value={value} index={0}>
-          {result!=={} ? (
-            <div>có result</div> /*chưa sửa đc */
-          ) : (
-            <React.Fragment>
-              <div>1/6 sample tests passed.</div>
-              {unit_tests.map((unit_test, index) => {
-                // unit_tests
-                return (
-                  <ExpansionPanel key={unit_test.id}>
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <div style={{ display: "flex", width: "100%" }}>
-                        <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
-                        <div style={{ width: "1em" }}>
-                          <img
-                            style={{ width: "100%" }}
-                            src={process.env.PUBLIC_URL + "/logo.png"}
-                            alt="Kiwi standing on oval"
-                          />
-                        </div>
-                      </div>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <div>
-                        <Grid container>
-                          <Grid item>Input: </Grid>
-                          <Grid item style={{ marginLeft: 10 }}>
-                            {unit_test.inputs.map((input, index) => (
-                              <div key={index}>
-                                param{index + 1}: {input}
-                              </div>
-                            ))}{" "}
-                            {/*dùng key ở đây nguy hiểm */}
-                          </Grid>
-                        </Grid>
-                        <Grid container>
-                          <Grid item>Output: </Grid>
-                        </Grid>
-                        <Grid container>
-                          <Grid item>
-                            Output mong đợi: {unit_test.expected_output}
-                          </Grid>
-                        </Grid>
-                      </div>
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                );
-              })}
-            </React.Fragment>
-          )}
+          {renderTestsPanel(result)}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Chưa run test
+          {renderResultPanel(result)}
         </TabPanel>
       </div>
     </div>
