@@ -98,6 +98,7 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 // @Router /courses/{id}/tasks [get]
 func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	ta := []*model.Task{}
+
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
@@ -115,6 +116,18 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 		// Sort("-timestamp").
 		All(&ta); err != nil {
 		return
+	}
+
+	for i := 0; i < len(ta); i++ {
+		mta := []*model.MiniTask{}
+
+		db.DB("hocode").C("minitasks").
+			Find(bson.M{
+				"task_id": ta[i].ID.Hex(),
+			}).
+			All(&mta)
+		ta[i].Minitasks = mta
+
 	}
 
 	return c.JSON(http.StatusOK, ta)
