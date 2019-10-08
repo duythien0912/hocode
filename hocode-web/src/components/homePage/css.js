@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 
 ///////////////////////////////////////
 // INITIALIZATION
@@ -247,7 +249,7 @@ var Application = function () {
                         contentSize = self.refreshRequest.getResponseHeader("Content-Length");
                         //lastModifiedDate = refreshRequest.getResponseHeader("Last-Modified");
                         var headers = self.refreshRequest.getAllResponseHeaders();
-                        var hasContentHeader = headers.indexOf("Content-Length") != -1;
+                        var hasContentHeader = headers.indexOf("Content-Length") !== -1;
 
                         if (hasContentHeader) {
                             contentSize = self.refreshRequest.getResponseHeader("Content-Length");
@@ -259,21 +261,21 @@ var Application = function () {
                                 return;
                             }
 
-                            if (contentSize != self.refreshContentSize) {
+                            if (contentSize !== self.refreshContentSize) {
                                 pageChanged = true;
                             }
                         }
                     }
                     else if (self.refreshCheckContent) {
 
-                        if (self.refreshRequest.responseText != self.refreshContent) {
+                        if (self.refreshRequest.responseText !== self.refreshContent) {
                             pageChanged = true;
                         }
                     }
                     else {
                         lastModifiedHeader = self.getLastModified(self.refreshRequest);
 
-                        if (self.lastModifiedDate != lastModifiedHeader) {
+                        if (self.lastModifiedDate !== lastModifiedHeader) {
                             pageChanged = true;
                         }
 
@@ -304,9 +306,9 @@ var Application = function () {
         if (self.refreshRequest.response) {
             self.lastModifiedDate = self.getLastModified(self.refreshRequest);
 
-            if (self.lastModifiedDate != null) {
+            if (self.lastModifiedDate !== null) {
 
-                if (self.refreshInterval == null) {
+                if (self.refreshInterval === null) {
                     self.refreshInterval = setInterval(self.requestRefreshUpdate, self.refreshDuration);
                 }
             }
@@ -318,7 +320,7 @@ var Application = function () {
 
     self.refreshUpdatedPage = function () {
         if (self.showRefreshNotifications) {
-            var date = new Date().setTime((new Date().getTime() + 10000));
+            // var date = new Date().setTime((new Date().getTime() + 10000));
             document.cookie = encodeURIComponent(self.pageRefreshedName) + "=true" + "; max-age=6000;" + " path=/";
         }
 
@@ -397,7 +399,7 @@ var Application = function () {
 
                 if (minutes > 60) {
                     hours = parseInt((seconds / 60 / 60) + "");
-                    labelValue += hours == 1 ? " hour" : " hours";
+                    labelValue += hours === 1 ? " hour" : " hours";
                 }
                 else {
                     labelValue = minutes + "";
@@ -1664,3 +1666,5 @@ var Application = function () {
 }
 
 window.application = new Application();
+
+/* eslint-enable */
