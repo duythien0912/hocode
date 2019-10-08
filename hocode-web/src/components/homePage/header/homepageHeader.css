@@ -1,0 +1,326 @@
+
+.fixH {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(27,39,68,1);
+
+}
+.mediaViewInfo {
+    --web-view-name: Home - 2;
+    --web-view-id: Home___2;
+    --web-scale-to-fit: true;
+    --web-scale-to-fit-type: fit;
+    --web-center-horizontally: true;
+    --web-center-vertically: true;
+    --web-enable-deep-linking: true;
+}
+:root {
+    --web-view-ids: Home___2;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+#Home___2 {
+    position: absolute;
+    box-sizing: border-box;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%; 
+    /* background: #E5E5E5; */
+    width: 1920px;
+    height: 1080px;
+    /* background-color: rgba(255,255,255,1); */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    --web-view-name: Home - 2;
+    --web-view-id: Home___2;
+    --web-scale-to-fit: true;
+    --web-scale-to-fit-type: fit;
+    --web-center-horizontally: true;
+    --web-center-vertically: true;
+    --web-enable-deep-linking: true;
+}
+#Group_55 {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+.Rectangle_91 {
+    position: absolute;
+    overflow: visible;
+    width: 1920px;
+    height: 1080px;
+    left: 0px;
+    top: 0px;
+}
+#Path_74 {
+    filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+}
+.Path_74 {
+    overflow: visible;
+    position: absolute;
+    top: 552.286px;
+    left: 1491.117px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}
+#Path_75 {
+    filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+}
+.Path_75 {
+    overflow: visible;
+    position: absolute;
+    top: 296.454px;
+    left: 954.59px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}
+#Path_76 {
+    filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+}
+.Path_76 {
+    overflow: visible;
+    position: absolute;
+    top: 530.679px;
+    left: 379.209px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}
+#Path_77 {
+    filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+}
+.Path_77 {
+    overflow: visible;
+    position: absolute;
+    top: 284.354px;
+    left: 419.428px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}
+#Path_78 {
+    filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+}
+.Path_78 {
+    overflow: visible;
+    position: absolute;
+    top: 853.926px;
+    left: 237px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}
+#WELCOME_TO_HOCODE {
+    position: absolute;
+    left: 641px;
+    top: 345px;
+    overflow: visible;
+    width: 639px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.3px;
+}
+.Rectangle_93 {
+    position: absolute;
+    overflow: visible;
+    width: 469.421px;
+    height: 176.562px;
+    left: 1300.931px;
+    top: 694.353px;
+    transform: rotate(-20deg);
+    transform-origin: left;
+}
+.Rectangle_94 {
+    position: absolute;
+    overflow: visible;
+    width: 469.421px;
+    height: 176.562px;
+    left: 578.931px;
+    top: 143.353px;
+    transform: rotate(-20deg);
+    transform-origin: left;
+}
+.Rectangle_95 {
+    position: absolute;
+    overflow: visible;
+    width: 316.251px;
+    height: 120.813px;
+    left: 421.101px;
+    top: 843.353px;
+    transform: rotate(-20deg);
+    transform-origin: left;
+}
+#Group_52 {
+    position: absolute;
+    width: 661px;
+    height: 75px;
+    left: 1163px;
+    top: 62px;
+    overflow: visible;
+}
+.Rectangle_96 {
+    position: absolute;
+    overflow: visible;
+    width: 201px;
+    height: 74px;
+    left: 220px;
+    top: 0px;
+}
+#LOGIN {
+    position: absolute;
+    left: 264px;
+    top: 12px;
+    overflow: visible;
+    width: 116px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.3px;
+}
+.Rectangle_92 {
+    position: absolute;
+    overflow: visible;
+    width: 201px;
+    height: 74px;
+    left: 460px;
+    top: 1px;
+}
+#SIGNUP {
+    position: absolute;
+    left: 495px;
+    top: 13px;
+    overflow: visible;
+    width: 140px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.3px;
+}
+#PRICING {
+    position: absolute;
+    left: 50px;
+    top: 14px;
+    overflow: visible;
+    width: 152px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.3px;
+}
+#Group_54 {
+    position: absolute;
+    width: 315px;
+    height: 98px;
+    left: 803px;
+    top: 662px;
+    overflow: visible;
+}
+#Rectangle_98 {
+    filter: drop-shadow(10px 10px 0px rgba(227, 57, 111, 1));
+}
+.Rectangle_98 {
+    position: absolute;
+    overflow: visible;
+    width: 325px;
+    height: 108px;
+    left: 0px;
+    top: 0px;
+}
+#GET_START {
+    position: absolute;
+    left: 61px;
+    top: 24px;
+    overflow: visible;
+    width: 194px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.3px;
+}
+#Learn_the_technical_skills_you {
+    opacity: 0.8;
+    position: absolute;
+    left: 526px;
+    top: 476px;
+    overflow: visible;
+    width: 869px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    color: rgba(255,255,255,1);
+}
+#Group_53 {
+    position: absolute;
+    width: 261px;
+    height: 86px;
+    left: 99px;
+    top: 57px;
+    overflow: visible;
+}
+.Rectangle_97 {
+    position: absolute;
+    overflow: visible;
+    width: 172px;
+    height: 86px;
+    left: 89px;
+    top: 0px;
+}
+#HOCODE {
+    position: absolute;
+    left: 0px;
+    top: 3px;
+    overflow: visible;
+    width: 250px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.56px;
+}
+#Path_85 {
+    filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+}
+.Path_85 {
+    overflow: visible;
+    position: absolute;
+    top: 372px;
+    left: 1650px;
+    width: 19px;
+    height: 19px;
+    transform: matrix(1,0,0,1,0,0);
+}

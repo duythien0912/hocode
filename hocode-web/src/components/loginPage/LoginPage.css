@@ -1,0 +1,339 @@
+
+	.mediaViewInfo {
+		--web-view-name: Login;
+		--web-view-id: Login;
+		--web-scale-to-fit: true;
+		--web-scale-to-fit-type: fit;
+		--web-center-horizontally: true;
+		--web-center-vertically: true;
+		--web-enable-deep-linking: true;
+	}
+	:root {
+		--web-view-ids: Login;
+	}
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	.Login_Class {
+		position: absolute;
+		box-sizing: border-box;
+		transform: translateX(-50%) translateY(-50%);
+		left: 50%;
+		top: 50%;
+
+        width: 1920px;
+		height: 1080px;
+
+        overflow: hidden;
+		margin: 0;
+		padding: 0;
+		--web-view-name: Login;
+		--web-view-id: Login;
+		--web-scale-to-fit: true;
+		--web-scale-to-fit-type: fit;
+		--web-center-horizontally: true;
+		--web-center-vertically: true;
+		--web-enable-deep-linking: true;
+	}
+	.Group_55_Class {
+		position: absolute;
+		width: 2337px;
+		height: 1248px;
+		left: -138px;
+		top: -84px;
+		overflow: visible;
+	}
+	.Path_89 {
+		overflow: visible;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 2337px;
+		height: 1248px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_74_Class {
+		filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+	}
+	.Path_74 {
+		overflow: visible;
+		position: absolute;
+		top: 639px;
+		left: 1573px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_75_Class {
+		filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+	}
+	.Path_75 {
+		overflow: visible;
+		position: absolute;
+		top: 1013px;
+		left: 1563px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_76_Class {
+		filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+	}
+	.Path_76 {
+		overflow: visible;
+		position: absolute;
+		top: 614px;
+		left: 462px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_77_Class {
+		filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+	}
+	.Path_77 {
+		overflow: visible;
+		position: absolute;
+		top: 329px;
+		left: 511px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_78_Class {
+		filter: drop-shadow(0px 0px 3px rgba(255, 129, 185, 1));
+	}
+	.Path_78 {
+		overflow: visible;
+		position: absolute;
+		top: 988px;
+		left: 237px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_87_Class {
+		filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+	}
+	.Path_87 {
+		overflow: visible;
+		position: absolute;
+		top: 314px;
+		left: 1362px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Path_88_Class {
+		filter: drop-shadow(0px 0px 3px rgba(161, 255, 250, 1));
+	}
+	.Path_88 {
+		overflow: visible;
+		position: absolute;
+		top: 713px;
+		left: 1763px;
+		width: 19px;
+		height: 19px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.Login_Button_Class {
+		position: absolute;
+		width: 201px;
+		height: 74px;
+		left: 860px;
+		top: 706px;
+		overflow: visible;
+	}
+	.Rectangle_Login {
+		position: absolute;
+		overflow: visible;
+		width: 201px;
+		height: 74px;
+		left: 0px;
+		top: 0px;
+	}
+	.LOGIN_Class {
+		position: absolute;
+		left: 44px;
+		top: 12px;
+		overflow: visible;
+		width: 116px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 36px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.3px;
+	}
+	.Group_53_Class {
+		position: absolute;
+		width: 261px;
+		height: 86px;
+		left: 830px;
+		top: 218px;
+		overflow: visible;
+	}
+	.Path_86 {
+		overflow: visible;
+		position: absolute;
+		top: 0px;
+		left: 89px;
+		width: 172px;
+		height: 86px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	.HOCODE_Class {
+		position: absolute;
+		left: 0px;
+		top: 4px;
+		overflow: visible;
+		width: 250px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 56px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.56px;
+	}
+	.Email_textf_Class {
+		position: absolute;
+		width: 600px;
+		height: 85px;
+		left: 660px;
+		top: 376px;
+		overflow: visible;
+	}
+	.Rectangle_100_Class {
+		filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.486));
+	}
+	.Rectangle_100 {
+		position: absolute;
+		overflow: visible;
+		width: 618px;
+		height: 103px;
+		left: 0px;
+		top: 0px;
+	}
+	.Email_Class {
+		position: absolute;
+		left: 137.729px;
+		top: 18.5px;
+		overflow: visible;
+		width: 94px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 36px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.56px;
+	}
+	.baseline_email_white_18dp {
+		position: absolute;
+		overflow: visible;
+		width: 50px;
+		height: 50px;
+		left: 30px;
+		top: 20px;
+	}
+	.pass_textf_Class {
+		position: absolute;
+		width: 600px;
+		height: 85px;
+		left: 660px;
+		top: 480px;
+		overflow: visible;
+	}
+	.Rectangle_100_A2_Rectangle_5_Class {
+		filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.486));
+	}
+	.Rectangle_100_A2_Rectangle_5 {
+		position: absolute;
+		overflow: visible;
+		width: 618px;
+		height: 103px;
+		left: 0px;
+		top: 0px;
+	}
+	.Password_Class {
+		position: absolute;
+		left: 140.514px;
+		top: 18px;
+		overflow: visible;
+		width: 163px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 36px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.56px;
+	}
+	.baseline_lock_white_18dp {
+		position: absolute;
+		overflow: visible;
+		width: 50px;
+		height: 50px;
+		left: 29px;
+		top: 18px;
+	}
+	.Don_t_have_an_account_yet__Sig_Class {
+		position: absolute;
+		left: 640px;
+		top: 852px;
+		overflow: visible;
+		width: 642px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 36px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.56px;
+	}
+	.baseline_check_box_white_18dp {
+		position: absolute;
+		overflow: visible;
+		width: 36px;
+		height: 36px;
+		left: 660px;
+		top: 600px;
+	}
+	.Remember_me_Class {
+		position: absolute;
+		left: 698px;
+		top: 602px;
+		overflow: visible;
+		width: 169px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(255,255,255,1);
+		letter-spacing: 0.56px;
+	}
+	.Forgot_Password___Class {
+		position: absolute;
+		left: 1046px;
+		top: 602px;
+		overflow: visible;
+		width: 215px;
+		white-space: nowrap;
+		text-align: left;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(0,211,255,1);
+		letter-spacing: 0.56px;
+	}
