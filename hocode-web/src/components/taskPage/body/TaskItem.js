@@ -22,6 +22,7 @@ const styles = {
 class TaskItem extends Component {
   renderMiniItem(minitask) {
     //miniItemStatus
+   
     if (minitask.status === "hoanthanh" ) {
       return (
         <Link
@@ -57,19 +58,19 @@ class TaskItem extends Component {
     }
     else if (minitask.status === "chuahoanthanh" && minitask.vitri===false) {
       return (
-        <a
-          href="dấdddd"
-          style={{
-            display: "flex",
-            textDecoration: "none",
-            color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`
-          }}
-        >
+        <Link
+        to={`/tasks/${minitask.id}`}
+        style={{
+          display: "flex",
+          textDecoration: "none",
+          color: "#595959",
+          fontFamily: `'Yanone Kaffeesatz', sans-serif`
+        }}
+      >
           <div></div>
           <div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div>
           <div style={{width:'1em'}}><img style={{width:'100%',backgroundColor:'#F5F5F5',borderRadius:'50%'}} src={require('../icons/chuahoanthanh.svg')} alt="Kiwi standing on oval"/></div>
-        </a>
+          </Link>
       );
     }
     else if (minitask.status === "yeucaumokhoa") {
@@ -95,6 +96,7 @@ class TaskItem extends Component {
   }
   render() {
     const { classes,task } = this.props;
+    //console.log(task)
     return (
       <React.Fragment>
         {/*<div  

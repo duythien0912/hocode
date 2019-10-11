@@ -4,36 +4,35 @@ import MiniTaskDesc from "./body/MiniTaskDesc";
 import MiniTaskHeader from "./header/MiniTaskHeader";
 import CodeEditor from "./body/CodeEditor";
 import ResultPanel from "./body/ResultPanel";
+import TestsPanel from "./body/TestsPanel";
 import "./minitask.css";
 import MediaQuery from "react-responsive";
-import axios from 'axios';
+import axios from "axios";
 
 class MiniTaskPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       minitask: {},
-      result:{
-       passedQuantity: 1,
-       testQuantity:2,
-        tests:[{inputs:["1","2"],output:"3",expected_output:"3",testStatus:"pass"},{inputs:["2","2"],output:"2",expected_output:"4",testStatus:"fail"}],
-        status: 'fail'
-      },
-      userCode:'',
-    }
+      result: {},
+      userCode: ""
+    };
     this.executeCode = this.executeCode.bind(this);
     this.updateUserCode = this.updateUserCode.bind(this);
   }
-  componentDidMount(){
-    const { match: { params } } = this.props;
-    axios.get(`/minitasks/${params.minitaskId}`)
-    .then(res => { 
-      const minitask = res.data;
-      
-      this.setState((state, props) => ({
-        minitask: minitask
-      }));
-      if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
+  componentDidMount() {
+    const {
+      match: { params }
+    } = this.props;
+    axios
+      .get(`https://hocode.appspot.com/api/v1/minitasks/${params.minitaskId}`)
+      .then(res => {
+        const minitask = res.data;
+
+        this.setState((state, props) => ({
+          minitask: minitask
+        }));
+        /* if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
         this.setState((state, props) => ({
           userCode: minitask.user_code
         }));
@@ -42,40 +41,64 @@ class MiniTaskPage extends Component {
         this.setState((state, props) => ({
           userCode: minitask.template_code
         }));
-      }
-      
-    })
+      } */
+        this.setState((state, props) => ({
+          userCode: minitask.template_code
+        }));
+      });
 
-   // setTimeout(()=>{console.log(this.state.minitask.minitask_desc)},2000)
+    // setTimeout(()=>{console.log(this.state.minitask.mini_task_desc)},2000)
   }
-  updateUserCode(value){ // is props of <codeEditor/> to update usercode wwhen edit in editor
-    this.setState({userCode:value})
+  updateUserCode(value) {
+    // is props of <codeEditor/> to update usercode wwhen edit in editor
+    this.setState({ userCode: value });
   }
-  executeCode(){
-    const {minitask}= this.state;
+  executeCode() {
+    const { minitask } = this.state;
     //console.log(this.state.userCode);
-    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n  `
-    
-    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`
-    
-    if(this.state.minitask.id !== undefined){
-      minitask.unit_tests.forEach((unit_test,index) => {
-        let inputs = '';
-        unit_test.inputs.forEach(input=>{ 
-          inputs+=`${input.value},`
-        })
-        let inputsFormat = inputs.substring(0,inputs.length-1);
-        junit4 += ` assertEquals("test ${index+1}", ${unit_test.expected_output}, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
+    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
+
+    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+
+    if (this.state.minitask.id !== undefined) {
+      minitask.unit_tests.forEach((unit_test, index) => {
+        let inputs = "";
+        unit_test.inputs.forEach(input => {
+          inputs += `${input.value},`;
+        });
+        let inputsFormat = inputs.substring(0, inputs.length - 1);
+        junit4 += ` assertEquals("test ${index + 1}", ${
+          unit_test.expected_output
+        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
       });
       junit4 += ` }}`;
-      
     }
-    
     console.log(junit4);
     console.log(code);
+    axios
+      .post("http://34.70.250.155", {
+        code: code,
+        test: junit4
+      })
+      .then(
+        function(response) {
+          const error = response.data.stderr.replace(/<:LF:>/gm, "\n");
+          const stdout = response.data.stdout.replace(/<:LF:>/gm, "\n");
+
+          this.setState((state, props) => ({
+            result: {
+              error: error,
+              stdout: stdout
+            }
+          }));
+        }.bind(this)
+      )
+      .catch(function(error) {
+        console.log(error);
+      });
   }
   render() {
-    const {minitask}=this.state;
+    const { minitask } = this.state;
     return (
       <React.Fragment>
         <div className="fit layout-code">
@@ -103,7 +126,7 @@ class MiniTaskPage extends Component {
                     cursor="col-resize"
                   >
                     <div className="split-panel-first ">
-                      <MiniTaskDesc minitask_desc={minitask.minitask_desc} />
+                      <MiniTaskDesc mini_task_desc={minitask.mini_task_desc} />
                     </div>
                     <div className="split-panel-second ">
                       <div className="coding-area">
@@ -120,22 +143,35 @@ class MiniTaskPage extends Component {
                           cursor="row-resize"
                         >
                           <div className="codeEditor">
-                            <CodeEditor userCode={this.state.userCode} updateUserCode={this.updateUserCode}/>
+                            <CodeEditor
+                              userCode={this.state.userCode}
+                              updateUserCode={this.updateUserCode}
+                            />
                             <div
                               className="reset_code"
                               style={{
                                 position: "absolute",
                                 bottom: 10,
                                 right: 20,
-                                zIndex: 9,
-                               
+                                zIndex: 9
                               }}
                             >
-                              <button style={{ fontSize:10, padding:"6px 8px"}}>Reset code</button>
+                              <button
+                                style={{ fontSize: 10, padding: "6px 8px" }}
+                              >
+                                Reset code
+                              </button>
                             </div>
                           </div>
                           <div className="resultPanel">
-                            <ResultPanel unit_tests={minitask.unit_tests} result={this.state.result}/>
+                            {this.state.result.stdout !== undefined ? (
+                              <ResultPanel
+                                unit_tests={minitask.unit_tests}// truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
+                                result={this.state.result}
+                              />
+                            ) : (
+                              <TestsPanel unit_tests={minitask.unit_tests} />
+                            )}
                           </div>
                         </Split>
                       </div>
@@ -149,23 +185,34 @@ class MiniTaskPage extends Component {
                           justifyContent: "flex-end"
                         }}
                       >
-                        <div style={{marginLeft:20, color:'#4DBF9D'}}>300/300</div>
-                        <div style={{marginLeft:30}}>
-                          <button className="execute_btn" style={{display:'flex',alignItems:'center'}} onClick={this.executeCode}>
+                        <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
+                          300/300
+                        </div>
+                        <div style={{ marginLeft: 30 }}>
+                          <button
+                            className="execute_btn"
+                            style={{ display: "flex", alignItems: "center" }}
+                            onClick={this.executeCode}
+                          >
                             Thực thi{" "}
                             <img
-                              src={require('./play-button.svg')}
+                              src={require("./play-button.svg")}
                               alt=""
-                              style={{ height: "10px",marginLeft:'3px' }}
+                              style={{ height: "10px", marginLeft: "3px" }}
                             ></img>
                           </button>
                         </div>
-                        <div style={{marginLeft:10}}>
-                          <button className="submitCode_btn">
-                            Nộp bài{" "}
-                          </button>
+                        <div style={{ marginLeft: 10 }}>
+                          <button className="submitCode_btn">Nộp bài </button>
                         </div>
-                        <div style={{marginLeft:30,fontSize:12}}><a href="/dsa" style={{textDecoration:'none',color:'#595959'}}>Qua bài mới</a></div>
+                        <div style={{ marginLeft: 30, fontSize: 12 }}>
+                          <a
+                            href="/dsa"
+                            style={{ textDecoration: "none", color: "#595959" }}
+                          >
+                            Qua bài mới
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </Split>{" "}

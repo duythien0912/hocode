@@ -5,7 +5,7 @@ class TaskPage extends Component {
    
     render() {
         const { match: { params } } = this.props;
-        console.log(params);
+        //console.log(params);
         return (
             <React.Fragment>
                 <TaskHeader/>

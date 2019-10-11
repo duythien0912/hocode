@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/styles";
 import ReactMarkdown from "react-markdown";
-import axios from "axios";
 import "./minitaskdesc.css";
 const styles = {
   DescContainer: {
@@ -17,19 +16,8 @@ const styles = {
   }
 };
 class MiniTaskDesc extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      MiniTaskDesc: ""
-    };
-  }
-  componentDidMount() {
-    axios.get(`/minitaskdesc/`).then(res => {
-      const MiniTaskDesc = res.data[0].desc;
-      this.setState({ MiniTaskDesc });
-    });
 
-  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -40,7 +28,7 @@ class MiniTaskDesc extends Component {
         <div className="md_desc" style={{ padding: "16px" }}> {/* minitask description */}
           <ReactMarkdown 
             escapeHtml={false}
-            source={this.props.minitask_desc} 
+            source={this.props.mini_task_desc} 
             renderers={{
               linkReference: reference => {
                 if (!reference.href) {
