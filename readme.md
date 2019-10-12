@@ -10,9 +10,9 @@ https://hocode.appspot.com
 
 ## Link Server Chạy code test với junit4: 
 
-http://34.70.250.155
+https://hocodevn.com/runner
 
-Lưu ý: Chạy post tới http://34.70.250.155 với body có khi truy cập vào trang trên
+Lưu ý: Chạy post tới https://hocodevn.com/runner với body có khi truy cập vào trang trên
 
 Body ở trên tương đương với code dưới đây
 
