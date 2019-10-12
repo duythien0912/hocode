@@ -15,7 +15,8 @@ class MiniTaskPage extends Component {
     this.state = {
       minitask: {},
       result: {},
-      userCode: ""
+      userCode: "",
+      isLoading: false
     };
     this.executeCode = this.executeCode.bind(this);
     this.updateUserCode = this.updateUserCode.bind(this);
@@ -59,6 +60,9 @@ class MiniTaskPage extends Component {
     let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
 
     let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+    this.setState((state, props) => ({
+      isLoading: true
+    }));
 
     if (this.state.minitask.id !== undefined) {
       minitask.unit_tests.forEach((unit_test, index) => {
@@ -76,7 +80,7 @@ class MiniTaskPage extends Component {
     console.log(junit4);
     console.log(code);
     axios
-      .post("http://34.70.250.155", {
+      .post("https://hocodevn.com/runner", {
         code: code,
         test: junit4
       })
@@ -90,6 +94,9 @@ class MiniTaskPage extends Component {
               error: error,
               stdout: stdout
             }
+          }));
+          this.setState((state, props) => ({
+            isLoading: false
           }));
         }.bind(this)
       )
@@ -166,7 +173,7 @@ class MiniTaskPage extends Component {
                           <div className="resultPanel">
                             {this.state.result.stdout !== undefined ? (
                               <ResultPanel
-                                unit_tests={minitask.unit_tests}// truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
+                                unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
                                 result={this.state.result}
                               />
                             ) : (
@@ -189,18 +196,22 @@ class MiniTaskPage extends Component {
                           300/300
                         </div>
                         <div style={{ marginLeft: 30 }}>
-                          <button
-                            className="execute_btn"
-                            style={{ display: "flex", alignItems: "center" }}
-                            onClick={this.executeCode}
-                          >
-                            Thực thi{" "}
-                            <img
-                              src={require("./play-button.svg")}
-                              alt=""
-                              style={{ height: "10px", marginLeft: "3px" }}
-                            ></img>
-                          </button>
+                          {this.state.isLoading === true ? (
+                            <div>loading...</div>
+                          ) : (
+                            <button
+                              className="execute_btn"
+                              style={{ display: "flex", alignItems: "center" }}
+                              onClick={this.executeCode}
+                            >
+                              Thực thi{" "}
+                              <img
+                                src={require("./play-button.svg")}
+                                alt=""
+                                style={{ height: "10px", marginLeft: "3px" }}
+                              ></img>
+                            </button>
+                          )}
                         </div>
                         <div style={{ marginLeft: 10 }}>
                           <button className="submitCode_btn">Nộp bài </button>

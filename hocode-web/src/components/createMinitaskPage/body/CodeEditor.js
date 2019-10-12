@@ -31,7 +31,7 @@ class CodeEditor extends Component {
     return (
       <CodeMirror
       value={
-        this.props.userCode
+        this.props.template_code
       }
         options={{
           mode: "javascript",
@@ -46,12 +46,12 @@ class CodeEditor extends Component {
           spellcheck:true,
           autocorrect:true,
           extraKeys:{"Ctrl-Space":"autocomplete"},
-          
+          readOnly:true,
           
         }}
         MarkText={{from:{line:0,ch:1}, to:{line:3,ch:1}, css: "font-size:5px"}}
         onBeforeChange={(editor, data, value) => {
-          this.props.updateUserCode(value); // update state usercode in component minitaskpage
+           this.props.updateTemplateCode(value);// update state usercode in component minitaskpage
         }}
         onChange={(editor, data, value) => {
          
