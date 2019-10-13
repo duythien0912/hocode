@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/styles";
 import Select from "react-select";
 import ReactMde from "../../minitaskPage/ReactMde";
 import CodeEditor from "./CodeEditor";
+import "./createminitaskbody.css";
+
 const options = [
   { value: "int", label: "Interger" },
   { value: "String", label: "String" },
@@ -16,6 +18,9 @@ const styles = {
     minHeight: "100vh"
   }
 };
+
+// custom react select style
+const selectStyles = { menu: styles => ({ ...styles, zIndex: 999 }) };
 class CreateMiniTaskBody extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +35,7 @@ class CreateMiniTaskBody extends Component {
       level: "hard",
       template_code: "",
       user_code: "",
-      unit_tests: [
+      /*unit_tests: [
         {
           inputs: [{ value: 2, type: "int" }, { value: 1, type: "int" }],
           expected_output: "3"
@@ -39,14 +44,15 @@ class CreateMiniTaskBody extends Component {
           inputs: [{ value: 2, type: "int" }, { value: 1, type: "int" }],
           expected_output: "3"
         }
-      ],
+      ],*/
+      unit_tests: [],
       taskId: "",
       //inputList:[{input_name:"param1",input_type:"int"}]
       inputList: []
     };
     this.output_type_func = React.createRef();
 
-    this.handleSingleInputChange = this.handleSingleInputChange.bind(this);
+    this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
 
     this.onSelectChange = this.onSelectChange.bind(this);
     this.handleMarkdownChange = this.handleMarkdownChange.bind(this);
@@ -54,7 +60,8 @@ class CreateMiniTaskBody extends Component {
     this.updateTemplateCode = this.updateTemplateCode.bind(this);
   }
   componentDidMount() {}
-  async handleSingleInputChange(event) {
+  // handle simple input change
+  async handleSimpleInputChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -66,40 +73,55 @@ class CreateMiniTaskBody extends Component {
       [name]: value
     }));
     await this.setState((state, props) => ({
-      template_code: `public ${this.state.output_type_func} ${this.state.name_func}(${this.state.inputList.map((input)=> {return `${input.input_type} ${input.input_name}`}).join()}){ 
+      template_code: `public ${this.state.output_type_func} ${
+        this.state.name_func
+      }(${this.state.inputList
+        .map(input => {
+          return `${input.input_type} ${input.input_name}`;
+        })
+        .join()}){ 
 
       }`
     }));
-    // setTimeout(()=>{  },0)
   }
-
+  // handle minitask desc change
   handleMarkdownChange(value) {
     this.setState({
       mini_task_desc: value
     });
   }
 
+  // create a new minitask
   handleSubmit() {
     console.log(this.state);
   }
 
+  // handle ouput_type_function select change
   async onSelectChange(select_value) {
     const name = this.output_type_func.current.props.name; //get name of select tag
     await this.setState({
       [name]: select_value.value
     });
     await this.setState((state, props) => ({
-      template_code: `public ${this.state.output_type_func} ${this.state.name_func}(${this.state.inputList.map((input)=> {return `${input.input_type} ${input.input_name}`}).join()}){ 
+      template_code: `public ${this.state.output_type_func} ${
+        this.state.name_func
+      }(${this.state.inputList
+        .map(input => {
+          return `${input.input_type} ${input.input_name}`;
+        })
+        .join()}){ 
 
       }`
     }));
   }
+  // update template code when typing
   updateTemplateCode(value) {
     this.setState({
       template_code: value
     });
   }
 
+  //add input to list input
   addInput() {
     this.setState({
       inputList: [
@@ -108,27 +130,72 @@ class CreateMiniTaskBody extends Component {
       ]
     });
   }
+
+  // handle list input change
   async handleListInputNameChange(e, index) {
     // eslint-disable-next-line react/no-direct-mutation-state
     this.state.inputList[index].input_name = e.target.value;
     await this.setState({ inputList: this.state.inputList });
     await this.setState((state, props) => ({
-      template_code: `public ${this.state.output_type_func} ${this.state.name_func}(${this.state.inputList.map((input)=> {return `${input.input_type} ${input.input_name}`}).join()}){ 
+      template_code: `public ${this.state.output_type_func} ${
+        this.state.name_func
+      }(${this.state.inputList
+        .map(input => {
+          return `${input.input_type} ${input.input_name}`;
+        })
+        .join()}){ 
 
       }`
     }));
   }
 
+  //handle list input type change
   async handleListInputTypeChange(select_value, index) {
     // eslint-disable-next-line react/no-direct-mutation-state
     this.state.inputList[index].input_type = select_value.value;
     await this.setState({ inputList: this.state.inputList });
     await this.setState((state, props) => ({
-      template_code: `public ${this.state.output_type_func} ${this.state.name_func}(${this.state.inputList.map((input)=> {return `${input.input_type} ${input.input_name}`}).join()}){ 
+      template_code: `public ${this.state.output_type_func} ${
+        this.state.name_func
+      }(${this.state.inputList
+        .map(input => {
+          return `${input.input_type} ${input.input_name}`;
+        })
+        .join()}){ 
 
       }`
     }));
   }
+
+  addTest() {
+    ///xem lại cái type của input có cần hông
+    const inputListLength = this.state.inputList.length;
+    let arrayInput = [];
+    for (let i = 0; i < inputListLength; i++) {
+      arrayInput.push({ value: "", type: "int" });
+    }
+    this.setState({
+      unit_tests: [
+        ...this.state.unit_tests,
+        { inputs: arrayInput, expected_output: " " }
+      ]
+    });
+  }
+
+   handleOutputTestChange(e, index0) {
+    // eslint-disable-next-line react/no-direct-mutation-state
+    this.state.unit_tests[index0].expected_output = e.target.value;
+    this.setState({ unit_tests: this.state.unit_tests });
+ 
+  }
+  handleInputTestChange(e, index0,index1) {
+    // eslint-disable-next-line react/no-direct-mutation-state
+    this.state.unit_tests[index0].inputs[index1].value = e.target.value;
+    this.setState({ unit_tests: this.state.unit_tests });
+ 
+  }
+
+  
   render() {
     const { classes } = this.props;
 
@@ -144,11 +211,12 @@ class CreateMiniTaskBody extends Component {
         >
           <Grid item xs={12} sm={6} md={6}>
             <div>Tên bài tập:</div>
-            <input name="name" onChange={this.handleSingleInputChange} />
+            <input name="name" onChange={this.handleSimpleInputChange} />
             <div>function name:</div>
-            <input name="name_func" onChange={this.handleSingleInputChange} />
+            <input name="name_func" onChange={this.handleSimpleInputChange} />
             <div>Kiểu trả về:</div>
             <Select
+              styles={selectStyles}
               options={options}
               ref={this.output_type_func}
               name="output_type_func"
@@ -168,7 +236,6 @@ class CreateMiniTaskBody extends Component {
                     value={input.input_name}
                     onChange={e => this.handleListInputNameChange(e, index)} // higher order function, index và e là biến vẫn được sử dụng sau khi onchange thự thi
                   />{" "}
-                  
                   <div>kiểu tham số:</div>
                   <Select
                     options={options}
@@ -191,6 +258,31 @@ class CreateMiniTaskBody extends Component {
                 updateTemplateCode={this.updateTemplateCode}
               />
             </div>
+            {this.state.unit_tests.map((unit_test, index0) => {
+              return (
+                <div key={index0}> test {index0+1}
+                  <div>Inputs:</div>
+
+                  {unit_test.inputs.map((input, index1) => {
+                    return (
+                      <input
+                        key={index1}
+                        value={input.value}
+                        onChange={e =>
+                          this.handleInputTestChange(e,index0,index1)
+                        }
+                      />
+                    );
+                  })}
+                  <div>Out put</div>
+                  <input
+                    value={unit_test.expected_output}
+                    onChange={e => this.handleOutputTestChange(e, index0)} 
+                  />
+                </div>
+              );
+            })}
+            <button onClick={e => this.addTest(e)}>Thêm test</button>
           </Grid>
         </Grid>
       </React.Fragment>
