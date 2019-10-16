@@ -27,6 +27,9 @@ func main() {
 
 	e := echo.New()
 	// e.Logger.SetLevel(log.ERROR)
+	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+		Level: 5,
+	}))
 
 	// Root level middleware
 	e.Use(middleware.Logger())
@@ -113,6 +116,16 @@ func main() {
 	e.File("/swagger-ui-standalone-preset.js", "static/dist/swagger-ui-standalone-preset.js")
 
 	e.File("*", "static/index.html")
-
+	e.Use(ServerHeader)
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func ServerHeader(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		c.Response().Header().Set(echo.HeaderServer, "Echo/3.0")
+		c.Response().Header().Set("Access-Control-Expose-Headers", "Content-Range")
+
+		c.Response().Header().Set("Content-Range", "bytes : 0-9/*")
+		return next(c)
+	}
 }

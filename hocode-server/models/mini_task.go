@@ -6,12 +6,13 @@ import (
 
 type (
 	MiniTask struct {
-		ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`
-		MiniTaskName string        `json:"mini_task_name" bson:"mini_task_name"`
-		PointUnlock  int           `json:"point_unlock" bson:"point_unlock"`
-		Status       string        `json:"status" bson:"status"`
-		Vitri        bool          `json:"vitri" bson:"vitri"`
-		NameFunc     string        `json:"name_func" bson:"name_func"`
+		ID             bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		MiniTaskName   string        `json:"mini_task_name" bson:"mini_task_name"`
+		PointUnlock    int           `json:"point_unlock" bson:"point_unlock"`
+		Status         string        `json:"status" bson:"status"`
+		Vitri          bool          `json:"vitri" bson:"vitri"`
+		NameFunc       string        `json:"name_func" bson:"name_func"`
+		OutputTypeFunc string        `json:"output_type_func" bson:"output_type_func"`
 
 		MinitaskDesc string      `json:"mini_task_desc" bson:"mini_task_desc"`
 		Level        string      `json:"level" bson:"level"`

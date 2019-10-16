@@ -32,6 +32,8 @@ definitions:
         type: string
       name_func:
         type: string
+      output_type_func:
+        type: string
       point_unlock:
         type: integer
       status:

@@ -9,6 +9,8 @@ import LoginPage from "./components/loginPage/LoginPage";
 import SignUpPage from "./components/signUpPage/SignUpPage";
 import ReactMde from './components/minitaskPage/ReactMde';
 import CreateMiniTask from './components/createMinitaskPage/CreateMiniTaskPage';
+import AdminPage from './components/adminPage/adminPage';
+
 function App() {
   return (
     <Router>
@@ -23,6 +25,7 @@ function App() {
           <Route path="/courses/:courseId/tasks" component={TaskPage} />
           <Route path="/tasks/:minitaskId" component={MiniTaskPage} />
           <Route path="/createminitask" exact component={CreateMiniTask} />
+          <Route path="/admin" exact component={AdminPage} />
           <Route render={() => <div>404 Page Not Found</div>} />
         </Switch>
       </div>
