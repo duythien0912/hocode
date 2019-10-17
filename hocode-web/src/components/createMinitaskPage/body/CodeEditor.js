@@ -26,12 +26,25 @@ import "codemirror/addon/hint/css-hint.js"
 
 
 class CodeEditor extends Component {
- 
+
   render() {
+    const inputList = this.props.inputList || [];
+    let template_code  ='';
+    if(this.props.name_func !== '' ){
+      template_code = `public ${this.props.output_type_func} ${
+        this.props.name_func
+      }(${inputList
+        .map(input => {
+          return `${input.input_type} ${input.input_name}`;
+        })
+        .join()}){ 
+    
+      }`
+    }
     return (
       <CodeMirror
       value={
-        this.props.template_code
+        template_code
       }
         options={{
           mode: "javascript",
