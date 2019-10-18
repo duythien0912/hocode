@@ -8,6 +8,8 @@ import TestsPanel from "./body/TestsPanel";
 import "./minitask.css";
 import MediaQuery from "react-responsive";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -18,8 +20,11 @@ class MiniTaskPage extends Component {
       userCode: "",
       isLoading: false
     };
+    
     this.executeCode = this.executeCode.bind(this);
+    this.submitCode = this.submitCode.bind(this);
     this.updateUserCode = this.updateUserCode.bind(this);
+    this.resetCode= this.resetCode.bind(this);
   }
   componentDidMount() {
     const {
@@ -54,6 +59,51 @@ class MiniTaskPage extends Component {
     // is props of <codeEditor/> to update usercode wwhen edit in editor
     this.setState({ userCode: value });
   }
+
+  resetCode(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Bạn có chắc chắn muốn xóa code đã lưu?',
+      text: "Bạn sẽ không thể hoàn tác!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy!',
+      reverseButtons: true
+    }).then((result) => {
+
+      if (result.value) {
+        this.setState((state, props) => ({
+          userCode: minitask.template_code
+        }));
+        swalWithBootstrapButtons.fire(
+          'Đã reset!',
+          '',
+          'success'
+        )
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã hủy',
+          '',
+          'error'
+        )
+      }
+    })
+    const { minitask } = this.state;
+   
+  }
+
   executeCode() {
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -103,6 +153,74 @@ class MiniTaskPage extends Component {
       .catch(function(error) {
         console.log(error);
       });
+  }
+  submitCode(){
+    const { minitask } = this.state;
+    //console.log(this.state.userCode);
+    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
+
+    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+    this.setState((state, props) => ({
+      isLoading: true
+    }));
+
+    if (this.state.minitask.id !== undefined) {
+      minitask.unit_tests.forEach((unit_test, index) => {
+        let inputs = "";
+        unit_test.inputs.forEach(input => {
+          inputs += `${input.value},`;
+        });
+        let inputsFormat = inputs.substring(0, inputs.length - 1);
+        junit4 += ` assertEquals("test ${index + 1}", ${
+          unit_test.expected_output
+        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
+      });
+      junit4 += ` }}`;
+    }
+    console.log(junit4);
+    console.log(code);
+    axios
+      .post("https://hocodevn.com/runner", {
+        code: code,
+        test: junit4
+      })
+      .then(
+        function(response) {
+          const error = response.data.stderr.replace(/<:LF:>/gm, "\n");
+          const stdout = response.data.stdout.replace(/<:LF:>/gm, "\n");
+
+          this.setState((state, props) => ({
+            result: {
+              error: error,
+              stdout: stdout
+            }
+          }));
+          this.setState((state, props) => ({
+            isLoading: false
+          }));
+          const result = true;  // dữ liệu giả
+          if(result === true){ // process alert success and add code point
+            Swal.fire({
+              
+              type:'success',
+            title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
+              width: 600,
+              padding: '3em',
+              backdrop: `
+                rgba(0,0,123,0.4)
+                url("${require('./giphy.gif')}") 
+                center left
+                no-repeat
+              `
+            })
+          }
+        }.bind(this)
+      )
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    
   }
   render() {
     const { minitask } = this.state;
@@ -164,6 +282,7 @@ class MiniTaskPage extends Component {
                               }}
                             >
                               <button
+                                onClick={this.resetCode}
                                 style={{ fontSize: 10, padding: "6px 8px" }}
                               >
                                 Reset code
@@ -196,34 +315,41 @@ class MiniTaskPage extends Component {
                           300/300
                         </div>
                         <div style={{ marginLeft: 30 }}>
-                          {this.state.isLoading === true ? (
-                            <div>loading...</div>
-                          ) : (
-                            <button
-                              className="execute_btn"
-                              style={{ display: "flex", alignItems: "center" }}
-                              onClick={this.executeCode}
-                            >
-                              Thực thi{" "}
-                              <img
-                                src={require("./play-button.svg")}
-                                alt=""
-                                style={{ height: "10px", marginLeft: "3px" }}
-                              ></img>
-                            </button>
-                          )}
+                          <button
+                            className={`execute_btn ${this.state.isLoading &&
+                              "disable_btn"}`}
+                            style={{ display: "flex", alignItems: "center" }}
+                            onClick={this.executeCode}
+                            disabled={this.state.isLoading}
+                          >
+                            Thực thi{" "}
+                            <img
+                              src={require("./play-button.svg")}
+                              alt=""
+                              style={{ height: "10px", marginLeft: "3px" }}
+                            ></img>
+                          </button>
                         </div>
                         <div style={{ marginLeft: 10 }}>
-                          <button className="submitCode_btn">Nộp bài </button>
+                          <button
+                            onClick ={this.submitCode}
+                            className={`submitCode_btn ${this.state.isLoading &&
+                              "disable_btn"}`}
+                            disabled={this.state.isLoading}
+                          >
+                            Nộp bài
+                          </button>
                         </div>
-                        <div style={{ marginLeft: 30, fontSize: 12 }}>
-                          <a
-                            href="/dsa"
+                        {this.state.result.isPass ?(   <div style={{ marginLeft: 30, fontSize: 12 }}>
+                          <Link
+                            to={`https://hocode.appspot.com/api/v1/minitasks/${this.state.next_minitask_id}`}
                             style={{ textDecoration: "none", color: "#595959" }}
+                            
                           >
                             Qua bài mới
-                          </a>
-                        </div>
+                          </Link>
+                        </div>):<div></div>}
+                     
                       </div>
                     </div>
                   </Split>{" "}

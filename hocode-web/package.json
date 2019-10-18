@@ -25,7 +25,8 @@
     "react-simplemde-editor": "^4.1.0",
     "react-split": "^2.0.7",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sweetalert2": "^8.18.4"
   },
   "scripts": {
     "start": "react-scripts start",
