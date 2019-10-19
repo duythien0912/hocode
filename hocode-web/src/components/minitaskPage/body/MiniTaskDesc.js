@@ -22,8 +22,10 @@ class MiniTaskDesc extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.DescContainer}>
-        <div>
-          <div>300</div>
+        <div style={{fontFamily:` "Share Tech Mono", monospace `,display:'flex',color:'#44BFA3',wordSpacing:'-8px'}}>
+        <div style={{flexGrow:1,marginRight:10}}>Độ khó: Hard</div>
+          <div style={{marginRight:'10px'}}>300</div>
+          
         </div>
         <div className="md_desc" style={{ padding: "16px" }}> {/* minitask description */}
           <ReactMarkdown 

@@ -9,6 +9,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
+import HashLoader from "react-spinners/HashLoader";
 import "./resultPanel.css";
 
 function TabPanel(props) {
@@ -66,19 +67,17 @@ const useStyles = makeStyles(theme => ({
 export default function TestsPanel(props) {
   //result panel is called in minitask page
   const classes = useStyles();
-  const [value, setValue] = React.useState(0); // if have result, direct to result panel tab 
+  const [value, setValue] = React.useState(0); // if have result, direct to result panel tab
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-  
- 
+
   const unit_tests = props.unit_tests || [];
-  
-  function renderTestsPanel(unit_tests){
+
+  function renderTestsPanel(unit_tests) {
     return (
       <React.Fragment>
-    
         {unit_tests.map((unit_test, index) => {
           // unit_tests
           return (
@@ -89,24 +88,44 @@ export default function TestsPanel(props) {
                 id="panel1a-header"
               >
                 <div style={{ display: "flex", width: "100%" }}>
-                  <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      fontFamily: ` "Share Tech Mono", monospace `
+                    }}
+                  >
+                    Test {index + 1}
+                  </div>
                 </div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <div>
                   <Grid container>
-                    <Grid item>Input: </Grid>
+                    <Grid
+                      item
+                      style={{ fontFamily: ` "Share Tech Mono", monospace ` }}
+                    >
+                      Input:{" "}
+                    </Grid>
                     <Grid item style={{ marginLeft: 10 }}>
                       {unit_test.inputs.map((input, index) => (
-                        <div key={index}>
-                          param{index + 1}: {input.value}
+                        <div
+                          key={index}
+                          style={{
+                            fontFamily: ` "Share Tech Mono", monospace `
+                          }}
+                        >
+                          > param{index + 1}: {input.value}
                         </div>
                       ))}{" "}
                       {/*dùng key ở đây nguy hiểm */}
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item>
+                    <Grid
+                      item
+                      style={{ fontFamily: ` "Share Tech Mono", monospace ` }}
+                    >
                       Output mong đợi: {unit_test.expected_output}
                     </Grid>
                   </Grid>
@@ -118,7 +137,7 @@ export default function TestsPanel(props) {
       </React.Fragment>
     );
   }
-  return ( 
+  return (
     <div
       className={classes.root}
       style={{
@@ -128,31 +147,57 @@ export default function TestsPanel(props) {
         flexDirection: "column"
       }}
     >
-      <Tabs
-        style={{ minHeight: "30px" }}
-        variant="fullWidth"
-        value={value}
-        onChange={handleChange}
-        aria-label="nav tabs example"
-      >
-        <LinkTab label="Danh sách test" href="/drafts" {...a11yProps(0)} />
-        
-      </Tabs>
-      <div
-        className="scroll_test"
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          overflowY: "auto",
-          overflowX: "hidden",
-          background: "#f5f5f5"
-        }}
-      >
-        <TabPanel value={value} index={0}>
-          {renderTestsPanel(unit_tests)}
-        </TabPanel>
-      </div>
+      {props.isLoading === true ? (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <div>
+            <div className="sweet-loading">
+              <HashLoader
+              
+                sizeUnit={"px"}
+                size={50}
+                color={"#AEA8A8"}
+                loading={props.isLoading}
+              />
+            </div>{" "}
+          </div>
+        </div>
+      ) : (
+        <React.Fragment>
+          <Tabs
+            style={{ minHeight: "30px" }}
+            variant="fullWidth"
+            value={value}
+            onChange={handleChange}
+            aria-label="nav tabs example"
+          >
+            <LinkTab label="Danh sách test" href="/drafts" {...a11yProps(0)} />
+          </Tabs>
+          <div
+            className="scroll_test"
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "100%",
+              overflowY: "auto",
+              overflowX: "hidden",
+              background: "#f5f5f5"
+            }}
+          >
+            <TabPanel value={value} index={0}>
+              {renderTestsPanel(unit_tests)}
+            </TabPanel>
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 }

@@ -114,3 +114,7 @@
     font-size: 12px;
     cursor: pointer;
 }
+
+.resultPanel .MuiTab-wrapper{
+    font-family: "Share Tech Mono", monospace !important;
+}

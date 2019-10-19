@@ -105,6 +105,9 @@ class MiniTaskPage extends Component {
   }
 
   executeCode() {
+    this.setState((state, props) => ({
+      result: {}
+    }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
     let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
@@ -155,6 +158,9 @@ class MiniTaskPage extends Component {
       });
   }
   submitCode(){
+    this.setState((state, props) => ({
+      result: {}
+    }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
     let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
@@ -292,11 +298,12 @@ class MiniTaskPage extends Component {
                           <div className="resultPanel">
                             {this.state.result.stdout !== undefined ? (
                               <ResultPanel
+                                
                                 unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
                                 result={this.state.result}
                               />
                             ) : (
-                              <TestsPanel unit_tests={minitask.unit_tests} />
+                              <TestsPanel isLoading ={this.state.isLoading} unit_tests={minitask.unit_tests} />
                             )}
                           </div>
                         </Split>
@@ -322,7 +329,7 @@ class MiniTaskPage extends Component {
                             onClick={this.executeCode}
                             disabled={this.state.isLoading}
                           >
-                            Thực thi{" "}
+                            {this.state.isLoading?'Đang thực thi':'Thực thi'}
                             <img
                               src={require("./play-button.svg")}
                               alt=""

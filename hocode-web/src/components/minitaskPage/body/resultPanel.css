@@ -3,8 +3,8 @@ flex-grow: 0;
 
 }
 
-.resultPanel .PrivateTabIndicator-colorSecondary-29{
-    background: #AEA8A8;
+.resultPanel .MuiTabs-indicator{
+    background: #AEA8A8!important;
 }
 
 .resultPanel .MuiTabs-flexContainer{

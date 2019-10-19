@@ -79,8 +79,8 @@ export default function ResultPanel(props) {
     if (result.stdout !== undefined) {
       if (result.error !== "") {
         return <React.Fragment>
-         <div>{result.error}</div>   
-        <div>{result.stdout}</div>
+         <div style={{color:'#ff1a1a',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>{result.error}</div>   
+        <div style={{fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>{result.stdout}</div>
       </React.Fragment>;
       } else {
         return (
@@ -108,16 +108,16 @@ export default function ResultPanel(props) {
                 id="panel1a-header"
               >
                 <div style={{ display: "flex", width: "100%" }}>
-                  <div style={{ flexGrow: 1 }}>Test {index + 1}</div>
+                  <div  style={{flexGrow: 1 ,fontFamily:` "Share Tech Mono", monospace `}}>Test {index + 1}</div>
                 </div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <div>
                   <Grid container>
-                    <Grid item>Input: </Grid>
+                    <Grid item style={{fontFamily:` "Share Tech Mono", monospace `}}>Input: </Grid>
                     <Grid item style={{ marginLeft: 10 }}>
                       {unit_test.inputs.map((input, index) => (
-                        <div key={index}>
+                        <div key={index} style={{fontFamily:` "Share Tech Mono", monospace `}}>
                           param{index + 1}: {input.value}
                         </div>
                       ))}{" "}
@@ -125,7 +125,7 @@ export default function ResultPanel(props) {
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item>
+                    <Grid item style={{fontFamily:` "Share Tech Mono", monospace `}}>
                       Output mong đợi: {unit_test.expected_output}
                     </Grid>
                   </Grid>
