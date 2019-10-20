@@ -5,14 +5,30 @@ import CoursePage from "./components/coursePage/CoursePage";
 import TaskPage from "./components/taskPage/TaskPage";
 import MiniTaskPage from "./components/minitaskPage/MiniTaskPage";
 import HomePage from "./components/homePage/HomePage";
-import LoginPage from "./components/loginPage/LoginPage";
 import SignUpPage from "./components/signUpPage/SignUpPage";
 import ReactMde from './components/minitaskPage/ReactMde';
 import CreateMiniTask from './components/createMinitaskPage/CreateMiniTaskPage';
 import AdminPage from './components/adminPage/adminPage';
+import { Provider } from "react-redux";
+import store from "./js/store/store.js";
+import LoginPage from "./components/loginPage1/LoginPage";
+import { setCurrentUser} from "./js/actions/authActions";
+import axios from "axios";
 
+// Check for token to keep user logged in/ xet khi load lai trang 
+if (localStorage.AuthToken) {
+  axios
+  .post("/api/users", localStorage.AuthToken) //if have authToken => get user from server
+  .then(res => {
+    const {user} = res.data;
+    // Set user and isAuthenticated
+    store.dispatch(setCurrentUser(user));
+  })
+}
+//store.dispatch(setCurrentUser({id:"giangdeptrai",pass:"giang123"}))
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <div className="App">
         <Switch>
@@ -30,6 +46,7 @@ function App() {
         </Switch>
       </div>
     </Router>
+    </Provider>
   );
 }
 
