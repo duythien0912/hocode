@@ -8,7 +8,7 @@ class TaskPage extends Component {
         //console.log(params);
         return (
             <React.Fragment>
-                <TaskHeader/>
+                <TaskHeader history={this.props.history} />
                 <TaskBody courseId={params.courseId}/>
             </React.Fragment>
         );

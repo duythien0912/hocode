@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import "./taskHeader.css";
-class CourseHeader extends Component {
+import { connect } from "react-redux";
+import { logoutUser } from "../../../js/actions/authActions";
+
+class TaskHeader extends Component {
+  onLogout = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+    const { history } = this.props;
+    history.push("/login")
+  };
+
   render() {
     return (
       <nav className="task-header">
@@ -30,11 +40,11 @@ class CourseHeader extends Component {
               <div className="nameMenu">giang</div>
               <ul className="nameSubmenu">
                   <li><a href="giang">Thông tin cá nhân</a></li>
-                  <li><a href="giang">Đăng xuất</a></li>
+                  <li><a href="giang" onClick={this.onLogout}>Đăng xuất</a></li>
               </ul>
             </div>
             <div className="desktop-hide"> {/*hide when screen is destop */}
-                <a href="/dsa">Đăng xuất</a>
+                <a href="/dsa" onClick={this.onLogout}>Đăng xuất</a>
                 </div>
           </div>
         </div>
@@ -43,4 +53,13 @@ class CourseHeader extends Component {
   }
 }
 
-export default CourseHeader;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(TaskHeader) ;
+

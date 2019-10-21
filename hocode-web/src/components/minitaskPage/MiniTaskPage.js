@@ -236,7 +236,7 @@ class MiniTaskPage extends Component {
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
-            <MiniTaskHeader minitaskName={minitask.name} />
+            <MiniTaskHeader minitaskName={minitask.name} history={this.props.history} />
           </div>
 
           <div className="layout-code-body">
