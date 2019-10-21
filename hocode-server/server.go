@@ -99,6 +99,8 @@ func main() {
 	ra := e.Group("/auth")
 	ra.Use(middleware.JWT([]byte("secret")))
 	ra.GET("", h.TestAuth)
+	ra.GET("/userinfo", h.GetUserData)
+	ra.POST("/userinfoupdate", h.UpdataUserData)
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")

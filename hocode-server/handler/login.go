@@ -18,6 +18,8 @@ func (h *Handler) Login(c echo.Context) (err error) {
 		return err
 	}
 
+	passw := ur.Password
+
 	// Validation
 	if ur.Email == "" || ur.Password == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid to or message fields"}
@@ -27,13 +29,17 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"email": ur.Email, "password": ur.Password}).
+		Find(bson.M{"email": ur.Email}).
 		One(&ur); err != nil {
 		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Not Found Email"}
 		}
 
 		return
+	}
+
+	if passw != ur.Password {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Wrong password"}
 	}
 
 	// Create token
@@ -52,6 +58,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 
 	ur.Token = t
+	ur.Password = ""
 
 	// if err = db.DB("hocode").C("course").Update(bson.M{"_id": ur.ID}, bson.M{"$set": bson.M{"token": t}}); err != nil {
 	// 	return echo.ErrInternalServerError
@@ -70,7 +77,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 
 	// Validation
 	if ur.Email == "" || ur.Password == "" {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid to or message fields"}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid Email or Password fields"}
 	}
 
 	// Connect to DB
@@ -107,6 +114,8 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 	} else {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Email " + ur.Email + " already in use"}
 	}
+
+	ur.Password = ""
 
 	return c.JSON(http.StatusOK, ur)
 }
