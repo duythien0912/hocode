@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./minitaskHeader.css";
+import {  Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../js/actions/authActions";
 
@@ -11,6 +12,12 @@ class MiniTaskHeader extends Component {
     history.push("/login")
   };
 
+  onBack = e =>{
+    e.preventDefault();
+    const { history } = this.props;
+    history.goBack();
+  }
+
   render() {
     return (
       <nav className="minitask-header">
@@ -21,18 +28,18 @@ class MiniTaskHeader extends Component {
           <i />
         </label>
         <div className="logo">
-          <a href="/giang">
+          <Link to="/">
           <img
               src={process.env.PUBLIC_URL + '/logo.png'}
               alt=""
               style={{ height: "40px" }}
             ></img>
-          </a>
+          </Link>
         </div>
         <div className="minitaskName_mobi">{this.props.minitaskName}</div> {/*minitask name */}
         <div className="nav-wrapper">
           <div className="left-menu" style={{display:'flex'}}>
-            <a href="/dsa">Quay lại</a>
+            <a onClick={this.onBack} href="/dsa">Quay lại</a>
             <div className="miniTask_name" style={{display:'flex',justifyContent:'center',flexGrow:1}}>
               <div>Cộng 2 số</div>
             </div>

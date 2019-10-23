@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-//import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
@@ -30,14 +30,9 @@ export const loginUser = userData => dispatch => {
       setAuthToken(token); // set token ở header
       // get user
       
-      axios
-        .get("https://hocode.appspot.com/auth/userinfo") 
-        .then(res => {
-         
-          const  user  = res.data;
-          // Set user and isAuthenticated
-          dispatch(setCurrentUser(user));
-        });
+      const decoded = jwt_decode(token);
+      // Set current user
+      dispatch(setCurrentUser(decoded));
     
     })
     .catch(err => 

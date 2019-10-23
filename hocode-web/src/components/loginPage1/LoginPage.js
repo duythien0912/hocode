@@ -86,11 +86,14 @@ class LoginPage extends React.Component {
   }
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/courses");
+      
+      this.props.history.push("/courses"); 
+      
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
+      
       this.props.history.push("/courses");
     }
 

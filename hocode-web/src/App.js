@@ -12,26 +12,29 @@ import AdminPage from './components/adminPage/adminPage';
 import { Provider } from "react-redux";
 import store from "./js/store/store.js";
 import LoginPage from "./components/loginPage1/LoginPage";
-import { setCurrentUser} from "./js/actions/authActions";
-import axios from "axios";
+import { setCurrentUser,logoutUser} from "./js/actions/authActions";
 import setAuthToken from "./js/utils/setAuthToken";
 import PrivateRoute from "./private-route/PrivateRoute"
-
+import jwt_decode from "jwt-decode";
 // Check for token to keep user logged in/ xet khi load lai trang 
-if (localStorage.AuthToken) {
+ if (localStorage.AuthToken) {
     // Set auth token header auth
     const token = localStorage.AuthToken;
     setAuthToken(token);
-  axios
-  .get("https://hocode.appspot.com/auth/userinfo") //if have authToken => get user from server
-  .then(res => {
-    const user = res.data;
-    // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(user));
-  })
+    const decoded = jwt_decode(token);
+    //console.log(decoded);
+    store.dispatch(setCurrentUser(decoded));
+    // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
 }
 
-function App() {
+ function App() {
   return (
     <Provider store={store}>
     <Router>
