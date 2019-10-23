@@ -199,7 +199,7 @@
     "solc": "^0.4.16",
     "sql": "^0.71.0",
     "sqlite3": "^3.1.4",
-    "superagent": "^2.2.0",
+    "superagent": "^5.1.0",
     "supertest": "^2.0.0",
     "swarm-js": "^0.1.36",
     "truffle-artifactor": "^2.1.5",
