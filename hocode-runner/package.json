@@ -146,7 +146,7 @@
     "immutable": "^3.8.1",
     "joi": "^9.0.4",
     "jsdom": "^10.1.0",
-    "jwt-simple": "^0.2.0",
+    "jwt-simple": "^0.5.6",
     "karma": "^1.1.2",
     "karma-chai": "^0.1.0",
     "karma-mocha": "^1.1.1",
