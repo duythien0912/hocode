@@ -191,7 +191,7 @@
     "rxjs": "^5.4.2",
     "safe-buffer": "^5.1.1",
     "scrypt.js": "^0.2.0",
-    "sequelize": "^3.24.3",
+    "sequelize": "^5.21.1",
     "should": "^8.3.1",
     "should-enzyme": "^1.4.0",
     "sinon": "^1.17.5",
