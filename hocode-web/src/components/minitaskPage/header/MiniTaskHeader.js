@@ -46,9 +46,9 @@ class MiniTaskHeader extends Component {
           </div>
 
           <div className="right-menu">
-            <div className="code-point">2000</div>
+            <div className="code-point">{this.props.auth.user.data.codepoint}</div>
             <div className="nav-name">
-              <div className="nameMenu">Giang</div>
+              <div className="nameMenu">{this.props.auth.user.data.firstname}</div>
               <ul className="nameSubmenu">
                   <li><a href="giang" >Thông tin cá nhân</a></li>
                   <li><a href="giang"  onClick={this.onLogout}>Đăng xuất</a></li>

@@ -118,3 +118,7 @@
 .resultPanel .MuiTab-wrapper{
     font-family: "Share Tech Mono", monospace !important;
 }
+
+.hidden_alert{
+    visibility: hidden!important;
+}

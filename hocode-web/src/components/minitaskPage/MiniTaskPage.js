@@ -10,6 +10,8 @@ import MediaQuery from "react-responsive";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -38,6 +40,9 @@ class MiniTaskPage extends Component {
         this.setState((state, props) => ({
           minitask: minitask
         }));
+        setTimeout(()=>{
+          console.log(this.state.minitask)
+        },0)
         /* if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
         this.setState((state, props) => ({
           userCode: minitask.user_code
@@ -212,13 +217,16 @@ class MiniTaskPage extends Component {
             title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
               width: 600,
               padding: '3em',
+              customClass:"hidden_alert",
               backdrop: `
                 rgba(0,0,123,0.4)
                 url("${require('./giphy.gif')}") 
-                center left
+                center center
                 no-repeat
               `
             })
+            toast('Chúc mừng, bạn đã hoàn thành bài tập này!', {containerId: 'B'});
+
           }
         }.bind(this)
       )
@@ -257,7 +265,7 @@ class MiniTaskPage extends Component {
                     cursor="col-resize"
                   >
                     <div className="split-panel-first ">
-                      <MiniTaskDesc mini_task_desc={minitask.mini_task_desc} />
+                      <MiniTaskDesc mini_task_desc={minitask.mini_task_desc} code_point={minitask.code_point} level={minitask.level} />
                     </div>
                     <div className="split-panel-second ">
                       <div className="coding-area">
@@ -319,7 +327,7 @@ class MiniTaskPage extends Component {
                         }}
                       >
                         <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
-                          300/300
+                          0/{minitask.code_point}
                         </div>
                         <div style={{ marginLeft: 30 }}>
                           <button
@@ -378,6 +386,7 @@ class MiniTaskPage extends Component {
               </div>
             </div>
           </div>
+          <ToastContainer enableMultiContainer containerId={'B'} position={toast.POSITION.TOP_RIGHT} />
         </div>
       </React.Fragment>
     );

@@ -23,8 +23,8 @@ class MiniTaskDesc extends Component {
     return (
       <div className={classes.DescContainer}>
         <div style={{fontFamily:` "Share Tech Mono", monospace `,display:'flex',color:'#44BFA3',wordSpacing:'-8px'}}>
-        <div style={{flexGrow:1,marginRight:10}}>Độ khó: Hard</div>
-          <div style={{marginRight:'10px'}}>300</div>
+        <div style={{flexGrow:1,marginRight:10}}>Độ khó: {this.props.level}</div>
+          <div style={{marginRight:'10px'}}>{this.props.code_point}</div>
           
         </div>
         <div className="md_desc" style={{ padding: "16px" }}> {/* minitask description */}
