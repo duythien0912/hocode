@@ -54,6 +54,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
 	claims["name"] = ur.Email
+	claims["id"] = ur.ID
 	claims["data"] = urn
 	claims["admin"] = true
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
@@ -86,13 +87,16 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid Email or Password fields"}
 	}
 
+	pass := ur.Password
+
 	// Connect to DB
 	db := h.DB.Clone()
 	defer db.Close()
 
+	urF := &model.User{}
+
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"email": ur.Email}).
-		One(&ur); err != nil {
+		Find(bson.M{"email": ur.Email}).One(urF); err != nil {
 
 		ur.ID = bson.NewObjectId()
 
@@ -104,6 +108,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		// Set claims
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = ur.Email
+		claims["id"] = ur.ID
 		claims["data"] = urn
 		claims["admin"] = true
 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
@@ -115,6 +120,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		}
 
 		ur.Token = t
+		ur.Password = pass
 
 		// Save in database
 		if err = db.DB("hocode").C("users").Insert(ur); err != nil {

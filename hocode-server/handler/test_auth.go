@@ -31,7 +31,7 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 	// Get team and member from the query string
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	name := claims["name"].(string)
+	ID := claims["id"].(string)
 
 	db := h.DB.Clone()
 	defer db.Close()
@@ -39,7 +39,7 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 	ur := &model.User{}
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"email": name}).
+		FindId(bson.ObjectIdHex(ID)).
 		One(&ur); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -56,25 +56,57 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 
 func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 
-	ur := &model.User{}
+	urN := &model.User{}
 
-	if err = c.Bind(ur); err != nil {
+	if err = c.Bind(urN); err != nil {
 		return err
 	}
 
-	ur.Email = ""
+	// ur.Email = ""
 
 	// Validation
-	if ur.ID == "" {
+	if urN.ID == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid ID fields"}
 	}
 
 	db := h.DB.Clone()
 	defer db.Close()
 
+	urO := &model.User{}
+
+	if err = db.DB("hocode").C("users").
+		Find(bson.M{"_id": urN.ID}).
+		One(&urO); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
+	if urN.CodePoint != 0 {
+		urO.CodePoint = urN.CodePoint
+	}
+
+	if urN.Password != "" {
+		urO.Password = urN.Password
+	}
+
+	if urN.FirstName != "" {
+		urO.FirstName = urN.FirstName
+	}
+
+	if urN.LastName != "" {
+		urO.LastName = urN.LastName
+	}
+
+	if urN.Avatar != "" {
+		urO.Avatar = urN.Avatar
+	}
+
 	if err = db.DB("hocode").
 		C("users").
-		Update(bson.M{"_id": ur.ID}, ur); err != nil {
+		Update(bson.M{"_id": urN.ID}, urO); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrInternalServerError
 		}
@@ -82,9 +114,8 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 		return
 	}
 
-	ur.Password = ""
-	ur.Email = ""
+	urO.Password = ""
 
-	return c.JSON(http.StatusOK, ur)
+	return c.JSON(http.StatusOK, urO)
 
 }
