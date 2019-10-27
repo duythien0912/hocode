@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import "./taskHeader.css";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../js/actions/authActions";
-
+import { getUser } from "../../../js/actions/userAction";
 class TaskHeader extends Component {
+  componentDidMount(){
+    this.props.getUser();
+    
+  }
   onLogout = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -35,9 +39,9 @@ class TaskHeader extends Component {
           </div>
 
           <div className="right-menu">
-            <div className="code-point">{this.props.auth.user.data.codepoint}</div>
+            <div className="code-point">{this.props.user.codepoint}</div>
             <div className="nav-name">
-              <div className="nameMenu">{this.props.auth.user.data.firstname}</div>
+              <div className="nameMenu">{this.props.user.firstname}</div>
               <ul className="nameSubmenu">
                   <li><a href="giang">Thông tin cá nhân</a></li>
                   <li><a href="giang" onClick={this.onLogout}>Đăng xuất</a></li>
@@ -52,14 +56,15 @@ class TaskHeader extends Component {
     );
   }
 }
-
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  user: state.user
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser,getUser }
 )(TaskHeader) ;
+
 

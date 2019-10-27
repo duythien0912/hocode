@@ -122,3 +122,23 @@
 .hidden_alert{
     visibility: hidden!important;
 }
+
+.cancelCodeBtn{
+    padding: 4px 8px;
+    border: none;
+    background: #dd4545;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+}
+.comfirmFesetCodeBtn{
+    padding: 4px 8px;
+    border: none;
+    background: #39a383;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+
+}

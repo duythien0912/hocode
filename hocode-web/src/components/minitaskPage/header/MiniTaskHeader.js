@@ -3,6 +3,7 @@ import "./minitaskHeader.css";
 import {  Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../js/actions/authActions";
+import { getUser } from "../../../js/actions/userAction";
 
 class MiniTaskHeader extends Component {
   onLogout = e => {
@@ -16,6 +17,10 @@ class MiniTaskHeader extends Component {
     e.preventDefault();
     const { history } = this.props;
     history.goBack();
+  }
+  componentDidMount(){
+    this.props.getUser();
+    
   }
 
   render() {
@@ -46,9 +51,9 @@ class MiniTaskHeader extends Component {
           </div>
 
           <div className="right-menu">
-            <div className="code-point">{this.props.auth.user.data.codepoint}</div>
+            <div className="code-point">{this.props.user.codepoint}</div>
             <div className="nav-name">
-              <div className="nameMenu">{this.props.auth.user.data.firstname}</div>
+              <div className="nameMenu">{this.props.user.firstname}</div>
               <ul className="nameSubmenu">
                   <li><a href="giang" >Thông tin cá nhân</a></li>
                   <li><a href="giang"  onClick={this.onLogout}>Đăng xuất</a></li>
@@ -57,7 +62,7 @@ class MiniTaskHeader extends Component {
             <div className="desktop-hide"> {/*hide when screen is destop */}
                 <a href="/dsa"  onClick={this.onLogout}>Đăng xuất</a>
                 </div>
-          </div>
+          </div>  
         </div>
       </nav>
     );
@@ -65,11 +70,12 @@ class MiniTaskHeader extends Component {
 }
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  user: state.user
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser,getUser }
 )(MiniTaskHeader) ;
 

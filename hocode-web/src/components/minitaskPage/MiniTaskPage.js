@@ -13,6 +13,9 @@ import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { connect } from "react-redux";
+import  {addCodePoint} from "../../js/actions/userAction";
+
 class MiniTaskPage extends Component {
   constructor(props) {
     super(props);
@@ -68,8 +71,8 @@ class MiniTaskPage extends Component {
   resetCode(){
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
+        confirmButton: 'btn btn-success comfirmFesetCodeBtn',
+        cancelButton: 'btn btn-danger cancelCodeBtn'
       },
       buttonsStyling: false
     })
@@ -115,7 +118,7 @@ class MiniTaskPage extends Component {
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
-    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
+    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    `;
 
     let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
@@ -129,14 +132,14 @@ class MiniTaskPage extends Component {
           inputs += `${input.value},`;
         });
         let inputsFormat = inputs.substring(0, inputs.length - 1);
-        junit4 += ` assertEquals("test ${index + 1}", ${
+        junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
           unit_test.expected_output
-        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
+        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n }\n`;
       });
-      junit4 += ` }}`;
+      junit4 += ` }`;
     }
     console.log(junit4);
-    console.log(code);
+    //console.log(code);
     axios
       .post("https://hocodevn.com/runner", {
         code: code,
@@ -144,8 +147,9 @@ class MiniTaskPage extends Component {
       })
       .then(
         function(response) {
-          const error = response.data.stderr.replace(/<:LF:>/gm, "\n");
-          const stdout = response.data.stdout.replace(/<:LF:>/gm, "\n");
+          console.log(response)
+          const error = response.data.stderr;
+          const stdout = response.data.stdout;
 
           this.setState((state, props) => ({
             result: {
@@ -168,7 +172,7 @@ class MiniTaskPage extends Component {
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
-    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    @Test\n    public void myTestFunction(){\n    Solution s = new Solution();\n `;
+    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
 
     let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
@@ -182,14 +186,13 @@ class MiniTaskPage extends Component {
           inputs += `${input.value},`;
         });
         let inputsFormat = inputs.substring(0, inputs.length - 1);
-        junit4 += ` assertEquals("test ${index + 1}", ${
+        junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
           unit_test.expected_output
-        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n`;
+        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
       });
-      junit4 += ` }}`;
+      junit4 += `}`;
     }
-    console.log(junit4);
-    console.log(code);
+    
     axios
       .post("https://hocodevn.com/runner", {
         code: code,
@@ -197,8 +200,9 @@ class MiniTaskPage extends Component {
       })
       .then(
         function(response) {
-          const error = response.data.stderr.replace(/<:LF:>/gm, "\n");
-          const stdout = response.data.stdout.replace(/<:LF:>/gm, "\n");
+          console.log(response);
+          const error = response.data.stderr;
+          const stdout = response.data.stdout;
 
           this.setState((state, props) => ({
             result: {
@@ -209,8 +213,10 @@ class MiniTaskPage extends Component {
           this.setState((state, props) => ({
             isLoading: false
           }));
-          const result = true;  // dữ liệu giả
-          if(result === true){ // process alert success and add code point
+          
+          if(this.state.result.stdout.WASSUCCESSFUL ==="true"){ // process alert success and add code point
+            const newCodePoint = this.props.user.codepoint + minitask.code_point;
+            this.props.addCodePoint(newCodePoint,this.props.auth.user.data.id);
             Swal.fire({
               
               type:'success',
@@ -297,7 +303,7 @@ class MiniTaskPage extends Component {
                             >
                               <button
                                 onClick={this.resetCode}
-                                style={{ fontSize: 10, padding: "6px 8px" }}
+                                style={{ fontSize: 10, padding: "6px 8px", cursor:'pointer'}}
                               >
                                 Reset code
                               </button>
@@ -393,4 +399,13 @@ class MiniTaskPage extends Component {
   }
 }
 
-export default MiniTaskPage;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+  user:state.user
+});
+
+export default connect(
+  mapStateToProps,
+  { addCodePoint }
+)(MiniTaskPage) ;
