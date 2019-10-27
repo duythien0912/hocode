@@ -486,6 +486,9 @@
         "model.MiniTask": {
             "type": "object",
             "properties": {
+                "code_point": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -580,10 +583,22 @@
         "model.User": {
             "type": "object",
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "codepoint": {
+                    "type": "integer"
+                },
                 "email": {
                     "type": "string"
                 },
+                "firstname": {
+                    "type": "string"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "lastname": {
                     "type": "string"
                 },
                 "password": {

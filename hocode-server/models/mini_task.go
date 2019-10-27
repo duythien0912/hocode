@@ -9,6 +9,7 @@ type (
 		ID             bson.ObjectId `json:"id" bson:"_id,omitempty"`
 		MiniTaskName   string        `json:"mini_task_name" bson:"mini_task_name"`
 		PointUnlock    int           `json:"point_unlock" bson:"point_unlock"`
+		CodePoint      int           `json:"code_point" bson:"code_point"`
 		Status         string        `json:"status" bson:"status"`
 		Vitri          bool          `json:"vitri" bson:"vitri"`
 		NameFunc       string        `json:"name_func" bson:"name_func"`

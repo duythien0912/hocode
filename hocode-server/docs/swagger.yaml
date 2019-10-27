@@ -22,6 +22,8 @@ definitions:
     type: object
   model.MiniTask:
     properties:
+      code_point:
+        type: integer
       id:
         type: string
       level:
@@ -84,9 +86,17 @@ definitions:
     type: object
   model.User:
     properties:
+      avatar:
+        type: string
+      codepoint:
+        type: integer
       email:
         type: string
+      firstname:
+        type: string
       id:
+        type: string
+      lastname:
         type: string
       password:
         type: string

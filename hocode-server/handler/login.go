@@ -42,12 +42,19 @@ func (h *Handler) Login(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Wrong password"}
 	}
 
+	ur.Password = ""
+
 	// Create token
 	token := jwt.New(jwt.SigningMethodHS256)
+
+	urn := ur
+	urn.Password = ""
+	urn.Token = ""
 
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
 	claims["name"] = ur.Email
+	claims["data"] = urn
 	claims["admin"] = true
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
@@ -58,7 +65,6 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 
 	ur.Token = t
-	ur.Password = ""
 
 	// if err = db.DB("hocode").C("course").Update(bson.M{"_id": ur.ID}, bson.M{"$set": bson.M{"token": t}}); err != nil {
 	// 	return echo.ErrInternalServerError
@@ -88,12 +94,17 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		Find(bson.M{"email": ur.Email}).
 		One(&ur); err != nil {
 
+		ur.ID = bson.NewObjectId()
+
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
 
+		urn := ur
+		urn.Password = ""
 		// Set claims
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = ur.Email
+		claims["data"] = urn
 		claims["admin"] = true
 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
@@ -104,7 +115,6 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		}
 
 		ur.Token = t
-		ur.ID = bson.NewObjectId()
 
 		// Save in database
 		if err = db.DB("hocode").C("users").Insert(ur); err != nil {
