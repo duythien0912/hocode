@@ -80,15 +80,34 @@ export default function ResultPanel(props) {
       if (result.error !== "") {
         return <React.Fragment>
          <div style={{color:'#ff1a1a',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>{result.error}</div>   
-        <div style={{fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>{result.stdout}</div>
+        
       </React.Fragment>;
       } else {
-        return (
-          <React.Fragment>
-            
-            <div>{result.stdout}</div>
-          </React.Fragment>
-        );
+        if(result.stdout.WASSUCCESSFUL === "true"){
+          return (
+            <React.Fragment>
+              
+              <div style={{color:'#19b280',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>
+              <div> Thời gian test: {result.stdout.COMPLETEDIN}</div>
+              <div>Kết quả: Passed</div>
+             
+              </div>
+            </React.Fragment>
+          );
+        }
+        else if(result.stdout.WASSUCCESSFUL === "false"){
+          return (
+            <React.Fragment>
+              
+              <div style={{color:'#ff1a1a',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>
+              <div>Số lượng test đúng: {result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/{result.stdout.RUNCOUNT}</div>
+              <div>Kết quả: Failed</div>
+              {result.stdout.GETALLFAILURE.map((testfail,index)=>{ return(<div key={index}>{testfail.DETAIL}</div>);})}
+              </div>
+            </React.Fragment>
+          );
+        }
+        
       }
     } else {
       return <div>chưa thực thi</div>;

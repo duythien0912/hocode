@@ -1,6 +1,28 @@
 import React, { Component } from "react";
 import "./minitaskHeader.css";
+import {  Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "../../../js/actions/authActions";
+import { getUser } from "../../../js/actions/userAction";
+
 class MiniTaskHeader extends Component {
+  onLogout = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+    const { history } = this.props;
+    history.push("/login")
+  };
+
+  onBack = e =>{
+    e.preventDefault();
+    const { history } = this.props;
+    history.goBack();
+  }
+  componentDidMount(){
+    this.props.getUser();
+    
+  }
+
   render() {
     return (
       <nav className="minitask-header">
@@ -11,40 +33,49 @@ class MiniTaskHeader extends Component {
           <i />
         </label>
         <div className="logo">
-          <a href="/giang">
+          <Link to="/">
           <img
               src={process.env.PUBLIC_URL + '/logo.png'}
               alt=""
               style={{ height: "40px" }}
             ></img>
-          </a>
+          </Link>
         </div>
         <div className="minitaskName_mobi">{this.props.minitaskName}</div> {/*minitask name */}
         <div className="nav-wrapper">
           <div className="left-menu" style={{display:'flex'}}>
-            <a href="/dsa">Quay lại</a>
+            <a onClick={this.onBack} href="/dsa">Quay lại</a>
             <div className="miniTask_name" style={{display:'flex',justifyContent:'center',flexGrow:1}}>
               <div>Cộng 2 số</div>
             </div>
           </div>
 
           <div className="right-menu">
-            <div className="code-point">2000</div>
+            <div className="code-point">{this.props.user.codepoint}</div>
             <div className="nav-name">
-              <div className="nameMenu">Giang</div>
+              <div className="nameMenu">{this.props.user.firstname}</div>
               <ul className="nameSubmenu">
-                  <li><a href="giang">Thông tin cá nhân</a></li>
-                  <li><a href="giang">Đăng xuất</a></li>
+                  <li><a href="giang" >Thông tin cá nhân</a></li>
+                  <li><a href="giang"  onClick={this.onLogout}>Đăng xuất</a></li>
               </ul>
             </div>
             <div className="desktop-hide"> {/*hide when screen is destop */}
-                <a href="/dsa">Đăng xuất</a>
+                <a href="/dsa"  onClick={this.onLogout}>Đăng xuất</a>
                 </div>
-          </div>
+          </div>  
         </div>
       </nav>
     );
   }
 }
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+  user: state.user
+});
 
-export default MiniTaskHeader;
+export default connect(
+  mapStateToProps,
+  { logoutUser,getUser }
+)(MiniTaskHeader) ;
+

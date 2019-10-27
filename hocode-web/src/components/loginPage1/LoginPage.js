@@ -86,11 +86,14 @@ class LoginPage extends React.Component {
   }
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/courses");
+      
+      this.props.history.push("/courses"); 
+      
     }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
+      
       this.props.history.push("/courses");
     }
 
@@ -110,9 +113,8 @@ class LoginPage extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    console.log(userData);
 
-    //this.props.loginUser(userData);
+    this.props.loginUser(userData);
   };
   render() {
     const { errors } = this.state;
@@ -130,10 +132,7 @@ class LoginPage extends React.Component {
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <div>
-              <div className="error_show">{errors.email}</div>
-              <div className="error_show">{errors.emailnotfound}</div>
-              <div className="error_show">{errors.password}</div>
-              <div className="error_show">{errors.passwordincorrect}</div>
+              <div className="error_show">{errors.message}</div>
             </div>
             
             <CssTextField

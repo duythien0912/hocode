@@ -5,7 +5,7 @@ class CoursePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <CourseHeader/>
+                <CourseHeader history={this.props.history}/>
                 <CourseBody/>
             </React.Fragment>
         );
