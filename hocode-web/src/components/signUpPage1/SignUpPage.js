@@ -1,20 +1,25 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
 
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/styles";
 
 import { connect } from "react-redux";
+
 import { registerUser } from "../../js/actions/authActions";
+import LogoHocode from "../../common/logo.js";
+import "./SignUpPage.css";
+
+import { regexEmail, regexPassword } from "../../common/regex";
 
 const CssTextField = withStyles({
   root: {
@@ -79,12 +84,19 @@ class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastName:"", //họ
-      firstName:"",
+      lastName: "", //họ
+      firstName: "",
       email: "",
       password: "",
       password2: "",
-      errors: {}
+      errors: {},
+      errorForm: {
+        lastName: "",
+        firstName: "",
+        email: "",
+        password: "",
+        password2: ""
+      }
     };
   }
   componentDidMount() {
@@ -97,139 +109,227 @@ class SignUpPage extends React.Component {
       this.props.history.push("/courses");
     }
     if (nextProps.errors) {
+      nextProps.errors.message = "*" + nextProps.errors.message;
+
       this.setState({
         errors: nextProps.errors
       });
     }
   }
   onChange = e => {
+    let isError = false;
+
+    if (e.target.id === "email")
+      if (regexEmail.test(e.target.value) === false) {
+        isError = true;
+        this.state.errorForm.email = "*Email không đúng định dạng";
+      } else {
+        this.state.errorForm.email = "";
+      }
+    if (e.target.id === "password")
+      if (regexPassword.test(e.target.value) === false) {
+        isError = true;
+        this.state.errorForm.password =
+          "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường";
+      } else {
+        this.state.errorForm.password = "";
+      }
+    if (e.target.id === "password2")
+      if (e.target.value !== this.state.password) {
+        isError = true;
+        this.state.errorForm.password2 = "*Bạn cần nhập mật khẩu giống trên";
+      } else {
+        this.state.errorForm.password2 = "";
+      }
+
+    if (isError) {
+      this.setState({
+        errorForm: this.state.errorForm
+      });
+    }
+
     this.setState({ [e.target.id]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
 
+    let messageError = "";
+
+    if (this.state.password.trim() === this.state.password2.trim())
+      messageError = "*Mật khẩu nhập lại không trùng";
+    if (this.state.password2.trim() === "")
+      messageError = "*Nhập lại mật khẩu không thể để trống";
+    if (this.state.password.trim() === "")
+      messageError = "*Mật khẩu không thể để trống";
+
+    if (this.state.email.trim() === "")
+      messageError = "*Email không thể để trống";
+
+    if (regexEmail.test(String(this.state.email).toLowerCase()) === false)
+      messageError = "*Email không đúng định dạng";
+
+    if (this.state.firstName.trim() === "")
+      messageError = "*Tên không thể để trống";
+    if (this.state.lastName.trim() === "")
+      messageError = "*Họ không thể để trống";
+
+    if (messageError.trim() !== "") {
+      this.props.errors.message = messageError;
+
+      this.setState({
+        errors: this.props.errors
+      });
+      return;
+    }
+
     const newUser = {
-      lastName:this.state.lastName,
+      lastName: this.state.lastName,
       firstName: this.state.firstName,
       email: this.state.email,
       password: this.state.password
     };
     console.log(newUser);
     this.props.registerUser(newUser, this.props.history);
-
   };
+
+  _checkError(val) {
+    if (val !== null || val !== "") {
+      return false;
+    }
+
+    return true;
+  }
+
   render() {
     const { errors } = this.state;
     const { classes } = this.props;
 
     return (
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          {/* <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-          <Grid container spacing={2}>
-          <div>
-              <div className="error_show">{errors.message}</div>
-              
-            </div>
-            <Grid item xs={12} sm={6}>
-              <CssTextField
-                autoComplete="lname"
-                name="lastName"
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Họ"
-                autoFocus
-                value={this.state.lastName}
-                onChange={this.onChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <CssTextField
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="Tên"
-                name="firstName"
-                autoComplete="fname"
-                value={this.state.firstname}
-                onChange={this.onChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CssTextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Địa chỉ Email"
-                name="email"
-                autoComplete="email"
-                value={this.state.email}
-                onChange={this.onChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CssTextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={this.state.password}
-                onChange={this.onChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CssTextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password2"
-                label="Nhập lại Password"
-                type="password"
-                id="password2"
-                autoComplete="current-password2"
-                value={this.state.password2}
-                onChange={this.onChange}
-              />
-            </Grid>
-           
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+        </Avatar> */}
+          <Box
+            justifyContent="center"
+            borderBottom={24}
+            color={"rgba(255, 255, 255, 0.1)"}
           >
-            Tạo tài khoản
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Bạn đã có tài khoản rồi, Đăng nhập ngay
-              </Link>
+            <LogoHocode />
+          </Box>
+
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  autoComplete="lname"
+                  name="lastName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Họ"
+                  autoFocus
+                  value={this.state.lastName}
+                  onChange={this.onChange}
+                  // error={this.state.errorForm.lastName.trim() !== ""}
+                  // helperText={this.state.errorForm.lastName}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="Tên"
+                  name="firstName"
+                  autoComplete="fname"
+                  value={this.state.firstname}
+                  onChange={this.onChange}
+                  // error={this._checkError(this.state.errorForm.firstname)}
+                  // helperText={this.state.errorForm.firstname}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Địa chỉ Email"
+                  name="email"
+                  autoComplete="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={this.state.errorForm.email.trim() !== ""}
+                  helperText={this.state.errorForm.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Mật khẩu"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={this.state.errorForm.password.trim() !== ""}
+                  helperText={this.state.errorForm.password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password2"
+                  label="Nhập lại Mật khẩu"
+                  type="password"
+                  id="password2"
+                  autoComplete="current-password2"
+                  value={this.state.password2}
+                  onChange={this.onChange}
+                  error={this.state.errorForm.password2.trim() !== ""}
+                  helperText={this.state.errorForm.password2}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+            <div>
+              <div className="error_show">{errors.message}</div>
+            </div>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Tạo tài khoản
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Bạn đã có tài khoản rồi, Đăng nhập ngay
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
     );
   }
 }
