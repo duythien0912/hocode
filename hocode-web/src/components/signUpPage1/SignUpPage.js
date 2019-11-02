@@ -122,7 +122,8 @@ class SignUpPage extends React.Component {
     if (e.target.id === "email")
       if (regexEmail.test(e.target.value) === false) {
         isError = true;
-        this.state.errorForm.email = "*Email không đúng định dạng";
+        this.state.errorForm.email =
+          "*Email không đúng định dạng vd: nguyenvana@gmail.com";
       } else {
         this.state.errorForm.email = "";
       }
@@ -130,7 +131,7 @@ class SignUpPage extends React.Component {
       if (regexPassword.test(e.target.value) === false) {
         isError = true;
         this.state.errorForm.password =
-          "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường";
+          "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường và không chứa ký tự đặc biệt";
       } else {
         this.state.errorForm.password = "";
       }
@@ -156,12 +157,15 @@ class SignUpPage extends React.Component {
 
     let messageError = "";
 
-    if (this.state.password.trim() === this.state.password2.trim())
+    if (this.state.password !== this.state.password2)
       messageError = "*Mật khẩu nhập lại không trùng";
     if (this.state.password2.trim() === "")
       messageError = "*Nhập lại mật khẩu không thể để trống";
     if (this.state.password.trim() === "")
       messageError = "*Mật khẩu không thể để trống";
+    // if (regexPassword.test(String(this.state.password).toLowerCase()) === false)
+    //   messageError =
+    //     "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường và không chứa ký tự đặc biệt";
 
     if (this.state.email.trim() === "")
       messageError = "*Email không thể để trống";
