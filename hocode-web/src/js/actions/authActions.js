@@ -8,7 +8,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("https://hocode.appspot.com/api/v1/signup", userData)
-    .then(res =>  history.push("/login"))
+    .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -26,16 +26,17 @@ export const loginUser = userData => dispatch => {
 
       // Set token to localStorage
       const { token } = res.data;
-      localStorage.setItem("AuthToken", token);
-      setAuthToken(token); // set token ở header
-      // get user
-      
+      if (userData.remember) {
+        localStorage.setItem("AuthToken", token);
+        setAuthToken(token); // set token ở header
+        // get user
+      }
+
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-    
     })
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -50,7 +51,6 @@ export const setCurrentUser = user => {
     payload: user
   };
 };
-
 
 // Log user out
 export const logoutUser = () => dispatch => {

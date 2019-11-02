@@ -16,6 +16,10 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 import { loginUser } from "../../js/actions/authActions";
 
+import LogoHocode from "../../common/logo.js";
+import './LoginPage.css';
+
+
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
@@ -81,23 +85,22 @@ class LoginPage extends React.Component {
     this.state = {
       email: "",
       password: "",
+      remember: false,
       errors: {}
     };
   }
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      
-      this.props.history.push("/courses"); 
-      
+      this.props.history.push("/courses");
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      
       this.props.history.push("/courses");
     }
 
     if (nextProps.errors) {
+      nextProps.errors.message = "*"+nextProps.errors.message;
       this.setState({
         errors: nextProps.errors
       });
@@ -106,12 +109,17 @@ class LoginPage extends React.Component {
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
+  handleChange = name => event => {
+    this.setState({ ...this.state, [name]: event.target.checked });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      remember: this.state.remember,
     };
 
     this.props.loginUser(userData);
@@ -124,17 +132,23 @@ class LoginPage extends React.Component {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Box
+            justifyContent="center"
+            borderBottom={24}
+            color={"rgba(255, 255, 255, 0.1)"}
+          >
+            <LogoHocode />
+          </Box>
+
           <Typography component="h1" variant="h5">
             Đăng nhập
           </Typography>
+
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <div>
               <div className="error_show">{errors.message}</div>
             </div>
-            
+
             <CssTextField
               variant="outlined"
               margin="normal"
@@ -162,7 +176,10 @@ class LoginPage extends React.Component {
               value={this.state.password}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="primary" 
+              onChange={this.handleChange('remember')}
+
+              />}
               label="Lưu tài khoản"
             />
             <Button
