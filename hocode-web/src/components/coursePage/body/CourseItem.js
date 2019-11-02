@@ -9,24 +9,62 @@ const styles = {
      overflow:'hidden',
      background: '#EEEEEE',
      cursor:'pointer',
-     marginBottom:'40px'
+     
  },
 };
 class CourseItem extends Component {
   render() {
     const { classes,course } = this.props;
+    console.log(course)
     return (
-      <Grid container direction='column' className={`${classes.courseItem} hvr-bounce-in`}>
-        <Grid item style={{height:'200px',width:'100%',overflow:'hidden'}}>
-        <img src={course.background_image} style={{height:'100%',width:'100%'}} alt=""/>
-        </Grid>
-        <Grid item container justify='center' style={{padding:'10px 0'}} >
-            <Grid item>
-                <div style={{margin:'5px 0',textAlign:'center', textTransform:'uppercase',color:'#595959',fontWeight: 'bold',fontFamily: `'Yanone Kaffeesatz', sans-serif`}} >{course.course_name}</div>
-                <div style={{margin:'5px 0',textAlign:'center',color:'#909090',fontFamily: `'Yanone Kaffeesatz', sans-serif`}}>Task đã làm: {course.task_solved.tasks_complete}/{course.task_solved.task_count}</div>
-            </Grid>
+      <Grid
+      container
+      direction="column"
+      style={{height:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}
+      className={`${classes.courseItem} hvr-bounce-in`}
+    >
+      <Grid
+        item
+        style={{  width: "100%", overflow: "hidden",display:'flex',justifyContent:'center',alignItems:'center' }}
+      >
+        <img
+          src={course.background_image}
+          style={{ width: "50px",objectFit:"cover", height:'50px',borderRadius:'50%',marginTop:"10px"}}
+          alt=""
+        />
+      </Grid>
+      <Grid
+        item
+        container
+        justify="center"
+        style={{ padding: "10px 0" }}
+      >
+        <Grid item>
+          <div
+            style={{
+              margin: "5px 0",
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#595959",
+              fontWeight: "bold",
+              fontFamily: `'Yanone Kaffeesatz', sans-serif`
+            }}
+          >
+            {course.course_name}
+          </div>
+          <div
+            style={{
+              margin: "5px 0",
+              textAlign: "center",
+              color: "#909090",
+              fontFamily: `'Yanone Kaffeesatz', sans-serif`
+            }}
+          >
+            Task đã làm: {course.task_solved.tasks_complete}/{course.task_solved.task_count}
+          </div>
         </Grid>
       </Grid>
+    </Grid>
     );
   }
 }

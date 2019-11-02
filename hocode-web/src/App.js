@@ -9,6 +9,7 @@ import SignUpPage from "./components/signUpPage1/SignUpPage";
 import ReactMde from './components/minitaskPage/ReactMde';
 import CreateMiniTask from './components/createMinitaskPage/CreateMiniTaskPage';
 import AdminPage from './components/adminPage/adminPage';
+import ProfilePage from './components/profilePage/ProfilePage'
 import { Provider } from "react-redux";
 import store from "./js/store/store.js";
 import LoginPage from "./components/loginPage1/LoginPage";
@@ -50,6 +51,7 @@ import jwt_decode from "jwt-decode";
           <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
           <Route path="/createminitask" exact component={CreateMiniTask} />
           <Route path="/admin" exact component={AdminPage} />
+          <Route path="/profile"  component={ProfilePage} />
           <Route render={() => <div>404 Page Not Found</div>} />
         </Switch>
       </div>

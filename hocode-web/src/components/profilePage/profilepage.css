@@ -1,0 +1,28 @@
+body{
+    background: white;
+}
+.menuLeftDrawer a{
+    text-decoration: none;
+}
+.menuLeftDrawer li{
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0;
+    font-size: 0.875rem;
+    font-family: 'Bitter', serif;
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    
+}
+.menuLeftDrawer .Mui-selected{
+    color: #03a9f4;
+    background-color: white!important;
+    border-left: 2px solid #03a9f4;
+    font-weight: 600;
+    
+}
+.drawerMain .MuiDrawer-paper{
+    height: 90%;
+    border-right: unset;
+}
+
