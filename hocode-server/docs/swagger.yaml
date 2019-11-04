@@ -1,5 +1,23 @@
 basePath: /api/v1
 definitions:
+  model.BodyUC:
+    properties:
+      course_id:
+        type: string
+      minitask_id:
+        type: string
+    type: object
+  model.Book:
+    properties:
+      content:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      title:
+        type: string
+    type: object
   model.Course:
     properties:
       background_image:
@@ -12,6 +30,23 @@ definitions:
         $ref: '#/definitions/model.TaskSolved'
         description: Name            string     json:"name" bson:"name"
         type: object
+    type: object
+  model.CourseInfo:
+    properties:
+      background_image:
+        type: string
+      completed_tasks_count:
+        type: integer
+      course_id:
+        type: string
+      course_name:
+        type: string
+      pass_course:
+        type: boolean
+      todo_tasks_count:
+        type: integer
+      total_tasks_count:
+        type: integer
     type: object
   model.Input:
     properties:
@@ -103,6 +138,17 @@ definitions:
       token:
         type: string
     type: object
+  model.UserCourse:
+    properties:
+      course_info:
+        items:
+          $ref: '#/definitions/model.CourseInfo'
+        type: array
+      id:
+        type: string
+      user_id:
+        type: string
+    type: object
 host: hocode.appspot.com
 info:
   contact:
@@ -117,6 +163,63 @@ info:
   title: Hocode API
   version: "1.0"
 paths:
+  /auth/updateusercourse:
+    post:
+      consumes:
+      - application/json
+      description: UpdateUserCourse
+      parameters:
+      - description: UpdateUserCourse
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.BodyUC'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserCourse'
+            type: object
+      summary: UpdateUserCourse
+      tags:
+      - UserCourse
+  /auth/usercourse:
+    get:
+      consumes:
+      - application/json
+      description: get GetUserCourse
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserCourse'
+            type: object
+      summary: List GetUserCourse
+      tags:
+      - UserCourse
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: get books <a href="/api/v1/books?page=1&limit=5">/api/v1/books?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Book'
+            type: array
+      summary: List Books
+      tags:
+      - Books
   /courses:
     get:
       consumes:
@@ -202,6 +305,30 @@ paths:
       summary: Get Task By Courses ID
       tags:
       - Courses
+  /createbook:
+    post:
+      consumes:
+      - application/json
+      description: Create Book
+      parameters:
+      - description: Create Book
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Book'
+            type: object
+      summary: Create Book
+      tags:
+      - Books
   /health_check:
     get:
       consumes:

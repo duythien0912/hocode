@@ -93,6 +93,9 @@ func main() {
 	r.POST("/login", h.Login)
 	r.POST("/signup", h.SignUp)
 
+	r.GET("/books", h.GetBooks)
+	r.POST("/createbook", h.CreateBook)
+
 	// r.GET("/rungolang", h.RunGolang)
 	r.POST("/rungolang", h.RunGolang)
 
@@ -101,6 +104,8 @@ func main() {
 	ra.GET("", h.TestAuth)
 	ra.GET("/userinfo", h.GetUserData)
 	ra.POST("/userinfoupdate", h.UpdataUserData)
+	ra.GET("/usercourse", h.GetUserCourse)
+	ra.POST("/updateusercourse", h.UpdateUserCourse)
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")

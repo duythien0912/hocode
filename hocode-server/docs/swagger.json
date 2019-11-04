@@ -18,6 +18,92 @@
     "host": "hocode.appspot.com",
     "basePath": "/api/v1",
     "paths": {
+        "/auth/updateusercourse": {
+            "post": {
+                "description": "UpdateUserCourse",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserCourse"
+                ],
+                "summary": "UpdateUserCourse",
+                "parameters": [
+                    {
+                        "description": "UpdateUserCourse",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.BodyUC"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.UserCourse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/usercourse": {
+            "get": {
+                "description": "get GetUserCourse",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserCourse"
+                ],
+                "summary": "List GetUserCourse",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.UserCourse"
+                        }
+                    }
+                }
+            }
+        },
+        "/books": {
+            "get": {
+                "description": "get books \u003ca href=\"/api/v1/books?page=1\u0026limit=5\"\u003e/api/v1/books?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "List Books",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Book"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/courses": {
             "get": {
                 "description": "get courses \u003ca href=\"/api/v1/courses?page=1\u0026limit=5\"\u003e/api/v1/courses?page=1\u0026limit=5\u003c/a\u003e",
@@ -141,6 +227,42 @@
                             "items": {
                                 "$ref": "#/definitions/model.Task"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/createbook": {
+            "post": {
+                "description": "Create Book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create Book",
+                "parameters": [
+                    {
+                        "description": "Create Book",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Book"
                         }
                     }
                 }
@@ -453,6 +575,34 @@
         }
     },
     "definitions": {
+        "model.BodyUC": {
+            "type": "object",
+            "properties": {
+                "course_id": {
+                    "type": "string"
+                },
+                "minitask_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Book": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Course": {
             "type": "object",
             "properties": {
@@ -469,6 +619,32 @@
                     "description": "Name            string     json:\"name\" bson:\"name\"",
                     "type": "object",
                     "$ref": "#/definitions/model.TaskSolved"
+                }
+            }
+        },
+        "model.CourseInfo": {
+            "type": "object",
+            "properties": {
+                "background_image": {
+                    "type": "string"
+                },
+                "completed_tasks_count": {
+                    "type": "integer"
+                },
+                "course_id": {
+                    "type": "string"
+                },
+                "course_name": {
+                    "type": "string"
+                },
+                "pass_course": {
+                    "type": "boolean"
+                },
+                "todo_tasks_count": {
+                    "type": "integer"
+                },
+                "total_tasks_count": {
+                    "type": "integer"
                 }
             }
         },
@@ -605,6 +781,23 @@
                     "type": "string"
                 },
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UserCourse": {
+            "type": "object",
+            "properties": {
+                "course_info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.CourseInfo"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "string"
                 }
             }
