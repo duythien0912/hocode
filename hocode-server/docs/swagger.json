@@ -268,6 +268,68 @@
                 }
             }
         },
+        "/createevent": {
+            "post": {
+                "description": "Create Event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Create Event",
+                "parameters": [
+                    {
+                        "description": "Create Event",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Event"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Event"
+                        }
+                    }
+                }
+            }
+        },
+        "/events": {
+            "get": {
+                "description": "get events \u003ca href=\"/api/v1/events?page=1\u0026limit=5\"\u003e/api/v1/events?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "List Events",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Event"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/health_check": {
             "get": {
                 "description": "Health Check Server",
@@ -645,6 +707,26 @@
                 },
                 "total_tasks_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.Event": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },

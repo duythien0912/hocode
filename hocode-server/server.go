@@ -95,6 +95,8 @@ func main() {
 
 	r.GET("/books", h.GetBooks)
 	r.POST("/createbook", h.CreateBook)
+	r.GET("/events", h.GetEvents)
+	r.POST("/createevent", h.CreateEvent)
 
 	// r.GET("/rungolang", h.RunGolang)
 	r.POST("/rungolang", h.RunGolang)

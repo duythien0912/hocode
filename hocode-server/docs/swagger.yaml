@@ -48,6 +48,19 @@ definitions:
       total_tasks_count:
         type: integer
     type: object
+  model.Event:
+    properties:
+      content:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      link:
+        type: string
+      title:
+        type: string
+    type: object
   model.Input:
     properties:
       type:
@@ -329,6 +342,47 @@ paths:
       summary: Create Book
       tags:
       - Books
+  /createevent:
+    post:
+      consumes:
+      - application/json
+      description: Create Event
+      parameters:
+      - description: Create Event
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Event'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+            type: object
+      summary: Create Event
+      tags:
+      - Events
+  /events:
+    get:
+      consumes:
+      - application/json
+      description: get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Event'
+            type: array
+      summary: List Events
+      tags:
+      - Events
   /health_check:
     get:
       consumes:
