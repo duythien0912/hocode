@@ -1,0 +1,333 @@
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import { withStyles } from "@material-ui/styles";
+import {changeUserInfo} from "../../../../js/actions/userAction"
+import { connect } from "react-redux";
+import { regexPassword } from "../../../../common/regex";
+
+import axios from "axios";
+const CssTextField = withStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "#3f51b5"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#3f51b5"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#3f51b5"
+      },
+      "&:hover fieldset": {
+        borderColor: "#3f51b5"
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#3f51b5"
+      }
+    }
+  }
+})(TextField);
+
+const styles = {
+  "@global": {
+    body: {
+      backgroundColor: "white"
+    }
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: 8,
+    backgroundColor: "#3f51b5"
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: 8
+  },
+  submit: {
+    margin: "16px 0px"
+  }
+};
+
+class Account extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastName: "", //họ
+      firstName: "",
+      password: "",
+      password2: "",
+      avatar: "",
+      errors: {},
+      errorForm: {
+        lastName: "",
+        firstName: "",
+        password: "",
+        password2: ""
+      },
+      image: null,
+      url: "",
+      urlPreview: ""
+    };
+    this.handleChangeImage = this.handleChangeImage.bind(this);
+    this.toBase64 = this.toBase64.bind(this);
+    this.ImgToBase64 = this.ImgToBase64.bind(this);
+  }
+
+  componentDidMount() {
+    axios
+      .get("https://hocode.appspot.com/auth/userinfo")
+      .then(res => {
+        this.setState({
+          firstName: res.data.firstname,
+          lastName: res.data.lastname,
+          avatar: res.data.avatar
+        });
+      })
+      .catch(err => console.log(err));
+  }
+ async handleChangeImage(e) {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      const urlimage = URL.createObjectURL(image);
+       let image1 = await this.ImgToBase64(image)
+       await this.setState({ image: image1, urlPreview: urlimage });
+    }
+  };
+  onChange = e => {
+    let isError = false;
+    this.setState({
+      errors: { message: "" }
+    });
+    if (e.target.id === "password")
+      if (regexPassword.test(e.target.value) === false) {
+        isError = true;
+        this.state.errorForm.password =
+          "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường và không chứa ký tự đặc biệt";
+      } else {
+        this.state.errorForm.password = "";
+      }
+    if (e.target.id === "password2")
+      if (e.target.value !== this.state.password) {
+        isError = true;
+        this.state.errorForm.password2 = "*Bạn cần nhập mật khẩu giống trên";
+      } else {
+        this.state.errorForm.password2 = "";
+      }
+
+    if (isError) {
+      this.setState({
+        errorForm: this.state.errorForm
+      });
+    }
+
+    this.setState({ [e.target.id]: e.target.value });
+  };
+  toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+  async ImgToBase64(file){
+    const result = await this.toBase64(file).catch(e => e);
+    if(result instanceof Error) {
+       console.log('Error: ', result.message);
+       return;
+    }
+    return result;
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+  
+    let messageError = "";
+
+    if (this.state.password !== this.state.password2)
+      messageError = "*Mật khẩu nhập lại không trùng";
+
+    if (this.state.firstName.trim() === "")
+      messageError = "*Tên không thể để trống";
+    if (this.state.lastName.trim() === "")
+      messageError = "*Họ không thể để trống";
+
+    if (messageError.trim() !== "") {
+      this.props.errors.message = messageError;
+
+      this.setState({
+        errors: this.props.errors
+      });
+      return;
+    }
+    
+    const newUser = {
+      lastName: this.state.lastName,
+      firstName: this.state.firstName,
+      password: this.state.password,
+      avatar: this.state.image
+    };
+    this.props.changeUserInfo(newUser,this.props.auth.user.data.id);
+    
+  };
+
+  _checkError(val) {
+    if (val !== null || val !== "") {
+      return false;
+    }
+
+    return true;
+  }
+
+  render() {
+    const { errors } = this.state;
+    const { classes } = this.props;
+
+    return (
+      <Container
+        component="main"
+        maxWidth="xs"
+        style={{
+          background: "white",
+          padding: "20px",
+          boxShadow:
+            "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)",
+          borderRadius: 10,
+          marginTop: 50
+        }}
+      >
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5"></Typography>
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  autoComplete="lname"
+                  name="lastName"
+                  variant="outlined"
+                  fullWidth
+                  id="lastName"
+                  label="Họ"
+                  autoFocus
+                  value={this.state.lastName}
+                  onChange={this.onChange}
+                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  variant="outlined"
+                  fullWidth
+                  id="firstName"
+                  label="Tên"
+                  name="firstName"
+                  autoComplete="fname"
+                  value={this.state.firstName}
+                  onChange={this.onChange}
+                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  variant="outlined"
+                  fullWidth
+                  name="password"
+                  label="Mật khẩu mới"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={this.state.errorForm.password.trim() !== ""}
+                  helperText={this.state.errorForm.password}
+                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  variant="outlined"
+                  fullWidth
+                  name="password2"
+                  label="Nhập lại Mật khẩu mới"
+                  type="password"
+                  id="password2"
+                  autoComplete="current-password2"
+                  value={this.state.password2}
+                  onChange={this.onChange}
+                  error={this.state.errorForm.password2.trim() !== ""}
+                  helperText={this.state.errorForm.password2}
+                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <div>Thay đổi avatar</div>
+                <div>
+                  {" "}
+                  {this.state.avatar !== "" ? (
+                    <img
+                      style={{ width: 40, height: 40 }}
+                      src={this.state.avatar}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      style={{ width: 40, height: 40 }}
+                      src={this.state.urlPreview}
+                      alt=""
+                    />
+                  )}
+                </div>
+                <div>
+                  <input type="file" onChange={this.handleChangeImage} />
+                </div>
+              </Grid>
+            </Grid>
+            <div>
+              <div className="error_show">{errors.message}</div>
+            </div>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Lưu thông tin
+            </Button>
+          </form>
+        </div>
+      </Container>
+    );
+  }
+}
+Account.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+  user: state.user
+});
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    {changeUserInfo}
+  )(Account)
+);

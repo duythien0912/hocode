@@ -8,15 +8,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import { Route, Switch, Link } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
 import CourseBody from "./content/course/CourseBody1";
 import TaskBody from "./content/task/TaskBody";
-
+import NavRight from  "./navRight/NavRight";
+import AppsIcon from '@material-ui/icons/Apps';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import CardMembershipIcon from '@material-ui/icons/CardMembership';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AppBarContent from './header/AppBarContent';
+import Account from './content/account/Account';
 import "./profilepage.css";
 
 const drawerWidth = 240;
@@ -36,7 +38,7 @@ const styles = theme => ({
     width: "225px",
     height: "calc(100vh - 65px)",
     display: "none",
-    padding: "16px 16px 16px 0px",
+    padding: "16px 16px 16px 16px",
     position: "sticky",
     marginTop: "65px",
     overflowY: "auto",
@@ -44,7 +46,7 @@ const styles = theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "block"
     },
-    background:'white'
+    background: "white"
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
@@ -52,8 +54,8 @@ const styles = theme => ({
       marginLeft: drawerWidth
     },
     background: "#fff",
-    boxShadow:'unset!important',
-    borderBottom: '1px solid rgba(76, 87, 102, .1)'
+    boxShadow: "unset!important",
+    borderBottom: "1px solid rgba(76, 87, 102, .1)"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -69,7 +71,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    background:'#f6f9fc'
+    background: "#f3f3f3"
   },
   searchComponent: {
     padding: "2px 15px 2px 4px",
@@ -117,12 +119,28 @@ class ProfilePage extends React.Component {
       location: { pathname }
     } = this.props;
 
-    
     const drawer = (
       <div>
-        <div className={classes.toolbar} style={{borderBottom: '1px solid rgba(76, 87, 102, .1)',minHeight:65}}>
-          <Link to="/" style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-            <img src={require("./minilogo.PNG")} alt='dsa' style={{width:'70%'}}/>
+        <div
+          className={classes.toolbar}
+          style={{
+            borderBottom: "1px solid rgba(76, 87, 102, .1)",
+            minHeight: 65
+          }}
+        >
+          <Link
+            to="/"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <img
+              src={require("./minilogo.PNG")}
+              alt="dsa"
+              style={{ width: "70%" }}
+            />
           </Link>
         </div>
 
@@ -132,7 +150,8 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/overview`}
               onClick={this.onClickMenuItem(1)}
             >
-              Tổng quan
+              <AppsIcon style={{fontSize:16}}/> 
+            <p style={{fontSize:12,marginLeft:"3px"}}>Tổng quan</p>
             </MenuItem>
           </Link>
 
@@ -141,7 +160,8 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/course`}
               onClick={this.onClickMenuItem(1)}
             >
-              Khóa học
+                 <ImportContactsIcon style={{fontSize:16}}/> 
+            <p style={{fontSize:12,marginLeft:"3px"}}>Khóa học</p>
             </MenuItem>
           </Link>
 
@@ -150,12 +170,20 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/print`}
               onClick={this.onClickMenuItem(1)}
             >
-              In chứng chỉ
+                  <CardMembershipIcon style={{fontSize:16}}/> 
+            <p style={{fontSize:12,marginLeft:"3px"}}>Chứng  chỉ</p>
             </MenuItem>
           </Link>
-          
+          <Link to={`${url}/account`}>
+            <MenuItem
+              selected={pathname === `${url}/account`}
+              onClick={this.onClickMenuItem(1)}
+            >
+                  <AccountCircleIcon style={{fontSize:16}}/> 
+            <p style={{fontSize:12,marginLeft:"3px"}}>Tài khoản</p>
+            </MenuItem>
+          </Link>
         </MenuList>
-        <div style={{ position: "fixed", bottom: 0, left: 0 }}>logout</div>
       </div>
     );
     return (
@@ -171,23 +199,7 @@ class ProfilePage extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap style={{ borderRadius: "30px" }}>
-              {" "}
-              {/* search component */}
-              <Paper className={classes.searchComponent}>
-                <InputBase
-                  className={classes.inputSearchComponent}
-                  placeholder="Tìm kiếm khóa học,..."
-                  inputProps={{ "aria-label": "search google maps" }}
-                />
-                <IconButton
-                  className={classes.iconButtonSearchComponent}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Typography>
+            <AppBarContent/>
           </Toolbar>
         </AppBar>
         <nav
@@ -225,7 +237,7 @@ class ProfilePage extends React.Component {
           </Hidden>
         </nav>
         <nav className={classes.navRight} aria-label="nav right">
-          
+          <NavRight/>
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -242,6 +254,7 @@ class ProfilePage extends React.Component {
               <TaskBody location={this.props.location} />
             </Route>
             <Route path={`${path}/print`}>In chứng chỉ</Route>
+            <Route path={`${path}/account`}><Account/></Route>
           </Switch>
         </main>
       </div>

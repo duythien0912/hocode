@@ -23,7 +23,7 @@ export const loginUser = userData => dispatch => {
     .post("https://hocode.appspot.com/api/v1/login", userData)
     .then(res => {
       // Save to localStorage
-
+      
       // Set token to localStorage
       const { token } = res.data;
       if (userData.remember) {
@@ -33,6 +33,7 @@ export const loginUser = userData => dispatch => {
       }
 
       const decoded = jwt_decode(token);
+      console.log(decoded)
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -54,6 +55,7 @@ export const setCurrentUser = user => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
+
   // Remove token from local storage
   localStorage.removeItem("AuthToken");
   // Remove auth header for future requests
