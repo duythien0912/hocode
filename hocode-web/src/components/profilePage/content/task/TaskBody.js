@@ -6,8 +6,8 @@ import axios from "axios";
 import { matchPath } from "react-router-dom";
 const styles = {
   TasksContainer: {
-    paddingTop: 100,
-    background: "#DDDDDD",
+    paddingTop: 30,
+    
     minHeight: "100vh"
   }
 };

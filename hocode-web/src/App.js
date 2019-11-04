@@ -51,7 +51,7 @@ import jwt_decode from "jwt-decode";
           <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
           <Route path="/createminitask" exact component={CreateMiniTask} />
           <Route path="/admin" exact component={AdminPage} />
-          <Route path="/profile"  component={ProfilePage} />
+          <PrivateRoute path="/profile"  component={ProfilePage} />
           <Route render={() => <div>404 Page Not Found</div>} />
         </Switch>
       </div>
