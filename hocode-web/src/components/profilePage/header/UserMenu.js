@@ -54,7 +54,7 @@ const StyledMenuItem = withStyles(theme => ({
   };
 
   return (
-    <div>
+    <div style={{marginLeft:3}}>
       <MoreHorizIcon
         aria-controls="customized-menu"
         aria-haspopup="true"

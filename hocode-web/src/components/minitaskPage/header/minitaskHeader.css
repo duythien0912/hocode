@@ -3,7 +3,7 @@
     padding-top:10px;
     padding-bottom:10px;
     align-items: center;
-    background: #e7e7e7;
+    background: white;
     width: 100%;
     position: relative;
 }
@@ -27,15 +27,12 @@
 
 .right-menu{
     display: flex;
+    align-items: center;
 }
 
 .right-menu .code-point{
-    color:#595959;
     font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-size: 20px;
-    background-color: #DDDDDD;
-    border-radius: 9px;
-    padding:5px 20px;
+    
 }
 
 .right-menu .nav-name{
@@ -119,6 +116,9 @@
         display: none;
     }
     .nav-wrapper .right-menu .nav-name{
+        display: none;
+    }
+    .nav-wrapper .right-menu .nav_usermenu{
         display: none;
     }
     .nav-wrapper .right-menu  .desktop-hide{

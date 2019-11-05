@@ -19,6 +19,7 @@ import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppBarContent from './header/AppBarContent';
 import Account from './content/account/Account';
+import Overview  from './content/overview/Overview'
 import "./profilepage.css";
 
 const drawerWidth = 240;
@@ -244,9 +245,9 @@ class ProfilePage extends React.Component {
 
           <Switch>
             <Route exact path={path}>
-              overview
+              <Overview/>
             </Route>
-            <Route path={`${path}/overview`}>overview</Route>
+            <Route path={`${path}/overview`}><Overview/></Route>
             <Route path={`${path}/course`}>
               <CourseBody url={url} />
             </Route>

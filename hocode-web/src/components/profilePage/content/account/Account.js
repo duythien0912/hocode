@@ -7,9 +7,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/styles";
-import {changeUserInfo} from "../../../../js/actions/userAction"
+import { changeUserInfo } from "../../../../js/actions/userAction";
 import { connect } from "react-redux";
 import { regexPassword } from "../../../../common/regex";
+import Paper from "@material-ui/core/Paper";
 
 import axios from "axios";
 const CssTextField = withStyles({
@@ -95,14 +96,14 @@ class Account extends React.Component {
       })
       .catch(err => console.log(err));
   }
- async handleChangeImage(e) {
+  async handleChangeImage(e) {
     if (e.target.files[0]) {
       const image = e.target.files[0];
       const urlimage = URL.createObjectURL(image);
-       let image1 = await this.ImgToBase64(image)
-       await this.setState({ image: image1, urlPreview: urlimage });
+      let image1 = await this.ImgToBase64(image);
+      await this.setState({ image: image1, urlPreview: urlimage });
     }
-  };
+  }
   onChange = e => {
     let isError = false;
     this.setState({
@@ -140,18 +141,18 @@ class Account extends React.Component {
       reader.onerror = error => reject(error);
     });
   }
-  async ImgToBase64(file){
+  async ImgToBase64(file) {
     const result = await this.toBase64(file).catch(e => e);
-    if(result instanceof Error) {
-       console.log('Error: ', result.message);
-       return;
+    if (result instanceof Error) {
+      console.log("Error: ", result.message);
+      return;
     }
     return result;
   }
 
   onSubmit = e => {
     e.preventDefault();
-  
+
     let messageError = "";
 
     if (this.state.password !== this.state.password2)
@@ -170,15 +171,14 @@ class Account extends React.Component {
       });
       return;
     }
-    
+
     const newUser = {
       lastName: this.state.lastName,
       firstName: this.state.firstName,
       password: this.state.password,
       avatar: this.state.image
     };
-    this.props.changeUserInfo(newUser,this.props.auth.user.data.id);
-    
+    this.props.changeUserInfo(newUser, this.props.auth.user.data.id);
   };
 
   _checkError(val) {
@@ -194,125 +194,134 @@ class Account extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Container
-        component="main"
-        maxWidth="xs"
-        style={{
-          background: "white",
-          padding: "20px",
-          boxShadow:
-            "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)",
-          borderRadius: 10,
-          marginTop: 50
-        }}
-      >
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5"></Typography>
-          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <CssTextField
-                  autoComplete="lname"
-                  name="lastName"
-                  variant="outlined"
-                  fullWidth
-                  id="lastName"
-                  label="Họ"
-                  autoFocus
-                  value={this.state.lastName}
-                  onChange={this.onChange}
-                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CssTextField
-                  variant="outlined"
-                  fullWidth
-                  id="firstName"
-                  label="Tên"
-                  name="firstName"
-                  autoComplete="fname"
-                  value={this.state.firstName}
-                  onChange={this.onChange}
-                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CssTextField
-                  variant="outlined"
-                  fullWidth
-                  name="password"
-                  label="Mật khẩu mới"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={this.state.errorForm.password.trim() !== ""}
-                  helperText={this.state.errorForm.password}
-                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CssTextField
-                  variant="outlined"
-                  fullWidth
-                  name="password2"
-                  label="Nhập lại Mật khẩu mới"
-                  type="password"
-                  id="password2"
-                  autoComplete="current-password2"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={this.state.errorForm.password2.trim() !== ""}
-                  helperText={this.state.errorForm.password2}
-                  inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                  InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <div>Thay đổi avatar</div>
-                <div>
-                  {" "}
-                  {this.state.avatar !== "" ? (
-                    <img
-                      style={{ width: 40, height: 40 }}
-                      src={this.state.avatar}
-                      alt=""
-                    />
-                  ) : (
-                    <img
-                      style={{ width: 40, height: 40 }}
-                      src={this.state.urlPreview}
-                      alt=""
-                    />
-                  )}
-                </div>
-                <div>
-                  <input type="file" onChange={this.handleChangeImage} />
-                </div>
-              </Grid>
-            </Grid>
-            <div>
-              <div className="error_show">{errors.message}</div>
-            </div>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={5} md={5}>
+          <Paper style={{ padding: 16 }}>
+            <div style={{ fontWeight: "bold" }}>Thông tin cá nhân</div>{" "}
+            <div>Họ và tên: {this.props.user.lastname}   {this.props.user.firstname}</div>
+            <div>Email: {this.props.user.email}</div>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={7} md={7} >
+          <Paper style={{ padding: 16 }}>
+            <Container
+              component="main"
+              maxWidth="xs"
             >
-              Lưu thông tin
-            </Button>
-          </form>
-        </div>
-      </Container>
+              <CssBaseline />
+              <div className={classes.paper}>
+                <Typography component="h1" variant="h5"></Typography>
+                <form
+                  className={classes.form}
+                  noValidate
+                  onSubmit={this.onSubmit}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <CssTextField
+                        autoComplete="lname"
+                        name="lastName"
+                        variant="outlined"
+                        fullWidth
+                        id="lastName"
+                        label="Họ"
+                        autoFocus
+                        value={this.state.lastName}
+                        onChange={this.onChange}
+                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <CssTextField
+                        variant="outlined"
+                        fullWidth
+                        id="firstName"
+                        label="Tên"
+                        name="firstName"
+                        autoComplete="fname"
+                        value={this.state.firstName}
+                        onChange={this.onChange}
+                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <CssTextField
+                        variant="outlined"
+                        fullWidth
+                        name="password"
+                        label="Mật khẩu mới"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        value={this.state.password}
+                        onChange={this.onChange}
+                        error={this.state.errorForm.password.trim() !== ""}
+                        helperText={this.state.errorForm.password}
+                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <CssTextField
+                        variant="outlined"
+                        fullWidth
+                        name="password2"
+                        label="Nhập lại Mật khẩu mới"
+                        type="password"
+                        id="password2"
+                        autoComplete="current-password2"
+                        value={this.state.password2}
+                        onChange={this.onChange}
+                        error={this.state.errorForm.password2.trim() !== ""}
+                        helperText={this.state.errorForm.password2}
+                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <div>Thay đổi avatar</div>
+                      <div>
+                        {" "}
+                        {this.state.avatar !== "" ? (
+                          <img
+                            style={{ width: 40, height: 40 }}
+                            src={this.state.avatar}
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            style={{ width: 40, height: 40 }}
+                            src={this.state.urlPreview}
+                            alt=""
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <input type="file" onChange={this.handleChangeImage} />
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <div>
+                    <div className="error_show">{errors.message}</div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Lưu thông tin
+                  </Button>
+                </form>
+              </div>
+            </Container>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -328,6 +337,6 @@ const mapStateToProps = state => ({
 export default withStyles(styles)(
   connect(
     mapStateToProps,
-    {changeUserInfo}
+    { changeUserInfo }
   )(Account)
 );

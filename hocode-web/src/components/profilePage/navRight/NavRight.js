@@ -6,11 +6,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
 import { getUser } from "../../../js/actions/userAction";
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 const styles = theme => ({
   userinfo: {
     marginBottom:15,
     flexWrap: "unset",
-    alignItems: "center"
+    alignItems: "center",
+    color:"#4978CC"
   },
   dailychallenge:{
     
@@ -34,23 +36,10 @@ class NavRight extends React.Component {
       <React.Fragment>
         <Grid container className={classes.userinfo}>
           <Grid item>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://loremflickr.com/320/240"
-              className={classes.avatar}
-            />
+          <SentimentSatisfiedAltIcon style={{ fontSize: 30, marginRight: 4 }} />
           </Grid>
           <Grid item style={{ flexGrow: 1 }}>
-            <div
-              style={{ fontSize: "15px", fontWeight: 600, margin: "0 10px" }}
-            >
-              {this.props.user.firstname}
-            </div>
-            <div
-              style={{ fontSize: "12px", color: "#a2a8b1", margin: "0 10px" }}
-            >
-              Trưởng ban đam mê lập trình
-            </div>
+          <div style={{ fontWeight: "bold" }}>Xin chào {this.props.user.firstname} !!! </div>{" "}
           </Grid>
         </Grid>
         <Divider light />
