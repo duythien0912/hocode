@@ -51,6 +51,8 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	urn.Password = ""
 	urn.Token = ""
 
+	urn.Avatar = ""
+
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
 	claims["name"] = ur.Email
@@ -109,6 +111,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 
 		urn := ur
 		urn.Password = ""
+		urn.Avatar = ""
 		// Set claims
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = ur.Email
