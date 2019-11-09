@@ -6,6 +6,15 @@ go get github.com/githubnemo/CompileDaemon
 CompileDaemon -build="go build" -command="./hocode"
 ```
 
+or
+
+```go
+// install fresh
+go get github.com/pilu/fresh
+
+// run
+fresh
+```
 
 ## Create docs
 

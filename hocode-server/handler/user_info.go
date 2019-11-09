@@ -72,18 +72,34 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	// miniTaskID := c.Param("minitask_id")
 
 	// Validation
-	if bodyUC.CourseID == "" || bodyUC.MiniTaskID == "" {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid course_id or minitask_id fields"}
+	if bodyUC.TaskID == "" || bodyUC.MiniTaskID == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid task_id or minitask_id fields"}
 	}
 
 	if userID == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid jwt"}
 	}
 
-	uc.UserID = userID
-
 	db := h.DB.Clone()
 	defer db.Close()
+
+	tf := &model.Task{}
+
+	if err = db.DB("hocode").C("tasks").
+		FindId(bson.ObjectIdHex(bodyUC.TaskID)).
+		// Find(bson.M{}).
+		// Select(bson.M{"id": id}).
+		One(&tf); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
+	bodyUC.CourseID = tf.CourseId
+
+	uc.UserID = userID
 
 	isInDB := true
 	// Find old db user_course
@@ -286,5 +302,42 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	// db.getCollection("minitasks").find({_id: {$gt: ObjectId("5d9b6ff5fe6e2b038fe5a409") }}).limit(1)
 
 	return c.JSON(http.StatusOK, userCourseOut)
+
+}
+
+func (h *Handler) NextMiniTask(c echo.Context) (err error) {
+
+	bodyUC := &model.BodyUC{}
+
+	if err = c.Bind(bodyUC); err != nil {
+		return
+	}
+
+	// Validation
+	if bodyUC.MiniTaskID == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid minitask_id fields"}
+	}
+
+	nextMiniTask := &model.MiniTask{}
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	nextMiniTask.Timestamp = time.Now()
+	if err = db.DB("hocode").C("minitasks").
+		Find(
+			bson.M{
+				"_id": bson.M{
+					"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
+				},
+			},
+		).
+		Sort("-timestamp").
+		Select(bson.M{"_id": 1, "mini_task_name": 1}).
+		Limit(1).
+		One(&nextMiniTask); err != nil {
+	}
+
+	return c.JSON(http.StatusOK, nextMiniTask)
 
 }

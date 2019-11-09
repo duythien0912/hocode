@@ -31,6 +31,7 @@ type (
 	BodyUC struct {
 		CourseID   string `json:"course_id" bson:"course_id"`
 		MiniTaskID string `json:"minitask_id" bson:"minitask_id"`
+		TaskID     string `json:"task_id" bson:"task_id"`
 	}
 )
 
