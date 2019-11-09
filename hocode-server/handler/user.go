@@ -36,7 +36,7 @@ func (h *Handler) GetUser(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&courses); err != nil {
 		return
 	}

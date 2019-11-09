@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -31,8 +32,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&ta); err != nil {
 		return
 	}
@@ -44,6 +44,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
 			}).
+			Sort("-timestamp").
 			All(&mta)
 		ta[i].Minitasks = mta
 
@@ -88,6 +89,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 		Find(bson.M{
 			"task_id": id,
 		}).
+		Sort("-timestamp").
 		All(&mta)
 	tf.Minitasks = mta
 
@@ -122,6 +124,7 @@ func (h *Handler) CreateTask(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
+	tn.Timestamp = time.Now()
 	if err = db.DB("hocode").C("tasks").Insert(tn); err != nil {
 		return echo.ErrInternalServerError
 	}

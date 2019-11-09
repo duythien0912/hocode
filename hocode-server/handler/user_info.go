@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
@@ -51,7 +52,7 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 // @Accept  json
 // @Produce  json
 // @Param  course body model.BodyUC true "UpdateUserCourse"
-// @Success 200 {object} model.UserCourse
+// @Success 200 {object} model.UserCourseOut
 // @Router /auth/updateusercourse [post]
 func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
@@ -105,8 +106,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}
 	}
 
-	courseInfo := model.CourseInfo{}
-
 	// get title from course
 	course := &model.Course{}
 
@@ -149,6 +148,8 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}
 
 	} else {
+		courseInfo := model.CourseInfo{}
+
 		courseInfo.CourseID = bodyUC.CourseID
 		courseInfo.CourseName = course.CourseName
 		courseInfo.BackgroundImage = course.BackgroundImage
@@ -176,6 +177,8 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	if isInDB {
 
+		uc.Timestamp = time.Now()
+
 		if err = db.DB("hocode").
 			C("user_course").
 			Update(bson.M{"user_id": uc.UserID}, uc); err != nil {
@@ -189,6 +192,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	} else {
 		uc.ID = bson.NewObjectId()
 		// Save in database
+		uc.Timestamp = time.Now()
 		if err = db.DB("hocode").C("user_course").Insert(uc); err != nil {
 			fmt.Println("[err]")
 			fmt.Println(err)
@@ -197,6 +201,90 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	}
 
-	return c.JSON(http.StatusOK, uc)
+	userMiniTask := &model.UserMiniTask{}
+
+	userMiniTask.UserID = userID
+
+	isInDBUserMiniTask := true
+
+	if err = db.DB("hocode").C("user_minitask").
+		Find(bson.M{
+			"user_id": userID,
+		}).
+		One(&userMiniTask); err != nil {
+		// if err == mgo.ErrNotFound {
+		// 	uc.CourseInfo = []CourseInfo
+		// }
+		isInDBUserMiniTask = false
+		// return
+	}
+	uMiniTaskLocationC := -1
+
+	if len(userMiniTask.MiniTaskInfo) != 0 {
+		for i := 0; i < len(userMiniTask.MiniTaskInfo); i++ {
+			if userMiniTask.MiniTaskInfo[i].MiniTaskID == bodyUC.MiniTaskID {
+				uMiniTaskLocationC = i
+			}
+		}
+	}
+
+	if uMiniTaskLocationC != -1 {
+		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
+		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
+	} else {
+		miniTaskIn := model.MiniTaskInfo{}
+		miniTaskIn.Status = "hoanthanh"
+		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
+
+		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
+
+	}
+
+	userMiniTask.Timestamp = time.Now()
+
+	if isInDBUserMiniTask {
+		if err = db.DB("hocode").
+			C("user_minitask").
+			Update(bson.M{"user_id": userMiniTask.UserID}, userMiniTask); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrInternalServerError
+			}
+
+			return
+		}
+	} else {
+		userMiniTask.ID = bson.NewObjectId()
+		if err = db.DB("hocode").C("user_minitask").Insert(userMiniTask); err != nil {
+			fmt.Println("[err]")
+			fmt.Println(err)
+			return echo.ErrInternalServerError
+		}
+	}
+
+	nextMiniTask := &model.MiniTask{}
+
+	nextMiniTask.Timestamp = time.Now()
+	if err = db.DB("hocode").C("minitasks").
+		Find(
+			bson.M{
+				"_id": bson.M{
+					"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
+				},
+			},
+		).
+		Select(bson.M{"_id": 1}).
+		Limit(1).
+		One(&nextMiniTask); err != nil {
+	}
+
+	userCourseOut := &model.UserCourseOut{
+		UserCourse:   uc,
+		UserMiniTask: userMiniTask,
+		NextMiniTask: nextMiniTask,
+	}
+
+	// db.getCollection("minitasks").find({_id: {$gt: ObjectId("5d9b6ff5fe6e2b038fe5a409") }}).limit(1)
+
+	return c.JSON(http.StatusOK, userCourseOut)
 
 }

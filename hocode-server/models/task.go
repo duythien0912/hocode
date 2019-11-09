@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -11,5 +13,6 @@ type (
 		BackgroundImage string        `json:"background_image" bson:"background_image"`
 		CourseId        string        `json:"course_id" bson:"course_id"`
 		Minitasks       []*MiniTask   `json:"minitasks" bson:"minitasks"`
+		Timestamp       time.Time     `json:"timestamp" bson:"timestamp"`
 	}
 )

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -20,7 +22,8 @@ type (
 		TemplateCode string      `json:"template_code" bson:"template_code"`
 		UnitTests    []*UnitTest `json:"unit_tests" bson:"unit_tests"`
 
-		TaskId string `json:"task_id" bson:"task_id"`
+		TaskId    string    `json:"task_id" bson:"task_id"`
+		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
 	}
 )
 

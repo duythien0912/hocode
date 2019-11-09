@@ -12,6 +12,8 @@ import (
 	model "github.com/duythien0912/hocode/models"
 
 	"gopkg.in/mgo.v2"
+
+	"time"
 )
 
 //e.GET("/testauth", TestAuth)
@@ -46,6 +48,10 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 		}
 
 		return
+	}
+
+	if ur.Avatar == "" {
+		ur.Avatar = "https://ui-avatars.com/api/?name=" + ur.FirstName + "+" + ur.LastName
 	}
 
 	ur.Password = ""
@@ -104,6 +110,7 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 		urO.Avatar = urN.Avatar
 	}
 
+	urO.Timestamp = time.Now()
 	if err = db.DB("hocode").
 		C("users").
 		Update(bson.M{"_id": urN.ID}, urO); err != nil {

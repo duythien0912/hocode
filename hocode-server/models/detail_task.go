@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -11,5 +13,6 @@ type (
 		TemplateCode string        `json:"template_code" bson:"template_code"`
 		UserCode     string        `json:"user_code" bson:"user_code"`
 		PointUnlock  string        `json:"point_unlock" bson:"point_unlock"`
+		Timestamp    time.Time     `json:"timestamp" bson:"timestamp"`
 	}
 )

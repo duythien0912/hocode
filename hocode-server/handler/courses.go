@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -43,7 +44,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&courses); err != nil {
 		return
 	}
@@ -72,8 +73,6 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 	defer db.Close()
 	if err = db.DB("hocode").C("course").
 		FindId(bson.ObjectIdHex(id)).
-		// Find(bson.M{}).
-		// Select(bson.M{"id": id}).
 		One(&course); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -109,11 +108,9 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 
 	if err = db.DB("hocode").C("tasks").
 		Find(bson.M{"course_id": id}).
-		// Find(bson.M{}).
-		// Select(bson.M{"course_id": id}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&ta); err != nil {
 		return
 	}
@@ -125,6 +122,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
 			}).
+			Sort("-timestamp").
 			All(&mta)
 		ta[i].Minitasks = mta
 
@@ -171,6 +169,7 @@ func (h *Handler) CreateCourse(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
+	pn.Timestamp = time.Now()
 	if err = db.DB("hocode").C("course").Insert(pn); err != nil {
 		return echo.ErrInternalServerError
 	}

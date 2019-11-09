@@ -87,6 +87,10 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid Email or Password fields"}
 	}
 
+	if ur.Avatar == "" {
+		ur.Avatar = "https://ui-avatars.com/api/?name=" + ur.FirstName + "+" + ur.LastName
+	}
+
 	pass := ur.Password
 
 	// Connect to DB
@@ -123,6 +127,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		ur.Password = pass
 
 		// Save in database
+		ur.Timestamp = time.Now()
 		if err = db.DB("hocode").C("users").Insert(ur); err != nil {
 			return echo.ErrInternalServerError
 		}

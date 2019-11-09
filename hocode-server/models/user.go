@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -15,5 +17,6 @@ type (
 		CodePoint int           `json:"codepoint" bson:"codepoint"`
 		Avatar    string        `json:"avatar" bson:"avatar"`
 		// Company []company      `json:"company,omitempty" bson:"company,omitempty"`
+		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
 	}
 )

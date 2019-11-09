@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -11,12 +13,14 @@ type (
 		// Name            string     `json:"name" bson:"name"`
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
+		Timestamp       time.Time  `json:"timestamp" bson:"timestamp"`
 	}
 )
 type (
 	TaskSolved struct {
 		// ID            bson.ObjectId `json:"id" bson:"_id,omitempty"`
-		TaskCount     int `json:"task_count" bson:"task_count"`
-		TasksComplete int `json:"tasks_complete" bson:"tasks_complete"`
+		TaskCount     int       `json:"task_count" bson:"task_count"`
+		TasksComplete int       `json:"tasks_complete" bson:"tasks_complete"`
+		Timestamp     time.Time `json:"timestamp" bson:"timestamp"`
 	}
 )

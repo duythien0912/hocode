@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -23,7 +24,7 @@ func (h *Handler) Profile(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&ta); err != nil {
 		return
 	}
@@ -73,6 +74,7 @@ func (h *Handler) CreateProfile(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
+	tn.Timestamp = time.Now()
 	if err = db.DB("hocode").C("profile").Insert(tn); err != nil {
 		return echo.ErrInternalServerError
 	}

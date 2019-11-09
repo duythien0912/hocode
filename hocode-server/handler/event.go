@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -31,7 +32,7 @@ func (h *Handler) GetEvents(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&bk); err != nil {
 		return
 	}
@@ -68,6 +69,7 @@ func (h *Handler) CreateEvent(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
+	bk.Timestamp = time.Now()
 	if err = db.DB("hocode").C("events").Insert(bk); err != nil {
 		return echo.ErrInternalServerError
 	}

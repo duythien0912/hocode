@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -31,7 +32,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 		Find(bson.M{}).
 		Skip((page - 1) * limit).
 		Limit(limit).
-		// Sort("-timestamp").
+		Sort("-timestamp").
 		All(&mta); err != nil {
 		return
 	}
@@ -58,8 +59,6 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 	defer db.Close()
 	if err = db.DB("hocode").C("minitasks").
 		FindId(bson.ObjectIdHex(id)).
-		// Find(bson.M{}).
-		// Select(bson.M{"id": id}).
 		One(&mtf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -99,10 +98,36 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 	defer db.Close()
 
 	// Save in database
+	mtn.Timestamp = time.Now()
 	if err = db.DB("hocode").C("minitasks").Insert(mtn); err != nil {
 		return echo.ErrInternalServerError
 	}
 
 	return c.JSON(http.StatusOK, mtn)
+
+}
+
+func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
+
+	limit, errorLimit := strconv.Atoi(c.QueryParam("limit"))
+	if errorLimit != nil {
+		limit = 4
+	}
+	mta := []*model.MiniTask{}
+
+	// Connect to DB
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if err = db.DB("hocode").C("minitasks").
+		Find(bson.M{}).
+		// Select().
+		Limit(limit).
+		Sort("-timestamp").
+		All(&mta); err != nil {
+		return
+	}
+
+	return c.JSON(http.StatusOK, mta)
 
 }
