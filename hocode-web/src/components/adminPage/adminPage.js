@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import restProvider from 'ra-data-simple-rest';
 import { Show, SimpleShowLayout, List, Datagrid, Edit, Create, SimpleForm, NumberField, NumberInput, BooleanInput, DisabledInput, TextInput, LongTextInput, TextField, BooleanField, RichTextField, } from 'react-admin';
 import BookIcon from '@material-ui/icons/Book';
-import { createMuiTheme } from '@material-ui/core/styles';
+
 
 const dataProvider = restProvider('https://hocode.appspot.com/api/v1');
 

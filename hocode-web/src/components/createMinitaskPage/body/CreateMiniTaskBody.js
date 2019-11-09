@@ -114,11 +114,13 @@ class CreateMiniTaskBody extends Component {
 
   //add input to list input
   addInput() {
+
     this.setState({
       inputList: [
         ...this.state.inputList,
         { input_name: "", input_type: "int" }
-      ]
+      ],
+      unit_tests:[]
     });
   }
 

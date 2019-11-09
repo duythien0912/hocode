@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-
+import { Link } from "react-router-dom";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -76,7 +76,9 @@ const StyledMenuItem = withStyles(theme => ({
         </StyledMenuItem>
         <StyledMenuItem>
             <AccountBoxIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Thông tin cá nhân</p>
+            <Link to="/profile/account">
+            <p style={{ fontSize: 12, marginLeft: "3px" }}>Thông tin cá nhân</p>
+          </Link>
         </StyledMenuItem>
 
       </StyledMenu>

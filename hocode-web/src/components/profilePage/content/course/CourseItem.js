@@ -59,7 +59,7 @@ class CourseItem extends Component {
               fontFamily: `'Yanone Kaffeesatz', sans-serif`
             }}
           >
-            Task đã làm: {course.completed_tasks_count}/{course.total_tasks_count}
+            
           </div>
         </Grid>
       </Grid>

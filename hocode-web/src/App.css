@@ -18,3 +18,13 @@
     background: #555; 
   }
 
+a:visited{
+  color:#000000!important
+}
+a{
+  color:#000000!important
+}
+
+*{
+  font-family: 'Nunito Sans', sans-serif;
+}

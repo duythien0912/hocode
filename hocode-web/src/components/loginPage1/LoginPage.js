@@ -83,7 +83,7 @@ class LoginPage extends React.Component {
     this.state = {
       email: "",
       password: "",
-      remember: false,
+      remember: true,
       errors: {}
     };
   }
@@ -176,6 +176,7 @@ class LoginPage extends React.Component {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" 
               onChange={this.handleChange('remember')}
+              checked={this.state.remember}
 
               />}
               label="Lưu tài khoản"

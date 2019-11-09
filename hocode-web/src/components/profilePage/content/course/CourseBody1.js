@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import CourseItem from './CourseItem';
-import "./coursebody.css"
+import "./coursebody.css";
+import HashLoader from "react-spinners/HashLoader";
 const styles = {
   CourseContainer: {
     paddingTop: "30px",
@@ -23,27 +24,43 @@ class CourseBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading:true,
       courses: []
     };
   }
+  getApi=async () =>{
+    await Promise.all([
+      axios.get(`https://hocode.appspot.com/api/v1/courses`).then(res => {
+        const courses = res.data;
+        console.log(courses)
+        this.setState({ courses });
+      })]
+    );
+    this.setState({isLoading:false})
+  }
   componentDidMount() {
-    axios.get(`https://hocode.appspot.com/auth/usercourse`).then(res => {
-      const courses = res.data.course_info;
-      this.setState({ courses });
-    });
+    this.getApi();
   }
   render() {
     const { classes } = this.props;
-    const {courses} = this.state;
+    const {courses,isLoading} = this.state;
     let url = this.props.url;
   
     return (
       <Grid container className={classes.CourseContainer} justify="center">
-        <Grid item xs={12} sm={12} style={{ padding: "0px 60px" }}>
+          {isLoading?<div className="sweet-loading" style={{display:'flex',alignItems:"center",justifyContent:'center',width:'100%'}}>
+              <HashLoader
+              
+                sizeUnit={"px"}
+                size={50}
+                color={"#AEA8A8"}
+                loading={isLoading}
+              />
+            </div> : (<React.Fragment><Grid item xs={12} sm={12} style={{ padding: "0px 60px" }}>
           <div className = "gallery" >
-          {courses.map((course)=><Link className = "item"key={course.course_id} style={{textDecoration:'none'}}to={`${url}/courses/${course.course_id}/tasks`}><CourseItem course={course}/></Link>)}
+          {courses.map((course)=><Link className = "item"key={course.id} style={{textDecoration:'none'}}to={`${url}/courses/${course.id}/tasks`}><CourseItem course={course}/></Link>)}
           </div>
-        </Grid>
+        </Grid></React.Fragment>)}  
       </Grid>
     );
   }

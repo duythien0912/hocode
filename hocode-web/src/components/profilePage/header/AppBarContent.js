@@ -9,8 +9,6 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import UserMenu from "./UserMenu";
 import Avatar from "@material-ui/core/Avatar";
-import Fab from "@material-ui/core/Fab";
-import NavigationIcon from "@material-ui/icons/Navigation";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import IconButton from "@material-ui/core/IconButton";
 const styles = theme => ({
@@ -65,7 +63,7 @@ class AppBarContent extends React.Component {
                 </IconButton>
               </Paper>
             </Typography>
-            <Fab 
+            {/*<Fab 
               className={classes.mobileHide}
               variant="extended"
               aria-label="like"
@@ -79,7 +77,7 @@ class AppBarContent extends React.Component {
             >
               <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
               Đăng bài tập
-            </Fab>
+            </Fab> */}
             
           </div>
           <div
@@ -87,14 +85,14 @@ class AppBarContent extends React.Component {
           >
             <div style={{ fontSize: 12, margin: "0px 4px", color: "#4978cc", marginLeft:10}}>
               <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
-              31242
+              {this.props.user.codepoint}
             </div>
 
             <Avatar
              className={classes.mobileHide}
               style={{ width: "30px", height: "30px", marginLeft:10}}
               alt="Remy Sharp"
-              src="https://loremflickr.com/320/240"
+              src={this.props.user.avatar}
              
             />
             <UserMenu />

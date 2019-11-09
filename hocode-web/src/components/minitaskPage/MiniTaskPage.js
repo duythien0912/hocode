@@ -125,18 +125,37 @@ class MiniTaskPage extends Component {
       isLoading: true
     }));
 
+
     if (this.state.minitask.id !== undefined) {
-      minitask.unit_tests.forEach((unit_test, index) => {
-        let inputs = "";
-        unit_test.inputs.forEach(input => {
-          inputs += `${input.value},`;
+      if(this.state.minitask.output_type_func.includes('[]')===true){
+        junit4 = `import static org.junit.Assert.assertArrayEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            inputs += `${input.value},`;
+          });
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index + 1}", ${
+            unit_test.expected_output
+          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
         });
-        let inputsFormat = inputs.substring(0, inputs.length - 1);
-        junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
-          unit_test.expected_output
-        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n }\n`;
-      });
-      junit4 += ` }`;
+        junit4 += `}`;
+      }
+      else{
+        junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            inputs += `${input.value},`;
+          });
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
+            unit_test.expected_output
+          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
+        });
+        junit4 += `}`;
+      }
+    
     }
     console.log(junit4);
     //console.log(code);
@@ -172,25 +191,44 @@ class MiniTaskPage extends Component {
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
-    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
-
+    let junit4='';
+    
+    
     let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
       isLoading: true
     }));
 
     if (this.state.minitask.id !== undefined) {
-      minitask.unit_tests.forEach((unit_test, index) => {
-        let inputs = "";
-        unit_test.inputs.forEach(input => {
-          inputs += `${input.value},`;
+      if(this.state.minitask.output_type_func.includes('[]')===true){
+        junit4 = `import static org.junit.Assert.assertArrayEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            inputs += `${input.value},`;
+          });
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index + 1}", ${
+            unit_test.expected_output
+          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
         });
-        let inputsFormat = inputs.substring(0, inputs.length - 1);
-        junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
-          unit_test.expected_output
-        }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
-      });
-      junit4 += `}`;
+        junit4 += `}`;
+      }
+      else{
+        junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            inputs += `${input.value},`;
+          });
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
+            unit_test.expected_output
+          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
+        });
+        junit4 += `}`;
+      }
+    
     }
     
     axios

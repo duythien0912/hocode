@@ -245,9 +245,9 @@ class ProfilePage extends React.Component {
 
           <Switch>
             <Route exact path={path}>
-              <Overview/>
+              <Overview url={url}/>
             </Route>
-            <Route path={`${path}/overview`}><Overview/></Route>
+            <Route path={`${path}/overview`}><Overview url={url}/></Route>
             <Route path={`${path}/course`}>
               <CourseBody url={url} />
             </Route>
