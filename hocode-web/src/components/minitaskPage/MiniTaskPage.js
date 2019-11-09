@@ -39,7 +39,7 @@ class MiniTaskPage extends Component {
       .get(`https://hocode.appspot.com/api/v1/minitasks/${params.minitaskId}`)
       .then(res => {
         const minitask = res.data;
-
+       
         this.setState((state, props) => ({
           minitask: minitask
         }));
@@ -244,13 +244,14 @@ class MiniTaskPage extends Component {
   }
   render() {
     const { minitask } = this.state;
+
     return (
       <React.Fragment>
         <div className="fit layout-code">
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
-            <MiniTaskHeader minitaskName={minitask.name} history={this.props.history} />
+            <MiniTaskHeader minitaskName={minitask.mini_task_name} history={this.props.history} />
           </div>
 
           <div className="layout-code-body">

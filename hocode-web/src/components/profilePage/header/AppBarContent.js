@@ -73,7 +73,8 @@ class AppBarContent extends React.Component {
                 height: "32px",
                 fontSize: 12,
                 background: "#dbe4f8",
-                color: "#1f74be"
+                color: "#1f74be",
+                marginLeft:10
               }}
             >
               <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
@@ -84,14 +85,14 @@ class AppBarContent extends React.Component {
           <div
             style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
           >
-            <div style={{ fontSize: 12, margin: "0px 4px", color: "#4978cc" }}>
+            <div style={{ fontSize: 12, margin: "0px 4px", color: "#4978cc", marginLeft:10}}>
               <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
               31242
             </div>
 
             <Avatar
              className={classes.mobileHide}
-              style={{ width: "30px", height: "30px" }}
+              style={{ width: "30px", height: "30px", marginLeft:10}}
               alt="Remy Sharp"
               src="https://loremflickr.com/320/240"
              

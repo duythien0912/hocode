@@ -25,12 +25,9 @@
 }
 
 .right-menu .code-point{
-    color:#595959;
+
     font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-size: 20px;
-    background-color: #DDDDDD;
-    border-radius: 9px;
-    padding:5px 20px;
+   
 }
 
 .right-menu .nav-name{
