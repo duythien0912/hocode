@@ -41,7 +41,11 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 	ur := &model.User{}
 
 	if err = db.DB("hocode").C("users").
-		FindId(bson.ObjectIdHex(ID)).
+		// FindId(bson.ObjectIdHex(ID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(ID),
+			"del": bson.M{"$ne": true},
+		}).
 		One(&ur); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -81,7 +85,10 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 	urO := &model.User{}
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"_id": urN.ID}).
+		Find(bson.M{
+			"_id": urN.ID,
+			"del": bson.M{"$ne": true},
+		}).
 		One(&urO); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound

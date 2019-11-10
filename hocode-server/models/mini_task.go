@@ -19,11 +19,13 @@ type (
 
 		MinitaskDesc string      `json:"mini_task_desc" bson:"mini_task_desc"`
 		Level        string      `json:"level" bson:"level"`
+		Avatar       string      `json:"avatar" bson:"avatar"`
 		TemplateCode string      `json:"template_code" bson:"template_code"`
 		UnitTests    []*UnitTest `json:"unit_tests" bson:"unit_tests"`
 
 		TaskId    string    `json:"task_id" bson:"task_id"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
+		Del       bool      `json:"del" bson:"del"`
 	}
 )
 

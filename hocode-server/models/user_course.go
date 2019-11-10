@@ -12,6 +12,7 @@ type (
 		UserID     string        `json:"user_id" bson:"user_id"`
 		CourseInfo []CourseInfo  `json:"course_info" bson:"course_info"`
 		Timestamp  time.Time     `json:"timestamp" bson:"timestamp"`
+		Del        bool          `json:"del" bson:"del"`
 	}
 )
 

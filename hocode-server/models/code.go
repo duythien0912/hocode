@@ -9,5 +9,6 @@ type (
 		Code      string    `json:"code" bson:"code"`
 		Lang      string    `json:"lang" bson:"lang"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
+		Del       bool      `json:"del" bson:"del"`
 	}
 )

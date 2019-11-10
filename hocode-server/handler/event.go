@@ -29,7 +29,7 @@ func (h *Handler) GetEvents(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("events").
-		Find(bson.M{}).
+	Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -53,10 +53,14 @@ func (h *Handler) GetEvents(c echo.Context) (err error) {
 func (h *Handler) CreateEvent(c echo.Context) (err error) {
 
 	bk := &model.Event{
-		ID: bson.NewObjectId(),
+		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
 		return
+	}
+
+	if bk.ID == "" {
+		bk.ID = bson.NewObjectId()
 	}
 
 	// Validation
@@ -70,8 +74,14 @@ func (h *Handler) CreateEvent(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	if err = db.DB("hocode").C("events").Insert(bk); err != nil {
-		return echo.ErrInternalServerError
+	// if err = db.DB("hocode").C("events").Insert(bk); err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
+
+	_, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}
 
 	return c.JSON(http.StatusOK, bk)

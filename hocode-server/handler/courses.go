@@ -41,7 +41,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("course").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -72,7 +72,11 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("hocode").C("course").
-		FindId(bson.ObjectIdHex(id)).
+		// FindId(bson.ObjectIdHex(id)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(id),
+			"del": bson.M{"$ne": true},
+		}).
 		One(&course); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -107,7 +111,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("tasks").
-		Find(bson.M{"course_id": id}).
+		Find(bson.M{"course_id": id, "del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -121,7 +125,8 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 		db.DB("hocode").C("minitasks").
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
-			}).
+				"del":     bson.M{"$ne": true}},
+			).
 			Sort("-timestamp").
 			All(&mta)
 		ta[i].Minitasks = mta
@@ -153,10 +158,15 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
 	pn := &model.Course{
-		ID: bson.NewObjectId(),
+		// ID: bson.NewObjectId(),
 	}
+
 	if err = c.Bind(pn); err != nil {
 		return
+	}
+
+	if pn.ID == "" {
+		pn.ID = bson.NewObjectId()
 	}
 
 	// Validation
@@ -170,8 +180,13 @@ func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
 	// Save in database
 	pn.Timestamp = time.Now()
-	if err = db.DB("hocode").C("course").Insert(pn); err != nil {
-		return echo.ErrInternalServerError
+	// if err = db.DB("hocode").C("course").Insert(pn); err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
+
+	_, errUs := db.DB("hocode").C("course").UpsertId(pn.ID, pn)
+	if errUs != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}
 
 	return c.JSON(http.StatusOK, pn)

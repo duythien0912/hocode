@@ -12,5 +12,6 @@ type (
 		Name      string        `json:"name" bson:"name"`
 		Avatar    string        `json:"avatar" bson:"avatar"`
 		Timestamp time.Time     `json:"timestamp" bson:"timestamp"`
+		Del       bool          `json:"del" bson:"del"`
 	}
 )

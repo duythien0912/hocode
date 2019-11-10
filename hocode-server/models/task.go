@@ -14,5 +14,6 @@ type (
 		CourseId        string        `json:"course_id" bson:"course_id"`
 		Minitasks       []*MiniTask   `json:"minitasks" bson:"minitasks"`
 		Timestamp       time.Time     `json:"timestamp" bson:"timestamp"`
+		Del             bool          `json:"del" bson:"del"`
 	}
 )

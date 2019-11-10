@@ -14,5 +14,6 @@ type (
 		Content   string        `json:"content" bson:"content"`
 		Link      string        `json:"link" bson:"link"`
 		Timestamp time.Time     `json:"timestamp" bson:"timestamp"`
+		Del       bool          `json:"del" bson:"del"`
 	}
 )

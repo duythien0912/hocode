@@ -14,6 +14,7 @@ type (
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
 		Timestamp       time.Time  `json:"timestamp" bson:"timestamp"`
+		Del             bool       `json:"del" bson:"del"`
 	}
 )
 type (

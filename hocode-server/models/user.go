@@ -18,5 +18,6 @@ type (
 		Avatar    string        `json:"avatar" bson:"avatar"`
 		// Company []company      `json:"company,omitempty" bson:"company,omitempty"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
+		Del       bool      `json:"del" bson:"del"`
 	}
 )

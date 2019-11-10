@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
@@ -29,7 +30,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("tasks").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -43,6 +44,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 		db.DB("hocode").C("minitasks").
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
+				"del":     bson.M{"$ne": true},
 			}).
 			Sort("-timestamp").
 			All(&mta)
@@ -69,29 +71,71 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 
 	id := c.Param("id")
 
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userID := claims["id"].(string)
+
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("hocode").C("tasks").
-		FindId(bson.ObjectIdHex(id)).
+		// FindId(bson.ObjectIdHex(id)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(id),
+			"del": bson.M{"$ne": true},
+		}).
 		// Find(bson.M{}).
 		// Select(bson.M{"id": id}).
 		One(&tf); err != nil {
 		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "tasks not found"}
 		}
 
 		return
 	}
 
 	mta := []*model.MiniTask{}
+	userMiniTask := &model.UserMiniTask{}
 
 	db.DB("hocode").C("minitasks").
 		Find(bson.M{
 			"task_id": id,
+			"del":     bson.M{"$ne": true},
 		}).
 		Sort("-timestamp").
 		All(&mta)
+
+	if err = db.DB("hocode").C("user_minitask").
+		Find(bson.M{
+			"user_id": userID,
+			"del":     bson.M{"$ne": true},
+		}).
+		One(&userMiniTask); err != nil {
+		// if err == mgo.ErrNotFound {
+		// 	uc.CourseInfo = []CourseInfo
+		// }
+		// isInDBUserMiniTask = false
+		// return
+	}
+
 	tf.Minitasks = mta
+
+	vitri := -1
+
+	for i := 0; i < len(mta); i++ {
+		for j := 0; j < len(
+			userMiniTask.MiniTaskInfo); j++ {
+			if mta[i].ID.Hex() == userMiniTask.MiniTaskInfo[j].MiniTaskID {
+				vitri = i
+				mta[i].Status = userMiniTask.MiniTaskInfo[j].Status
+			}
+
+		}
+
+	}
+
+	if vitri != -1 {
+		mta[vitri].Vitri = true
+	}
 
 	return c.JSON(http.StatusOK, tf)
 }
@@ -108,10 +152,14 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 func (h *Handler) CreateTask(c echo.Context) (err error) {
 
 	tn := &model.Task{
-		ID: bson.NewObjectId(),
+		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(tn); err != nil {
 		return
+	}
+
+	if tn.ID == "" {
+		tn.ID = bson.NewObjectId()
 	}
 
 	// Validation
@@ -125,8 +173,14 @@ func (h *Handler) CreateTask(c echo.Context) (err error) {
 
 	// Save in database
 	tn.Timestamp = time.Now()
-	if err = db.DB("hocode").C("tasks").Insert(tn); err != nil {
-		return echo.ErrInternalServerError
+	// if err = db.DB("hocode").C("tasks").Insert(tn); err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
+
+	_, errUs := db.DB("hocode").C("tasks").UpsertId(tn.ID, tn)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}
 
 	return c.JSON(http.StatusOK, tn)

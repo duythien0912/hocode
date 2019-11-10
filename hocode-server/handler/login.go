@@ -29,7 +29,12 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"email": ur.Email}).
+		Find(
+			bson.M{
+				"email": ur.Email,
+				"del":   bson.M{"$ne": true},
+			},
+		).
 		One(&ur); err != nil {
 		if err == mgo.ErrNotFound {
 			return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Not Found Email"}
@@ -102,7 +107,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 	urF := &model.User{}
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{"email": ur.Email}).One(urF); err != nil {
+		Find(bson.M{"email": ur.Email, "del": bson.M{"$ne": true}}).One(urF); err != nil {
 
 		ur.ID = bson.NewObjectId()
 

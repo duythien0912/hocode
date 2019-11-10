@@ -32,7 +32,10 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("user_course").
-		Find(bson.M{"user_id": ID}).
+		Find(bson.M{
+			"user_id": ID,
+			"del":     bson.M{"$ne": true},
+		}).
 		One(&uc); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -86,7 +89,11 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	tf := &model.Task{}
 
 	if err = db.DB("hocode").C("tasks").
-		FindId(bson.ObjectIdHex(bodyUC.TaskID)).
+		// FindId(bson.ObjectIdHex(bodyUC.TaskID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(bodyUC.TaskID),
+			"del": bson.M{"$ne": true},
+		}).
 		// Find(bson.M{}).
 		// Select(bson.M{"id": id}).
 		One(&tf); err != nil {
@@ -104,7 +111,10 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	isInDB := true
 	// Find old db user_course
 	if err = db.DB("hocode").C("user_course").
-		Find(bson.M{"user_id": userID}).
+		Find(bson.M{
+			"user_id": userID,
+			"del":     bson.M{"$ne": true},
+		}).
 		One(&uc); err != nil {
 		// if err == mgo.ErrNotFound {
 		// 	uc.CourseInfo = []CourseInfo
@@ -126,7 +136,11 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	course := &model.Course{}
 
 	if err = db.DB("hocode").C("course").
-		FindId(bson.ObjectIdHex(bodyUC.CourseID)).
+		// FindId(bson.ObjectIdHex(bodyUC.CourseID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(bodyUC.CourseID),
+			"del": bson.M{"$ne": true},
+		}).
 		One(&course); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -138,7 +152,10 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	taskf := &model.Task{}
 
 	if err = db.DB("hocode").C("tasks").
-		Find(bson.M{"course_id": bodyUC.CourseID}).
+		Find(bson.M{
+			"course_id": bodyUC.CourseID,
+			"del":       bson.M{"$ne": true},
+		}).
 		One(&taskf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -226,6 +243,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	if err = db.DB("hocode").C("user_minitask").
 		Find(bson.M{
 			"user_id": userID,
+			"del":     bson.M{"$ne": true},
 		}).
 		One(&userMiniTask); err != nil {
 		// if err == mgo.ErrNotFound {
@@ -247,6 +265,56 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	if uMiniTaskLocationC != -1 {
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
+
+		// Cộng điểm cho user
+		mtf := &model.MiniTask{}
+
+		if err = db.DB("hocode").C("minitasks").
+			// FindId(bson.ObjectIdHex(bodyUC.MiniTaskID)).
+			Find(bson.M{
+				"_id": bson.ObjectIdHex(bodyUC.MiniTaskID),
+				"del": bson.M{"$ne": true},
+			}).
+			One(&mtf); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			}
+		}
+
+		ur := &model.User{}
+
+		if err = db.DB("hocode").
+			C("users").
+			// FindId(bson.ObjectIdHex(userID)).
+			Find(bson.M{
+				"_id": bson.ObjectIdHex(userID),
+				"del": bson.M{"$ne": true},
+			}).
+			// Find(bson.M{"_id": userID}).
+			One(&ur); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			}
+
+			return
+		}
+
+		// ur, eur := claims["data"].(model.User)
+
+		// if eur != true { return c.JSON(http.StatusBadRequest, eur)}
+
+		ur.CodePoint = ur.CodePoint + mtf.CodePoint
+
+		ur.Timestamp = time.Now()
+		if err = db.DB("hocode").
+			C("users").
+			Update(bson.M{"_id": bson.ObjectIdHex(userID)}, ur); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			}
+			return
+		}
+
 	} else {
 		miniTaskIn := model.MiniTaskInfo{}
 		miniTaskIn.Status = "hoanthanh"
@@ -277,6 +345,8 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}
 	}
 
+	// db.getCollection("minitasks").find({_id: {$gt: ObjectId("5d9b6ff5fe6e2b038fe5a409") }}).limit(1)
+
 	nextMiniTask := &model.MiniTask{}
 
 	nextMiniTask.Timestamp = time.Now()
@@ -286,6 +356,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 				"_id": bson.M{
 					"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
 				},
+				"del": bson.M{"$ne": true},
 			},
 		).
 		Select(bson.M{"_id": 1}).
@@ -298,8 +369,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		UserMiniTask: userMiniTask,
 		NextMiniTask: nextMiniTask,
 	}
-
-	// db.getCollection("minitasks").find({_id: {$gt: ObjectId("5d9b6ff5fe6e2b038fe5a409") }}).limit(1)
 
 	return c.JSON(http.StatusOK, userCourseOut)
 
@@ -330,6 +399,7 @@ func (h *Handler) NextMiniTask(c echo.Context) (err error) {
 				"_id": bson.M{
 					"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
 				},
+				"del": bson.M{"$ne": true},
 			},
 		).
 		Sort("-timestamp").

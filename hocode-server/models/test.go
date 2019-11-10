@@ -13,5 +13,6 @@ type (
 		OutputType string        `json:"output_type" bson:"output_type"`
 		// TestInputId string        `json:"test_input_id" bson:"test_input_id"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
+		Del       bool      `json:"del" bson:"del"`
 	}
 )

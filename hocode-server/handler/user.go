@@ -33,7 +33,7 @@ func (h *Handler) GetUser(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("users").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").

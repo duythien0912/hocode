@@ -14,5 +14,6 @@ type (
 		UserCode     string        `json:"user_code" bson:"user_code"`
 		PointUnlock  string        `json:"point_unlock" bson:"point_unlock"`
 		Timestamp    time.Time     `json:"timestamp" bson:"timestamp"`
+		Del          bool          `json:"del" bson:"del"`
 	}
 )

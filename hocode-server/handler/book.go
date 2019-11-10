@@ -29,7 +29,7 @@ func (h *Handler) GetBooks(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("books").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -53,8 +53,9 @@ func (h *Handler) GetBooks(c echo.Context) (err error) {
 func (h *Handler) CreateBook(c echo.Context) (err error) {
 
 	bk := &model.Book{
-		ID: bson.NewObjectId(),
+		// ID: bson.NewObjectId(),
 	}
+
 	if err = c.Bind(bk); err != nil {
 		return
 	}
@@ -64,14 +65,27 @@ func (h *Handler) CreateBook(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid title or image fields"}
 	}
 
+	if bk.ID == "" {
+		bk.ID = bson.NewObjectId()
+	}
 	// Connect to DB
 	db := h.DB.Clone()
 	defer db.Close()
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	if err = db.DB("hocode").C("books").Insert(bk); err != nil {
-		return echo.ErrInternalServerError
+	// if err = db.DB("hocode").C("books").Insert(bk); err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
+
+	//Upsert
+	// update := bson.M{"$inc": bk}
+	// selector := bson.M{"_id": bk.ID}
+
+	_, errUs := db.DB("hocode").C("books").UpsertId(bk.ID, bk)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}
 
 	return c.JSON(http.StatusOK, bk)

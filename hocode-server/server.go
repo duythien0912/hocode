@@ -112,8 +112,11 @@ func main() {
 	ra.GET("/usercourse", h.GetUserCourse)
 
 	ra.POST("/updateusercourse", h.UpdateUserCourse)
-	
+
 	ra.POST("/nextminitask", h.NextMiniTask)
+
+	ra.POST("/nextminitask", h.NextMiniTask)
+	ra.GET("/tasks/:id", h.TaskByID)
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")

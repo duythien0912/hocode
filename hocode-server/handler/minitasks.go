@@ -29,7 +29,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("minitasks").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -58,7 +58,11 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("hocode").C("minitasks").
-		FindId(bson.ObjectIdHex(id)).
+		// FindId(bson.ObjectIdHex(id)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(id),
+			"del": bson.M{"$ne": true},
+		}).
 		One(&mtf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
@@ -82,12 +86,15 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	mtn := &model.MiniTask{
-		ID: bson.NewObjectId(),
+		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(mtn); err != nil {
 		return
 	}
 
+	if mtn.ID == "" {
+		mtn.ID = bson.NewObjectId()
+	}
 	// Validation
 	if mtn.MiniTaskName == "" || mtn.TaskId == "" || mtn.Status == "" || mtn.NameFunc == "" || mtn.MinitaskDesc == "" || mtn.TemplateCode == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid to or message fields"}
@@ -99,8 +106,14 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	// Save in database
 	mtn.Timestamp = time.Now()
-	if err = db.DB("hocode").C("minitasks").Insert(mtn); err != nil {
-		return echo.ErrInternalServerError
+	// if err = db.DB("hocode").C("minitasks").Insert(mtn); err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
+
+	_, errUs := db.DB("hocode").C("minitasks").UpsertId(mtn.ID, mtn)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}
 
 	return c.JSON(http.StatusOK, mtn)
@@ -120,7 +133,7 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("minitasks").
-		Find(bson.M{}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Select().
 		Limit(limit).
 		Sort("-timestamp").
@@ -128,6 +141,27 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 		return
 	}
 
+	for i := 0; i < len(mta); i++ {
+
+		tf := &model.Task{}
+
+		if err = db.DB("hocode").C("tasks").
+			// FindId(bson.ObjectIdHex(mta[i].TaskId)).
+			Find(bson.M{
+				"_id": bson.ObjectIdHex(mta[i].TaskId),
+				"del": bson.M{"$ne": true},
+			}).
+			// Find(bson.M{}).
+			// Select(bson.M{"id": id}).
+			One(&tf); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrNotFound
+			}
+
+			return
+		}
+		mta[i].Avatar = tf.BackgroundImage
+	}
 	return c.JSON(http.StatusOK, mta)
 
 }
