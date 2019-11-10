@@ -2,19 +2,19 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-
+import { Link } from "react-router-dom";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { logoutUser } from "../../../js/actions/authActions";
 import { connect } from "react-redux";
 const StyledMenu = withStyles({
   paper: {
-    border: "1px solid #d3d4d5",
+    border: "1px solid #d3d4d5"
   }
 })(props => (
   <Menu
-    style={{paddingLeft:'5px',paddingRight:"5px"}}
+    style={{ paddingLeft: "5px", paddingRight: "5px" }}
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
@@ -31,9 +31,9 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
-    minHeight:"unset",
+    minHeight: "unset",
     "&:focus": {
-     // backgroundColor: "red",
+      // backgroundColor: "red",
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white
       }
@@ -41,8 +41,7 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
-
- function CustomizedMenus(props) {
+function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
@@ -54,13 +53,13 @@ const StyledMenuItem = withStyles(theme => ({
   };
 
   return (
-    <div style={{marginLeft:3}}>
+    <div style={{ marginLeft: 3 }}>
       <MoreHorizIcon
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
         onClick={handleClick}
-        style={{color:"#282828"}}
+        style={{ color: "#282828" }}
       />
 
       <StyledMenu
@@ -71,14 +70,15 @@ const StyledMenuItem = withStyles(theme => ({
         onClose={handleClose}
       >
         <StyledMenuItem onClick={props.logoutUser}>
-            <ExitToAppIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Đăng xuất</p>
+          <ExitToAppIcon style={{ fontSize: 16 }} />
+          <p style={{ fontSize: 12, marginLeft: "3px" }}>Đăng xuất</p>
         </StyledMenuItem>
         <StyledMenuItem>
-            <AccountBoxIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Thông tin cá nhân</p>
+          <AccountBoxIcon style={{ fontSize: 16 }} />
+          <Link to="/profile/account" onClick={()=>{setAnchorEl(null)}}>
+            <p style={{ fontSize: 12, marginLeft: "3px" }}>Thông tin cá nhân</p>
+          </Link>
         </StyledMenuItem>
-
       </StyledMenu>
     </div>
   );
@@ -93,4 +93,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(CustomizedMenus) ;
+)(CustomizedMenus);

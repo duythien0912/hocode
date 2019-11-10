@@ -1,4 +1,4 @@
-import { ADD_CODEPOINT, GET_USER, CHANGE_USER_INFO } from "../actions/types";
+import { ADD_CODEPOINT, GET_USER, CHANGE_USER_INFO,CHANGE_LOADING } from "../actions/types";
 
 const initialState = {
   avatar: "",
@@ -6,7 +6,8 @@ const initialState = {
   email: "",
   firstname: "",
   id: "",
-  lastname: ""
+  lastname: "",
+  isUserLoading:false,
 };
 
 export default function(state = initialState, action) {
@@ -14,16 +15,29 @@ export default function(state = initialState, action) {
     case ADD_CODEPOINT:
       return {
         ...state,
-        codepoint: action.payload
+        codepoint: action.payload,
+        isUserLoading:false
       };
     case GET_USER:
       return {
+        ...state,
         ...action.payload
       };
     case CHANGE_USER_INFO:
       return {
-        ...action.payload
+        ...state,
+        avatar:action.payload.avatar,
+        codepoint:action.payload.codepoint,
+        email:action.payload.email,
+        firstname:action.payload.firstname,
+        lastname:action.payload.lastname,
+        isUserLoading: false
       };
+      case CHANGE_LOADING:
+        return {
+          ...state,
+          isUserLoading: action.payload
+        }; 
     default:
       return state;
   }

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -8,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/styles";
@@ -118,34 +116,35 @@ class SignUpPage extends React.Component {
   }
   onChange = e => {
     let isError = false;
+    var errorFormNew = this.state.errorForm;
 
     if (e.target.id === "email")
       if (regexEmail.test(e.target.value) === false) {
         isError = true;
-        this.state.errorForm.email =
+        errorFormNew.email =
           "*Email không đúng định dạng vd: nguyenvana@gmail.com";
       } else {
-        this.state.errorForm.email = "";
+        errorFormNew.email = "";
       }
     if (e.target.id === "password")
       if (regexPassword.test(e.target.value) === false) {
         isError = true;
-        this.state.errorForm.password =
+        errorFormNew.password =
           "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường và không chứa ký tự đặc biệt";
       } else {
-        this.state.errorForm.password = "";
+        errorFormNew.password = "";
       }
     if (e.target.id === "password2")
       if (e.target.value !== this.state.password) {
         isError = true;
-        this.state.errorForm.password2 = "*Bạn cần nhập mật khẩu giống trên";
+        errorFormNew.password2 = "*Bạn cần nhập mật khẩu giống trên";
       } else {
-        this.state.errorForm.password2 = "";
+        errorFormNew.password2 = "";
       }
 
     if (isError) {
       this.setState({
-        errorForm: this.state.errorForm
+        errorForm: errorFormNew
       });
     }
 

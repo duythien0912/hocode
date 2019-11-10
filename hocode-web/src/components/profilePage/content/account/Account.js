@@ -11,7 +11,7 @@ import { changeUserInfo } from "../../../../js/actions/userAction";
 import { connect } from "react-redux";
 import { regexPassword } from "../../../../common/regex";
 import Paper from "@material-ui/core/Paper";
-
+import HashLoader from "react-spinners/HashLoader";
 import axios from "axios";
 const CssTextField = withStyles({
   root: {
@@ -63,6 +63,7 @@ class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       lastName: "", //họ
       firstName: "",
       password: "",
@@ -83,18 +84,23 @@ class Account extends React.Component {
     this.toBase64 = this.toBase64.bind(this);
     this.ImgToBase64 = this.ImgToBase64.bind(this);
   }
-
+  getApi = async () => {
+    await Promise.all([
+      axios
+        .get("https://hocode.appspot.com/auth/userinfo")
+        .then(res => {
+          this.setState({
+            firstName: res.data.firstname,
+            lastName: res.data.lastname,
+            avatar: res.data.avatar
+          });
+        })
+        .catch(err => console.log(err))
+    ]);
+    this.setState({ isLoading: false });
+  };
   componentDidMount() {
-    axios
-      .get("https://hocode.appspot.com/auth/userinfo")
-      .then(res => {
-        this.setState({
-          firstName: res.data.firstname,
-          lastName: res.data.lastname,
-          avatar: res.data.avatar
-        });
-      })
-      .catch(err => console.log(err));
+    this.getApi();
   }
   async handleChangeImage(e) {
     if (e.target.files[0]) {
@@ -112,22 +118,23 @@ class Account extends React.Component {
     if (e.target.id === "password")
       if (regexPassword.test(e.target.value) === false) {
         isError = true;
-        this.state.errorForm.password =
+        var errorFormNew = this.state.errorForm;
+        errorFormNew.password =
           "*Mật khẩu cần có ít nhất 6 ký tự, 1 số, 1 chữ In và 1 chữ thường và không chứa ký tự đặc biệt";
       } else {
-        this.state.errorForm.password = "";
+        errorFormNew.password = "";
       }
     if (e.target.id === "password2")
       if (e.target.value !== this.state.password) {
         isError = true;
-        this.state.errorForm.password2 = "*Bạn cần nhập mật khẩu giống trên";
+        errorFormNew.password2 = "*Bạn cần nhập mật khẩu giống trên";
       } else {
-        this.state.errorForm.password2 = "";
+        errorFormNew.password2 = "";
       }
 
     if (isError) {
       this.setState({
-        errorForm: this.state.errorForm
+        errorForm: errorFormNew
       });
     }
 
@@ -150,7 +157,7 @@ class Account extends React.Component {
     return result;
   }
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
 
     let messageError = "";
@@ -178,7 +185,20 @@ class Account extends React.Component {
       password: this.state.password,
       avatar: this.state.image
     };
-    this.props.changeUserInfo(newUser, this.props.auth.user.data.id);
+    console.log(this.props.auth.user.data.id);
+    this.setState(function(state, props) {
+      return {
+        isLoading: true
+      };
+    });
+    await this.props.changeUserInfo(newUser, this.props.auth.user.data.id);
+    setTimeout(() => {
+      this.setState(function(state, props) {
+        return {
+          isLoading: false
+        };
+      });
+    }, 0);
   };
 
   _checkError(val) {
@@ -190,137 +210,176 @@ class Account extends React.Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, isLoading } = this.state;
     const { classes } = this.props;
 
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={5} md={5}>
-          <Paper style={{ padding: 16 }}>
-            <div style={{ fontWeight: "bold" }}>Thông tin cá nhân</div>{" "}
-            <div>Họ và tên: {this.props.user.lastname}   {this.props.user.firstname}</div>
-            <div>Email: {this.props.user.email}</div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={7} md={7} >
-          <Paper style={{ padding: 16 }}>
-            <Container
-              component="main"
-              maxWidth="xs"
-            >
-              <CssBaseline />
-              <div className={classes.paper}>
-                <Typography component="h1" variant="h5"></Typography>
-                <form
-                  className={classes.form}
-                  noValidate
-                  onSubmit={this.onSubmit}
-                >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <CssTextField
-                        autoComplete="lname"
-                        name="lastName"
-                        variant="outlined"
-                        fullWidth
-                        id="lastName"
-                        label="Họ"
-                        autoFocus
-                        value={this.state.lastName}
-                        onChange={this.onChange}
-                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <CssTextField
-                        variant="outlined"
-                        fullWidth
-                        id="firstName"
-                        label="Tên"
-                        name="firstName"
-                        autoComplete="fname"
-                        value={this.state.firstName}
-                        onChange={this.onChange}
-                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CssTextField
-                        variant="outlined"
-                        fullWidth
-                        name="password"
-                        label="Mật khẩu mới"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={this.state.password}
-                        onChange={this.onChange}
-                        error={this.state.errorForm.password.trim() !== ""}
-                        helperText={this.state.errorForm.password}
-                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <CssTextField
-                        variant="outlined"
-                        fullWidth
-                        name="password2"
-                        label="Nhập lại Mật khẩu mới"
-                        type="password"
-                        id="password2"
-                        autoComplete="current-password2"
-                        value={this.state.password2}
-                        onChange={this.onChange}
-                        error={this.state.errorForm.password2.trim() !== ""}
-                        helperText={this.state.errorForm.password2}
-                        inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                        InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <div>Thay đổi avatar</div>
-                      <div>
-                        {" "}
-                        {this.state.avatar !== "" ? (
-                          <img
-                            style={{ width: 40, height: 40 }}
-                            src={this.state.avatar}
-                            alt=""
+      <Grid container spacing={3} style={{ height: "100%" }}>
+        {isLoading === true || this.props.user.isUserLoading === true ? (
+          <div
+            className="sweet-loading"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%"
+            }}
+          >
+            <HashLoader
+              sizeUnit={"px"}
+              size={50}
+              color={"#AEA8A8"}
+              loading={true}
+            />
+          </div>
+        ) : (
+          <React.Fragment>
+            <Grid item xs={12} sm={5} md={5}>
+              <Paper style={{ padding: 16 }}>
+                <div style={{ fontWeight: "bold" }}>Thông tin cá nhân</div>{" "}
+                <div>
+                  Họ và tên: {this.props.user.lastname}{" "}
+                  {this.props.user.firstname}
+                </div>
+                <div>Email: {this.props.user.email}</div>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={7} md={7}>
+              <Paper style={{ padding: 16 }}>
+                <Container component="main" maxWidth="xs">
+                  <CssBaseline />
+                  <div className={classes.paper}>
+                    <Typography component="h1" variant="h5"></Typography>
+                    <form
+                      className={classes.form}
+                      noValidate
+                      onSubmit={this.onSubmit}
+                    >
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                          <CssTextField
+                            autoComplete="lname"
+                            name="lastName"
+                            variant="outlined"
+                            fullWidth
+                            id="lastName"
+                            label="Họ"
+                            value={this.state.lastName}
+                            onChange={this.onChange}
+                            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
                           />
-                        ) : (
-                          <img
-                            style={{ width: 40, height: 40 }}
-                            src={this.state.urlPreview}
-                            alt=""
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <CssTextField
+                            variant="outlined"
+                            fullWidth
+                            id="firstName"
+                            label="Tên"
+                            name="firstName"
+                            autoComplete="fname"
+                            value={this.state.firstName}
+                            onChange={this.onChange}
+                            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
                           />
-                        )}
-                      </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <CssTextField
+                            variant="outlined"
+                            fullWidth
+                            name="password"
+                            label="Mật khẩu mới"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={this.state.password}
+                            onChange={this.onChange}
+                            error={this.state.errorForm.password.trim() !== ""}
+                            helperText={this.state.errorForm.password}
+                            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <CssTextField
+                            variant="outlined"
+                            fullWidth
+                            name="password2"
+                            label="Nhập lại Mật khẩu mới"
+                            type="password"
+                            id="password2"
+                            autoComplete="current-password2"
+                            value={this.state.password2}
+                            onChange={this.onChange}
+                            error={this.state.errorForm.password2.trim() !== ""}
+                            helperText={this.state.errorForm.password2}
+                            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <div>Thay đổi avatar</div>
+                          <div>
+                            {" "}
+                            {this.state.urlPreview !== "" ? (
+                              <img
+                                style={{ width: 40, height: 40 }}
+                                src={this.state.urlPreview}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                style={{ width: 40, height: 40 }}
+                                src={this.state.avatar}
+                                alt=""
+                              />
+                            )}
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="files"
+                              style={{
+                                padding: "4px 6px",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                background: "#2098d1",
+                                color: "white",
+                                boxShadow:
+                                  "0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)"
+                              }}
+                            >
+                              Chọn ảnh
+                            </label>
+                            <input
+                              id="files"
+                              type="file"
+                              onChange={this.handleChangeImage}
+                              style={{ visibility: "hidden" }}
+                            />
+                          </div>
+                        </Grid>
+                      </Grid>
                       <div>
-                        <input type="file" onChange={this.handleChangeImage} />
+                        <div className="error_show">{errors.message}</div>
                       </div>
-                    </Grid>
-                  </Grid>
-                  <div>
-                    <div className="error_show">{errors.message}</div>
-                  </div>
 
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Lưu thông tin
-                  </Button>
-                </form>
-              </div>
-            </Container>
-          </Paper>
-        </Grid>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                      >
+                        Lưu thông tin
+                      </Button>
+                    </form>
+                  </div>
+                </Container>
+              </Paper>
+            </Grid>
+          </React.Fragment>
+        )}
       </Grid>
     );
   }
