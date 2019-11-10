@@ -99,12 +99,12 @@ class SignUpPage extends React.Component {
   }
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/courses");
+      this.props.history.push("/profile");
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/courses");
+      this.props.history.push("/profile");
     }
     if (nextProps.errors) {
       nextProps.errors.message = "*" + nextProps.errors.message;

@@ -21,7 +21,7 @@ func (h *Handler) Profile(c echo.Context) (err error) {
 	defer db.Close()
 
 	if err = db.DB("hocode").C("profile").
-	Find(bson.M{"del": bson.M{"$ne": true}}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
 		Sort("-timestamp").
@@ -42,7 +42,7 @@ func (h *Handler) ProfileByID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 	if err = db.DB("hocode").C("profile").
-	Find(bson.M{"del": bson.M{"$ne": true}}).
+		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Select(bson.M{"id": id}).
 		One(&tf); err != nil {
 		if err == mgo.ErrNotFound {
@@ -80,15 +80,14 @@ func (h *Handler) CreateProfile(c echo.Context) (err error) {
 	// }
 
 	if tn.ID == "" {
-        tn.ID = bson.NewObjectId()
-    }
+		tn.ID = bson.NewObjectId()
+	}
 
-    _, errUs := db.DB("hocode").C("books").UpsertId(tn.ID, tn)
-    if errUs != nil {
-        // return echo.ErrInternalServerError
-        return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
-    }
-
+	_, errUs := db.DB("hocode").C("books").UpsertId(tn.ID, tn)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
+	}
 
 	return c.JSON(http.StatusOK, tn)
 
