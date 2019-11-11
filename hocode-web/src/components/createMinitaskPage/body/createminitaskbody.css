@@ -1,13 +1,24 @@
 .input-createminitask{
-    margin: 10px 0;
     border-radius:4px;
     border:none;
     box-shadow : 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
     padding-left: 3px;
     line-height: 2;
+    width: 100%;
+}
+.output_createminitask{
+    margin: 10px 0;
+    border-radius:4px;
+    border:none;
+    box-shadow : 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+    padding-left: 3px;
+    line-height: 2; 
 }
 
 .select_type{
-    width: 20%;
+   
     margin-bottom: 10px;
+}
+*{
+    font-size: 14px;
 }

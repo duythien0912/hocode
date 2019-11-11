@@ -20,6 +20,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppBarContent from './header/AppBarContent';
 import Account from './content/account/Account';
 import Overview  from './content/overview/Overview'
+import CreateMiniTask from '../createMinitaskPage/body/CreateMiniTaskBody';
+import Paper from '@material-ui/core/Paper';
 import "./profilepage.css";
 
 const drawerWidth = 240;
@@ -245,7 +247,9 @@ class ProfilePage extends React.Component {
 
           <Switch>
             <Route exact path={path}>
-              <Overview url={url}/>
+              <Paper style={{padding:10}}>
+              <CreateMiniTask/>
+              </Paper>
             </Route>
             <Route path={`${path}/overview`}><Overview url={url}/></Route>
             <Route path={`${path}/course`}>

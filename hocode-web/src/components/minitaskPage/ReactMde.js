@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-
+import "./reactmde.css"
 class ReactMde extends Component {
   handleChange = value => {
     this.props.handleMarkdownChange(value);
@@ -10,7 +10,7 @@ class ReactMde extends Component {
     return (
       <div>
         <SimpleMDEReact
-          className={""}
+          className={"react_mde_custom"}
           label=""
           value={this.props.mini_task_desc}
           onChange={this.handleChange}
