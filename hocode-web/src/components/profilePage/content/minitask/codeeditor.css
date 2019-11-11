@@ -1,0 +1,29 @@
+.codeEditorCreateMiniTask .react-codemirror2{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    height: 100%;
+}
+.codeEditorCreateMiniTask .react-codemirror2 .CodeMirror{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.codeEditorCreateMiniTask{
+    height: 30%;
+}
+
+.codeEditorCreateMiniTask .CodeMirror-cursor { display: none !important } 
+.codeEditorCreateMiniTask .CodeMirror-scroll{
+    cursor:  auto!important
+}
+
+.codeEditorCreateMiniTask .CodeMirror-lines{
+    cursor:  auto!important
+}

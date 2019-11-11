@@ -20,7 +20,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppBarContent from './header/AppBarContent';
 import Account from './content/account/Account';
 import Overview  from './content/overview/Overview'
-import CreateMiniTask from '../createMinitaskPage/body/CreateMiniTaskBody';
+import CreateMiniTask from './content/minitask/CreateMiniTaskBody';
 import Paper from '@material-ui/core/Paper';
 import "./profilepage.css";
 
@@ -247,9 +247,7 @@ class ProfilePage extends React.Component {
 
           <Switch>
             <Route exact path={path}>
-              <Paper style={{padding:10}}>
-              <CreateMiniTask/>
-              </Paper>
+            <Overview url={url}/>
             </Route>
             <Route path={`${path}/overview`}><Overview url={url}/></Route>
             <Route path={`${path}/course`}>
@@ -260,6 +258,11 @@ class ProfilePage extends React.Component {
             </Route>
             <Route path={`${path}/print`}>In chứng chỉ</Route>
             <Route path={`${path}/account`}><Account/></Route>
+            <Route exact path={`${path}/minitasks/createminitask`}>
+              <Paper style={{padding:10}}>
+              <CreateMiniTask/>
+              </Paper>
+            </Route>
           </Switch>
         </main>
       </div>

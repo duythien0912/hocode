@@ -1,0 +1,54 @@
+
+.react_mde_custom .editor-preview h1,h2,h3,h4,h5,h6{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+
+
+.react_mde_custom .editor-preview code{
+    background: gainsboro;
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 12px;
+
+}
+.react_mde_custom .editor-preview  pre{
+    font-family: Operator Mono SSm A,Operator Mono SSm B,monospace;
+    font-size: .85em;
+    overflow: auto;
+    word-wrap: normal;
+    padding: 16px;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    overflow: auto;
+}
+.react_mde_custom .editor-preview  pre code{
+    background: none;
+    padding: 2px;
+    border-radius: none;
+    font-size: 12px;
+}
+.react_mde_custom .editor-preview {
+    background: white!important;
+    padding-right: 25px;
+}
+.react_mde_custom .editor-preview ul{
+    margin-left: 20px;
+}
+.react_mde_custom .editor-preview ul li ul{
+    margin-left: 20px;
+}
+.react_mde_custom .editor-toolbar{
+    background: #f3f3f3;
+    
+}
+.react_mde_custom .CodeMirror-fullscreen{
+    
+    z-index: 9999999;
+}
+
+.react_mde_custom .fullscreen{
+    z-index: 9999999;
+}
+

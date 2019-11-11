@@ -31,6 +31,13 @@
 }
 .react_mde_custom .editor-preview {
     background: white!important;
+    padding-right: 25px;
+}
+.react_mde_custom .editor-preview ul{
+    margin-left: 20px;
+}
+.react_mde_custom .editor-preview ul li ul{
+    margin-left: 20px;
 }
 .react_mde_custom .editor-toolbar{
     background: #f3f3f3;
@@ -44,3 +51,4 @@
 .react_mde_custom .fullscreen{
     z-index: 9999999;
 }
+
