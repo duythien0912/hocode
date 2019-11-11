@@ -13,6 +13,7 @@ type (
 		// Name            string     `json:"name" bson:"name"`
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
+		Tasks           []*Task    `json:"tasks" bson:"tasks"`
 		Timestamp       time.Time  `json:"timestamp" bson:"timestamp"`
 		Del             bool       `json:"del" bson:"del"`
 	}

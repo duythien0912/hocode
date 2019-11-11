@@ -49,6 +49,21 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 		return
 	}
 
+	for i := 0; i < len(courses); i++ {
+		mta := []*model.Task{}
+
+		db.DB("hocode").C("tasks").
+			Find(bson.M{
+				"course_id": courses[i].ID.Hex(),
+				"del":       bson.M{"$ne": true}},
+			).
+			Select(bson.M{"_id": 1, "task_name": 1}).
+			Sort("-timestamp").
+			All(&mta)
+		courses[i].Tasks = mta
+
+	}
+
 	return c.JSON(http.StatusOK, courses)
 
 }
