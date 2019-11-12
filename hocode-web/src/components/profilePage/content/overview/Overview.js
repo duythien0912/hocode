@@ -231,7 +231,7 @@ class Overview extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.rootReducer.user
 });
 export default withStyles(styles)(
   connect(

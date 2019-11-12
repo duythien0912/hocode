@@ -1,37 +1,51 @@
 basePath: /api/v1
 definitions:
-  model.BodyUC:
+  model_BodyUC:
     properties:
       course_id:
         type: string
       minitask_id:
         type: string
+      task_id:
+        type: string
     type: object
-  model.Book:
+  model_Book:
     properties:
       content:
         type: string
+      del:
+        type: boolean
       id:
         type: string
       image:
         type: string
+      timestamp:
+        type: string
       title:
         type: string
     type: object
-  model.Course:
+  model_Course:
     properties:
       background_image:
         type: string
       course_name:
         type: string
+      del:
+        type: boolean
       id:
         type: string
       task_solved:
-        $ref: '#/definitions/model.TaskSolved'
+        $ref: '#/definitions/model_TaskSolved'
         description: Name            string     json:"name" bson:"name"
         type: object
+      tasks:
+        items:
+          $ref: '#/definitions/model_Task'
+        type: array
+      timestamp:
+        type: string
     type: object
-  model.CourseInfo:
+  model_CourseInfo:
     properties:
       background_image:
         type: string
@@ -48,30 +62,38 @@ definitions:
       total_tasks_count:
         type: integer
     type: object
-  model.Event:
+  model_Event:
     properties:
       content:
         type: string
+      del:
+        type: boolean
       id:
         type: string
       image:
         type: string
       link:
         type: string
+      timestamp:
+        type: string
       title:
         type: string
     type: object
-  model.Input:
+  model_Input:
     properties:
       type:
         type: string
       value:
         type: string
     type: object
-  model.MiniTask:
+  model_MiniTask:
     properties:
+      avatar:
+        type: string
       code_point:
         type: integer
+      del:
+        type: boolean
       id:
         type: string
       level:
@@ -92,52 +114,69 @@ definitions:
         type: string
       template_code:
         type: string
+      timestamp:
+        type: string
       unit_tests:
         items:
-          $ref: '#/definitions/model.UnitTest'
+          $ref: '#/definitions/model_UnitTest'
         type: array
       vitri:
         type: boolean
     type: object
-  model.Task:
+  model_MiniTaskInfo:
+    properties:
+      minitask_id:
+        type: string
+      status:
+        type: string
+    type: object
+  model_Task:
     properties:
       background_image:
         type: string
       course_id:
         type: string
+      del:
+        type: boolean
       id:
         type: string
       minitasks:
         items:
-          $ref: '#/definitions/model.MiniTask'
+          $ref: '#/definitions/model_MiniTask'
         type: array
       task_name:
         type: string
+      timestamp:
+        type: string
     type: object
-  model.TaskSolved:
+  model_TaskSolved:
     properties:
       task_count:
         description: ID            bson.ObjectId json:"id" bson:"_id,omitempty"
         type: integer
       tasks_complete:
         type: integer
+      timestamp:
+        type: string
     type: object
-  model.UnitTest:
+  model_UnitTest:
     properties:
       expected_output:
         type: string
       inputs:
         description: ID             bson.ObjectId json:"id" bson:"_id,omitempty"
         items:
-          $ref: '#/definitions/model.Input'
+          $ref: '#/definitions/model_Input'
         type: array
     type: object
-  model.User:
+  model_User:
     properties:
       avatar:
         type: string
       codepoint:
         type: integer
+      del:
+        type: boolean
       email:
         type: string
       firstname:
@@ -148,16 +187,50 @@ definitions:
         type: string
       password:
         type: string
+      timestamp:
+        description: Company []company      json:"company,omitempty" bson:"company,omitempty"
+        type: string
       token:
         type: string
     type: object
-  model.UserCourse:
+  model_UserCourse:
     properties:
       course_info:
         items:
-          $ref: '#/definitions/model.CourseInfo'
+          $ref: '#/definitions/model_CourseInfo'
         type: array
+      del:
+        type: boolean
       id:
+        type: string
+      timestamp:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model_UserCourseOut:
+    properties:
+      next_minitask:
+        $ref: '#/definitions/model_MiniTask'
+        type: object
+      user_course:
+        $ref: '#/definitions/model_UserCourse'
+        type: object
+      user_minitask:
+        $ref: '#/definitions/model_UserMiniTask'
+        type: object
+    type: object
+  model_UserMiniTask:
+    properties:
+      course_info:
+        items:
+          $ref: '#/definitions/model_MiniTaskInfo'
+        type: array
+      del:
+        type: boolean
+      id:
+        type: string
+      timestamp:
         type: string
       user_id:
         type: string
@@ -187,7 +260,7 @@ paths:
         name: course
         required: true
         schema:
-          $ref: '#/definitions/model.BodyUC'
+          $ref: '#/definitions/model_BodyUC'
           type: object
       produces:
       - application/json
@@ -195,7 +268,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.UserCourse'
+            $ref: '#/definitions/model_UserCourseOut'
             type: object
       summary: UpdateUserCourse
       tags:
@@ -211,7 +284,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.UserCourse'
+            $ref: '#/definitions/model_UserCourse'
             type: object
       summary: List GetUserCourse
       tags:
@@ -221,6 +294,7 @@ paths:
       consumes:
       - application/json
       description: get books <a href="/api/v1/books?page=1&limit=5">/api/v1/books?page=1&limit=5</a>
+      operationId: book_list
       produces:
       - application/json
       responses:
@@ -228,7 +302,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Book'
+              $ref: '#/definitions/model_Book'
             type: array
       summary: List Books
       tags:
@@ -238,6 +312,7 @@ paths:
       consumes:
       - application/json
       description: get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
+      operationId: course_list
       produces:
       - application/json
       responses:
@@ -245,7 +320,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Course'
+              $ref: '#/definitions/model_Course'
             type: array
       summary: List Courses
       tags:
@@ -260,7 +335,7 @@ paths:
         name: course
         required: true
         schema:
-          $ref: '#/definitions/model.Course'
+          $ref: '#/definitions/model_Course'
           type: object
       produces:
       - application/json
@@ -268,7 +343,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Course'
+            $ref: '#/definitions/model_Course'
             type: object
       summary: Create Course
       tags:
@@ -290,7 +365,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Course'
+            $ref: '#/definitions/model_Course'
             type: object
       summary: Get Course By ID
       tags:
@@ -313,7 +388,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Task'
+              $ref: '#/definitions/model_Task'
             type: array
       summary: Get Task By Courses ID
       tags:
@@ -329,7 +404,7 @@ paths:
         name: course
         required: true
         schema:
-          $ref: '#/definitions/model.Book'
+          $ref: '#/definitions/model_Book'
           type: object
       produces:
       - application/json
@@ -337,7 +412,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Book'
+            $ref: '#/definitions/model_Book'
             type: object
       summary: Create Book
       tags:
@@ -353,7 +428,7 @@ paths:
         name: course
         required: true
         schema:
-          $ref: '#/definitions/model.Event'
+          $ref: '#/definitions/model_Event'
           type: object
       produces:
       - application/json
@@ -361,7 +436,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Event'
+            $ref: '#/definitions/model_Event'
             type: object
       summary: Create Event
       tags:
@@ -371,6 +446,7 @@ paths:
       consumes:
       - application/json
       description: get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
+      operationId: event_list
       produces:
       - application/json
       responses:
@@ -378,7 +454,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Event'
+              $ref: '#/definitions/model_Event'
             type: array
       summary: List Events
       tags:
@@ -401,6 +477,7 @@ paths:
       consumes:
       - application/json
       description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      operationId: minitask_list
       produces:
       - application/json
       responses:
@@ -408,7 +485,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.MiniTask'
+              $ref: '#/definitions/model_MiniTask'
             type: array
       summary: List Minitasks
       tags:
@@ -423,7 +500,7 @@ paths:
         name: task
         required: true
         schema:
-          $ref: '#/definitions/model.MiniTask'
+          $ref: '#/definitions/model_MiniTask'
           type: object
       produces:
       - application/json
@@ -431,7 +508,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.MiniTask'
+            $ref: '#/definitions/model_MiniTask'
             type: object
       summary: Create Minitast
       tags:
@@ -453,7 +530,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.MiniTask'
+            $ref: '#/definitions/model_MiniTask'
             type: object
       summary: Get Minitasks By ID
       tags:
@@ -463,6 +540,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
+      operationId: task_list
       produces:
       - application/json
       responses:
@@ -470,7 +548,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Task'
+              $ref: '#/definitions/model_Task'
             type: array
       summary: List Task
       tags:
@@ -485,7 +563,7 @@ paths:
         name: task
         required: true
         schema:
-          $ref: '#/definitions/model.Task'
+          $ref: '#/definitions/model_Task'
           type: object
       produces:
       - application/json
@@ -493,7 +571,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Task'
+            $ref: '#/definitions/model_Task'
             type: object
       summary: Create Task
       tags:
@@ -515,7 +593,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Task'
+            $ref: '#/definitions/model_Task'
             type: object
       summary: Get Task By ID
       tags:
@@ -532,7 +610,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.User'
+              $ref: '#/definitions/model_User'
             type: array
       summary: List users
       tags:
@@ -573,7 +651,7 @@ paths:
         name: account
         required: true
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/model_User'
           type: object
       produces:
       - application/json
@@ -581,7 +659,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.User'
+            $ref: '#/definitions/model_User'
             type: object
       summary: Update user
       tags:

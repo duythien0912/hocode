@@ -13,6 +13,7 @@ import (
 
 // Minitasks godoc
 // @Summary List Minitasks
+// @ID minitask_list
 // @Description get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
 // @Tags Minitasks
 // @Accept  json
@@ -22,7 +23,8 @@ import (
 func (h *Handler) Minitasks(c echo.Context) (err error) {
 
 	mta := []*model.MiniTask{}
-	page, _ := strconv.Atoi(c.QueryParam("page"))
+	// page, _ := strconv.Atoi(c.QueryParam("page"))
+	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
 	db := h.DB.Clone()
@@ -30,13 +32,15 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 
 	if err = db.DB("hocode").C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
-		Skip((page - 1) * limit).
+		// Skip((page - 1) * limit).
+		Skip(offset).
 		Limit(limit).
 		Sort("-timestamp").
 		All(&mta); err != nil {
 		return
 	}
 
+	c.Response().Header().Set("x-total-count", strconv.Itoa(len(mta)))
 	return c.JSON(http.StatusOK, mta)
 }
 

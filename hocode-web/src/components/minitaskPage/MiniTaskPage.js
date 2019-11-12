@@ -439,9 +439,9 @@ class MiniTaskPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors,
-  user:state.user
+  auth: state.rootReducer.auth,
+  errors: state.rootReducer.errors,
+  user:state.rootReducer.user
 });
 
 export default connect(

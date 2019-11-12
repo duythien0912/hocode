@@ -20,4 +20,7 @@ fresh
 
 ```sh
 swag init -g server.go
+
+swag init -g server.go && sed -i '' 's/odel./odel_/g' ./docs/swagger.yaml
+
 ```

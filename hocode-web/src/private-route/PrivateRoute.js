@@ -15,9 +15,10 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   />
 );
 PrivateRoute.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object
 };
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+const mapStateToProps = (state) => {
+  return ({
+  auth: state.rootReducer.auth,
+})};
 export default connect(mapStateToProps)(PrivateRoute);

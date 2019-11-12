@@ -342,8 +342,8 @@ SignUpPage.propTypes = {
   errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  auth: state.rootReducer.auth,
+  errors: state.rootReducer.errors
 });
 export default withStyles(styles)(
   connect(

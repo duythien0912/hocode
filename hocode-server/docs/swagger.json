@@ -48,7 +48,7 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/model.UserCourse"
+                            "$ref": "#/definitions/model.UserCourseOut"
                         }
                     }
                 }
@@ -91,6 +91,7 @@
                     "Books"
                 ],
                 "summary": "List Books",
+                "operationId": "book_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -117,6 +118,7 @@
                     "Courses"
                 ],
                 "summary": "List Courses",
+                "operationId": "course_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -317,6 +319,7 @@
                     "Events"
                 ],
                 "summary": "List Events",
+                "operationId": "event_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -363,6 +366,7 @@
                     "Minitasks"
                 ],
                 "summary": "List Minitasks",
+                "operationId": "minitask_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -456,6 +460,7 @@
                     "Tasks"
                 ],
                 "summary": "List Task",
+                "operationId": "task_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -645,6 +650,9 @@
                 },
                 "minitask_id": {
                     "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
                 }
             }
         },
@@ -654,10 +662,16 @@
                 "content": {
                     "type": "string"
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
                 "image": {
+                    "type": "string"
+                },
+                "timestamp": {
                     "type": "string"
                 },
                 "title": {
@@ -674,6 +688,9 @@
                 "course_name": {
                     "type": "string"
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -681,6 +698,15 @@
                     "description": "Name            string     json:\"name\" bson:\"name\"",
                     "type": "object",
                     "$ref": "#/definitions/model.TaskSolved"
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Task"
+                    }
+                },
+                "timestamp": {
+                    "type": "string"
                 }
             }
         },
@@ -716,6 +742,9 @@
                 "content": {
                     "type": "string"
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -723,6 +752,9 @@
                     "type": "string"
                 },
                 "link": {
+                    "type": "string"
+                },
+                "timestamp": {
                     "type": "string"
                 },
                 "title": {
@@ -744,8 +776,14 @@
         "model.MiniTask": {
             "type": "object",
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
                 "code_point": {
                     "type": "integer"
+                },
+                "del": {
+                    "type": "boolean"
                 },
                 "id": {
                     "type": "string"
@@ -777,6 +815,9 @@
                 "template_code": {
                     "type": "string"
                 },
+                "timestamp": {
+                    "type": "string"
+                },
                 "unit_tests": {
                     "type": "array",
                     "items": {
@@ -785,6 +826,17 @@
                 },
                 "vitri": {
                     "type": "boolean"
+                }
+            }
+        },
+        "model.MiniTaskInfo": {
+            "type": "object",
+            "properties": {
+                "minitask_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
                 }
             }
         },
@@ -797,6 +849,9 @@
                 "course_id": {
                     "type": "string"
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -807,6 +862,9 @@
                     }
                 },
                 "task_name": {
+                    "type": "string"
+                },
+                "timestamp": {
                     "type": "string"
                 }
             }
@@ -820,6 +878,9 @@
                 },
                 "tasks_complete": {
                     "type": "integer"
+                },
+                "timestamp": {
+                    "type": "string"
                 }
             }
         },
@@ -847,6 +908,9 @@
                 "codepoint": {
                     "type": "integer"
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -860,6 +924,10 @@
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "Company []company      json:\"company,omitempty\" bson:\"company,omitempty\"",
                     "type": "string"
                 },
                 "token": {
@@ -876,7 +944,53 @@
                         "$ref": "#/definitions/model.CourseInfo"
                     }
                 },
+                "del": {
+                    "type": "boolean"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UserCourseOut": {
+            "type": "object",
+            "properties": {
+                "next_minitask": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.MiniTask"
+                },
+                "user_course": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.UserCourse"
+                },
+                "user_minitask": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.UserMiniTask"
+                }
+            }
+        },
+        "model.UserMiniTask": {
+            "type": "object",
+            "properties": {
+                "course_info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MiniTaskInfo"
+                    }
+                },
+                "del": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "timestamp": {
                     "type": "string"
                 },
                 "user_id": {

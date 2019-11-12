@@ -1,27 +1,28 @@
-import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
-import { Route, Switch, Link } from "react-router-dom";
+import Toolbar from "@material-ui/core/Toolbar";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AppsIcon from "@material-ui/icons/Apps";
+import CardMembershipIcon from "@material-ui/icons/CardMembership";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import MenuIcon from "@material-ui/icons/Menu";
+import React from "react";
+import { Link, Route, Switch } from "react-router-dom";
+import Account from "./content/account/Account";
 import CourseBody from "./content/course/CourseBody1";
+import CreateMiniTask from "./content/minitask/CreateMiniTaskBody";
+import Overview from "./content/overview/Overview";
 import TaskBody from "./content/task/TaskBody";
-import NavRight from  "./navRight/NavRight";
-import AppsIcon from '@material-ui/icons/Apps';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import CardMembershipIcon from '@material-ui/icons/CardMembership';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import AppBarContent from './header/AppBarContent';
-import Account from './content/account/Account';
-import Overview  from './content/overview/Overview'
-import CreateMiniTask from './content/minitask/CreateMiniTaskBody';
-import Paper from '@material-ui/core/Paper';
+import AppBarContent from "./header/AppBarContent";
+import NavRight from "./navRight/NavRight";
+import ReactAdmin from "../adminPage/hocode/ReactAdmin";
 import "./profilepage.css";
 
 const drawerWidth = 240;
@@ -153,8 +154,8 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/overview`}
               onClick={this.onClickMenuItem(1)}
             >
-              <AppsIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Tổng quan</p>
+              <AppsIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tổng quan</p>
             </MenuItem>
           </Link>
 
@@ -163,8 +164,8 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/course`}
               onClick={this.onClickMenuItem(1)}
             >
-                 <ImportContactsIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Khóa học</p>
+              <ImportContactsIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 12, marginLeft: "3px" }}>Khóa học</p>
             </MenuItem>
           </Link>
 
@@ -173,8 +174,17 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/print`}
               onClick={this.onClickMenuItem(1)}
             >
-                  <CardMembershipIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Chứng  chỉ</p>
+              <CardMembershipIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 12, marginLeft: "3px" }}>Chứng chỉ</p>
+            </MenuItem>
+          </Link>
+          <Link to={`${url}/admin`}>
+            <MenuItem
+              selected={pathname === `${url}/admin`}
+              onClick={this.onClickMenuItem(1)}
+            >
+              <CardMembershipIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 12, marginLeft: "3px" }}>Admin</p>
             </MenuItem>
           </Link>
           <Link to={`${url}/account`}>
@@ -182,8 +192,8 @@ class ProfilePage extends React.Component {
               selected={pathname === `${url}/account`}
               onClick={this.onClickMenuItem(1)}
             >
-                  <AccountCircleIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Tài khoản</p>
+              <AccountCircleIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tài khoản</p>
             </MenuItem>
           </Link>
         </MenuList>
@@ -202,7 +212,7 @@ class ProfilePage extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <AppBarContent/>
+            <AppBarContent />
           </Toolbar>
         </AppBar>
         <nav
@@ -240,16 +250,18 @@ class ProfilePage extends React.Component {
           </Hidden>
         </nav>
         <nav className={classes.navRight} aria-label="nav right">
-          <NavRight/>
+          <NavRight />
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
 
           <Switch>
             <Route exact path={path}>
-            <Overview url={url}/>
+              <Overview url={url} />
             </Route>
-            <Route path={`${path}/overview`}><Overview url={url}/></Route>
+            <Route path={`${path}/overview`}>
+              <Overview url={url} />
+            </Route>
             <Route path={`${path}/course`}>
               <CourseBody url={url} />
             </Route>
@@ -257,10 +269,15 @@ class ProfilePage extends React.Component {
               <TaskBody location={this.props.location} />
             </Route>
             <Route path={`${path}/print`}>In chứng chỉ</Route>
-            <Route path={`${path}/account`}><Account/></Route>
+            <Route path={`${path}/admin`}>
+              <ReactAdmin />
+            </Route>
+            <Route path={`${path}/account`}>
+              <Account />
+            </Route>
             <Route exact path={`${path}/minitasks/createminitask`}>
-              <Paper style={{padding:10}}>
-              <CreateMiniTask/>
+              <Paper style={{ padding: 10 }}>
+                <CreateMiniTask />
               </Paper>
             </Route>
           </Switch>

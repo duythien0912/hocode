@@ -12,6 +12,7 @@ import (
 
 // Events godoc
 // @Summary List Events
+// @ID event_list
 // @Description get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
 // @Tags Events
 // @Accept  json
@@ -22,7 +23,8 @@ func (h *Handler) GetEvents(c echo.Context) (err error) {
 
 	bk := []*model.Event{}
 
-	page, _ := strconv.Atoi(c.QueryParam("page"))
+	// page, _ := strconv.Atoi(c.QueryParam("page"))
+	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
 	db := h.DB.Clone()
@@ -30,12 +32,14 @@ func (h *Handler) GetEvents(c echo.Context) (err error) {
 
 	if err = db.DB("hocode").C("events").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
-		Skip((page - 1) * limit).
+		// Skip((page - 1) * limit).
+		Skip(offset).
 		Limit(limit).
 		Sort("-timestamp").
 		All(&bk); err != nil {
 		return
 	}
+	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)
 

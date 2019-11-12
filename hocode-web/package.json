@@ -12,6 +12,7 @@
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^2.9.7",
     "ra-data-simple-rest": "^2.9.7",
+    "ra-language-vietnamese": "^2.0.0",
     "react": "^16.9.0",
     "react-ace": "^7.0.4",
     "react-admin": "^2.9.7",
@@ -29,6 +30,7 @@
     "react-split": "^2.0.7",
     "react-toastify": "^5.4.0",
     "redux": "^4.0.4",
+    "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^8.18.4"
   },

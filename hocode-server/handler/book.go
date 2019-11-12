@@ -13,6 +13,7 @@ import (
 // Books godoc
 // @Summary List Books
 // @Description get books <a href="/api/v1/books?page=1&limit=5">/api/v1/books?page=1&limit=5</a>
+// @ID book_list
 // @Tags Books
 // @Accept  json
 // @Produce  json
@@ -22,7 +23,7 @@ func (h *Handler) GetBooks(c echo.Context) (err error) {
 
 	bk := []*model.Book{}
 
-	page, _ := strconv.Atoi(c.QueryParam("page"))
+	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
 	db := h.DB.Clone()
@@ -30,15 +31,15 @@ func (h *Handler) GetBooks(c echo.Context) (err error) {
 
 	if err = db.DB("hocode").C("books").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
-		Skip((page - 1) * limit).
+		Skip(offset).
 		Limit(limit).
 		Sort("-timestamp").
 		All(&bk); err != nil {
 		return
 	}
+	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)
-
 }
 
 // CreateBook godoc

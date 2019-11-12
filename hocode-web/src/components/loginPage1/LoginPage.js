@@ -212,8 +212,8 @@ class LoginPage extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  auth: state.rootReducer.auth,
+  errors: state.rootReducer.errors
 });
 export default withStyles(styles)(
   connect(

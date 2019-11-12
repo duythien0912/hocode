@@ -142,6 +142,7 @@ func ServerHeader(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		c.Response().Header().Set(echo.HeaderServer, "Echo/3.0")
 		c.Response().Header().Set("Access-Control-Expose-Headers", "Content-Range")
+		c.Response().Header().Set("Access-Control-Expose-Headers", "X-Total-Count")
 
 		c.Response().Header().Set("Content-Range", "bytes : 0-9/*")
 		return next(c)

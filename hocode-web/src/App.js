@@ -6,26 +6,27 @@ import TaskPage from "./components/taskPage/TaskPage";
 import MiniTaskPage from "./components/minitaskPage/MiniTaskPage";
 import HomePage from "./components/homePage/HomePage";
 import SignUpPage from "./components/signUpPage1/SignUpPage";
-import ReactMde from './components/minitaskPage/ReactMde';
-import CreateMiniTask from './components/createMinitaskPage/CreateMiniTaskPage';
-import AdminPage from './components/adminPage/adminPage';
-import ProfilePage from './components/profilePage/ProfilePage'
+import ReactMde from "./components/minitaskPage/ReactMde";
+import CreateMiniTask from "./components/createMinitaskPage/CreateMiniTaskPage";
+import ReactAdmin from "./components/adminPage/hocode/ReactAdmin";
+import ProfilePage from "./components/profilePage/ProfilePage";
 import { Provider } from "react-redux";
 import store from "./js/store/store.js";
 import LoginPage from "./components/loginPage1/LoginPage";
-import { setCurrentUser,logoutUser} from "./js/actions/authActions";
+import { setCurrentUser, logoutUser } from "./js/actions/authActions";
 import setAuthToken from "./js/utils/setAuthToken";
-import PrivateRoute from "./private-route/PrivateRoute"
+import PrivateRoute from "./private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
-// Check for token to keep user logged in/ xet khi load lai trang 
- if (localStorage.AuthToken) {
-    // Set auth token header auth
-    const token = localStorage.AuthToken;
-    setAuthToken(token);
-    const decoded = jwt_decode(token);
-    //console.log(decoded);
-    store.dispatch(setCurrentUser(decoded));
-    // Check for expired token
+
+// Check for token to keep user logged in/ xet khi load lai trang
+if (localStorage.AuthToken) {
+  // Set auth token header auth
+  const token = localStorage.AuthToken;
+  setAuthToken(token);
+  const decoded = jwt_decode(token);
+  //console.log(decoded);
+  store.dispatch(setCurrentUser(decoded));
+  // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
@@ -35,27 +36,39 @@ import jwt_decode from "jwt-decode";
   }
 }
 
- function App() {
+function App() {
+  
   return (
-    <Provider store={store}>
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/home" exact component={HomePage} />
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="/signup" exact component={SignUpPage} />
-          <Route path="/reactmde" exact component={ReactMde} />
-          <PrivateRoute path="/courses" exact component={CoursePage} />
-          <PrivateRoute path="/courses/:courseId/tasks" component={TaskPage} />
-          <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
-          <Route path="/createminitask" exact component={CreateMiniTask} />
-          <Route path="/admin" exact component={AdminPage} />
-          <PrivateRoute path="/profile"  component={ProfilePage} />
-          <Route render={() => <div>404 Page Not Found</div>} />
-        </Switch>
-      </div>
-    </Router>
+    <Provider
+      store={store}
+      >
+    <Provider
+      // store={store}
+      store={store}
+
+    >
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/home" exact component={HomePage} />
+            <Route path="/login" exact component={LoginPage} />
+            <Route path="/signup" exact component={SignUpPage} />
+            <Route path="/reactmde" exact component={ReactMde} />
+            <PrivateRoute path="/courses" exact component={CoursePage} />
+            <PrivateRoute
+              path="/courses/:courseId/tasks"
+              component={TaskPage}
+            />
+            <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
+            <Route path="/createminitask" exact component={CreateMiniTask} />
+            <PrivateRoute path="/admin" exact component={ReactAdmin} />
+            <PrivateRoute path="/profile" component={ProfilePage} />
+            <Route render={() => <div>404 Page Not Found</div>} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
     </Provider>
   );
 }

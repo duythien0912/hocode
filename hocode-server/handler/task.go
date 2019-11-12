@@ -14,6 +14,7 @@ import (
 
 // Task godoc
 // @Summary List Task
+// @ID task_list
 // @Description get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
 // @Tags Tasks
 // @Accept  json
@@ -23,15 +24,17 @@ import (
 func (h *Handler) Task(c echo.Context) (err error) {
 
 	ta := []*model.Task{}
-	page, _ := strconv.Atoi(c.QueryParam("page"))
+	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
+	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 
 	db := h.DB.Clone()
 	defer db.Close()
 
 	if err = db.DB("hocode").C("tasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
-		Skip((page - 1) * limit).
+		// Skip((page - 1) * limit).
+		Skip(offset).
 		Limit(limit).
 		Sort("-timestamp").
 		All(&ta); err != nil {
@@ -52,6 +55,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 
 	}
 
+	c.Response().Header().Set("x-total-count", strconv.Itoa(len(ta)))
 	return c.JSON(http.StatusOK, ta)
 
 }
