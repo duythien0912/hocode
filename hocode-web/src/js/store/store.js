@@ -1,5 +1,5 @@
 // import { createStore, applyMiddleware, compose } from "redux";
-import { createHashHistory } from "history";
+import { createBrowserHistory } from "history";
 import vietnameseMessages from "ra-language-vietnamese";
 // import defaultMessages from 'ra-language-english';
 import {
@@ -23,7 +23,7 @@ import rootReducer from "../reducers";
 
 const initialState = {};
 
-const history = createHashHistory();
+const history = createBrowserHistory();
 
 const createAdminStore = ({
   authProvider,

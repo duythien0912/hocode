@@ -62,7 +62,7 @@ function App() {
             />
             <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
             <Route path="/createminitask" exact component={CreateMiniTask} />
-            <PrivateRoute path="/admin" exact component={ReactAdmin} />
+            <Route path="/admin" exact component={ReactAdmin} />
             <PrivateRoute path="/profile" component={ProfilePage} />
             <Route render={() => <div>404 Page Not Found</div>} />
           </Switch>

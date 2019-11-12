@@ -28,6 +28,7 @@ export const loginUser = userData => dispatch => {
       const { token } = res.data;
       if (userData.remember) {
         localStorage.setItem("AuthToken", token);
+        localStorage.setItem("token", token);
         setAuthToken(token); // set token ở header
         // get user
       }
