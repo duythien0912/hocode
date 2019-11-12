@@ -16,7 +16,7 @@
 }
 
 .codeEditorCreateMiniTask{
-    height: 30%;
+    height: 300px;
 }
 
 .codeEditorCreateMiniTask .CodeMirror-cursor { display: none !important } 
