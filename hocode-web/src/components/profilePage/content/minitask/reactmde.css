@@ -52,3 +52,6 @@
     z-index: 9999999;
 }
 
+.react_mde_custom .CodeMirror{
+    height: 300px!important;
+}

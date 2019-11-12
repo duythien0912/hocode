@@ -51,7 +51,7 @@ class NavRight extends React.Component {
             />
           </Grid>
           <Grid item style={{ flexGrow: 1 }}>
-            <div style={{ fontWeight: "bold" }}>
+            <div >
               Xin chào {this.props.user.firstname} !!!{" "}
             </div>{" "}
           </Grid>
