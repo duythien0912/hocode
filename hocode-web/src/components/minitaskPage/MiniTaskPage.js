@@ -9,12 +9,12 @@ import "./minitask.css";
 import MediaQuery from "react-responsive";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { connect } from "react-redux";
-import  {addCodePoint} from "../../js/actions/userAction";
+import { addCodePoint } from "../../js/actions/userAction";
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -25,11 +25,12 @@ class MiniTaskPage extends Component {
       userCode: "",
       isLoading: false
     };
-    
+
     this.executeCode = this.executeCode.bind(this);
     this.submitCode = this.submitCode.bind(this);
     this.updateUserCode = this.updateUserCode.bind(this);
-    this.resetCode= this.resetCode.bind(this);
+    this.resetCode = this.resetCode.bind(this);
+    this.createFileTest = this.createFileTest.bind(this);
   }
   componentDidMount() {
     const {
@@ -39,13 +40,13 @@ class MiniTaskPage extends Component {
       .get(`https://hocode.appspot.com/api/v1/minitasks/${params.minitaskId}`)
       .then(res => {
         const minitask = res.data;
-       
+
         this.setState((state, props) => ({
           minitask: minitask
         }));
-        setTimeout(()=>{
-          console.log(this.state.minitask)
-        },0)
+        setTimeout(() => {
+          console.log(this.state.minitask);
+        }, 0);
         /* if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
         this.setState((state, props) => ({
           userCode: minitask.user_code
@@ -68,48 +69,98 @@ class MiniTaskPage extends Component {
     this.setState({ userCode: value });
   }
 
-  resetCode(){
+  resetCode() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
-        confirmButton: 'btn btn-success comfirmFesetCodeBtn',
-        cancelButton: 'btn btn-danger cancelCodeBtn'
+        confirmButton: "btn btn-success comfirmFesetCodeBtn",
+        cancelButton: "btn btn-danger cancelCodeBtn"
       },
       buttonsStyling: false
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: 'Bạn có chắc chắn muốn xóa code đã lưu?',
-      text: "Bạn sẽ không thể hoàn tác!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy!',
-      reverseButtons: true
-    }).then((result) => {
+    });
 
-      if (result.value) {
-        this.setState((state, props) => ({
-          userCode: minitask.template_code
-        }));
-        swalWithBootstrapButtons.fire(
-          'Đã reset!',
-          '',
-          'success'
-        )
-
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Đã hủy',
-          '',
-          'error'
-        )
-      }
-    })
+    swalWithBootstrapButtons
+      .fire({
+        title: "Bạn có chắc chắn muốn xóa code đã lưu?",
+        text: "Bạn sẽ không thể hoàn tác!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xóa",
+        cancelButtonText: "Hủy!",
+        reverseButtons: true
+      })
+      .then(result => {
+        if (result.value) {
+          this.setState((state, props) => ({
+            userCode: minitask.template_code
+          }));
+          swalWithBootstrapButtons.fire("Đã reset!", "", "success");
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire("Đã hủy", "", "error");
+        }
+      });
     const { minitask } = this.state;
-   
+  }
+
+  createFileTest(minitask) {
+    let junit4 = ``;
+
+    if (minitask.id !== undefined) {
+      if (minitask.output_type_func.includes("[]") === true) {
+        junit4 = `import static org.junit.Assert.assertArrayEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            if (input.type.includes("[]") === true) {
+              // if input is array, add new input.type before input.value // new int[] {1,2,3,4}
+              inputs += `new ${input.type} ${input.value},`;
+            } else {
+              inputs += `${input.value},`;
+            }
+          });
+
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          junit4 += ` @Test\n    public void myTestFunction${index +
+            1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
+            1}", new ${minitask.output_type_func} ${
+            unit_test.expected_output
+          }, s.${minitask.name_func}(${inputsFormat}));\n  }\n`;
+        });
+        junit4 += `}`;
+      } else {
+        junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
+        minitask.unit_tests.forEach((unit_test, index) => {
+          let inputs = "";
+          unit_test.inputs.forEach(input => {
+            if (input.type.includes("[]") === true) {
+              // if input is array, add new input.type before input.value // new int[] {1,2,3,4}
+              inputs += `new ${input.type} ${input.value},`;
+            } else {
+              inputs += `${input.value},`;
+            }
+          });
+          let inputsFormat = inputs.substring(0, inputs.length - 1);
+          if (minitask.output_type_func === "double") {
+            junit4 += ` @Test\n    public void myTestFunction${index +
+              1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
+              1}", ${unit_test.expected_output}, s.${
+              minitask.name_func
+            }(${inputsFormat}),0);\n  }\n`;
+          } else{
+            junit4 += ` @Test\n    public void myTestFunction${index +
+              1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
+              1}", ${unit_test.expected_output}, s.${
+              minitask.name_func
+            }(${inputsFormat}));\n  }\n`;
+          }
+          
+        });
+        junit4 += `}`;
+      }
+    }
+    return junit4;
   }
 
   executeCode() {
@@ -118,119 +169,15 @@ class MiniTaskPage extends Component {
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
-    let junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n    `;
+    let junit4 = this.createFileTest(minitask);
 
     let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
       isLoading: true
     }));
 
-
-    if (this.state.minitask.id !== undefined) {
-      if(this.state.minitask.output_type_func.includes('[]')===true){
-        junit4 = `import static org.junit.Assert.assertArrayEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
-        minitask.unit_tests.forEach((unit_test, index) => {
-          let inputs = "";
-          unit_test.inputs.forEach(input => {
-            inputs += `${input.value},`;
-          });
-          let inputsFormat = inputs.substring(0, inputs.length - 1);
-          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index + 1}", ${
-            unit_test.expected_output
-          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
-        });
-        junit4 += `}`;
-      }
-      else{
-        junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
-        minitask.unit_tests.forEach((unit_test, index) => {
-          let inputs = "";
-          unit_test.inputs.forEach(input => {
-            inputs += `${input.value},`;
-          });
-          let inputsFormat = inputs.substring(0, inputs.length - 1);
-          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
-            unit_test.expected_output
-          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
-        });
-        junit4 += `}`;
-      }
-    
-    }
     console.log(junit4);
     //console.log(code);
-    axios
-      .post("https://hocodevn.com/runner", {
-        code: code,
-        test: junit4
-      })
-      .then(
-        function(response) {
-          console.log(response)
-          const error = response.data.stderr;
-          const stdout = response.data.stdout;
-
-          this.setState((state, props) => ({
-            result: {
-              error: error,
-              stdout: stdout
-            }
-          }));
-          this.setState((state, props) => ({
-            isLoading: false
-          }));
-        }.bind(this)
-      )
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-  submitCode(){
-    this.setState((state, props) => ({
-      result: {}
-    }));
-    const { minitask } = this.state;
-    //console.log(this.state.userCode);
-    let junit4='';
-    
-    
-    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
-    this.setState((state, props) => ({
-      isLoading: true
-    }));
-
-    if (this.state.minitask.id !== undefined) {
-      if(this.state.minitask.output_type_func.includes('[]')===true){
-        junit4 = `import static org.junit.Assert.assertArrayEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
-        minitask.unit_tests.forEach((unit_test, index) => {
-          let inputs = "";
-          unit_test.inputs.forEach(input => {
-            inputs += `${input.value},`;
-          });
-          let inputsFormat = inputs.substring(0, inputs.length - 1);
-          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index + 1}", ${
-            unit_test.expected_output
-          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
-        });
-        junit4 += `}`;
-      }
-      else{
-        junit4 = `import static org.junit.Assert.assertEquals;\n    import org.junit.Test;\n    import org.junit.runners.JUnit4;\n    public class TestFixture {\n    public TestFixture(){}\n `;
-        minitask.unit_tests.forEach((unit_test, index) => {
-          let inputs = "";
-          unit_test.inputs.forEach(input => {
-            inputs += `${input.value},`;
-          });
-          let inputsFormat = inputs.substring(0, inputs.length - 1);
-          junit4 += ` @Test\n    public void myTestFunction${index + 1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index + 1}", ${
-            unit_test.expected_output
-          }, s.${this.state.minitask.name_func}(${inputsFormat}));\n  }\n`;
-        });
-        junit4 += `}`;
-      }
-    
-    }
-    
     axios
       .post("https://hocodevn.com/runner", {
         code: code,
@@ -251,34 +198,75 @@ class MiniTaskPage extends Component {
           this.setState((state, props) => ({
             isLoading: false
           }));
-          
-          if(this.state.result.stdout.WASSUCCESSFUL ==="true"){ // process alert success and add code point
-            const newCodePoint = this.props.user.codepoint + minitask.code_point;
-            this.props.addCodePoint(newCodePoint,this.props.auth.user.data.id);
+        }.bind(this)
+      )
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+  submitCode() {
+    this.setState((state, props) => ({
+      result: {}
+    }));
+    const { minitask } = this.state;
+    //console.log(this.state.userCode);
+    let junit4 = this.createFileTest(minitask);
+
+    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+    this.setState((state, props) => ({
+      isLoading: true
+    }));
+
+    
+
+    axios
+      .post("https://hocodevn.com/runner", {
+        code: code,
+        test: junit4
+      })
+      .then(
+        function(response) {
+          console.log(response);
+          const error = response.data.stderr;
+          const stdout = response.data.stdout;
+
+          this.setState((state, props) => ({
+            result: {
+              error: error,
+              stdout: stdout
+            }
+          }));
+          this.setState((state, props) => ({
+            isLoading: false
+          }));
+
+          if (this.state.result.stdout.WASSUCCESSFUL === "true") {
+            // process alert success and add code point
+            const newCodePoint =
+              this.props.user.codepoint + minitask.code_point;
+            this.props.addCodePoint(newCodePoint, this.props.auth.user.data.id);
             Swal.fire({
-              
-              type:'success',
-            title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
+              type: "success",
+              title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
               width: 600,
-              padding: '3em',
-              customClass:"hidden_alert",
+              padding: "3em",
+              customClass: "hidden_alert",
               backdrop: `
                 rgba(0,0,123,0.4)
-                url("${require('./giphy.gif')}") 
+                url("${require("./giphy.gif")}") 
                 center center
                 no-repeat
               `
-            })
-            toast('Chúc mừng, bạn đã hoàn thành bài tập này!', {containerId: 'B'});
-
+            });
+            toast("Chúc mừng, bạn đã hoàn thành bài tập này!", {
+              containerId: "B"
+            });
           }
         }.bind(this)
       )
       .catch(function(error) {
         console.log(error);
       });
-
-    
   }
   render() {
     const { minitask } = this.state;
@@ -289,7 +277,10 @@ class MiniTaskPage extends Component {
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
-            <MiniTaskHeader minitaskName={minitask.mini_task_name} history={this.props.history} />
+            <MiniTaskHeader
+              minitaskName={minitask.mini_task_name}
+              history={this.props.history}
+            />
           </div>
 
           <div className="layout-code-body">
@@ -310,7 +301,11 @@ class MiniTaskPage extends Component {
                     cursor="col-resize"
                   >
                     <div className="split-panel-first ">
-                      <MiniTaskDesc mini_task_desc={minitask.mini_task_desc} code_point={minitask.code_point} level={minitask.level} />
+                      <MiniTaskDesc
+                        mini_task_desc={minitask.mini_task_desc}
+                        code_point={minitask.code_point}
+                        level={minitask.level}
+                      />
                     </div>
                     <div className="split-panel-second ">
                       <div className="coding-area">
@@ -342,7 +337,11 @@ class MiniTaskPage extends Component {
                             >
                               <button
                                 onClick={this.resetCode}
-                                style={{ fontSize: 10, padding: "6px 8px", cursor:'pointer'}}
+                                style={{
+                                  fontSize: 10,
+                                  padding: "6px 8px",
+                                  cursor: "pointer"
+                                }}
                               >
                                 Reset code
                               </button>
@@ -351,12 +350,14 @@ class MiniTaskPage extends Component {
                           <div className="resultPanel">
                             {this.state.result.stdout !== undefined ? (
                               <ResultPanel
-                                
                                 unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
                                 result={this.state.result}
                               />
                             ) : (
-                              <TestsPanel isLoading ={this.state.isLoading} unit_tests={minitask.unit_tests} />
+                              <TestsPanel
+                                isLoading={this.state.isLoading}
+                                unit_tests={minitask.unit_tests}
+                              />
                             )}
                           </div>
                         </Split>
@@ -382,7 +383,9 @@ class MiniTaskPage extends Component {
                             onClick={this.executeCode}
                             disabled={this.state.isLoading}
                           >
-                            {this.state.isLoading?'Đang thực thi':'Thực thi'}
+                            {this.state.isLoading
+                              ? "Đang thực thi"
+                              : "Thực thi"}
                             <img
                               src={require("./play-button.svg")}
                               alt=""
@@ -392,7 +395,7 @@ class MiniTaskPage extends Component {
                         </div>
                         <div style={{ marginLeft: 10 }}>
                           <button
-                            onClick ={this.submitCode}
+                            onClick={this.submitCode}
                             className={`submitCode_btn ${this.state.isLoading &&
                               "disable_btn"}`}
                             disabled={this.state.isLoading}
@@ -400,16 +403,21 @@ class MiniTaskPage extends Component {
                             Nộp bài
                           </button>
                         </div>
-                        {this.state.result.isPass ?(   <div style={{ marginLeft: 30, fontSize: 12 }}>
-                          <Link
-                            to={`https://hocode.appspot.com/api/v1/minitasks/${this.state.next_minitask_id}`}
-                            style={{ textDecoration: "none", color: "#595959" }}
-                            
-                          >
-                            Qua bài mới
-                          </Link>
-                        </div>):<div></div>}
-                     
+                        {this.state.result.isPass ? (
+                          <div style={{ marginLeft: 30, fontSize: 12 }}>
+                            <Link
+                              to={`https://hocode.appspot.com/api/v1/minitasks/${this.state.next_minitask_id}`}
+                              style={{
+                                textDecoration: "none",
+                                color: "#595959"
+                              }}
+                            >
+                              Qua bài mới
+                            </Link>
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     </div>
                   </Split>{" "}
@@ -431,7 +439,11 @@ class MiniTaskPage extends Component {
               </div>
             </div>
           </div>
-          <ToastContainer enableMultiContainer containerId={'B'} position={toast.POSITION.TOP_RIGHT} />
+          <ToastContainer
+            enableMultiContainer
+            containerId={"B"}
+            position={toast.POSITION.TOP_RIGHT}
+          />
         </div>
       </React.Fragment>
     );
@@ -441,10 +453,7 @@ class MiniTaskPage extends Component {
 const mapStateToProps = state => ({
   auth: state.rootReducer.auth,
   errors: state.rootReducer.errors,
-  user:state.rootReducer.user
+  user: state.rootReducer.user
 });
 
-export default connect(
-  mapStateToProps,
-  { addCodePoint }
-)(MiniTaskPage) ;
+export default connect(mapStateToProps, { addCodePoint })(MiniTaskPage);
