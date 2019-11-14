@@ -1,4 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-env GOOS=linux GOARCH=arm go build
-#scp ./hocode root@45.76.179.78:/
+git add .
+
+git commit -m "deploy to vps"
+
+git push -u origin master
+
+ssh root@45.76.179.78 cd hocode && git pull && cd hocode-server && go build && sudo systemctl restart hocode

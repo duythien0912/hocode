@@ -48,6 +48,7 @@ func main() {
 	h := &handler.Handler{DB: db}
 
 	e.GET("/health_check", h.HealthCheck)
+	e.GET("/health_check2", h.HealthCheck)
 
 	e.GET("/users", h.GetUser)
 	e.GET("/users/:id", h.GetUserByID)
