@@ -78,15 +78,12 @@ func main() {
 	r.GET("/courses", h.Courses)
 	r.GET("/courses/:id", h.CourseByID)
 	r.GET("/courses/:id/tasks", h.TaskByCoursesID)
-	r.POST("/courses", h.CreateCourse)
 
 	r.GET("/tasks", h.Task)
 	r.GET("/tasks/:id", h.TaskByID)
-	r.POST("/tasks", h.CreateTask)
 
 	r.GET("/minitasks", h.Minitasks)
 	r.GET("/minitasks/:id", h.MinitasksByID)
-	r.POST("/minitasks", h.CreateMinitast)
 
 	r.GET("/profile", h.Profile)
 	r.POST("/profile", h.CreateProfile)
@@ -96,12 +93,29 @@ func main() {
 	r.GET("/dailyminitask", h.DailyMiniTask)
 
 	r.GET("/books", h.GetBooks)
-	r.POST("/createbook", h.CreateBook)
 	r.GET("/events", h.GetEvents)
-	r.POST("/createevent", h.CreateEvent)
 
-	// r.GET("/rungolang", h.RunGolang)
-	r.POST("/rungolang", h.RunGolang)
+	rs := e.Group("/api/v1/auth")
+
+	r.POST("/createevent", h.CreateEvent)
+	r.POST("/createbook", h.CreateBook)
+	r.POST("/courses", h.CreateCourse)
+	r.POST("/tasks", h.CreateTask)
+	r.POST("/minitasks", h.CreateMinitast)
+
+	rs.Use(middleware.JWT([]byte("secret")))
+	rs.GET("", h.TestAuth)
+	rs.GET("/userinfo", h.GetUserData)
+	rs.POST("/userinfoupdate", h.UpdataUserData)
+
+	rs.GET("/usercourse", h.GetUserCourse)
+
+	rs.POST("/updateusercourse", h.UpdateUserCourse)
+
+	rs.POST("/nextminitask", h.NextMiniTask)
+
+	rs.POST("/nextminitask", h.NextMiniTask)
+	rs.GET("/tasks/:id", h.TaskByID)
 
 	ra := e.Group("/auth")
 	ra.Use(middleware.JWT([]byte("secret")))
@@ -124,6 +138,10 @@ func main() {
 	// e.Static("/*", "../hocode-web/build")
 	// e.File("/*", "../hocode-web/build/index.html")
 	// e.GET("/swagger/*", echoSwagger.WrapHandler)
+
+	// r.GET("/rungolang", h.RunGolang)
+	r.POST("/rungolang", h.RunGolang)
+
 	e.File("/swagger.json", "docs/swagger.json")
 
 	e.File("/", "static/docs.html")
@@ -135,7 +153,7 @@ func main() {
 
 	e.File("*", "static/index.html")
 	e.Use(ServerHeader)
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8081"))
 }
 
 func ServerHeader(next echo.HandlerFunc) echo.HandlerFunc {
