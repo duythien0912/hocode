@@ -318,7 +318,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		// }
 
 		ur.CodePoint = ur.CodePoint + mtf.CodePoint
-		codePoint = ur.CodePoint
 		ur.Timestamp = time.Now()
 		if err = db.DB("hocode").
 			C("users").
@@ -328,6 +327,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 			return
 		}
+		codePoint = ur.CodePoint
 
 		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
 
