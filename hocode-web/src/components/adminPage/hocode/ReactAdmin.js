@@ -42,16 +42,18 @@ import {
     ModelTaskEdit,
 } from './resources/ModelTask';
 
+import { history } from '../../../js/store/store'
 
 const ReactAdmin = () => (
     <Admin
         appLayout={MyLayout}
         authProvider={authProvider}
         catchAll={catchAll}
-        customRoutes={customRoutes}
+        // customRoutes={customRoutes}
         dataProvider={dataProvider}
         title="Hocode Admin"
         theme={theme}
+        history={history}
     >
         <Resource
             name="books"

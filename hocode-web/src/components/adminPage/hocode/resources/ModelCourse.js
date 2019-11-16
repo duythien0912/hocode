@@ -15,6 +15,7 @@ import {
     BooleanField,
     EditButton,
     DeleteButton,
+    ImageField,
 } from 'react-admin';
 import { permitted } from '../utils';
 
@@ -27,12 +28,12 @@ import ModelCourseFilter from '../filters/ModelCourseFilter';
 export const ModelCourseList = props => (
     <List {...props} title="ModelCourse List" filters={<ModelCourseFilter />} bulkActionButtons={false}>
         <Datagrid>
-            <TextField                source="background_image"                sortable={false}            />
+            {/* <TextField                source="id"                sortable={false}            /> */}
             <TextField                source="course_name"                sortable={false}            />
-            <BooleanField                source="del"                sortable={false}            />
-            <TextField                source="id"                sortable={false}            />
+            <ImageField      className="thumbNailView"                 source="background_image"                sortable={false}            />
+            {/* <BooleanField                source="del"                sortable={false}            /> */}
             {/* <                source="tasks"                sortable={false}            /> */}
-            <TextField                source="timestamp"                sortable={false}            />
+            {/* <TextField                source="timestamp"                sortable={false}            /> */}
             <EditButton />
             <DeleteButton />
         </Datagrid></List>
@@ -43,10 +44,10 @@ export const ModelCourseCreate = props => (
         <SimpleForm redirect="show">
             <TextInput                source="background_image"            />
             <TextInput                source="course_name"            />
-            <BooleanInput                source="del"            />
-            <TextInput                source="id"            />
+            {/* <BooleanInput                source="del"            /> */}
+            {/* <TextInput                source="id"            /> */}
             <TextInput                source="tasks"            />
-            <TextInput                source="timestamp"            />
+            {/* <TextInput                source="timestamp"            /> */}
         </SimpleForm></Create>
 );
 
@@ -55,10 +56,10 @@ export const ModelCourseEdit = props => (
         <SimpleForm toolbar={<ModelCourseEditToolbar />}>
             <TextInput                source="background_image"            />
             <TextInput                source="course_name"            />
-            <BooleanInput                source="del"            />
+            {/* <BooleanInput                source="del"            /> */}
             <TextInput                source="id"            />
             <TextInput                source="tasks"            />
-            <TextInput                source="timestamp"            />
+            {/* <TextInput                source="timestamp"            /> */}
         </SimpleForm></Edit>
 );
 

@@ -1,28 +1,30 @@
-body{
-    background: white;
+body {
+  background: white;
 }
-.menuLeftDrawer a{
-    text-decoration: none;
+.menuLeftDrawer a {
+  text-decoration: none;
 }
-.menuLeftDrawer li{
-    color: rgba(0, 0, 0, 0.87);
-    margin: 0;
-    font-size: 0.875rem;
-    font-family: 'Bitter', serif;
-    font-weight: 500;
-    line-height: 1.43;
-    letter-spacing: 0.01071em;
-    
+.menuLeftDrawer li {
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0;
+  font-size: 0.875rem;
+  font-family: "Bitter", serif;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
 }
-.menuLeftDrawer .Mui-selected{
-    color: #115b7c;
-    background-color: white!important;
-    border-left: 3px solid #115b7c;
-    font-weight: 600;
-    
+.menuLeftDrawer .Mui-selected {
+  color: #115b7c;
+  background-color: white !important;
+  border-left: 3px solid #115b7c;
+  font-weight: 600;
 }
-.drawerMain .MuiDrawer-paper{
-    
-    border-right: unset;
+.drawerMain .MuiDrawer-paper {
+  border-right: unset;
 }
 
+.thumbNailView img {
+  /* height: 60px; */
+  width: 80px;
+  /* border-radius: 50%; */
+}

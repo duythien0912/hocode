@@ -222,6 +222,6 @@ export const httpClient = (url, options = {}) => {
 };
 
 // export default dataProvider('rest_url', httpClient);
-export default dataProvider('http://localhost:8081/api/v1/curd', httpClient);
+export default dataProvider('https://hocodevn.com/api/v1/curd', httpClient);
 
 /** End of Generated Code **/

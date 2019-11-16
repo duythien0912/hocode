@@ -13,6 +13,7 @@ import {
     TextInput,
     Edit,
     BooleanField,
+    ImageField,
     EditButton,
     DeleteButton,
 } from 'react-admin';
@@ -22,17 +23,17 @@ import ModelBookEditToolbar from '../customActions/ModelBookEditToolbar';
 
 import ModelBookFilter from '../filters/ModelBookFilter';
 
-
+  
 
 export const ModelBookList = props => (
     <List {...props} title="ModelBook List" filters={<ModelBookFilter />} bulkActionButtons={false}>
         <Datagrid>
-            <TextField                source="content"                sortable={false}            />
-            <BooleanField                source="del"                sortable={false}            />
-            <TextField                source="id"                sortable={false}            />
-            <TextField                source="image"                sortable={false}            />
-            <TextField                source="timestamp"                sortable={false}            />
+            {/* <TextField                source="content"                sortable={false}            /> */}
+            {/* <BooleanField                source="del"                sortable={false}            /> */}
+            {/* <TextField                source="id"                sortable={false}            /> */}
+            {/* <TextField                source="timestamp"                sortable={false}            /> */}
             <TextField                source="title"                sortable={false}            />
+            <ImageField      className="thumbNailView"          source="image"                sortable={false}            />
             <EditButton />
             <DeleteButton />
         </Datagrid></List>
@@ -42,10 +43,10 @@ export const ModelBookCreate = props => (
     <Create {...props} title="ModelBook Create">
         <SimpleForm redirect="show">
             <TextInput                source="content"            />
-            <BooleanInput                source="del"            />
-            <TextInput                source="id"            />
+            {/* <BooleanInput                source="del"            /> */}
+            {/* <TextInput                source="id"            /> */}
             <TextInput                source="image"            />
-            <TextInput                source="timestamp"            />
+            {/* <TextInput                source="timestamp"            /> */}
             <TextInput                source="title"            />
         </SimpleForm></Create>
 );
@@ -54,10 +55,10 @@ export const ModelBookEdit = props => (
     <Edit {...props} title="ModelBook Edit">
         <SimpleForm toolbar={<ModelBookEditToolbar />}>
             <TextInput                source="content"            />
-            <BooleanInput                source="del"            />
+            {/* <BooleanInput                source="del"            /> */}
             <TextInput                source="id"            />
             <TextInput                source="image"            />
-            <TextInput                source="timestamp"            />
+            {/* <TextInput                source="timestamp"            /> */}
             <TextInput                source="title"            />
         </SimpleForm></Edit>
 );
