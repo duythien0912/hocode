@@ -187,6 +187,8 @@ definitions:
         type: string
       password:
         type: string
+      role:
+        type: string
       timestamp:
         description: Company []company      json:"company,omitempty" bson:"company,omitempty"
         type: string
@@ -210,6 +212,8 @@ definitions:
     type: object
   model_UserCourseOut:
     properties:
+      codepoint:
+        type: integer
       next_minitask:
         $ref: '#/definitions/model_MiniTask'
         type: object
@@ -307,12 +311,101 @@ paths:
       summary: List Books
       tags:
       - Books
+    post:
+      consumes:
+      - application/json
+      description: Create Book
+      operationId: book_create
+      parameters:
+      - description: Create Book
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Book'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Book'
+            type: object
+      summary: Create Book
+      tags:
+      - Books
+  /books/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Book
+      operationId: book_delete
+      parameters:
+      - description: Delete Book
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Book'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Book'
+            type: object
+      summary: Delete Book
+      tags:
+      - Books
+    get:
+      consumes:
+      - application/json
+      description: get books <a href="/api/v1/books?page=1&limit=5">/api/v1/books?page=1&limit=5</a>
+      operationId: book_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Book'
+            type: object
+      summary: One Books
+      tags:
+      - Books
+    put:
+      consumes:
+      - application/json
+      description: Update Book
+      operationId: book_update
+      parameters:
+      - description: Update Book
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Book'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Book'
+            type: object
+      summary: UpdateBooks Book
+      tags:
+      - Books
   /courses:
     get:
       consumes:
       - application/json
       description: get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
-      operationId: course_list
+      operationId: coursesx_list
       produces:
       - application/json
       responses:
@@ -329,6 +422,7 @@ paths:
       consumes:
       - application/json
       description: Create Course
+      operationId: coursesx_create
       parameters:
       - description: Create Course
         in: body
@@ -346,6 +440,71 @@ paths:
             $ref: '#/definitions/model_Course'
             type: object
       summary: Create Course
+      tags:
+      - Courses
+  /courses/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Course
+      operationId: coursesx_delete
+      parameters:
+      - description: Delete Course
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Course'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Course'
+            type: object
+      summary: Delete Course
+      tags:
+      - Courses
+    get:
+      consumes:
+      - application/json
+      description: get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
+      operationId: coursesx_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Course'
+            type: object
+      summary: One Courses
+      tags:
+      - Courses
+    put:
+      consumes:
+      - application/json
+      description: Update Course
+      operationId: coursesx_update
+      parameters:
+      - description: Update Course
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Course'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Course'
+            type: object
+      summary: UpdateCourses Course
       tags:
       - Courses
   /courses/{id}:
@@ -417,11 +576,29 @@ paths:
       summary: Create Book
       tags:
       - Books
-  /createevent:
+  /events:
+    get:
+      consumes:
+      - application/json
+      description: get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
+      operationId: event_list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model_Event'
+            type: array
+      summary: List Events
+      tags:
+      - Events
     post:
       consumes:
       - application/json
       description: Create Event
+      operationId: event_create
       parameters:
       - description: Create Event
         in: body
@@ -441,22 +618,69 @@ paths:
       summary: Create Event
       tags:
       - Events
-  /events:
-    get:
+  /events/:
+    delete:
       consumes:
       - application/json
-      description: get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
-      operationId: event_list
+      description: Delete Event
+      operationId: event_delete
+      parameters:
+      - description: Delete Event
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Event'
+          type: object
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model_Event'
-            type: array
-      summary: List Events
+            $ref: '#/definitions/model_Event'
+            type: object
+      summary: Delete Event
+      tags:
+      - Events
+    get:
+      consumes:
+      - application/json
+      description: get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
+      operationId: event_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Event'
+            type: object
+      summary: One Events
+      tags:
+      - Events
+    put:
+      consumes:
+      - application/json
+      description: Update Event
+      operationId: event_update
+      parameters:
+      - description: Update Event
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model_Event'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Event'
+            type: object
+      summary: UpdateEvents Event
       tags:
       - Events
   /health_check:
@@ -476,7 +700,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      description: get minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
       operationId: minitask_list
       produces:
       - application/json
@@ -487,17 +711,18 @@ paths:
             items:
               $ref: '#/definitions/model_MiniTask'
             type: array
-      summary: List Minitasks
+      summary: List MiniTasks
       tags:
-      - Minitasks
+      - MiniTasks
     post:
       consumes:
       - application/json
       description: Create MiniTask
+      operationId: minitask_create
       parameters:
       - description: Create MiniTask
         in: body
-        name: task
+        name: minitask
         required: true
         schema:
           $ref: '#/definitions/model_MiniTask'
@@ -510,9 +735,74 @@ paths:
           schema:
             $ref: '#/definitions/model_MiniTask'
             type: object
-      summary: Create Minitast
+      summary: Create MiniTask
       tags:
-      - Minitasks
+      - MiniTasks
+  /minitasks/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete MiniTask
+      operationId: minitask_delete
+      parameters:
+      - description: Delete MiniTask
+        in: body
+        name: minitask
+        required: true
+        schema:
+          $ref: '#/definitions/model_MiniTask'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_MiniTask'
+            type: object
+      summary: Delete MiniTask
+      tags:
+      - MiniTasks
+    get:
+      consumes:
+      - application/json
+      description: get minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      operationId: minitask_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_MiniTask'
+            type: object
+      summary: One MiniTasks
+      tags:
+      - MiniTasks
+    put:
+      consumes:
+      - application/json
+      description: Update MiniTask
+      operationId: minitask_update
+      parameters:
+      - description: Update MiniTask
+        in: body
+        name: minitask
+        required: true
+        schema:
+          $ref: '#/definitions/model_MiniTask'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_MiniTask'
+            type: object
+      summary: UpdateMiniTasks MiniTask
+      tags:
+      - MiniTasks
   /minitasks/{id}:
     get:
       consumes:
@@ -540,7 +830,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
-      operationId: task_list
+      operationId: tasks_list
       produces:
       - application/json
       responses:
@@ -550,13 +840,14 @@ paths:
             items:
               $ref: '#/definitions/model_Task'
             type: array
-      summary: List Task
+      summary: List Tasks
       tags:
       - Tasks
     post:
       consumes:
       - application/json
       description: Create Task
+      operationId: tasks_create
       parameters:
       - description: Create Task
         in: body
@@ -574,6 +865,71 @@ paths:
             $ref: '#/definitions/model_Task'
             type: object
       summary: Create Task
+      tags:
+      - Tasks
+  /tasks/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Task
+      operationId: tasks_delete
+      parameters:
+      - description: Delete Task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model_Task'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Task'
+            type: object
+      summary: Delete Task
+      tags:
+      - Tasks
+    get:
+      consumes:
+      - application/json
+      description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
+      operationId: tasks_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Task'
+            type: object
+      summary: One Tasks
+      tags:
+      - Tasks
+    put:
+      consumes:
+      - application/json
+      description: Update Task
+      operationId: tasks_update
+      parameters:
+      - description: Update Task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model_Task'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_Task'
+            type: object
+      summary: UpdateTasks Task
       tags:
       - Tasks
   /tasks/{id}:

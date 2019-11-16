@@ -94,7 +94,42 @@ func main() {
 	r.GET("/dailyminitask", h.DailyMiniTask)
 
 	r.GET("/books", h.GetBooks)
-	r.GET("/events", h.GetListEvents)
+
+	curd := e.Group("/api/v1/curd")
+
+	curd.Use(middleware.JWT([]byte("secret")))
+	// CURD
+	curd.GET("/books", h.GetListBooks)
+	curd.GET("/books/:id", h.GetOneBooks)
+	curd.PUT("/books/:id", h.UpdateBooks)
+	curd.POST("/books", h.CreateBooks)
+	curd.DELETE("/books/:id", h.DeleteBooks)
+
+	curd.GET("/events", h.GetListEvents)
+	curd.GET("/events/:id", h.GetOneEvents)
+	curd.PUT("/events/:id", h.UpdateEvents)
+	curd.POST("/events", h.CreateEvents)
+	curd.DELETE("/events/:id", h.DeleteEvents)
+
+	curd.GET("/courses", h.GetListCourses)
+	curd.GET("/courses/:id", h.GetOneCourses)
+	curd.PUT("/courses/:id", h.UpdateCourses)
+	curd.POST("/courses", h.CreateCourses)
+	curd.DELETE("/courses/:id", h.DeleteCourses)
+
+	curd.GET("/tasks", h.GetListTasks)
+	curd.GET("/tasks/:id", h.GetOneTasks)
+	curd.PUT("/tasks/:id", h.UpdateTasks)
+	curd.POST("/tasks", h.CreateTasks)
+	curd.DELETE("/tasks/:id", h.DeleteTasks)
+
+	curd.GET("/minitasks", h.GetListMiniTasks)
+	curd.GET("/minitasks/:id", h.GetOneMiniTasks)
+	curd.PUT("/minitasks/:id", h.UpdateMiniTasks)
+	curd.POST("/minitasks", h.CreateMiniTasks)
+	curd.DELETE("/minitasks/:id", h.DeleteMiniTasks)
+	
+	// End CURD
 
 	rs := e.Group("/api/v1/auth")
 
@@ -149,7 +184,7 @@ func main() {
 	// r.GET("/rungolang", h.RunGolang)
 	r.POST("/rungolang", h.RunGolang)
 
-	e.File("/swagger.json", "docs/swagger.json")
+	e.File("/swagger.yaml", "docs/swagger.yaml")
 
 	e.File("/", "static/docs.html")
 

@@ -47,14 +47,14 @@ func (h *Handler) GetListEvents(c echo.Context) (err error) {
 }
 
 // Events godoc
-// @Summary List Events
+// @Summary One Events
 // @ID event_one
 // @Description get events <a href="/api/v1/events?page=1&limit=5">/api/v1/events?page=1&limit=5</a>
 // @Tags Events
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} model.Event
-// @Router /events [get]
+// @Success 200 {object} model.Event
+// @Router /events/:id [get]
 func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 
 	bk := &model.Event{}
@@ -71,7 +71,9 @@ func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 		}).
 		One(&bk); err != nil {
 		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
+			// return echo.ErrNotFound
+			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
+
 		}
 
 		return
@@ -83,15 +85,16 @@ func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 
 }
 
-// CreateEvent godoc
-// @Summary Create Event
-// @Description Create Event
+// Events godoc
+// @Summary UpdateEvents Event
+// @ID event_update
+// @Description Update Event
 // @Tags Events
 // @Accept  json
 // @Produce  json
-// @Param  course body model.Event true "Create Event"
+// @Param  course body model.Event true "Update Event"
 // @Success 200 {object} model.Event
-// @Router /createevent [post]
+// @Router /events/:id [put]
 func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 
 	bk := &model.Event{
@@ -103,7 +106,7 @@ func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 	if err = c.Bind(bk); err != nil {
 		return
 	}
-	bk.ID = bson.ObjectId(id)
+	bk.ID = bson.ObjectIdHex(id)
 	if bk.ID == "" {
 		bk.ID = bson.NewObjectId()
 	}
@@ -133,15 +136,16 @@ func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 
 }
 
-// CreateEvent godoc
+// Events godoc
 // @Summary Create Event
+// @ID event_create
 // @Description Create Event
 // @Tags Events
 // @Accept  json
 // @Produce  json
 // @Param  course body model.Event true "Create Event"
 // @Success 200 {object} model.Event
-// @Router /createevent [post]
+// @Router /events [post]
 func (h *Handler) CreateEvents(c echo.Context) (err error) {
 
 	bk := &model.Event{
@@ -180,21 +184,21 @@ func (h *Handler) CreateEvents(c echo.Context) (err error) {
 
 }
 
-// CreateEvent godoc
-// @Summary Create Event
-// @Description Create Event
+// Events godoc
+// @Summary Delete Event
+// @ID event_delete
+// @Description Delete Event
 // @Tags Events
 // @Accept  json
 // @Produce  json
-// @Param  course body model.Event true "Create Event"
+// @Param  course body model.Event true "Delete Event"
 // @Success 200 {object} model.Event
-// @Router /createevent [post]
+// @Router /events/:id [delete]
 func (h *Handler) DeleteEvents(c echo.Context) (err error) {
 
 	bk := &model.Event{
 		// ID: bson.NewObjectId(),
 	}
-
 
 	if err = c.Bind(bk); err != nil {
 		return
@@ -202,15 +206,15 @@ func (h *Handler) DeleteEvents(c echo.Context) (err error) {
 
 	id := c.Param("id")
 
-	bk.ID = bson.ObjectId(id)
+	bk.ID = bson.ObjectIdHex(id)
 
-	if bk.ID == "" {
-		bk.ID = bson.NewObjectId()
-	}
+	// if bk.ID == "" {
+	// 	bk.ID = bson.NewObjectId()
+	// }
 
 	// Validation
-	if bk.Title == "" || bk.Image == "" || bk.Link == "" {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid title or image fields"}
+	if bk.ID == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid id fields"}
 	}
 
 	// Connect to DB
@@ -224,12 +228,15 @@ func (h *Handler) DeleteEvents(c echo.Context) (err error) {
 	// }
 
 	bk.Del = true
-
-	_, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
-	if errUs != nil {
-		// return echo.ErrInternalServerError
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
+	if err = db.DB("hocode").C("events").Update(bson.M{"_id": bk.ID}, bson.M{"$set": bson.M{"del": true}}); err != nil {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
+
+	// _, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
+	// if errUs != nil {
+	// 	// return echo.ErrInternalServerError
+	// 	return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
+	// }
 
 	return c.JSON(http.StatusOK, bk)
 
