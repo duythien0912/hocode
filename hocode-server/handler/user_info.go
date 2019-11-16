@@ -267,7 +267,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	}
 
 	if uMiniTaskLocationC != -1 {
-		preStatus := userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
 
@@ -308,10 +307,12 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 		// if eur != true { return c.JSON(http.StatusBadRequest, eur)}
 
-		if preStatus != "hoanthanh" {
+		// preStatus := userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status
 
-			ur.CodePoint = ur.CodePoint + mtf.CodePoint
-		}
+		// if preStatus != "hoanthanh" {
+		// }
+
+		ur.CodePoint = ur.CodePoint + mtf.CodePoint
 		codePoint = ur.CodePoint
 		ur.Timestamp = time.Now()
 		if err = db.DB("hocode").
