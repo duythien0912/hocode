@@ -94,10 +94,12 @@ func main() {
 	r.GET("/dailyminitask", h.DailyMiniTask)
 
 	r.GET("/books", h.GetBooks)
+	r.GET("/events", h.GetListEvents)
 
 	curd := e.Group("/api/v1/curd")
 
 	curd.Use(middleware.JWT([]byte("secret")))
+
 	// CURD
 	curd.GET("/books", h.GetListBooks)
 	curd.GET("/books/:id", h.GetOneBooks)
@@ -128,7 +130,7 @@ func main() {
 	curd.PUT("/minitasks/:id", h.UpdateMiniTasks)
 	curd.POST("/minitasks", h.CreateMiniTasks)
 	curd.DELETE("/minitasks/:id", h.DeleteMiniTasks)
-	
+
 	// End CURD
 
 	rs := e.Group("/api/v1/auth")
