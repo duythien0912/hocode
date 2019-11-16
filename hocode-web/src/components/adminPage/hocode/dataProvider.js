@@ -216,12 +216,12 @@ export const httpClient = (url, options = {}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
-    const id_token = localStorage.getItem('id_token');
+    const id_token = localStorage.getItem('token');
     options.headers.set('Authorization', `Bearer ${id_token}`);
     return fetchUtils.fetchJson(url, options);
 };
 
 // export default dataProvider('rest_url', httpClient);
-export default dataProvider('https://hocode.appspot.com/api/v1', httpClient);
+export default dataProvider('http://localhost:8081/api/v1/curd', httpClient);
 
 /** End of Generated Code **/
