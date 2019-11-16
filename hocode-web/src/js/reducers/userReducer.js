@@ -1,4 +1,4 @@
-import { ADD_CODEPOINT, GET_USER, CHANGE_USER_INFO,CHANGE_LOADING } from "../actions/types";
+import { ADD_CODEPOINT, GET_USER, CHANGE_USER_INFO,CHANGE_LOADING,SET_UNDEFINED_NEXT_MINITASK } from "../actions/types";
 
 const initialState = {
   avatar: "",
@@ -33,6 +33,11 @@ export default function(state = initialState, action) {
         lastname:action.payload.lastname,
         isUserLoading: false
       };
+      case SET_UNDEFINED_NEXT_MINITASK:
+          return {
+            ...state,
+            next_minitask: action.payload
+          }; 
       case CHANGE_LOADING:
         return {
           ...state,

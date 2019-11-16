@@ -31,7 +31,7 @@ class TaskBody extends Component {
     console.log(currentParams);
     axios
       .get(
-        `https://hocodevn.com/api/v1/courses/${currentParams.courseId}/tasks`
+        `https://hocodevn.com/api/v1/auth/courses/${currentParams.courseId}/tasks`
       )
       .then(res => {
         const tasks = res.data;

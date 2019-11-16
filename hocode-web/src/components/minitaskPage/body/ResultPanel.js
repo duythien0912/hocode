@@ -74,7 +74,7 @@ export default function ResultPanel(props) {
 
   const unit_tests = props.unit_tests || [];
   const result = props.result;
-
+  console.log(result)
   function renderResultPanel(result) {
     if (result.stdout !== undefined ) {
       if (result.error !== "") {

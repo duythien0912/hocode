@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { connect } from "react-redux";
-import { submitUpdateMinitask } from "../../js/actions/userAction";
+import { submitUpdateMinitask,setUndefinedNextMinitask } from "../../js/actions/userAction";
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class MiniTaskPage extends Component {
       result: {},
       userCode: "",
       isLoading: false,
-      canNext:false,
+     
     };
 
     this.executeCode = this.executeCode.bind(this);
@@ -33,26 +33,7 @@ class MiniTaskPage extends Component {
     this.resetCode = this.resetCode.bind(this);
     this.createFileTest = this.createFileTest.bind(this);
   }
-  goNextMinitask =()=>{
-    console.log("next ")
-    this.setState((state, props) => ({
-      result: {},
-      canNext:false
-    }));
-    axios
-      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.user.next_minitask.id}`)
-      .then(res => {
-        const minitask = res.data;
 
-        this.setState((state, props) => ({
-          minitask: minitask
-        }));
-
-        this.setState((state, props) => ({
-          userCode: minitask.template_code
-        }));
-      });
-  }
   componentDidMount() {
     const {
       match: { params }
@@ -84,6 +65,29 @@ class MiniTaskPage extends Component {
       });
 
     // setTimeout(()=>{console.log(this.state.minitask.mini_task_desc)},2000)
+  }
+  componentDidUpdate(prevProps) {
+    if(prevProps.match.params.minitaskId !== this.props.match.params.minitaskId){
+      this.props.setUndefinedNextMinitask();
+      console.log("next ")
+      this.setState((state, props) => ({
+        result: {},
+      }));
+      axios
+        .get(`https://hocodevn.com/api/v1/minitasks/${this.props.match.params.minitaskId}`)
+        .then(res => {
+          const minitask = res.data;
+  
+          this.setState((state, props) => ({
+            minitask: minitask
+          }));
+  
+          this.setState((state, props) => ({
+            userCode: minitask.template_code
+          }));
+        });
+      // do something
+    }
   }
   updateUserCode(value) {
     // is props of <codeEditor/> to update usercode wwhen edit in editor
@@ -186,7 +190,7 @@ class MiniTaskPage extends Component {
   executeCode() {
     this.setState((state, props) => ({
       result: {},
-      canNext:false
+      
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -233,10 +237,10 @@ class MiniTaskPage extends Component {
         }.bind(this)
       );
   }
-  submitCode() {
+   submitCode() {
     this.setState((state, props) => ({
       result: {},
-      canNext:false
+      
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -274,7 +278,7 @@ class MiniTaskPage extends Component {
               this.state.minitask.id,
               this.state.minitask.task_id
             );
-            this.setState({canNext:true})
+            
             Swal.fire({
               type: "success",
               title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
@@ -307,8 +311,17 @@ class MiniTaskPage extends Component {
       );
   }
   render() {
-    const { minitask } = this.state;
-
+    const { minitask,result } = this.state;
+    function renderPassedTestCount() {
+      if(result !== undefined){
+        if(result.stdout!== undefined){
+          if(result.stdout.WASSUCCESSFUL !==undefined){
+            return(<React.Fragment>{result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/{result.stdout.RUNCOUNT}</React.Fragment>)  
+          }
+        }
+      }
+    }
+    
     return (
       <React.Fragment>
         <div className="fit layout-code">
@@ -414,7 +427,7 @@ class MiniTaskPage extends Component {
                       }}
                     >
                       <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
-                        0/{minitask.code_point}
+                      {renderPassedTestCount()}
                       </div>
                       <div style={{ marginLeft: 30 }}>
                         <button
@@ -443,12 +456,12 @@ class MiniTaskPage extends Component {
                         </button>
                       </div>
                       
-                      {this.state.canNext=== true ? (
+                      {this.props.user.next_minitask !== undefined ? (
                         <div style={{ marginLeft: 30, fontSize: 12 }}>
                           
                           <Link
-                            onClick={this.goNextMinitask}
-                            to={`/tasks/${this.props.user.next_minitask !== undefined ?this.props.user.next_minitask.id:""}`}
+                           
+                            to={`/tasks/${this.props.user.next_minitask.id}`}
                             style={{
                               textDecoration: "none",
                               color: "#595959"
@@ -498,4 +511,4 @@ const mapStateToProps = state => ({
   user: state.rootReducer.user
 });
 
-export default connect(mapStateToProps, { submitUpdateMinitask })(MiniTaskPage);
+export default connect(mapStateToProps, { submitUpdateMinitask,setUndefinedNextMinitask })(MiniTaskPage);
