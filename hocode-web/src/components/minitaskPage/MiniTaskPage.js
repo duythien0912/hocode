@@ -35,9 +35,12 @@ class MiniTaskPage extends Component {
   }
   goNextMinitask =()=>{
     console.log("next ")
-  
+    this.setState((state, props) => ({
+      result: {},
+      canNext:false
+    }));
     axios
-      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitaskId}`)
+      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.user.next_minitask.id}`)
       .then(res => {
         const minitask = res.data;
 
@@ -51,9 +54,11 @@ class MiniTaskPage extends Component {
       });
   }
   componentDidMount() {
-
+    const {
+      match: { params }
+    } = this.props;
     axios
-      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitaskId}`)
+      .get(`https://hocodevn.com/api/v1/minitasks/${params.minitaskId}`)
       .then(res => {
         const minitask = res.data;
 
