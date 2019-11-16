@@ -16,6 +16,7 @@ type (
 		LastName  string        `json:"lastname" bson:"lastname"`
 		CodePoint int           `json:"codepoint" bson:"codepoint"`
 		Avatar    string        `json:"avatar" bson:"avatar"`
+		Role      string        `json:"role" bson:"role"`
 		// Company []company      `json:"company,omitempty" bson:"company,omitempty"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
 		Del       bool      `json:"del" bson:"del"`

@@ -136,6 +136,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 
 		// Save in database
 		ur.Timestamp = time.Now()
+		ur.Role = "user"
 		if err = db.DB("hocode").C("users").Insert(ur); err != nil {
 			return echo.ErrInternalServerError
 		}
