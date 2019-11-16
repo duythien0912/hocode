@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "hocode.appspot.com",
+    "host": "hocodevn.com",
     "basePath": "/api/v1",
     "paths": {
         "/auth/updateusercourse": {

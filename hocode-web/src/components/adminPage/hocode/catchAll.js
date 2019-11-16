@@ -9,7 +9,7 @@ import { NotFound } from 'react-admin';
 
 class catchAll extends Component {
     render() {
-        return localStorage.getItem('id_token') ? (
+        return localStorage.getItem('token') ? (
             <NotFound />
         ) : (
             <Redirect push to="/login" />

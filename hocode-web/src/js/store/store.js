@@ -21,6 +21,8 @@ import authProvider from "../../components/adminPage/hocode/auth/authProvider";
 import dataProvider from "../../components/adminPage/hocode/dataProvider";
 import rootReducer from "../reducers";
 
+import routeReducer2 from '../reducers/routeReducer';
+
 const initialState = {};
 
 const history = createBrowserHistory();

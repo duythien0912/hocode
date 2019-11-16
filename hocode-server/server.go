@@ -20,7 +20,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host hocode.appspot.com
+// @host hocodevn.com
 // @BasePath /api/v1
 
 func main() {
@@ -153,6 +153,8 @@ func main() {
 	rs.POST("/userinfoupdate", h.UpdataUserData)
 
 	rs.GET("/usercourse", h.GetUserCourse)
+
+	rs.GET("/courses/:id/tasks", h.AuthTaskByCoursesID)
 
 	rs.POST("/updateusercourse", h.UpdateUserCourse)
 

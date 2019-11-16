@@ -119,6 +119,8 @@ class ProfilePage extends React.Component {
     const { classes, theme, container } = this.props;
     const { mobileOpen } = this.state;
     let { path, url } = this.props.match;
+    console.log("[path]");
+    console.log(path);
     const {
       location: { pathname }
     } = this.props;
@@ -178,6 +180,7 @@ class ProfilePage extends React.Component {
               <p style={{ fontSize: 12, marginLeft: "3px" }}>Chứng chỉ</p>
             </MenuItem>
           </Link>
+          
           <Link to={`${url}/admin`}>
             <MenuItem
               selected={pathname === `${url}/admin`}
