@@ -242,6 +242,8 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	isInDBUserMiniTask := true
 
+	codePoint := 0
+
 	if err = db.DB("hocode").C("user_minitask").
 		Find(bson.M{
 			"user_id": userID,
@@ -306,7 +308,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		// if eur != true { return c.JSON(http.StatusBadRequest, eur)}
 
 		ur.CodePoint = ur.CodePoint + mtf.CodePoint
-
+		codePoint = ur.CodePoint
 		ur.Timestamp = time.Now()
 		if err = db.DB("hocode").
 			C("users").
@@ -370,6 +372,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		UserCourse:   uc,
 		UserMiniTask: userMiniTask,
 		NextMiniTask: nextMiniTask,
+		CodePoint: codePoint,
 	}
 
 	return c.JSON(http.StatusOK, userCourseOut)

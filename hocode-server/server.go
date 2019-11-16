@@ -94,11 +94,17 @@ func main() {
 	r.GET("/dailyminitask", h.DailyMiniTask)
 
 	r.GET("/books", h.GetBooks)
-	r.GET("/events", h.GetEvents)
+	r.GET("/events", h.GetListEvents)
 
 	rs := e.Group("/api/v1/auth")
 
-	r.POST("/createevent", h.CreateEvent)
+	rs.GET("/events", h.GetListEvents)
+	rs.GET("/events/:id", h.GetOneEvents)
+	rs.PUT("/events/:id", h.UpdateEvents)
+	rs.POST("/events", h.CreateEvents)
+	rs.DELETE("/events/:id", h.DeleteEvents)
+
+	r.POST("/createevent", h.CreateEvents)
 	r.POST("/createbook", h.CreateBook)
 	r.POST("/courses", h.CreateCourse)
 	r.POST("/tasks", h.CreateTask)
