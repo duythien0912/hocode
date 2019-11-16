@@ -39,6 +39,7 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 		One(&uc); err != nil {
 		if err == mgo.ErrNotFound {
 			// return echo.ErrNotFound
+			return c.JSON(http.StatusOK, uc)
 		}
 
 		return
