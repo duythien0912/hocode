@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
@@ -125,6 +126,10 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
+	// user := c.Get("user").(*jwt.Token)
+	// claims := user.Claims.(jwt.MapClaims)
+	// userID := claims["id"].(string)
+
 	id := c.Param("id")
 
 	db := h.DB.Clone()
@@ -149,6 +154,122 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 			).
 			Sort("-timestamp").
 			All(&mta)
+
+		// userMiniTask := &model.UserMiniTask{}
+
+		// if err = db.DB("hocode").C("user_minitask").
+		// 	Find(bson.M{
+		// 		"user_id": userID,
+		// 		"del":     bson.M{"$ne": true},
+		// 	}).
+		// 	One(&userMiniTask); err != nil {
+		// 	// if err == mgo.ErrNotFound {
+		// 	// 	uc.CourseInfo = []CourseInfo
+		// 	// }
+		// 	// isInDBUserMiniTask = false
+		// 	// return
+		// }
+		// vitri := -1
+
+		// for i := 0; i < len(mta); i++ {
+		// 	for j := 0; j < len(
+		// 		userMiniTask.MiniTaskInfo); j++ {
+		// 		if mta[i].ID.Hex() == userMiniTask.MiniTaskInfo[j].MiniTaskID {
+		// 			vitri = i
+		// 			mta[i].Status = userMiniTask.MiniTaskInfo[j].Status
+		// 		}
+
+		// 	}
+
+		// }
+
+		// if vitri != -1 {
+		// 	mta[vitri].Vitri = true
+		// }
+
+		ta[i].Minitasks = mta
+
+	}
+
+	return c.JSON(http.StatusOK, ta)
+}
+
+// Task godoc
+// @Summary Get Task By Courses ID Auth
+// @Description Get Task By Courses ID <a href="/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks">/api/v1/courses/5d86e07bfe6e2b157bd3b259/tasks</a>
+// @Tags Courses
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Course ID"
+// @Success 200 {array} model.Task
+// @Router /courses/{id}/tasks [get]
+func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
+	ta := []*model.Task{}
+
+	page, _ := strconv.Atoi(c.QueryParam("page"))
+	limit, _ := strconv.Atoi(c.QueryParam("limit"))
+
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userID := claims["id"].(string)
+
+	id := c.Param("id")
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	if err = db.DB("hocode").C("tasks").
+		Find(bson.M{"course_id": id, "del": bson.M{"$ne": true}}).
+		Skip((page - 1) * limit).
+		Limit(limit).
+		Sort("-timestamp").
+		All(&ta); err != nil {
+		return
+	}
+
+	for i := 0; i < len(ta); i++ {
+		mta := []*model.MiniTask{}
+
+		db.DB("hocode").C("minitasks").
+			Find(bson.M{
+				"task_id": ta[i].ID.Hex(),
+				"del":     bson.M{"$ne": true}},
+			).
+			Sort("-timestamp").
+			All(&mta)
+
+		userMiniTask := &model.UserMiniTask{}
+
+		if err = db.DB("hocode").C("user_minitask").
+			Find(bson.M{
+				"user_id": userID,
+				"del":     bson.M{"$ne": true},
+			}).
+			One(&userMiniTask); err != nil {
+			// if err == mgo.ErrNotFound {
+			// 	uc.CourseInfo = []CourseInfo
+			// }
+			// isInDBUserMiniTask = false
+			// return
+		}
+		vitri := -1
+
+		for i := 0; i < len(mta); i++ {
+			for j := 0; j < len(
+				userMiniTask.MiniTaskInfo); j++ {
+				if mta[i].ID.Hex() == userMiniTask.MiniTaskInfo[j].MiniTaskID {
+					vitri = i
+					mta[i].Status = userMiniTask.MiniTaskInfo[j].Status
+				}
+
+			}
+
+		}
+
+		if vitri != -1 {
+			mta[vitri].Vitri = true
+		}
+
 		ta[i].Minitasks = mta
 
 	}

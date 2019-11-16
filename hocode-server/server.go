@@ -154,6 +154,8 @@ func main() {
 
 	rs.GET("/usercourse", h.GetUserCourse)
 
+	rs.GET("/courses/:id/tasks", h.AuthTaskByCoursesID)
+
 	rs.POST("/updateusercourse", h.UpdateUserCourse)
 
 	rs.POST("/nextminitask", h.NextMiniTask)
