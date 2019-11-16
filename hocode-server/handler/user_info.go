@@ -270,6 +270,11 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
 
+	} else {
+		miniTaskIn := model.MiniTaskInfo{}
+		miniTaskIn.Status = "hoanthanh"
+		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
+
 		// Cộng điểm cho user
 		mtf := &model.MiniTask{}
 
@@ -323,11 +328,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 			return
 		}
-
-	} else {
-		miniTaskIn := model.MiniTaskInfo{}
-		miniTaskIn.Status = "hoanthanh"
-		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
 
 		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
 
