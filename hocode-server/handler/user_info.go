@@ -265,6 +265,24 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 		}
 	}
+	ur := &model.User{}
+
+	if err = db.DB("hocode").
+		C("users").
+		// FindId(bson.ObjectIdHex(userID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(userID),
+			"del": bson.M{"$ne": true},
+		}).
+		// Find(bson.M{"_id": userID}).
+		One(&ur); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
 
 	if uMiniTaskLocationC != -1 {
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
@@ -290,23 +308,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 		}
 
-		ur := &model.User{}
 
-		if err = db.DB("hocode").
-			C("users").
-			// FindId(bson.ObjectIdHex(userID)).
-			Find(bson.M{
-				"_id": bson.ObjectIdHex(userID),
-				"del": bson.M{"$ne": true},
-			}).
-			// Find(bson.M{"_id": userID}).
-			One(&ur); err != nil {
-			if err == mgo.ErrNotFound {
-				return echo.ErrNotFound
-			}
-
-			return
-		}
 
 		// ur, eur := claims["data"].(model.User)
 
@@ -327,12 +329,13 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 			return
 		}
-		codePoint = ur.CodePoint
 
 		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
 
 	}
 
+
+	codePoint = ur.CodePoint
 	userMiniTask.Timestamp = time.Now()
 
 	if isInDBUserMiniTask {
