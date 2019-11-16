@@ -20,7 +20,7 @@ class CourseBody extends Component {
         }
     }
     componentDidMount(){
-        axios.get(`https://hocode.appspot.com/api/v1/courses`)
+        axios.get(`https://hocodevn.com/api/v1/courses`)
         .then(res => {
           const courses = res.data;
           this.setState({courses });

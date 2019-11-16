@@ -5,6 +5,7 @@ import axios from "axios";
 import Select from "react-select";
 import ReactMde from "./ReactMde";
 import CodeEditor from "./CodeEditor";
+import ShowUnitTest from "./ShowUnitTest";
 import "./createminitaskbody.css";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
@@ -80,7 +81,7 @@ class CreateMiniTaskBody extends Component {
   }
 
   componentDidMount() {
-    axios.get(`https://hocode.appspot.com/api/v1/courses`).then(res => {
+    axios.get(`https://hocodevn.com/api/v1/courses`).then(res => {
       const courses = res.data;
       const coursesFilter = courses.filter(course => course.tasks.length > 0); // chọn những courses có task
       const coursesoption = coursesFilter.map(course => {
@@ -145,8 +146,8 @@ class CreateMiniTaskBody extends Component {
       level: "hard",
       code_point: parseInt(this.state.code_point)
     };
-     axios
-      .post("https://hocode.appspot.com/api/v1/minitasks", newMiniTask)
+    axios
+      .post("https://hocodevn.com/api/v1/minitasks", newMiniTask)
       .then(function(response) {
         console.log(response);
       });
@@ -556,6 +557,16 @@ class CreateMiniTaskBody extends Component {
                     </div>
                   );
                 })}
+              </div>
+              <div>
+                <div className="codeEditorShowUnitTest">
+                  <ShowUnitTest
+                    output_type_func={this.state.output_type_func}
+                    name_func={this.state.name_func}
+                    unit_tests={this.state.unit_tests}
+                    
+                  />
+                </div>
               </div>
               <div
                 style={{

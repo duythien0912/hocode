@@ -6,7 +6,7 @@ import CodeEditor from "./body/CodeEditor";
 import ResultPanel from "./body/ResultPanel";
 import TestsPanel from "./body/TestsPanel";
 import "./minitask.css";
-import MediaQuery from "react-responsive";
+//import MediaQuery from "react-responsive";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { connect } from "react-redux";
-import { addCodePoint } from "../../js/actions/userAction";
+import { submitUpdateMinitask } from "../../js/actions/userAction";
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -23,7 +23,8 @@ class MiniTaskPage extends Component {
       minitask: {},
       result: {},
       userCode: "",
-      isLoading: false
+      isLoading: false,
+      canNext:false,
     };
 
     this.executeCode = this.executeCode.bind(this);
@@ -32,21 +33,36 @@ class MiniTaskPage extends Component {
     this.resetCode = this.resetCode.bind(this);
     this.createFileTest = this.createFileTest.bind(this);
   }
-  componentDidMount() {
-    const {
-      match: { params }
-    } = this.props;
+  goNextMinitask =()=>{
+    console.log("next ")
+  
     axios
-      .get(`https://hocode.appspot.com/api/v1/minitasks/${params.minitaskId}`)
+      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitaskId}`)
       .then(res => {
         const minitask = res.data;
 
         this.setState((state, props) => ({
           minitask: minitask
         }));
-        setTimeout(() => {
-          console.log(this.state.minitask);
-        }, 0);
+
+        this.setState((state, props) => ({
+          userCode: minitask.template_code
+        }));
+      });
+  }
+  componentDidMount() {
+
+    axios
+      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitaskId}`)
+      .then(res => {
+        const minitask = res.data;
+
+        this.setState((state, props) => ({
+          minitask: minitask
+        }));
+        // setTimeout(() => {
+        //   console.log(this.state.minitask);
+        // }, 0);
         /* if(minitask.user_code !== ''){ // if user have ever code in this minitassk, load user code
         this.setState((state, props) => ({
           userCode: minitask.user_code
@@ -148,14 +164,13 @@ class MiniTaskPage extends Component {
               1}", ${unit_test.expected_output}, s.${
               minitask.name_func
             }(${inputsFormat}),0);\n  }\n`;
-          } else{
+          } else {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
               1}", ${unit_test.expected_output}, s.${
               minitask.name_func
             }(${inputsFormat}));\n  }\n`;
           }
-          
         });
         junit4 += `}`;
       }
@@ -165,7 +180,8 @@ class MiniTaskPage extends Component {
 
   executeCode() {
     this.setState((state, props) => ({
-      result: {}
+      result: {},
+      canNext:false
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -179,7 +195,7 @@ class MiniTaskPage extends Component {
     console.log(junit4);
     //console.log(code);
     axios
-      .post("https://hocodevn.com/runner", {
+      .post("https://hocodevn.com/api/runner/java", {
         code: code,
         test: junit4
       })
@@ -200,13 +216,22 @@ class MiniTaskPage extends Component {
           }));
         }.bind(this)
       )
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(
+        function(error) {
+          this.setState((state, props) => ({
+            isLoading: false,
+            result: {
+              errorRuntime: error
+            }
+          }));
+          console.log(error);
+        }.bind(this)
+      );
   }
   submitCode() {
     this.setState((state, props) => ({
-      result: {}
+      result: {},
+      canNext:false
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -217,10 +242,8 @@ class MiniTaskPage extends Component {
       isLoading: true
     }));
 
-    
-
     axios
-      .post("https://hocodevn.com/runner", {
+      .post("https://hocodevn.com/api/runner/java", {
         code: code,
         test: junit4
       })
@@ -242,9 +265,11 @@ class MiniTaskPage extends Component {
 
           if (this.state.result.stdout.WASSUCCESSFUL === "true") {
             // process alert success and add code point
-            const newCodePoint =
-              this.props.user.codepoint + minitask.code_point;
-            this.props.addCodePoint(newCodePoint, this.props.auth.user.data.id);
+            this.props.submitUpdateMinitask(
+              this.state.minitask.id,
+              this.state.minitask.task_id
+            );
+            this.setState({canNext:true})
             Swal.fire({
               type: "success",
               title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
@@ -264,9 +289,17 @@ class MiniTaskPage extends Component {
           }
         }.bind(this)
       )
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(
+        function(error) {
+          this.setState((state, props) => ({
+            isLoading: false,
+            result: {
+              errorRuntime: error
+            }
+          }));
+          console.log(error);
+        }.bind(this)
+      );
   }
   render() {
     const { minitask } = this.state;
@@ -287,40 +320,41 @@ class MiniTaskPage extends Component {
             {/* layout-code-body->   position: relative;flex-grow: 1;*/}
             <div className="split-panel fit">
               <div className="stretch fit">
-                <MediaQuery minDeviceWidth={701}>
-                  <Split
-                    className="splitHorizontal"
-                    sizes={[25, 75]}
-                    minSize={0}
-                    expandToMin={false}
-                    gutterSize={4}
-                    gutterAlign="center"
-                    snapOffset={30}
-                    dragInterval={1}
-                    direction="horizontal"
-                    cursor="col-resize"
-                  >
-                    <div className="split-panel-first ">
-                      <MiniTaskDesc
-                        mini_task_desc={minitask.mini_task_desc}
-                        code_point={minitask.code_point}
-                        level={minitask.level}
-                      />
-                    </div>
-                    <div className="split-panel-second ">
-                      <div className="coding-area">
-                        <Split
-                          className="splitVertical"
-                          sizes={[75, 25]}
-                          minSize={100}
-                          expandToMin={false}
-                          gutterSize={4}
-                          gutterAlign="center"
-                          snapOffset={30}
-                          dragInterval={1}
-                          direction="vertical"
-                          cursor="row-resize"
-                        >
+                {/*  <MediaQuery minDeviceWidth={701}>*/}
+                <Split
+                  className="splitHorizontal"
+                  sizes={[25, 75]}
+                  minSize={0}
+                  expandToMin={false}
+                  gutterSize={4}
+                  gutterAlign="center"
+                  snapOffset={30}
+                  dragInterval={1}
+                  direction="horizontal"
+                  cursor="col-resize"
+                >
+                  <div className="split-panel-first ">
+                    <MiniTaskDesc
+                      mini_task_desc={minitask.mini_task_desc}
+                      code_point={minitask.code_point}
+                      level={minitask.level}
+                    />
+                  </div>
+                  <div className="split-panel-second ">
+                    <div className="coding-area">
+                      <Split
+                        className="splitVertical"
+                        sizes={[75, 25]}
+                        minSize={100}
+                        expandToMin={false}
+                        gutterSize={4}
+                        gutterAlign="center"
+                        snapOffset={30}
+                        dragInterval={1}
+                        direction="vertical"
+                        cursor="row-resize"
+                      >
+                        <div>
                           <div className="codeEditor">
                             <CodeEditor
                               userCode={this.state.userCode}
@@ -347,82 +381,85 @@ class MiniTaskPage extends Component {
                               </button>
                             </div>
                           </div>
-                          <div className="resultPanel">
-                            {this.state.result.stdout !== undefined ? (
-                              <ResultPanel
-                                unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
-                                result={this.state.result}
-                              />
-                            ) : (
-                              <TestsPanel
-                                isLoading={this.state.isLoading}
-                                unit_tests={minitask.unit_tests}
-                              />
-                            )}
-                          </div>
-                        </Split>
-                      </div>
-                      <div
-                        className="runtest-area"
-                        style={{
-                          minHeight: "40px",
-                          padding: "10px 20px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "flex-end"
-                        }}
-                      >
-                        <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
-                          0/{minitask.code_point}
                         </div>
-                        <div style={{ marginLeft: 30 }}>
-                          <button
-                            className={`execute_btn ${this.state.isLoading &&
-                              "disable_btn"}`}
-                            style={{ display: "flex", alignItems: "center" }}
-                            onClick={this.executeCode}
-                            disabled={this.state.isLoading}
-                          >
-                            {this.state.isLoading
-                              ? "Đang thực thi"
-                              : "Thực thi"}
-                            <img
-                              src={require("./play-button.svg")}
-                              alt=""
-                              style={{ height: "10px", marginLeft: "3px" }}
-                            ></img>
-                          </button>
+                        <div className="resultPanel">
+                          {this.state.result.stdout !== undefined ||
+                          this.state.result.errorRuntime !== undefined ? (
+                            <ResultPanel
+                              unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
+                              result={this.state.result}
+                            />
+                          ) : (
+                            <TestsPanel
+                              isLoading={this.state.isLoading}
+                              unit_tests={minitask.unit_tests}
+                            />
+                          )}
                         </div>
-                        <div style={{ marginLeft: 10 }}>
-                          <button
-                            onClick={this.submitCode}
-                            className={`submitCode_btn ${this.state.isLoading &&
-                              "disable_btn"}`}
-                            disabled={this.state.isLoading}
-                          >
-                            Nộp bài
-                          </button>
-                        </div>
-                        {this.state.result.isPass ? (
-                          <div style={{ marginLeft: 30, fontSize: 12 }}>
-                            <Link
-                              to={`https://hocode.appspot.com/api/v1/minitasks/${this.state.next_minitask_id}`}
-                              style={{
-                                textDecoration: "none",
-                                color: "#595959"
-                              }}
-                            >
-                              Qua bài mới
-                            </Link>
-                          </div>
-                        ) : (
-                          <div></div>
-                        )}
-                      </div>
+                      </Split>
                     </div>
-                  </Split>{" "}
-                </MediaQuery>
-                <MediaQuery maxDeviceWidth={700}>
+                    <div
+                      className="runtest-area"
+                      style={{
+                        minHeight: "40px",
+                        padding: "10px 20px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-end"
+                      }}
+                    >
+                      <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
+                        0/{minitask.code_point}
+                      </div>
+                      <div style={{ marginLeft: 30 }}>
+                        <button
+                          className={`execute_btn ${this.state.isLoading &&
+                            "disable_btn"}`}
+                          style={{ display: "flex", alignItems: "center" }}
+                          onClick={this.executeCode}
+                          disabled={this.state.isLoading}
+                        >
+                          {this.state.isLoading ? "Đang thực thi" : "Thực thi"}
+                          <img
+                            src={require("./play-button.svg")}
+                            alt=""
+                            style={{ height: "10px", marginLeft: "3px" }}
+                          ></img>
+                        </button>
+                      </div>
+                      <div style={{ marginLeft: 10 }}>
+                        <button
+                          onClick={this.submitCode}
+                          className={`submitCode_btn ${this.state.isLoading &&
+                            "disable_btn"}`}
+                          disabled={this.state.isLoading}
+                        >
+                          Nộp bài
+                        </button>
+                      </div>
+                      
+                      {this.state.canNext=== true ? (
+                        <div style={{ marginLeft: 30, fontSize: 12 }}>
+                          
+                          <Link
+                            onClick={this.goNextMinitask}
+                            to={`/tasks/${this.props.user.next_minitask !== undefined ?this.props.user.next_minitask.id:""}`}
+                            style={{
+                              textDecoration: "none",
+                              color: "#595959"
+                            }}
+                          >
+                            Qua bài mới
+                          </Link>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  </div>
+                </Split>{" "}
+                {/* </MediaQuery>*/}
+                {/* <MediaQuery maxDeviceWidth={700}>
                   {" "}
                   <div
                     style={{
@@ -435,7 +472,7 @@ class MiniTaskPage extends Component {
                   >
                     Không hỗ trợ code bằng điện thoại
                   </div>
-                </MediaQuery>
+                </MediaQuery> */}
               </div>
             </div>
           </div>
@@ -456,4 +493,4 @@ const mapStateToProps = state => ({
   user: state.rootReducer.user
 });
 
-export default connect(mapStateToProps, { addCodePoint })(MiniTaskPage);
+export default connect(mapStateToProps, { submitUpdateMinitask })(MiniTaskPage);

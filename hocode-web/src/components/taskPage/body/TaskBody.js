@@ -20,7 +20,7 @@ class TaskBody extends Component {
         }
     }
     componentDidMount(){
-       axios.get(`https://hocode.appspot.com/api/v1/courses/${this.props.courseId}/tasks`)
+       axios.get(`https://hocodevn.com/api/v1/courses/${this.props.courseId}/tasks`)
         .then(res => {
           const tasks = res.data;
           this.setState({tasks });

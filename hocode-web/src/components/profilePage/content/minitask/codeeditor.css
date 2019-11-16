@@ -18,6 +18,10 @@
 .codeEditorCreateMiniTask{
     height: 300px;
 }
+.codeEditorShowUnitTest{
+    height: 200px;
+    overflow: auto;
+}
 
 .codeEditorCreateMiniTask .CodeMirror-cursor { display: none !important } 
 .codeEditorCreateMiniTask .CodeMirror-scroll{

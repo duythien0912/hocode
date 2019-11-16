@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
     case ADD_CODEPOINT:
       return {
         ...state,
-        codepoint: action.payload,
+        ...action.payload,
         isUserLoading:false
       };
     case GET_USER:

@@ -19,3 +19,7 @@
     font-family: 'Share Tech Mono', monospace!important;
     font-size: 14px!important;    
     }
+
+    .codeEditor{
+        height: 100%;
+    }
