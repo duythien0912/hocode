@@ -7,7 +7,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("https://hocode.appspot.com/api/v1/signup", userData)
+    .post("https://hocodevn.com/api/v1/signup", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -20,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("https://hocode.appspot.com/api/v1/login", userData)
+    .post("https://hocodevn.com/api/v1/login", userData)
     .then(res => {
       // Save to localStorage
       

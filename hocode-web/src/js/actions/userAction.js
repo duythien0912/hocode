@@ -1,16 +1,19 @@
 import { ADD_CODEPOINT, GET_USER, CHANGE_USER_INFO,CHANGE_LOADING } from "./types";
 import axios from "axios";
 
-export const addCodePoint = (newCodePoint, userId) => dispatch => {
+export const submitUpdateMinitask = (minitask_id, task_id) => dispatch => {
+  console.log({minitask_id: minitask_id,
+    task_id: task_id})
   axios
-    .post("https://hocode.appspot.com/auth/userinfoupdate", {
-      codepoint: newCodePoint,
-      id: userId
+    .post("https://hocodevn.com/api/v1/auth/updateusercourse", {
+      minitask_id: minitask_id,
+      task_id: task_id
     })
     .then(res => {
+      console.log(res.data)
       dispatch({
         type: ADD_CODEPOINT,
-        payload: res.data.codepoint
+        payload: res.data
       });
     })
     .catch(err => console.log(err));
@@ -23,7 +26,7 @@ export const changeUserInfo = (newUser, userId) => dispatch => {
     payload: true
   });
   axios
-    .post("https://hocode.appspot.com/auth/userinfoupdate", {
+    .post("https://hocodevn.com/auth/userinfoupdate", {
       id: userId,
       avatar: newUser.avatar,
       password: newUser.password,
@@ -43,7 +46,7 @@ export const changeUserInfo = (newUser, userId) => dispatch => {
 
 export const getUser = () => dispatch => {
   axios
-    .get("https://hocode.appspot.com/auth/userinfo")
+    .get("https://hocodevn.com/auth/userinfo")
     .then(res => {
       dispatch({
         type: GET_USER,

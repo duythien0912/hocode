@@ -11,7 +11,7 @@ import {
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params;
-    const request = new Request("https://hocode.appspot.com/api/v1/login", {
+    const request = new Request("https://hocodevn.com/api/v1/login", {
       method: "POST",
       body: JSON.stringify({ email: username, password: password }),
       headers: new Headers({ "Content-Type": "application/json" })

@@ -28,7 +28,7 @@ class NavRight extends React.Component {
   }
   getApi = async () => {
     await Promise.all([
-      axios.get(`https://hocode.appspot.com/api/v1/dailyminitask`).then(res => {
+      axios.get(`https://hocodevn.com/api/v1/dailyminitask`).then(res => {
         const daily_minitasks = res.data;
         console.log(daily_minitasks);
         this.setState({ daily_minitasks: daily_minitasks });

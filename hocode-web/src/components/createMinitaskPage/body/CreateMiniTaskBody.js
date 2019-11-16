@@ -73,7 +73,7 @@ class CreateMiniTaskBody extends Component {
   }
 
   componentDidMount() {
-    axios.get(`https://hocode.appspot.com/api/v1/courses`).then(res => { 
+    axios.get(`https://hocodevn.com/api/v1/courses`).then(res => { 
       const courses = res.data;
       const coursesFilter = courses.filter(course => course.tasks.length > 0); // chọn những courses có task
       const coursesoption = coursesFilter.map(course => {

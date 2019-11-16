@@ -19,7 +19,7 @@ import "codemirror/addon/hint/show-hint.js"
 import "codemirror/addon/hint/javascript-hint.js"
 import "codemirror/addon/hint/css-hint.js"
 
-
+let jBeautify = require('js-beautify').js;
 
 
 
@@ -41,10 +41,11 @@ class CodeEditor extends Component {
     
       }`
     }
+    let template_code_format = jBeautify(template_code,{indent_size: 2});
     return (
       <CodeMirror
       value={
-        template_code
+        template_code_format
       }
         options={{
           mode: "javascript",

@@ -222,6 +222,6 @@ export const httpClient = (url, options = {}) => {
 };
 
 // export default dataProvider('rest_url', httpClient);
-export default dataProvider('https://hocode.appspot.com/api/v1', httpClient);
+export default dataProvider('https://hocodevn.com/api/v1', httpClient);
 
 /** End of Generated Code **/

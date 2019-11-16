@@ -66,57 +66,94 @@ const useStyles = makeStyles(theme => ({
 export default function ResultPanel(props) {
   //result panel is called in minitask page
   const classes = useStyles();
-  const [value, setValue] = React.useState(1); 
+  const [value, setValue] = React.useState(1);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-  
- 
+
   const unit_tests = props.unit_tests || [];
   const result = props.result;
+
   function renderResultPanel(result) {
-    if (result.stdout !== undefined) {
+    if (result.stdout !== undefined ) {
       if (result.error !== "") {
-        return <React.Fragment>
-         <div style={{color:'#ff1a1a',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>{result.error}</div>   
-        
-      </React.Fragment>;
+        return (
+          <React.Fragment>
+            <div
+              style={{
+                color: "#ff1a1a",
+                fontFamily: ` 'Share Tech Mono', monospace`,
+                fontSize: 14
+              }}
+            >
+              {result.error}
+            </div>
+          </React.Fragment>
+        );
       } else {
-        if(result.stdout.WASSUCCESSFUL === "true"){
+        if (result.stdout.WASSUCCESSFUL === "true") {
           return (
             <React.Fragment>
-              
-              <div style={{color:'#19b280',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>
-              <div> Thời gian test: {result.stdout.COMPLETEDIN}</div>
-              <div>Kết quả: Passed</div>
-             
+              <div
+                style={{
+                  color: "#19b280",
+                  fontFamily: ` 'Share Tech Mono', monospace`,
+                  fontSize: 14
+                }}
+              >
+                <div> Thời gian test: {result.stdout.COMPLETEDIN}</div>
+                <div>Kết quả: Passed</div>
+              </div>
+            </React.Fragment>
+          );
+        } else if (result.stdout.WASSUCCESSFUL === "false") {
+          return (
+            <React.Fragment>
+              <div
+                style={{
+                  color: "#ff1a1a",
+                  fontFamily: ` 'Share Tech Mono', monospace`,
+                  fontSize: 14
+                }}
+              >
+                <div>
+                  Số lượng test đúng:{" "}
+                  {result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/
+                  {result.stdout.RUNCOUNT}
+                </div>
+                <div>Kết quả: Failed</div>
+                {result.stdout.GETALLFAILURE.map((testfail, index) => {
+                  return <div key={index}>{testfail.DETAIL}</div>;
+                })}
               </div>
             </React.Fragment>
           );
         }
-        else if(result.stdout.WASSUCCESSFUL === "false"){
-          return (
-            <React.Fragment>
-              
-              <div style={{color:'#ff1a1a',fontFamily:` 'Share Tech Mono', monospace`,fontSize:14}}>
-              <div>Số lượng test đúng: {result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/{result.stdout.RUNCOUNT}</div>
-              <div>Kết quả: Failed</div>
-              {result.stdout.GETALLFAILURE.map((testfail,index)=>{ return(<div key={index}>{testfail.DETAIL}</div>);})}
-              </div>
-            </React.Fragment>
-          );
-        }
-        
       }
-    } else {
+    }
+    else if (result.errorRuntime !== undefined) {
+      return (
+        <React.Fragment>
+          <div
+            style={{
+              color: "#ff1a1a",
+              fontFamily: ` 'Share Tech Mono', monospace`,
+              fontSize: 14
+            }}
+          >
+           Code chạy quá lâu, vui lòng thử lại. 
+          </div>
+        </React.Fragment>
+      );
+    }
+     else {
       return <div>chưa thực thi</div>;
     }
   }
-  function renderTestsPanel(result){
+  function renderTestsPanel(result) {
     return (
       <React.Fragment>
-    
         {unit_tests.map((unit_test, index) => {
           // unit_tests
           return (
@@ -127,16 +164,33 @@ export default function ResultPanel(props) {
                 id="panel1a-header"
               >
                 <div style={{ display: "flex", width: "100%" }}>
-                  <div  style={{flexGrow: 1 ,fontFamily:` "Share Tech Mono", monospace `}}>Test {index + 1}</div>
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      fontFamily: ` "Share Tech Mono", monospace `
+                    }}
+                  >
+                    Test {index + 1}
+                  </div>
                 </div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <div>
                   <Grid container>
-                    <Grid item style={{fontFamily:` "Share Tech Mono", monospace `}}>Input: </Grid>
+                    <Grid
+                      item
+                      style={{ fontFamily: ` "Share Tech Mono", monospace ` }}
+                    >
+                      Input:{" "}
+                    </Grid>
                     <Grid item style={{ marginLeft: 10 }}>
                       {unit_test.inputs.map((input, index) => (
-                        <div key={index} style={{fontFamily:` "Share Tech Mono", monospace `}}>
+                        <div
+                          key={index}
+                          style={{
+                            fontFamily: ` "Share Tech Mono", monospace `
+                          }}
+                        >
                           param{index + 1}: {input.value}
                         </div>
                       ))}{" "}
@@ -144,7 +198,10 @@ export default function ResultPanel(props) {
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item style={{fontFamily:` "Share Tech Mono", monospace `}}>
+                    <Grid
+                      item
+                      style={{ fontFamily: ` "Share Tech Mono", monospace ` }}
+                    >
                       Output mong đợi: {unit_test.expected_output}
                     </Grid>
                   </Grid>
@@ -212,7 +269,7 @@ export default function ResultPanel(props) {
       );
     } 
   } */
-  return ( 
+  return (
     <div
       className={classes.root}
       style={{
