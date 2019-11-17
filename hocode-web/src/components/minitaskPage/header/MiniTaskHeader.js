@@ -34,7 +34,7 @@ class MiniTaskHeader extends Component {
           <i />
         </label>
         <div className="logo">
-          <Link to="/">
+          <Link to="/profile">
             <img
               src={process.env.PUBLIC_URL + "/minilogo.PNG"}
               alt=""

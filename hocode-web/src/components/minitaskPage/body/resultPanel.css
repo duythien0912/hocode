@@ -10,3 +10,7 @@ flex-grow: 0;
 .resultPanel .MuiTabs-flexContainer{
     height: 100%;
 }
+
+.resultPanel .MuiTab-root{
+    padding:20px;
+}

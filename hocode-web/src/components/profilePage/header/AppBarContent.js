@@ -3,14 +3,17 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { getUser } from "../../../js/actions/userAction";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
+//import Typography from "@material-ui/core/Typography";
+//import Paper from "@material-ui/core/Paper";
+//import InputBase from "@material-ui/core/InputBase";
+//import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import Avatar from "@material-ui/core/Avatar";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
-import IconButton from "@material-ui/core/IconButton";
+import Fab from "@material-ui/core/Fab";
+import NavigationIcon from "@material-ui/icons/Navigation";
+//import IconButton from "@material-ui/core/IconButton";
 const styles = theme => ({
   searchComponent: {
     padding: "2px 15px 2px 4px",
@@ -28,10 +31,10 @@ const styles = theme => ({
   iconButtonSearchComponent: {
     padding: 10
   },
-  mobileHide:{
+  mobileHide: {
     [theme.breakpoints.down("sm")]: {
       display: "none"
-    },
+    }
   }
 });
 class AppBarContent extends React.Component {
@@ -44,11 +47,11 @@ class AppBarContent extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <div style={{ display: "flex", flexGrow:1}}>
+        <div style={{ display: "flex", flexGrow: 1 }}>
           <div style={{ display: "flex" }}>
-            <Typography variant="h6" noWrap style={{ borderRadius: "30px" }}>
+            {/* <Typography variant="h6" noWrap style={{ borderRadius: "30px" }}>
               {" "}
-              {/* search component */}
+            
               <Paper className={classes.searchComponent}>
                 <InputBase
                   className={classes.inputSearchComponent}
@@ -62,38 +65,54 @@ class AppBarContent extends React.Component {
                   <SearchIcon />
                 </IconButton>
               </Paper>
-            </Typography>
-            {/*<Fab 
-              className={classes.mobileHide}
-              variant="extended"
-              aria-label="like"
-              style={{
-                height: "32px",
-                fontSize: 12,
-                background: "#dbe4f8",
-                color: "#1f74be",
-                marginLeft:10
-              }}
-            >
-              <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
-              Đăng bài tập
-            </Fab> */}
-            
+            </Typography> */}
+
+            {this.props.user.role === "mod" ||
+            this.props.user.role === "admin" ? (
+              <Link to="/profile/minitasks/createminitask" style={{textDecoration:"none"}} >
+              <Fab
+                className={classes.mobileHide}
+                variant="extended"
+                aria-label="like"
+                style={{
+                  height: "32px",
+                  fontSize: 12,
+                  background: "#dbe4f8",
+                  color: "#1f74be",
+                  marginLeft: 10
+                }}
+              >
+                     
+                     <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
+                Đăng bài tập
+         
+                
+              </Fab>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
           <div
             style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
           >
-            <div style={{ fontSize: 12, margin: "0px 4px", color: "#4978cc", marginLeft:10}}>
+            <div
+              style={{
+                fontSize: 12,
+                margin: "0px 4px",
+                color: "#4978cc",
+                marginLeft: 10
+              }}
+            >
               <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
               {this.props.user.codepoint}
             </div>
 
             <Avatar
-             className={classes.mobileHide}
-              style={{ width: "30px", height: "30px", marginLeft:10}}
+              className={classes.mobileHide}
+              style={{ width: "30px", height: "30px", marginLeft: 10 }}
               alt="Remy Sharp"
               src={this.props.user.avatar}
-             
             />
             <UserMenu />
           </div>
@@ -110,8 +129,5 @@ const mapStateToProps = state => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    { getUser }
-  )(AppBarContent)
+  connect(mapStateToProps, { getUser })(AppBarContent)
 );

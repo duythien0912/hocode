@@ -6,9 +6,10 @@ const styles = {
   DescContainer: {
     background: "#ffffff",
     position: "relative",
-    overflowY: "scroll",
+    //overflowY: "scroll",
     height: "100%",
-    overflowX: "hidden",
+    overflow:"auto",
+    //overflowX: "hidden",
     borderRadius: "4px",
     boxShadow:
       "0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)",
@@ -22,7 +23,7 @@ class MiniTaskDesc extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.DescContainer}>
-        <div style={{fontFamily:` "Share Tech Mono", monospace `,display:'flex',color:'#44BFA3',wordSpacing:'-8px'}}>
+        <div style={{fontFamily:` "Share Tech Mono", monospace `,display:'flex',color:'#44BFA3'}}>
         <div style={{flexGrow:1,marginRight:10}}>Độ khó: {this.props.level}</div>
           <div style={{marginRight:'10px'}}>{this.props.code_point}</div>
           

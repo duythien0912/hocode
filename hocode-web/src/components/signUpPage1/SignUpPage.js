@@ -14,7 +14,6 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 
 import { registerUser } from "../../js/actions/authActions";
-import LogoHocode from "../../common/logo.js";
 import "./SignUpPage.css";
 
 import { regexEmail, regexPassword } from "../../common/regex";
@@ -220,7 +219,15 @@ class SignUpPage extends React.Component {
             borderBottom={24}
             color={"rgba(255, 255, 255, 0.1)"}
           >
-            <LogoHocode />
+             <div className="logo">
+          <Link to="/profile">
+            <img
+              src={process.env.PUBLIC_URL + "/minilogo.PNG"}
+              alt=""
+              style={{ height: "40px" }}
+            ></img>
+          </Link>
+        </div>
           </Box>
 
           <Typography component="h1" variant="h5">

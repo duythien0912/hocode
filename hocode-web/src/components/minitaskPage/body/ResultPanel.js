@@ -39,13 +39,15 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`
+    "aria-controls": `nav-tabpanel-${index}`,
+    
   };
 }
 
 function LinkTab(props) {
   return (
     <Tab
+    
       style={{ minHeight: "100%" }}
       component="a"
       onClick={event => {
@@ -286,7 +288,7 @@ export default function ResultPanel(props) {
         onChange={handleChange}
         aria-label="nav tabs example"
       >
-        <LinkTab label="Danh sách test" href="/drafts" {...a11yProps(0)} />
+        <LinkTab label="Danh sách test" href="/drafts" {...a11yProps(0)}  />
         <LinkTab label="Kết quả" href="/trash" {...a11yProps(1)} />
       </Tabs>
       <div

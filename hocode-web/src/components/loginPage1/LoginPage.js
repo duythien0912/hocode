@@ -14,9 +14,7 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 import { loginUser } from "../../js/actions/authActions";
 
-import LogoHocode from "../../common/logo.js";
-import './LoginPage.css';
-
+import "./LoginPage.css";
 
 const CssTextField = withStyles({
   root: {
@@ -98,7 +96,7 @@ class LoginPage extends React.Component {
     }
 
     if (nextProps.errors) {
-      nextProps.errors.message = "*"+nextProps.errors.message;
+      nextProps.errors.message = "*" + nextProps.errors.message;
       this.setState({
         errors: nextProps.errors
       });
@@ -117,9 +115,9 @@ class LoginPage extends React.Component {
     const userData = {
       email: this.state.email,
       password: this.state.password,
-      remember: this.state.remember,
+      remember: this.state.remember
     };
-    
+
     this.props.loginUser(userData);
   };
   render() {
@@ -135,7 +133,15 @@ class LoginPage extends React.Component {
             borderBottom={24}
             color={"rgba(255, 255, 255, 0.1)"}
           >
-            <LogoHocode />
+            <div className="logo">
+              <Link to="/profile">
+                <img
+                  src={process.env.PUBLIC_URL + "/minilogo.PNG"}
+                  alt=""
+                  style={{ height: "40px" }}
+                ></img>
+              </Link>
+            </div>
           </Box>
 
           <Typography component="h1" variant="h5">
@@ -174,11 +180,14 @@ class LoginPage extends React.Component {
               value={this.state.password}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" 
-              onChange={this.handleChange('remember')}
-              checked={this.state.remember}
-
-              />}
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  onChange={this.handleChange("remember")}
+                  checked={this.state.remember}
+                />
+              }
               label="Lưu tài khoản"
             />
             <Button
@@ -216,8 +225,5 @@ const mapStateToProps = state => ({
   errors: state.rootReducer.errors
 });
 export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    { loginUser }
-  )(LoginPage)
+  connect(mapStateToProps, { loginUser })(LoginPage)
 );

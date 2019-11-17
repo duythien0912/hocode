@@ -1,0 +1,111 @@
+*{
+    box-sizing: border-box;
+}
+.fit{ 
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom:0;
+}
+.layout-code{
+    display: flex;
+    flex-direction: column;
+    
+}
+.layout-code-header{
+    display: flex;
+}
+
+
+
+
+
+.coding-area{ 
+    flex-grow:1;
+    background: #f5f5f5;
+
+}
+
+
+
+.codeEditor{     
+   overflow: hidden;
+   position: relative;
+   top:0;
+   left: 0;
+   height: 450px;
+}
+.resultPanel{ 
+    overflow: hidden;
+    height: 275px;
+}
+.codeEditor .reset_code button{ 
+   background: #8291a3;    
+   border: none;
+   color: white;
+   padding: 3px 5px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   border-radius: 4px;
+   
+}
+
+.execute_btn{
+    background: #2680EB;    
+    border: none;
+    color: #FFFFFF;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.disable_btn{
+    opacity: 0.5;
+    cursor: auto!important;
+}
+.submitCode_btn{
+    background: #4DBF9D;    
+    border: none;
+    color: #FFFFFF;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.resultPanel .MuiTab-wrapper{
+    font-family: "Share Tech Mono", monospace !important;
+}
+
+.hidden_alert{
+    visibility: hidden!important;
+}
+
+.cancelCodeBtn{
+    padding: 4px 8px;
+    border: none;
+    background: #dd4545;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+}
+.comfirmFesetCodeBtn{
+    padding: 4px 8px;
+    border: none;
+    background: #39a383;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+
+}

@@ -33,11 +33,13 @@
     padding: 10px;
     background: #f5f5f5;
     overflow: hidden;
+    height: 100%;
 }
 .split-panel-second{
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 

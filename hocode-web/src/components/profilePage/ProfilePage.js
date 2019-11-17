@@ -135,7 +135,7 @@ class ProfilePage extends React.Component {
           }}
         >
           <Link
-            to="/"
+            to="/profile"
             style={{
               display: "flex",
               justifyContent: "center",

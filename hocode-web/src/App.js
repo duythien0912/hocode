@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CoursePage from "./components/coursePage/CoursePage";
 import TaskPage from "./components/taskPage/TaskPage";
-import MiniTaskPage from "./components/minitaskPage/MiniTaskPage";
+import MiniTaskPage from "./components/minitaskPage/MiniTaskPageNoSplit";
 import HomePage from "./components/homePage/HomePage";
 import SignUpPage from "./components/signUpPage1/SignUpPage";
 import ReactMde from "./components/minitaskPage/ReactMde";

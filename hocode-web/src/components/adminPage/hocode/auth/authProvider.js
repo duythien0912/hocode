@@ -1,6 +1,6 @@
 // in src/authProvider.js
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_CHECK } from 'react-admin';
-import decodeJwt from 'jwt-decode';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
+//import decodeJwt from 'jwt-decode';
 
 
 export default (type, params) => {
@@ -19,7 +19,7 @@ export default (type, params) => {
                 return response.json();
             })
             .then(({ token }) => {
-                const decodedToken = decodeJwt(token);
+                //const decodedToken = decodeJwt(token);
                 localStorage.setItem('token', token);
             });
     }

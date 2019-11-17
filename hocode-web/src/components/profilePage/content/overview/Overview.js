@@ -61,7 +61,7 @@ class Overview extends React.Component {
     let url = this.props.url;
     return (
       <Grid container spacing={3} style={{height:'100%'}}>
-        {isLoading?<div className="sweet-loading" style={{display:'flex',alignItems:"center",justifyContent:'center',width:'100%'}}>
+        {isLoading?<div className="sweet-loading" style={{display:'flex',alignItems:"center",justifyContent:'center',width:'100%',height:'100vh'}}>
               <HashLoader
               
                 sizeUnit={"px"}
