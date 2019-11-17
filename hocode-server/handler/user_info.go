@@ -265,11 +265,33 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 		}
 	}
+	ur := &model.User{}
+
+	if err = db.DB("hocode").
+		C("users").
+		// FindId(bson.ObjectIdHex(userID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(userID),
+			"del": bson.M{"$ne": true},
+		}).
+		// Find(bson.M{"_id": userID}).
+		One(&ur); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
 
 	if uMiniTaskLocationC != -1 {
-		preStatus := userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
+
+	} else {
+		miniTaskIn := model.MiniTaskInfo{}
+		miniTaskIn.Status = "hoanthanh"
+		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
 
 		// Cộng điểm cho user
 		mtf := &model.MiniTask{}
@@ -286,33 +308,18 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 		}
 
-		ur := &model.User{}
 
-		if err = db.DB("hocode").
-			C("users").
-			// FindId(bson.ObjectIdHex(userID)).
-			Find(bson.M{
-				"_id": bson.ObjectIdHex(userID),
-				"del": bson.M{"$ne": true},
-			}).
-			// Find(bson.M{"_id": userID}).
-			One(&ur); err != nil {
-			if err == mgo.ErrNotFound {
-				return echo.ErrNotFound
-			}
-
-			return
-		}
 
 		// ur, eur := claims["data"].(model.User)
 
 		// if eur != true { return c.JSON(http.StatusBadRequest, eur)}
 
-		if preStatus != "hoanthanh" {
+		// preStatus := userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status
 
-			ur.CodePoint = ur.CodePoint + mtf.CodePoint
-		}
-		codePoint = ur.CodePoint
+		// if preStatus != "hoanthanh" {
+		// }
+
+		ur.CodePoint = ur.CodePoint + mtf.CodePoint
 		ur.Timestamp = time.Now()
 		if err = db.DB("hocode").
 			C("users").
@@ -323,15 +330,12 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			return
 		}
 
-	} else {
-		miniTaskIn := model.MiniTaskInfo{}
-		miniTaskIn.Status = "hoanthanh"
-		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
-
 		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
 
 	}
 
+
+	codePoint = ur.CodePoint
 	userMiniTask.Timestamp = time.Now()
 
 	if isInDBUserMiniTask {
