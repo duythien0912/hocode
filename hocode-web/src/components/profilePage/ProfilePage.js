@@ -18,6 +18,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import Account from "./content/account/Account";
 import CourseBody from "./content/course/CourseBody1";
 import CreateMiniTask from "./content/minitask/CreateMiniTaskBody";
+import MinitaskEdit from "./content/minitask/MinitaskEdit";
 import Overview from "./content/overview/Overview";
 import TaskBody from "./content/task/TaskBody";
 import AppBarContent from "./header/AppBarContent";
@@ -131,23 +132,20 @@ class ProfilePage extends React.Component {
           className={classes.toolbar}
           style={{
             borderBottom: "1px solid rgba(76, 87, 102, .1)",
-            minHeight: 65
+            minHeight: 65,
+            display:"flex",
+            alignItems:"center",justifyContent:"center"
           }}
         >
-          <Link
-            to="/profile"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
+            <div className="logo">
+          <Link to="/profile">
             <img
-              src={require("./minilogo.PNG")}
-              alt="dsa"
-              style={{ width: "70%" }}
-            />
+              src={process.env.PUBLIC_URL + "/logo.PNG"}
+              alt=""
+              style={{ height: "40px" }}
+            ></img>
           </Link>
+        </div>
         </div>
 
         <MenuList className="menuLeftDrawer">
@@ -281,6 +279,11 @@ class ProfilePage extends React.Component {
             <Route exact path={`${path}/minitasks/createminitask`}>
               <Paper style={{ padding: 10 }}>
                 <CreateMiniTask />
+              </Paper>
+            </Route>
+            <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
+              <Paper style={{ padding: 10 }}>
+                <MinitaskEdit location={this.props.location} />
               </Paper>
             </Route>
           </Switch>

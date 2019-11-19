@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
+import Grid from "@material-ui/core/Grid";
 import "easymde/dist/easymde.min.css";
 import "./reactmde.css"
 class ReactMde extends Component {
@@ -8,8 +9,9 @@ class ReactMde extends Component {
   };
   render() {
     return (
-      <div>
+    <Grid item xs={12} sm={12} >
         <SimpleMDEReact
+        style={{width:"350px"}}
           className={"react_mde_custom"}
           label=""
           value={this.props.mini_task_desc}
@@ -20,7 +22,8 @@ class ReactMde extends Component {
             
           }}
         />
-      </div>
+        </Grid>
+      
     );
   }
 }

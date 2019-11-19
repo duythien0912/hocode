@@ -1,0 +1,23 @@
+.containerMain{
+    background-image: url("/backgroundHomeDes.png"),linear-gradient(to right bottom, rgb(6, 6, 38) 0%, rgb(87, 133, 180) 100%);
+}
+.HeaderRightHome{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end!important;
+}
+@media only screen and (max-width: 600px) {
+    .containerMain{
+        background-image: url("/backgroundHomeMobile.png"),linear-gradient(to right bottom, rgb(6, 6, 38) 0%, rgb(87, 133, 180) 100%);
+    }
+    .HeaderLeftHome{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .HeaderRightHome{
+        display: flex;
+        align-items: center;
+        justify-content: center!important;
+    }
+  }

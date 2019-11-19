@@ -67,9 +67,9 @@ const createAdminStore = ({
         thunk
         // add your own middlewares here
       ),
-    // typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__
-      // ? window.__REDUX_DEVTOOLS_EXTENSION__()
-       // : f => f
+ //    typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__
+   //    ? window.__REDUX_DEVTOOLS_EXTENSION__()
+    //    : f => f
       // add your own enhancers here
     )
   );
