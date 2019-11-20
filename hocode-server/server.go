@@ -1,13 +1,16 @@
 package main
 
 import (
+	config "github.com/duythien0912/hocode/config"
 	"github.com/duythien0912/hocode/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
+
 	"gopkg.in/mgo.v2"
-	config "github.com/duythien0912/hocode/config"
-)
+ 	"github.com/getsentry/sentry-go"
+
+	)
 
 // @title Hocode API
 // @version 1.0
@@ -26,6 +29,13 @@ import (
 
 
 func main() {
+	sentry.Init(sentry.ClientOptions{
+		Dsn: "https://dc72a0f7e03b48ee9f92721698fbd011@sentry.io/1827288",
+	})
+	//sentry.CaptureException(errors.New("Start App"))
+	// Since sentry emits events in the background we need to make sure
+	// they are sent before we shut down
+	//sentry.Flush(time.Second * 5)
 
 	e := echo.New()
 	// e.Logger.SetLevel(log.ERROR)
