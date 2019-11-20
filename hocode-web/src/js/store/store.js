@@ -9,7 +9,7 @@ import {
   defaultI18nProvider,
   USER_LOGOUT,
   i18nReducer
-} from "react-admin";
+} from 'react-admin';
 import { routerMiddleware, routerReducer } from "react-router-redux";
 // in src/createAdminStore.js
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
@@ -25,7 +25,7 @@ import rootReducer from "../reducers";
 
 const initialState = {};
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({ basename: '/profile/admin' });
 
 const createAdminStore = ({
   authProvider,

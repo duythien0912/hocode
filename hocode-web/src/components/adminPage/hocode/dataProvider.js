@@ -34,6 +34,10 @@ export const convertRESTRequestToHTTP = ({ apiUrl, type, resource, params }) => 
     let url = '';
     const options = {};
     let query = {};
+            console.log("[params, type, resource]");
+            console.log(params);
+            console.log(type);
+            console.log(resource);
 
     switch (type) {
         case GET_MANY_REFERENCE: {

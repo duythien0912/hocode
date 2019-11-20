@@ -7,7 +7,7 @@ import { Admin, Resource } from 'react-admin';
 
 import authProvider from './auth/authProvider';
 import catchAll from './catchAll';
-//import customRoutes from './customRoutes';
+import customRoutes from './customRoutes';
 import dataProvider from "./dataProvider";
 import MyLayout from './MyLayout';
 import { theme } from './theme';
@@ -45,15 +45,18 @@ import {
 import { history } from '../../../js/store/store'
 
 const ReactAdmin = () => (
+    
     <Admin
         appLayout={MyLayout}
         authProvider={authProvider}
         catchAll={catchAll}
-        // customRoutes={customRoutes}
+        customRoutes={customRoutes}
         dataProvider={dataProvider}
         title="Hocode Admin"
         theme={theme}
         history={history}
+        locale="vi"
+        
     >
         <Resource
             name="books"
@@ -63,6 +66,7 @@ const ReactAdmin = () => (
         />
         <Resource
             name="courses"
+
             list={ ModelCourseList }
             create={ ModelCourseCreate }
             edit={ ModelCourseEdit }
