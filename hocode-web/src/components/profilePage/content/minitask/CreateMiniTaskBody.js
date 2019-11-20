@@ -10,6 +10,7 @@ import "./createminitaskbody.css";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import { ToastContainer, toast } from "react-toastify";
 const options = [
   { value: "int", label: "Interger" },
   { value: "String", label: "String" },
@@ -144,11 +145,16 @@ class CreateMiniTaskBody extends Component {
       vitri: false,
       mini_task_desc: this.state.mini_task_desc,
       level: "hard",
-      code_point: parseInt(this.state.code_point)
+      code_point: parseInt(this.state.code_point),
+      input_list: this.state.inputList
     };
     axios
       .post("https://hocodevn.com/api/v1/minitasks", newMiniTask)
       .then(function(response) {
+        window.location.reload();
+        toast("Tạo bài tập thành công!", {
+          containerId: "B"
+        });
         console.log(response);
       });
     console.log(newMiniTask);
@@ -606,6 +612,11 @@ class CreateMiniTaskBody extends Component {
             </Grid>
           </Grid>
         </Grid>
+        <ToastContainer
+            enableMultiContainer
+            containerId={"B"}
+            position={toast.POSITION.TOP_RIGHT}
+          />
       </React.Fragment>
     );
   }

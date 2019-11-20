@@ -283,7 +283,7 @@ class ProfilePage extends React.Component {
             </Route>
             <Route exact path={`${path}/minitasks/createminitask`}>
               <Paper style={{ padding: 10 }}>
-                <CreateMiniTask />
+                <CreateMiniTask  location={this.props.location}/>
               </Paper>
             </Route>
             <Route exact path={`${path}/minitasks/:minitasksId/edit`}>

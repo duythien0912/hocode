@@ -32,6 +32,7 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles(theme => ({
   root: {
     minHeight: "unset",
+    height:"25px",
     "&:focus": {
       // backgroundColor: "red",
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {

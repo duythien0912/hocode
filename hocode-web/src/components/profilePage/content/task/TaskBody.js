@@ -49,7 +49,7 @@ class TaskBody extends Component {
     return (
       <Grid container className={classes.TasksContainer} justify="center">
         <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
-          {tasks.map(task => (
+          {tasks.reverse().map(task => (
             <TaskItem key={task.id} task={task} />
           ))}
         </Grid>

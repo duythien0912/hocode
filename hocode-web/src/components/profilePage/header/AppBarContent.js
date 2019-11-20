@@ -69,32 +69,32 @@ class AppBarContent extends React.Component {
 
             {this.props.user.role === "mod" ||
             this.props.user.role === "admin" ? (
-              <Link to="/profile/minitasks/createminitask" style={{textDecoration:"none"}} >
-              <Fab
-                className={classes.mobileHide}
-                variant="extended"
-                aria-label="like"
-                style={{
-                  height: "32px",
-                  fontSize: 12,
-                  background: "#dbe4f8",
-                  color: "#1f74be",
-                  marginLeft: 10
-                }}
+              <Link
+                to="/profile/minitasks/createminitask"
+                style={{ textDecoration: "none" }}
               >
-                     
-                     <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
-                Đăng bài tập
-         
-                
-              </Fab>
+                <Fab
+                  //className={classes.mobileHide}
+                  variant="extended"
+                  aria-label="like"
+                  style={{
+                    height: "32px",
+                    fontSize: 12,
+                    background: "#dbe4f8",
+                    color: "#1f74be",
+                    marginLeft: 10
+                  }}
+                >
+                  <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
+                  Đăng bài tập
+                </Fab>
               </Link>
             ) : (
               ""
             )}
           </div>
           <div
-            style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+            style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end",alignItems:"center" }}
           >
             <div
               style={{
@@ -107,7 +107,18 @@ class AppBarContent extends React.Component {
               <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
               {this.props.user.codepoint}
             </div>
-
+            <div
+              style={{
+                color: "#595959",
+                fontFamily: "Yanone Kaffeesatz, sans-serif",
+                fontSize: "20px",
+               
+                padding: "5px"
+              }}
+            >
+              {" "}
+              <div>{this.props.user.firstname} </div>
+            </div>
             <Avatar
               className={classes.mobileHide}
               style={{ width: "30px", height: "30px", marginLeft: 10 }}

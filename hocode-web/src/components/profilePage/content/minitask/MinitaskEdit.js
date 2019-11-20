@@ -112,7 +112,7 @@ class MinitaskEdit extends Component {
           mini_task_desc: minitask.mini_task_desc,
           level: minitask.level,
           code_point: minitask.code_point,
-          
+          inputList: minitask.input_list
         });
       });
     axios.get(`https://hocodevn.com/api/v1/courses`).then(res => {
