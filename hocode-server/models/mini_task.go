@@ -22,10 +22,21 @@ type (
 		Avatar       string      `json:"avatar" bson:"avatar"`
 		TemplateCode string      `json:"template_code" bson:"template_code"`
 		UnitTests    []*UnitTest `json:"unit_tests" bson:"unit_tests"`
+		// input_list:[{input_name:"param1",input_type:"int"}]
+
+		InputList []*InputList `json:"input_list" bson:"input_list"`
 
 		TaskId    string    `json:"task_id" bson:"task_id"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
 		Del       bool      `json:"del" bson:"del"`
+	}
+)
+
+type (
+	InputList struct {
+		// ID             bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		InputName string `json:"input_name" bson:"input_name"`
+		InputType string `json:"input_type" bson:"input_type"`
 	}
 )
 
