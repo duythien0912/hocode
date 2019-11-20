@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 
@@ -32,7 +33,7 @@ func (h *Handler) GetUser(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("users").
+	if err = db.DB(config.NameDb).C("users").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"time"
 
@@ -31,7 +32,7 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("user_course").
+	if err = db.DB(config.NameDb).C("user_course").
 		Find(bson.M{
 			"user_id": ID,
 			"del":     bson.M{"$ne": true},
@@ -90,7 +91,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	tf := &model.Task{}
 
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		// FindId(bson.ObjectIdHex(bodyUC.TaskID)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(bodyUC.TaskID),
@@ -112,7 +113,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	isInDB := true
 	// Find old db user_course
-	if err = db.DB("hocode").C("user_course").
+	if err = db.DB(config.NameDb).C("user_course").
 		Find(bson.M{
 			"user_id": userID,
 			"del":     bson.M{"$ne": true},
@@ -137,7 +138,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	// get title from course
 	course := &model.Course{}
 
-	if err = db.DB("hocode").C("course").
+	if err = db.DB(config.NameDb).C("course").
 		// FindId(bson.ObjectIdHex(bodyUC.CourseID)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(bodyUC.CourseID),
@@ -153,7 +154,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	taskf := &model.Task{}
 
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{
 			"course_id": bodyUC.CourseID,
 			"del":       bson.M{"$ne": true},
@@ -214,7 +215,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 		uc.Timestamp = time.Now()
 
-		if err = db.DB("hocode").
+		if err = db.DB(config.NameDb).
 			C("user_course").
 			Update(bson.M{"user_id": uc.UserID}, uc); err != nil {
 			if err == mgo.ErrNotFound {
@@ -228,7 +229,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		uc.ID = bson.NewObjectId()
 		// Save in database
 		uc.Timestamp = time.Now()
-		if err = db.DB("hocode").C("user_course").Insert(uc); err != nil {
+		if err = db.DB(config.NameDb).C("user_course").Insert(uc); err != nil {
 			fmt.Println("[err]")
 			fmt.Println(err)
 			return echo.ErrInternalServerError
@@ -244,7 +245,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	codePoint := 0
 
-	if err = db.DB("hocode").C("user_minitask").
+	if err = db.DB(config.NameDb).C("user_minitask").
 		Find(bson.M{
 			"user_id": userID,
 			"del":     bson.M{"$ne": true},
@@ -267,7 +268,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	}
 	ur := &model.User{}
 
-	if err = db.DB("hocode").
+	if err = db.DB(config.NameDb).
 		C("users").
 		// FindId(bson.ObjectIdHex(userID)).
 		Find(bson.M{
@@ -296,7 +297,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		// Cộng điểm cho user
 		mtf := &model.MiniTask {}
 
-		if err = db.DB("hocode").C("minitasks").
+		if err = db.DB(config.NameDb).C("minitasks").
 			// FindId(bson.ObjectIdHex(bodyUC.MiniTaskID)).
 			Find(bson.M{
 				"_id": bson.ObjectIdHex(bodyUC.MiniTaskID),
@@ -321,7 +322,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 		ur.CodePoint = ur.CodePoint + mtf.CodePoint
 		ur.Timestamp = time.Now()
-		if err = db.DB("hocode").
+		if err = db.DB(config.NameDb).
 			C("users").
 			Update(bson.M{"_id": bson.ObjectIdHex(userID)}, ur); err != nil {
 			if err == mgo.ErrNotFound {
@@ -339,7 +340,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	userMiniTask.Timestamp = time.Now()
 
 	if isInDBUserMiniTask {
-		if err = db.DB("hocode").
+		if err = db.DB(config.NameDb).
 			C("user_minitask").
 			Update(bson.M{"user_id": userMiniTask.UserID}, userMiniTask); err != nil {
 			if err == mgo.ErrNotFound {
@@ -350,7 +351,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}
 	} else {
 		userMiniTask.ID = bson.NewObjectId()
-		if err = db.DB("hocode").C("user_minitask").Insert(userMiniTask); err != nil {
+		if err = db.DB(config.NameDb).C("user_minitask").Insert(userMiniTask); err != nil {
 			fmt.Println("[err]")
 			fmt.Println(err)
 			return echo.ErrInternalServerError
@@ -362,7 +363,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	nextMiniTask := &model.MiniTask{}
 
 	nextMiniTask.Timestamp = time.Now()
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		Find(
 			bson.M{
 				"_id": bson.M{
@@ -406,7 +407,7 @@ func (h *Handler) NextMiniTask(c echo.Context) (err error) {
 	defer db.Close()
 
 	nextMiniTask.Timestamp = time.Now()
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		Find(
 			bson.M{
 				"_id": bson.M{

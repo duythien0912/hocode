@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"time"
 
@@ -28,7 +29,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("users").
+	if err = db.DB(config.NameDb).C("users").
 		Find(
 			bson.M{
 				"email": ur.Email,
@@ -74,7 +75,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 
 	ur.Token = t
 
-	// if err = db.DB("hocode").C("course").Update(bson.M{"_id": ur.ID}, bson.M{"$set": bson.M{"token": t}}); err != nil {
+	// if err = db.DB(config.NameDb).C("course").Update(bson.M{"_id": ur.ID}, bson.M{"$set": bson.M{"token": t}}); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
@@ -106,7 +107,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 
 	urF := &model.User{}
 
-	if err = db.DB("hocode").C("users").
+	if err = db.DB(config.NameDb).C("users").
 		Find(bson.M{"email": ur.Email, "del": bson.M{"$ne": true}}).One(urF); err != nil {
 
 		ur.ID = bson.NewObjectId()
@@ -137,7 +138,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		// Save in database
 		ur.Timestamp = time.Now()
 		ur.Role = "user"
-		if err = db.DB("hocode").C("users").Insert(ur); err != nil {
+		if err = db.DB(config.NameDb).C("users").Insert(ur); err != nil {
 			return echo.ErrInternalServerError
 		}
 

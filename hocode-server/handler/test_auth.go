@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
@@ -40,7 +41,7 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 
 	ur := &model.User{}
 
-	if err = db.DB("hocode").C("users").
+	if err = db.DB(config.NameDb).C("users").
 		// FindId(bson.ObjectIdHex(ID)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(ID),
@@ -84,7 +85,7 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 
 	urO := &model.User{}
 
-	if err = db.DB("hocode").C("users").
+	if err = db.DB(config.NameDb).C("users").
 		Find(bson.M{
 			"_id": urN.ID,
 			"del": bson.M{"$ne": true},
@@ -118,7 +119,7 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 	}
 
 	urO.Timestamp = time.Now()
-	if err = db.DB("hocode").
+	if err = db.DB(config.NameDb).
 		C("users").
 		Update(bson.M{"_id": urN.ID}, urO); err != nil {
 		if err == mgo.ErrNotFound {

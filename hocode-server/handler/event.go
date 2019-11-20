@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ func (h *Handler) GetListEvents(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("events").
+	if err = db.DB(config.NameDb).C("events").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Skip((page - 1) * limit).
 		Skip(offset).
@@ -63,7 +64,7 @@ func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("events").
+	if err = db.DB(config.NameDb).C("events").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(id),
@@ -122,11 +123,11 @@ func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("events").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("events").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
+	_, errUs := db.DB(config.NameDb).C("events").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
@@ -170,11 +171,11 @@ func (h *Handler) CreateEvents(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("events").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("events").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
+	_, errUs := db.DB(config.NameDb).C("events").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
@@ -223,16 +224,16 @@ func (h *Handler) DeleteEvents(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("events").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("events").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
 	bk.Del = true
-	if err = db.DB("hocode").C("events").Update(bson.M{"_id": bk.ID}, bson.M{"$set": bson.M{"del": true}}); err != nil {
+	if err = db.DB(config.NameDb).C("events").Update(bson.M{"_id": bk.ID}, bson.M{"$set": bson.M{"del": true}}); err != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
-	// _, errUs := db.DB("hocode").C("events").UpsertId(bk.ID, bk)
+	// _, errUs := db.DB(config.NameDb).C("events").UpsertId(bk.ID, bk)
 	// if errUs != nil {
 	// 	// return echo.ErrInternalServerError
 	// 	return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}

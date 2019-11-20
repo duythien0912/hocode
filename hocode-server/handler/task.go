@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Skip((page - 1) * limit).
 		Skip(offset).
@@ -44,7 +45,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 	for i := 0; i < len(ta); i++ {
 		mta := []*model.MiniTask{}
 
-		db.DB("hocode").C("minitasks").
+		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
 				"del":     bson.M{"$ne": true},
@@ -81,7 +82,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(id),
@@ -100,7 +101,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 	mta := []*model.MiniTask{}
 	userMiniTask := &model.UserMiniTask{}
 
-	db.DB("hocode").C("minitasks").
+	db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{
 			"task_id": id,
 			"del":     bson.M{"$ne": true},
@@ -108,7 +109,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 		Sort("-timestamp").
 		All(&mta)
 
-	if err = db.DB("hocode").C("user_minitask").
+	if err = db.DB(config.NameDb).C("user_minitask").
 		Find(bson.M{
 			"user_id": userID,
 			"del":     bson.M{"$ne": true},
@@ -177,11 +178,11 @@ func (h *Handler) CreateTask(c echo.Context) (err error) {
 
 	// Save in database
 	tn.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("tasks").Insert(tn); err != nil {
+	// if err = db.DB(config.NameDb).C("tasks").Insert(tn); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("tasks").UpsertId(tn.ID, tn)
+	_, errUs := db.DB(config.NameDb).C("tasks").UpsertId(tn.ID, tn)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}

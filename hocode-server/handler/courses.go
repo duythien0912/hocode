@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -43,7 +44,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("course").
+	if err = db.DB(config.NameDb).C("course").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Skip((page - 1) * limit).
 		Skip(offset).
@@ -56,7 +57,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 	for i := 0; i < len(courses); i++ {
 		mta := []*model.Task{}
 
-		db.DB("hocode").C("tasks").
+		db.DB(config.NameDb).C("tasks").
 			Find(bson.M{
 				"course_id": courses[i].ID.Hex(),
 				"del":       bson.M{"$ne": true}},
@@ -92,7 +93,7 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("course").
+	if err = db.DB(config.NameDb).C("course").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(id),
@@ -135,7 +136,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{"course_id": id, "del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
@@ -147,7 +148,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	for i := 0; i < len(ta); i++ {
 		mta := []*model.MiniTask{}
 
-		db.DB("hocode").C("minitasks").
+		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
 				"del":     bson.M{"$ne": true}},
@@ -157,7 +158,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 
 		// userMiniTask := &model.UserMiniTask{}
 
-		// if err = db.DB("hocode").C("user_minitask").
+		// if err = db.DB(config.NameDb).C("user_minitask").
 		// 	Find(bson.M{
 		// 		"user_id": userID,
 		// 		"del":     bson.M{"$ne": true},
@@ -218,7 +219,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("tasks").
+	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{"course_id": id, "del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
@@ -230,7 +231,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 	for i := 0; i < len(ta); i++ {
 		mta := []*model.MiniTask{}
 
-		db.DB("hocode").C("minitasks").
+		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
 				"task_id": ta[i].ID.Hex(),
 				"del":     bson.M{"$ne": true}},
@@ -240,7 +241,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 
 		userMiniTask := &model.UserMiniTask{}
 
-		if err = db.DB("hocode").C("user_minitask").
+		if err = db.DB(config.NameDb).C("user_minitask").
 			Find(bson.M{
 				"user_id": userID,
 				"del":     bson.M{"$ne": true},
@@ -321,11 +322,11 @@ func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
 	// Save in database
 	pn.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("course").Insert(pn); err != nil {
+	// if err = db.DB(config.NameDb).C("course").Insert(pn); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("course").UpsertId(pn.ID, pn)
+	_, errUs := db.DB(config.NameDb).C("course").UpsertId(pn.ID, pn)
 	if errUs != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 	}

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 	defer db.Close()
 
 
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Skip((page - 1) * limit).
 		Skip(offset).
@@ -62,7 +63,7 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(id),
@@ -111,11 +112,11 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	// Save in database
 	mtn.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("minitasks").Insert(mtn); err != nil {
+	// if err = db.DB(config.NameDb).C("minitasks").Insert(mtn); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("minitasks").UpsertId(mtn.ID, mtn)
+	_, errUs := db.DB(config.NameDb).C("minitasks").UpsertId(mtn.ID, mtn)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
@@ -137,7 +138,7 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Select().
 		Limit(limit).
@@ -150,7 +151,7 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 
 		tf := &model.Task{}
 
-		if err = db.DB("hocode").C("tasks").
+		if err = db.DB(config.NameDb).C("tasks").
 			// FindId(bson.ObjectIdHex(mta[i].TaskId)).
 			Find(bson.M{
 				"_id": bson.ObjectIdHex(mta[i].TaskId),

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -20,7 +21,7 @@ func (h *Handler) Profile(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("profile").
+	if err = db.DB(config.NameDb).C("profile").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip((page - 1) * limit).
 		Limit(limit).
@@ -41,7 +42,7 @@ func (h *Handler) ProfileByID(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("profile").
+	if err = db.DB(config.NameDb).C("profile").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Select(bson.M{"id": id}).
 		One(&tf); err != nil {
@@ -75,7 +76,7 @@ func (h *Handler) CreateProfile(c echo.Context) (err error) {
 
 	// Save in database
 	tn.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("profile").Insert(tn); err != nil {
+	// if err = db.DB(config.NameDb).C("profile").Insert(tn); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
@@ -83,7 +84,7 @@ func (h *Handler) CreateProfile(c echo.Context) (err error) {
 		tn.ID = bson.NewObjectId()
 	}
 
-	_, errUs := db.DB("hocode").C("books").UpsertId(tn.ID, tn)
+	_, errUs := db.DB(config.NameDb).C("books").UpsertId(tn.ID, tn)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}

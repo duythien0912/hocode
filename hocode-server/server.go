@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"gopkg.in/mgo.v2"
+	config "github.com/duythien0912/hocode/config"
 )
 
 // @title Hocode API
@@ -23,6 +24,7 @@ import (
 // @host hocodevn.com
 // @BasePath /api/v1
 
+
 func main() {
 
 	e := echo.New()
@@ -38,7 +40,8 @@ func main() {
 
 	// mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode
 	//_, err := mgo.Dial("mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode")
-	db, err := mgo.Dial("mongodb://admin:adminadmin1@ds233500.mlab.com:33500/hocode2")
+
+	db, err := mgo.Dial(config.LinkDb + config.NameDb)
 	if err != nil {
 		log.Info("Connect mongodb error")
 		e.Logger.Fatal(err)

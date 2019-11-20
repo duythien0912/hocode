@@ -6,6 +6,7 @@ import (
 	"time"
 
 	model "github.com/duythien0912/hocode/models"
+	config "github.com/duythien0912/hocode/config"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -30,7 +31,7 @@ func (h *Handler) GetBooks(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("books").
+	if err = db.DB(config.NameDb).C("books").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		Skip(offset).
 		Limit(limit).
@@ -76,7 +77,7 @@ func (h *Handler) CreateBook(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("books").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("books").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
@@ -84,7 +85,7 @@ func (h *Handler) CreateBook(c echo.Context) (err error) {
 	// update := bson.M{"$inc": bk}
 	// selector := bson.M{"_id": bk.ID}
 
-	_, errUs := db.DB("hocode").C("books").UpsertId(bk.ID, bk)
+	_, errUs := db.DB(config.NameDb).C("books").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}

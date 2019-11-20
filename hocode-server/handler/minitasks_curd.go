@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ func (h *Handler) GetListMiniTasks(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
 		// Skip((page - 1) * limit).
 		Skip(offset).
@@ -40,7 +41,7 @@ func (h *Handler) GetListMiniTasks(c echo.Context) (err error) {
 		All(&bk); err != nil {
 		return
 	}
-	len, _ := db.DB("hocode").C("minitasks").Count()
+	len, _ := db.DB(config.NameDb).C("minitasks").Count()
 	c.Response().Header().Set("x-total-count", strconv.Itoa(len))
 
 	return c.JSON(http.StatusOK, bk)
@@ -64,7 +65,7 @@ func (h *Handler) GetOneMiniTasks(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-	if err = db.DB("hocode").C("minitasks").
+	if err = db.DB(config.NameDb).C("minitasks").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
 			"_id": bson.ObjectIdHex(id),
@@ -123,11 +124,11 @@ func (h *Handler) UpdateMiniTasks(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("minitasks").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("minitasks").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("minitasks").UpsertId(bk.ID, bk)
+	_, errUs := db.DB(config.NameDb).C("minitasks").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
@@ -171,11 +172,11 @@ func (h *Handler) CreateMiniTasks(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("minitasks").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("minitasks").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	_, errUs := db.DB("hocode").C("minitasks").UpsertId(bk.ID, bk)
+	_, errUs := db.DB(config.NameDb).C("minitasks").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
@@ -224,16 +225,16 @@ func (h *Handler) DeleteMiniTasks(c echo.Context) (err error) {
 
 	// Save in database
 	bk.Timestamp = time.Now()
-	// if err = db.DB("hocode").C("minitasks").Insert(bk); err != nil {
+	// if err = db.DB(config.NameDb).C("minitasks").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
 
 	bk.Del = true
-	if err = db.DB("hocode").C("minitasks").Update(bson.M{"_id": bk.ID}, bson.M{"$set": bson.M{"del": true}}); err != nil {
+	if err = db.DB(config.NameDb).C("minitasks").Update(bson.M{"_id": bk.ID}, bson.M{"$set": bson.M{"del": true}}); err != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 	}
 
-	// _, errUs := db.DB("hocode").C("minitasks").UpsertId(bk.ID, bk)
+	// _, errUs := db.DB(config.NameDb).C("minitasks").UpsertId(bk.ID, bk)
 	// if errUs != nil {
 	// 	// return echo.ErrInternalServerError
 	// 	return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
