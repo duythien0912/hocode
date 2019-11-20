@@ -26,7 +26,6 @@ import (
 // @host hocodevn.com
 // @BasePath /api/v1
 
-
 func main() {
 	sentry.Init(sentry.ClientOptions{
 		Dsn: "https://dc72a0f7e03b48ee9f92721698fbd011@sentry.io/1827288",
@@ -222,7 +221,7 @@ func ServerHeader(next echo.HandlerFunc) echo.HandlerFunc {
 		c.Response().Header().Set("Access-Control-Expose-Headers", "Content-Range")
 		c.Response().Header().Set("Access-Control-Expose-Headers", "X-Total-Count")
 
-		c.Response().Header().Set("Content-Range", "bytes : 0-9/*")
+		// c.Response().Header().Set("Content-Range", "bytes : 0-9/*")
 		return next(c)
 	}
 }

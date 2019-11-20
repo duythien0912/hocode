@@ -109,6 +109,13 @@ class LoginPage extends React.Component {
     this.setState({ ...this.state, [name]: event.target.checked });
   };
 
+  onSubmitTest = e => {
+    this.setState({
+      email: "giang12",
+      password: "giang12"
+    });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -179,17 +186,26 @@ class LoginPage extends React.Component {
               onChange={this.onChange}
               value={this.state.password}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="remember"
-                  color="primary"
-                  onChange={this.handleChange("remember")}
-                  checked={this.state.remember}
-                />
-              }
-              label="Lưu tài khoản"
-            />
+            <Grid container>
+            <Grid item xs>
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="remember"
+                    color="primary"
+                    onChange={this.handleChange("remember")}
+                    checked={this.state.remember}
+                  />
+                }
+                label="Lưu tài khoản"
+              />
+              </Grid>
+              <Button variant="contained" onClick={this.onSubmitTest}>
+                Tài khoản test
+              </Button>
+            </Grid>
+
             <Button
               type="submit"
               fullWidth

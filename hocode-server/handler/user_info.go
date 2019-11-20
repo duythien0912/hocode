@@ -301,19 +301,31 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	nextMiniTask := &model.MiniTask{}
 
-	nextMiniTask.Timestamp = time.Now()
-	if err = db.DB(config.NameDb).C("minitasks").
-		Find(
-			bson.M{
-				"_id": bson.M{
-					"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
-				},
-				"del": bson.M{"$ne": true},
-			},
-		).
-		Select(bson.M{"_id": 1}).
-		Limit(1).
-		One(&nextMiniTask); err != nil {
+	// nextMiniTask.Timestamp = time.Now()
+	// if err = db.DB(config.NameDb).C("minitasks").
+	// 	Find(
+	// 		bson.M{
+	// 			"_id": bson.M{
+	// 				"$gt": bson.ObjectIdHex(bodyUC.MiniTaskID),
+	// 			},
+	// 			"del": bson.M{"$ne": true},
+	// 		},
+	// 	).
+	// 	Select(bson.M{"_id": 1}).
+	// 	Limit(1).
+	// 	One(&nextMiniTask); err != nil {
+	// }
+
+	for i := range mta {
+		if mta[i].ID.Hex() == bodyUC.MiniTaskID {
+			// Found!
+			fmt.Println("[mta]")
+			fmt.Println(mta[i].MiniTaskName)
+
+			if i+1 < len(mta) {
+				nextMiniTask = mta[i+1]
+			}
+		}
 	}
 
 	if ucLocationC != -1 {
