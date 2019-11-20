@@ -35,7 +35,8 @@ class TaskBody extends Component {
       )
       .then(res => {
         const tasks = res.data;
-        this.setState({ tasks });
+        let tasks1 = tasks.reverse();
+        this.setState({ tasks:tasks1 });
       });
 
     /* setTimeout(()=>{

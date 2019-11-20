@@ -13,7 +13,10 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import { submitUpdateMinitask,setUndefinedNextMinitask } from "../../js/actions/userAction";
+import {
+  submitUpdateMinitask,
+  setUndefinedNextMinitask
+} from "../../js/actions/userAction";
 import HashLoader from "react-spinners/HashLoader";
 
 class MiniTaskPage extends Component {
@@ -25,7 +28,6 @@ class MiniTaskPage extends Component {
       userCode: "",
       isLoading: false,
       isLoadingComponent: true
-     
     };
 
     this.executeCode = this.executeCode.bind(this);
@@ -71,14 +73,18 @@ class MiniTaskPage extends Component {
     // setTimeout(()=>{console.log(this.state.minitask.mini_task_desc)},2000)
   }
   componentDidUpdate(prevProps) {
-    if(prevProps.match.params.minitaskId !== this.props.match.params.minitaskId){
+    if (
+      prevProps.match.params.minitaskId !== this.props.match.params.minitaskId
+    ) {
       this.props.setUndefinedNextMinitask();
-      console.log("next ")
+      console.log("next ");
       this.setState((state, props) => ({
-        result: {},
+        result: {}
       }));
       axios
-        .get(`https://hocodevn.com/api/v1/minitasks/${this.props.match.params.minitaskId}`)
+        .get(
+          `https://hocodevn.com/api/v1/minitasks/${this.props.match.params.minitaskId}`
+        )
         .then(res => {
           const minitask = res.data;
           this.setState((state, props) => ({
@@ -88,7 +94,7 @@ class MiniTaskPage extends Component {
           this.setState((state, props) => ({
             minitask: minitask
           }));
-  
+
           this.setState((state, props) => ({
             userCode: minitask.template_code
           }));
@@ -196,8 +202,7 @@ class MiniTaskPage extends Component {
 
   executeCode() {
     this.setState((state, props) => ({
-      result: {},
-      
+      result: {}
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -244,10 +249,9 @@ class MiniTaskPage extends Component {
         }.bind(this)
       );
   }
-   submitCode() {
+  submitCode() {
     this.setState((state, props) => ({
-      result: {},
-      
+      result: {}
     }));
     const { minitask } = this.state;
     //console.log(this.state.userCode);
@@ -285,7 +289,7 @@ class MiniTaskPage extends Component {
               this.state.minitask.id,
               this.state.minitask.task_id
             );
-            
+
             Swal.fire({
               type: "success",
               title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
@@ -318,18 +322,23 @@ class MiniTaskPage extends Component {
       );
   }
   render() {
-    const { minitask,result } = this.state;
+    const { minitask, result } = this.state;
     const { isLoadingComponent } = this.state;
     function renderPassedTestCount() {
-      if(result !== undefined){
-        if(result.stdout!== undefined){
-          if(result.stdout.WASSUCCESSFUL !==undefined){
-            return(<React.Fragment>{result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/{result.stdout.RUNCOUNT}</React.Fragment>)  
+      if (result !== undefined) {
+        if (result.stdout !== undefined) {
+          if (result.stdout.WASSUCCESSFUL !== undefined) {
+            return (
+              <React.Fragment>
+                {result.stdout.RUNCOUNT - result.stdout.GETFAILURECOUNT}/
+                {result.stdout.RUNCOUNT}
+              </React.Fragment>
+            );
           }
         }
       }
     }
-    
+
     return (
       <React.Fragment>
         <div className="fit layout-code">
@@ -349,7 +358,7 @@ class MiniTaskPage extends Component {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                height:'100vh'
+                height: "100vh"
               }}
             >
               <HashLoader
@@ -359,151 +368,163 @@ class MiniTaskPage extends Component {
                 loading={isLoadingComponent}
               />
             </div>
-          ):(
+          ) : (
             <div className="layout-code-body">
-            {/* layout-code-body->   position: relative;flex-grow: 1;*/}
-            <div className="split-panel fit">
-              <div className="stretch fit">
-                {/*  <MediaQuery minDeviceWidth={701}>*/}
-                <Split
-                  className="splitHorizontal"
-                  sizes={[25, 75]}
-                  minSize={0}
-                  expandToMin={false}
-                  gutterSize={4}
-                  gutterAlign="center"
-                  snapOffset={30}
-                  dragInterval={1}
-                  direction="horizontal"
-                  cursor="col-resize"
-                >
-                  <div className="split-panel-first ">
-                    <MiniTaskDesc
-                      mini_task_desc={minitask.mini_task_desc}
-                      code_point={minitask.code_point}
-                      level={minitask.level}
-                    />
-                  </div>
-                  <div className="split-panel-second ">
-                    <div className="coding-area">
-                      <Split
-                        className="splitVertical"
-                        sizes={[75, 25]}
-                        minSize={100}
-                        expandToMin={false}
-                        gutterSize={4}
-                        gutterAlign="center"
-                        snapOffset={30}
-                        dragInterval={1}
-                        direction="vertical"
-                        cursor="row-resize"
-                      >
-                        <div>
-                          <div className="codeEditor">
-                            <CodeEditor
-                              userCode={this.state.userCode}
-                              updateUserCode={this.updateUserCode}
-                            />
-                            <div
-                              className="reset_code"
-                              style={{
-                                position: "absolute",
-                                bottom: 10,
-                                right: 20,
-                                zIndex: 9
-                              }}
-                            >
-                              <button
-                                onClick={this.resetCode}
+              {/* layout-code-body->   position: relative;flex-grow: 1;*/}
+              <div className="split-panel fit">
+                <div className="stretch fit">
+                  {/*  <MediaQuery minDeviceWidth={701}>*/}
+                  <Split
+                    className="splitHorizontal"
+                    sizes={[25, 75]}
+                    minSize={0}
+                    expandToMin={false}
+                    gutterSize={4}
+                    gutterAlign="center"
+                    snapOffset={30}
+                    dragInterval={1}
+                    direction="horizontal"
+                    cursor="col-resize"
+                  >
+                    <div className="split-panel-first ">
+                      <MiniTaskDesc
+                        mini_task_desc={minitask.mini_task_desc}
+                        code_point={minitask.code_point}
+                        level={minitask.level}
+                      />
+                    </div>
+                    <div className="split-panel-second ">
+                      <div className="coding-area">
+                        <Split
+                          className="splitVertical"
+                          sizes={[75, 25]}
+                          minSize={100}
+                          expandToMin={false}
+                          gutterSize={4}
+                          gutterAlign="center"
+                          snapOffset={30}
+                          dragInterval={1}
+                          direction="vertical"
+                          cursor="row-resize"
+                        >
+                          <div>
+                            <div className="codeEditor">
+                              <CodeEditor
+                                userCode={this.state.userCode}
+                                updateUserCode={this.updateUserCode}
+                              />
+                              <div
+                                className="reset_code"
                                 style={{
-                                  fontSize: 10,
-                                  padding: "6px 8px",
-                                  cursor: "pointer"
+                                  position: "absolute",
+                                  bottom: 10,
+                                  right: 20,
+                                  zIndex: 9
                                 }}
                               >
-                                Reset code
-                              </button>
+                                <button
+                                  onClick={this.resetCode}
+                                  style={{
+                                    fontSize: 10,
+                                    padding: "6px 8px",
+                                    cursor: "pointer"
+                                  }}
+                                >
+                                  Reset code
+                                </button>
+                              </div>
                             </div>
                           </div>
+                          <div className="resultPanel">
+                            {this.state.result.stdout !== undefined ||
+                            this.state.result.errorRuntime !== undefined ? (
+                              <ResultPanel
+                                unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
+                                result={this.state.result}
+                              />
+                            ) : (
+                              <TestsPanel
+                                isLoading={this.state.isLoading}
+                                unit_tests={minitask.unit_tests}
+                              />
+                            )}
+                          </div>
+                        </Split>
+                      </div>
+                      <div
+                        className="runtest-area"
+                        style={{
+                          minHeight: "40px",
+                          padding: "10px 20px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-end"
+                        }}
+                      >
+                        <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
+                          {renderPassedTestCount()}
                         </div>
-                        <div className="resultPanel">
-                          {this.state.result.stdout !== undefined ||
-                          this.state.result.errorRuntime !== undefined ? (
-                            <ResultPanel
-                              unit_tests={minitask.unit_tests} // truyền unit test vô chỉ là tạm thời, chứ unitest này phải lấy từ result
-                              result={this.state.result}
-                            />
-                          ) : (
-                            <TestsPanel
-                              isLoading={this.state.isLoading}
-                              unit_tests={minitask.unit_tests}
-                            />
-                          )}
-                        </div>
-                      </Split>
-                    </div>
-                    <div
-                      className="runtest-area"
-                      style={{
-                        minHeight: "40px",
-                        padding: "10px 20px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-end"
-                      }}
-                    >
-                      <div style={{ marginLeft: 20, color: "#4DBF9D" }}>
-                      {renderPassedTestCount()}
-                      </div>
-                      <div style={{ marginLeft: 30 }}>
-                        <button
-                          className={`execute_btn ${this.state.isLoading &&
-                            "disable_btn"}`}
-                          style={{ display: "flex", alignItems: "center" }}
-                          onClick={this.executeCode}
-                          disabled={this.state.isLoading}
-                        >
-                          {this.state.isLoading ? "Đang thực thi" : "Thực thi"}
-                          <img
-                            src={require("./play-button.svg")}
-                            alt=""
-                            style={{ height: "10px", marginLeft: "3px" }}
-                          ></img>
-                        </button>
-                      </div>
-                      <div style={{ marginLeft: 10 }}>
-                        <button
-                          onClick={this.submitCode}
-                          className={`submitCode_btn ${this.state.isLoading &&
-                            "disable_btn"}`}
-                          disabled={this.state.isLoading}
-                        >
-                          Nộp bài
-                        </button>
-                      </div>
-                      
-                      {this.props.user.next_minitask !== undefined ? (
-                        <div style={{ marginLeft: 30, fontSize: 12 }}>
-                          
-                          <Link
-                           
-                            to={`/tasks/${this.props.user.next_minitask.id}`}
-                            style={{
-                              textDecoration: "none",
-                              color: "#595959"
-                            }}
+                        <div style={{ marginLeft: 30 }}>
+                          <button
+                            className={`execute_btn ${this.state.isLoading &&
+                              "disable_btn"}`}
+                            style={{ display: "flex", alignItems: "center" }}
+                            onClick={this.executeCode}
+                            disabled={this.state.isLoading}
                           >
-                            Qua bài mới
-                          </Link>
+                            {this.state.isLoading
+                              ? "Đang thực thi"
+                              : "Thực thi"}
+                            <img
+                              src={require("./play-button.svg")}
+                              alt=""
+                              style={{ height: "10px", marginLeft: "3px" }}
+                            ></img>
+                          </button>
                         </div>
-                      ) : (
-                        <div></div>
-                      )}
+                        <div style={{ marginLeft: 10 }}>
+                          <button
+                            onClick={this.submitCode}
+                            className={`submitCode_btn ${this.state.isLoading &&
+                              "disable_btn"}`}
+                            disabled={this.state.isLoading}
+                          >
+                            Nộp bài
+                          </button>
+                        </div>
+
+                        {this.props.user.next_minitask !== undefined ? (
+                          <div style={{ marginLeft: 30, fontSize: 12 }}>
+                            {this.props.user.next_minitask.id === "" ? (
+                              <Link
+                                to={`/profile/course`}
+                                style={{
+                                  textDecoration: "none",
+                                  color: "#595959"
+                                }}
+                              >
+                                Qua bài mới
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/tasks/${this.props.user.next_minitask.id}`}
+                                style={{
+                                  textDecoration: "none",
+                                  color: "#595959"
+                                }}
+                              >
+                                Qua bài mới
+                              </Link>
+                            )}
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Split>{" "}
-                {/* </MediaQuery>*/}
-                {/* <MediaQuery maxDeviceWidth={700}>
+                  </Split>{" "}
+                  {/* </MediaQuery>*/}
+                  {/* <MediaQuery maxDeviceWidth={700}>
                   {" "}
                   <div
                     style={{
@@ -517,11 +538,11 @@ class MiniTaskPage extends Component {
                     Không hỗ trợ code bằng điện thoại
                   </div>
                 </MediaQuery> */}
+                </div>
               </div>
             </div>
-          </div>
           )}
-          
+
           <ToastContainer
             enableMultiContainer
             containerId={"B"}
@@ -539,4 +560,7 @@ const mapStateToProps = state => ({
   user: state.rootReducer.user
 });
 
-export default connect(mapStateToProps, { submitUpdateMinitask,setUndefinedNextMinitask })(MiniTaskPage);
+export default connect(mapStateToProps, {
+  submitUpdateMinitask,
+  setUndefinedNextMinitask
+})(MiniTaskPage);

@@ -24,7 +24,9 @@ import TaskBody from "./content/task/TaskBody";
 import AppBarContent from "./header/AppBarContent";
 import NavRight from "./navRight/NavRight";
 import ReactAdmin from "../adminPage/hocode/ReactAdmin";
+import BallotIcon from '@material-ui/icons/Ballot';
 import "./profilepage.css";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -178,16 +180,19 @@ class ProfilePage extends React.Component {
               <p style={{ fontSize: 12, marginLeft: "3px" }}>Chứng chỉ</p>
             </MenuItem>
           </Link>
-          
-          <Link to={`${url}/admin`}>
+          {this.props.user.role === "mod" ||
+            this.props.user.role === "admin" ? (
+            <Link to={`${url}/admin`}>
             <MenuItem
               selected={pathname === `${url}/admin`}
               onClick={this.onClickMenuItem(1)}
             >
-              <CardMembershipIcon style={{ fontSize: 16 }} />
+              <BallotIcon style={{ fontSize: 16 }} />
               <p style={{ fontSize: 12, marginLeft: "3px" }}>Admin</p>
             </MenuItem>
           </Link>
+          ):(<React.Fragment></React.Fragment>)}
+  
           <Link to={`${url}/account`}>
             <MenuItem
               selected={pathname === `${url}/account`}
@@ -293,4 +298,13 @@ class ProfilePage extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ProfilePage);
+
+const mapStateToProps = state => ({
+  auth: state.rootReducer.auth,
+  errors: state.rootReducer.errors,
+  user: state.rootReducer.user
+});
+
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, {})(ProfilePage)
+);
