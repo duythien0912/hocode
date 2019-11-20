@@ -121,9 +121,6 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 	// Connect to DB
 	db := h.DB.Clone()
 	defer db.Close()
-
-	// Save in database
-	bk.Timestamp = time.Now()
 	// if err = db.DB(config.NameDb).C("course").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
@@ -132,14 +129,11 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 
 	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{
-			"course_id": id,
 			"del":       bson.M{"$ne": true},
+			"course_id": id,
 		}).
+		Sort("-timestamp").
 		All(&listtaskf); err != nil {
-		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
-		}
-
 		return
 	}
 
@@ -153,6 +147,11 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 			bk.TotalMinitask += len
 		}
 	}
+
+	// Save in database
+	bk.Timestamp = time.Now()
+
+	bk.Tasks = []*model.Task{}
 
 	_, errUs := db.DB(config.NameDb).C("course").UpsertId(bk.ID, bk)
 	if errUs != nil {
