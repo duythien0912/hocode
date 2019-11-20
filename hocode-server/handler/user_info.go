@@ -180,76 +180,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	// 	return
 	// }
 
-	if ucLocationC != -1 {
-
-		uc.CourseInfo[ucLocationC].CourseName = course.CourseName
-		uc.CourseInfo[ucLocationC].BackgroundImage = course.BackgroundImage
-		uc.CourseInfo[ucLocationC].TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
-		completedTasksCount := uc.CourseInfo[ucLocationC].CompletedTasksCount + 1
-		if uc.CourseInfo[ucLocationC].TotalTasksCount <= completedTasksCount {
-			uc.CourseInfo[ucLocationC].ToDoTasksCount = 0
-			uc.CourseInfo[ucLocationC].CompletedTasksCount = uc.CourseInfo[ucLocationC].TotalTasksCount
-			uc.CourseInfo[ucLocationC].PassCourse = true
-		} else {
-			uc.CourseInfo[ucLocationC].ToDoTasksCount = uc.CourseInfo[ucLocationC].TotalTasksCount - completedTasksCount
-			uc.CourseInfo[ucLocationC].CompletedTasksCount = completedTasksCount
-			uc.CourseInfo[ucLocationC].PassCourse = false
-		}
-
-	} else {
-		courseInfo := model.CourseInfo{}
-
-		courseInfo.CourseID = bodyUC.CourseID
-		courseInfo.CourseName = course.CourseName
-		courseInfo.BackgroundImage = course.BackgroundImage
-		courseInfo.TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
-		courseInfo.CompletedTasksCount += 1
-		completedTasksCount := courseInfo.CompletedTasksCount
-		if courseInfo.TotalTasksCount <= completedTasksCount {
-			courseInfo.ToDoTasksCount = 0
-			courseInfo.CompletedTasksCount = courseInfo.TotalTasksCount
-			courseInfo.PassCourse = true
-
-		} else {
-			courseInfo.ToDoTasksCount = courseInfo.TotalTasksCount - completedTasksCount
-			courseInfo.CompletedTasksCount = completedTasksCount
-			courseInfo.PassCourse = false
-		}
-
-		uc.CourseInfo = append(uc.CourseInfo, courseInfo)
-		// uc.CourseInfo.add(courseInfo)
-	}
-
-	fmt.Println("[isInDB]")
-	fmt.Println(isInDB)
-	fmt.Println(uc)
-
-	if isInDB {
-
-		uc.Timestamp = time.Now()
-
-		if err = db.DB(config.NameDb).
-			C("user_course").
-			Update(bson.M{"user_id": uc.UserID}, uc); err != nil {
-			if err == mgo.ErrNotFound {
-				return echo.ErrInternalServerError
-			}
-
-			return
-		}
-
-	} else {
-		uc.ID = bson.NewObjectId()
-		// Save in database
-		uc.Timestamp = time.Now()
-		if err = db.DB(config.NameDb).C("user_course").Insert(uc); err != nil {
-			fmt.Println("[err]")
-			fmt.Println(err)
-			return echo.ErrInternalServerError
-		}
-
-	}
-
 	userMiniTask := &model.UserMiniTask{}
 
 	userMiniTask.UserID = userID
@@ -384,6 +314,82 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		Select(bson.M{"_id": 1}).
 		Limit(1).
 		One(&nextMiniTask); err != nil {
+	}
+
+	if ucLocationC != -1 {
+
+		uc.CourseInfo[ucLocationC].CourseName = course.CourseName
+		uc.CourseInfo[ucLocationC].BackgroundImage = course.BackgroundImage
+		uc.CourseInfo[ucLocationC].TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
+		completedTasksCount := uc.CourseInfo[ucLocationC].CompletedTasksCount
+		if uMiniTaskLocationC != -1 {
+			completedTasksCount = uc.CourseInfo[ucLocationC].CompletedTasksCount + 1
+		}
+		if uc.CourseInfo[ucLocationC].TotalTasksCount <= completedTasksCount {
+			uc.CourseInfo[ucLocationC].ToDoTasksCount = 0
+			uc.CourseInfo[ucLocationC].CompletedTasksCount = uc.CourseInfo[ucLocationC].TotalTasksCount
+			uc.CourseInfo[ucLocationC].PassCourse = true
+		} else {
+			uc.CourseInfo[ucLocationC].ToDoTasksCount = uc.CourseInfo[ucLocationC].TotalTasksCount - completedTasksCount
+			uc.CourseInfo[ucLocationC].CompletedTasksCount = completedTasksCount
+			uc.CourseInfo[ucLocationC].PassCourse = false
+		}
+
+	} else {
+		courseInfo := model.CourseInfo{}
+
+		courseInfo.CourseID = bodyUC.CourseID
+		courseInfo.CourseName = course.CourseName
+		courseInfo.BackgroundImage = course.BackgroundImage
+		courseInfo.TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
+		if uMiniTaskLocationC != -1 {
+			courseInfo.CompletedTasksCount += 1
+		}
+
+		completedTasksCount := courseInfo.CompletedTasksCount
+		if courseInfo.TotalTasksCount <= completedTasksCount {
+			courseInfo.ToDoTasksCount = 0
+			courseInfo.CompletedTasksCount = courseInfo.TotalTasksCount
+			courseInfo.PassCourse = true
+
+		} else {
+			courseInfo.ToDoTasksCount = courseInfo.TotalTasksCount - completedTasksCount
+			courseInfo.CompletedTasksCount = completedTasksCount
+			courseInfo.PassCourse = false
+		}
+
+		uc.CourseInfo = append(uc.CourseInfo, courseInfo)
+		// uc.CourseInfo.add(courseInfo)
+	}
+
+	fmt.Println("[isInDB]")
+	fmt.Println(isInDB)
+	fmt.Println(uc)
+
+	if isInDB {
+
+		uc.Timestamp = time.Now()
+
+		if err = db.DB(config.NameDb).
+			C("user_course").
+			Update(bson.M{"user_id": uc.UserID}, uc); err != nil {
+			if err == mgo.ErrNotFound {
+				return echo.ErrInternalServerError
+			}
+
+			return
+		}
+
+	} else {
+		uc.ID = bson.NewObjectId()
+		// Save in database
+		uc.Timestamp = time.Now()
+		if err = db.DB(config.NameDb).C("user_course").Insert(uc); err != nil {
+			fmt.Println("[err]")
+			fmt.Println(err)
+			return echo.ErrInternalServerError
+		}
+
 	}
 
 	userCourseOut := &model.UserCourseOut{
