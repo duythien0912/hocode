@@ -163,7 +163,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 				}
 			}
 
-			co.TotalMinitask = totallen
+			co.TotalMinitask = totallen + 1
 
 			// Save in database
 			co.Timestamp = time.Now()
