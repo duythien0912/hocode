@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { submitUpdateMinitask,setUndefinedNextMinitask } from "../../js/actions/userAction";
+import HashLoader from "react-spinners/HashLoader";
 
 class MiniTaskPage extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class MiniTaskPage extends Component {
       result: {},
       userCode: "",
       isLoading: false,
+      isLoadingComponent: true
      
     };
 
@@ -41,7 +43,10 @@ class MiniTaskPage extends Component {
       .get(`https://hocodevn.com/api/v1/minitasks/${params.minitaskId}`)
       .then(res => {
         const minitask = res.data;
-
+        this.setState((state, props) => ({
+          minitask: minitask,
+          isLoadingComponent: false
+        }));
         this.setState((state, props) => ({
           minitask: minitask
         }));
@@ -76,7 +81,10 @@ class MiniTaskPage extends Component {
         .get(`https://hocodevn.com/api/v1/minitasks/${this.props.match.params.minitaskId}`)
         .then(res => {
           const minitask = res.data;
-  
+          this.setState((state, props) => ({
+            minitask: minitask,
+            isLoadingComponent: false
+          }));
           this.setState((state, props) => ({
             minitask: minitask
           }));
@@ -311,6 +319,7 @@ class MiniTaskPage extends Component {
   }
   render() {
     const { minitask,result } = this.state;
+    const { isLoadingComponent } = this.state;
     function renderPassedTestCount() {
       if(result !== undefined){
         if(result.stdout!== undefined){
@@ -332,8 +341,26 @@ class MiniTaskPage extends Component {
               history={this.props.history}
             />
           </div>
-
-          <div className="layout-code-body">
+          {isLoadingComponent ? (
+            <div
+              className="sweet-loading"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                height:'100vh'
+              }}
+            >
+              <HashLoader
+                sizeUnit={"px"}
+                size={50}
+                color={"#AEA8A8"}
+                loading={isLoadingComponent}
+              />
+            </div>
+          ):(
+            <div className="layout-code-body">
             {/* layout-code-body->   position: relative;flex-grow: 1;*/}
             <div className="split-panel fit">
               <div className="stretch fit">
@@ -493,6 +520,8 @@ class MiniTaskPage extends Component {
               </div>
             </div>
           </div>
+          )}
+          
           <ToastContainer
             enableMultiContainer
             containerId={"B"}

@@ -22,7 +22,7 @@ class CourseBody extends Component {
       <Grid
         className="containerMain"
         style={{
-          height: "100%",
+          height:"inherit",
           width: "100%",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -33,9 +33,9 @@ class CourseBody extends Component {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "100%",
             width: "100%",
-            padding: 40
+            padding: 40,
+            height:"inherit",
           }}
         >
           <Grid container>
@@ -50,7 +50,7 @@ class CourseBody extends Component {
               <div className="logo">
                 <Link to="/profile">
                   <img
-                    src={process.env.PUBLIC_URL + "/logo.PNG"}
+                    src={process.env.PUBLIC_URL + "/logo.png"}
                     alt=""
                     style={{ height: "40px" }}
                   ></img>
@@ -113,9 +113,7 @@ class CourseBody extends Component {
               </div>
               <div>
                 <p style={{ color: "white", textAlign: "center" }}>
-                  Learn the technical skills you need for the job you want. As
-                  leaders in online education and learning to code, we’ve taught
-                  over 45 million people using a tested
+                  Học và rèn luyện khả năng lập trình. Là môt nhà tiên phong trong việc giáo dục trực tuyến chúng tôi đã có hơn 45 triệu người dùng thông qua bản thử nghiệm. Còn chần chờ gì nữa, hãy tham gia ngay.  
                 </p>
               </div>
             </Grid>
