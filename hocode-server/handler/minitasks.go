@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -30,7 +31,6 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 
 	db := h.DB.Clone()
 	defer db.Close()
-
 
 	if err = db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).
@@ -116,6 +116,65 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 	// 	return echo.ErrInternalServerError
 	// }
 
+	// TODO: Update total_minitask từ bảng course
+
+	if mtn.TaskId != "" {
+
+		tf := &model.Task{}
+
+		db.DB(config.NameDb).C("tasks").
+			Find(bson.M{
+				"del": bson.M{"$ne": true},
+				"_id": bson.ObjectIdHex(mtn.TaskId),
+			}).One(&tf)
+
+		if tf.CourseId != "" {
+
+			listtaskf := []*model.Task{}
+
+			if err = db.DB(config.NameDb).C("tasks").
+				Find(bson.M{
+					"del":       bson.M{"$ne": true},
+					"course_id": tf.CourseId,
+				}).
+				Sort("-timestamp").
+				All(&listtaskf); err != nil {
+				return
+			}
+
+			co := &model.Course{}
+
+			db.DB(config.NameDb).C("course").
+				Find(bson.M{
+					"del": bson.M{"$ne": true},
+					"_id": bson.ObjectIdHex(tf.CourseId),
+				}).One(&co)
+
+			totallen := 0
+
+			if len(listtaskf) != 0 {
+				for i := 0; i < len(listtaskf); i++ {
+					len, _ := db.DB(config.NameDb).C("minitasks").
+						Find(bson.M{
+							"task_id": listtaskf[i].ID.Hex(),
+							"del":     bson.M{"$ne": true},
+						}).Count()
+					totallen += len
+				}
+			}
+
+			co.TotalMinitask = totallen
+
+			// Save in database
+			co.Timestamp = time.Now()
+
+			co.Tasks = []*model.Task{}
+
+			db.DB(config.NameDb).C("course").UpsertId(co.ID, co)
+
+		}
+
+	}
 	_, errUs := db.DB(config.NameDb).C("minitasks").UpsertId(mtn.ID, mtn)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
