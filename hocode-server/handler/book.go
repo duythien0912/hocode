@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	model "github.com/duythien0912/hocode/models"
 	config "github.com/duythien0912/hocode/config"
+	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -22,8 +22,7 @@ import (
 // @Router /books [get]
 func (h *Handler) GetBooks(c echo.Context) (err error) {
 
-	var bk []*model.Book
-
+	bk := []*model.Book{}
 
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
