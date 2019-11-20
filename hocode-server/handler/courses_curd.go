@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -126,6 +127,32 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 	// if err = db.DB(config.NameDb).C("course").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
+
+	listtaskf := []*model.Task{}
+
+	if err = db.DB(config.NameDb).C("tasks").
+		Find(bson.M{
+			"course_id": id,
+			"del":       bson.M{"$ne": true},
+		}).
+		All(&listtaskf); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
+	if len(listtaskf) != 0 {
+		for i := 0; i < len(listtaskf); i++ {
+			len, _ := db.DB(config.NameDb).C("minitasks").
+				Find(bson.M{
+					"task_id": listtaskf[i].ID.Hex(),
+					"del":     bson.M{"$ne": true},
+				}).Count()
+			bk.TotalMinitask += len
+		}
+	}
 
 	_, errUs := db.DB(config.NameDb).C("course").UpsertId(bk.ID, bk)
 	if errUs != nil {

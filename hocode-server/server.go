@@ -7,10 +7,9 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 
+	"github.com/getsentry/sentry-go"
 	"gopkg.in/mgo.v2"
- 	"github.com/getsentry/sentry-go"
-
-	)
+)
 
 // @title Hocode API
 // @version 1.0

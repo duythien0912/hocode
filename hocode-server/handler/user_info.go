@@ -2,9 +2,10 @@ package handler
 
 import (
 	"fmt"
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
@@ -89,7 +90,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	tf := &model.Task{}
+	taskf := &model.Task{}
 
 	if err = db.DB(config.NameDb).C("tasks").
 		// FindId(bson.ObjectIdHex(bodyUC.TaskID)).
@@ -99,7 +100,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}).
 		// Find(bson.M{}).
 		// Select(bson.M{"id": id}).
-		One(&tf); err != nil {
+		One(&taskf); err != nil {
 		if err == mgo.ErrNotFound {
 			return echo.ErrNotFound
 		}
@@ -107,7 +108,19 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-	bodyUC.CourseID = tf.CourseId
+	mta := []*model.MiniTask{}
+
+	db.DB(config.NameDb).C("minitasks").
+		Find(bson.M{
+			"task_id": bodyUC.TaskID,
+			"del":     bson.M{"$ne": true},
+		}).
+		Sort("-timestamp").
+		All(&mta)
+
+	taskf.Minitasks = mta
+
+	bodyUC.CourseID = taskf.CourseId
 
 	uc.UserID = userID
 
@@ -152,20 +165,20 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-	taskf := &model.Task{}
+	// taskf := &model.Task{}
 
-	if err = db.DB(config.NameDb).C("tasks").
-		Find(bson.M{
-			"course_id": bodyUC.CourseID,
-			"del":       bson.M{"$ne": true},
-		}).
-		One(&taskf); err != nil {
-		if err == mgo.ErrNotFound {
-			return echo.ErrNotFound
-		}
+	// if err = db.DB(config.NameDb).C("tasks").
+	// 	Find(bson.M{
+	// 		"course_id": bodyUC.CourseID,
+	// 		"del":       bson.M{"$ne": true},
+	// 	}).
+	// 	One(&taskf); err != nil {
+	// 	if err == mgo.ErrNotFound {
+	// 		return echo.ErrNotFound
+	// 	}
 
-		return
-	}
+	// 	return
+	// }
 
 	if ucLocationC != -1 {
 
@@ -284,7 +297,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-
 	if uMiniTaskLocationC != -1 {
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].Status = "hoanthanh"
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
@@ -295,7 +307,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
 
 		// Cộng điểm cho user
-		mtf := &model.MiniTask {}
+		mtf := &model.MiniTask{}
 
 		if err = db.DB(config.NameDb).C("minitasks").
 			// FindId(bson.ObjectIdHex(bodyUC.MiniTaskID)).
@@ -308,8 +320,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 				return echo.ErrNotFound
 			}
 		}
-
-
 
 		// ur, eur := claims["data"].(model.User)
 
@@ -334,7 +344,6 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		userMiniTask.MiniTaskInfo = append(userMiniTask.MiniTaskInfo, miniTaskIn)
 
 	}
-
 
 	codePoint = ur.CodePoint
 	userMiniTask.Timestamp = time.Now()
