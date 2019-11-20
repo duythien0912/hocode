@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
@@ -236,7 +237,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 				"task_id": ta[i].ID.Hex(),
 				"del":     bson.M{"$ne": true}},
 			).
-			Sort("-timestamp").
+			Sort("timestamp").
 			All(&mta)
 
 		userMiniTask := &model.UserMiniTask{}
