@@ -237,7 +237,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 				"task_id": ta[i].ID.Hex(),
 				"del":     bson.M{"$ne": true}},
 			).
-			Sort("timestamp").
+			Sort("-timestamp").
 			All(&mta)
 
 		userMiniTask := &model.UserMiniTask{}

@@ -137,6 +137,8 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 		return
 	}
 
+	totallen := 0
+
 	if len(listtaskf) != 0 {
 		for i := 0; i < len(listtaskf); i++ {
 			len, _ := db.DB(config.NameDb).C("minitasks").
@@ -144,9 +146,11 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 					"task_id": listtaskf[i].ID.Hex(),
 					"del":     bson.M{"$ne": true},
 				}).Count()
-			bk.TotalMinitask += len
+			totallen += len
 		}
 	}
+
+	bk.TotalMinitask = totallen
 
 	// Save in database
 	bk.Timestamp = time.Now()
