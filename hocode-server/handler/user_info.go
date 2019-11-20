@@ -322,7 +322,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		uc.CourseInfo[ucLocationC].BackgroundImage = course.BackgroundImage
 		uc.CourseInfo[ucLocationC].TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
 		completedTasksCount := uc.CourseInfo[ucLocationC].CompletedTasksCount
-		if uMiniTaskLocationC != -1 {
+		if uMiniTaskLocationC == -1 {
 			completedTasksCount = uc.CourseInfo[ucLocationC].CompletedTasksCount + 1
 		}
 		if uc.CourseInfo[ucLocationC].TotalTasksCount <= completedTasksCount {
@@ -342,7 +342,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		courseInfo.CourseName = course.CourseName
 		courseInfo.BackgroundImage = course.BackgroundImage
 		courseInfo.TotalTasksCount = course.TotalMinitask // len(taskf.Minitasks)
-		if uMiniTaskLocationC != -1 {
+		if uMiniTaskLocationC == -1 {
 			courseInfo.CompletedTasksCount += 1
 		}
 
