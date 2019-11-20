@@ -7,7 +7,7 @@ import { Admin, Resource } from 'react-admin';
 
 import authProvider from './auth/authProvider';
 import catchAll from './catchAll';
-import customRoutes from './customRoutes';
+//import customRoutes from './customRoutes';
 import dataProvider from "./dataProvider";
 import MyLayout from './MyLayout';
 import { theme } from './theme';

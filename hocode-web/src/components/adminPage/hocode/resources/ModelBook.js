@@ -7,17 +7,17 @@ import {
     Create,
     Datagrid,
     TextField,
-    BooleanInput,
+ //   BooleanInput,
     SimpleForm,
     List,
     TextInput,
     Edit,
-    BooleanField,
+  //  BooleanField,
     ImageField,
     EditButton,
     DeleteButton,
 } from 'react-admin';
-import { permitted } from '../utils';
+//import { permitted } from '../utils';
 
 import ModelBookEditToolbar from '../customActions/ModelBookEditToolbar';
 

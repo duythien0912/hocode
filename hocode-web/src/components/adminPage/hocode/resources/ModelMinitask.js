@@ -3,6 +3,7 @@
  * When regenerated the changes will be lost.
 **/
 import React from 'react';
+
 import {
     Create,
     Datagrid,
@@ -12,17 +13,18 @@ import {
     SimpleForm,
     List,
     TextInput,
-    Edit,
+ //   Edit,
     NumberInput,
-    BooleanField,
+  //  BooleanField,
     EditButton,
     DeleteButton,
 } from 'react-admin';
-import { permitted } from '../utils';
+//import { permitted } from '../utils';
 
-import ModelMinitaskEditToolbar from '../customActions/ModelMinitaskEditToolbar';
+//import ModelMinitaskEditToolbar from '../customActions/ModelMinitaskEditToolbar';
 
 import ModelMinitaskFilter from '../filters/ModelMinitaskFilter';
+//import { getLocationHref } from '@sentry/utils';
 
 
 
@@ -72,26 +74,29 @@ export const ModelMinitaskCreate = props => (
         </SimpleForm></Create>
 );
 
-export const ModelMinitaskEdit = props => (
-    <Edit {...props} title="ModelMinitask Edit">
-        <SimpleForm toolbar={<ModelMinitaskEditToolbar />}>
-            <TextInput                source="avatar"            />
-            <NumberInput                source="code_point"            />
-            {/* <BooleanInput                source="del"            /> */}
-            <TextInput                source="id"            />
-            <TextInput                source="level"            />
-            <TextInput                source="mini_task_desc"            />
-            <TextInput                source="mini_task_name"            />
-            <TextInput                source="name_func"            />
-            <TextInput                source="output_type_func"            />
-            <NumberInput                source="point_unlock"            />
-            <TextInput                source="status"            />
-            <TextInput                source="task_id"            />
-            <TextInput                source="template_code"            />
-            {/* <TextInput                source="timestamp"            /> */}
-            <TextInput                source="unit_tests"            />
-            <BooleanInput                source="vitri"            />
-        </SimpleForm></Edit>
-);
+export const ModelMinitaskEdit = props => {
+    console.log(props.id);
+    window.location.replace(`/profile/minitasks/${props.id}/edit`)
+    // return (
+    // <Edit  {...props} title="ModelMinitask Edit">
+    //     <SimpleForm toolbar={<ModelMinitaskEditToolbar />}>
+    //         <TextInput                source="avatar"            />
+    //         <NumberInput                source="code_point"            />
+    //         {/* <BooleanInput                source="del"            /> */}
+    //         <TextInput                source="id"            />
+    //         <TextInput                source="level"            />
+    //         <TextInput                source="mini_task_desc"            />
+    //         <TextInput                source="mini_task_name"            />
+    //         <TextInput                source="name_func"            />
+    //         <TextInput                source="output_type_func"            />
+    //         <NumberInput                source="point_unlock"            />
+    //         <TextInput                source="status"            />
+    //         <TextInput                source="task_id"            />
+    //         <TextInput                source="template_code"            />
+    //         {/* <TextInput                source="timestamp"            /> */}
+    //         <TextInput                source="unit_tests"            />
+    //         <BooleanInput                source="vitri"            />
+    //     </SimpleForm></Edit>); 
+};
 
 /** End of Generated Code **/

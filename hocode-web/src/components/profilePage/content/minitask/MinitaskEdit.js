@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { matchPath } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 const options = [
   { value: "int", label: "Interger" },
   { value: "String", label: "String" },
@@ -112,8 +113,9 @@ class MinitaskEdit extends Component {
           mini_task_desc: minitask.mini_task_desc,
           level: minitask.level,
           code_point: minitask.code_point,
-          inputList: minitask.input_list
+          inputList: minitask.input_list || []
         });
+        
       });
     axios.get(`https://hocodevn.com/api/v1/courses`).then(res => {
       const courses = res.data;
@@ -152,6 +154,9 @@ class MinitaskEdit extends Component {
 
   // create a new minitask
   async handleSubmit() {
+    let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
+
+    const currentParams = getParams(location.pathname);
     const template_code = `public ${this.state.output_type_func} ${
       this.state.name_func
     }(${this.state.inputList
@@ -174,13 +179,18 @@ class MinitaskEdit extends Component {
       vitri: false,
       mini_task_desc: this.state.mini_task_desc,
       level: "hard",
-      code_point: parseInt(this.state.code_point)
+      code_point: parseInt(this.state.code_point),
+      input_list:this.state.inputList
     };
-    // axios
-    //   .post("https://hocodevn.com/api/v1/minitasks", newMiniTask)
-    //   .then(function(response) {
-    //     console.log(response);
-    //   });
+    axios
+      .put(`https://hocodevn.com/api/v1/curd/minitasks/${currentParams.minitasksId}`, newMiniTask)
+      .then(function(response) {
+        toast("Sửa bài thành công!", {
+          containerId: "B"
+        });
+        console.log(response);
+
+      });
     console.log(newMiniTask);
   }
 
@@ -637,12 +647,17 @@ class MinitaskEdit extends Component {
                   className={classes.button}
                   onClick={this.handleSubmit}
                 >
-                  submit
+                  Thay đổi
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+        <ToastContainer
+            enableMultiContainer
+            containerId={"B"}
+            position={toast.POSITION.TOP_RIGHT}
+          />
       </React.Fragment>
     );
   }
