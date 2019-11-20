@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"hocode.tasks"}],"uuid":"76ab9e27e78e4eddb6a075deee60fd70"}

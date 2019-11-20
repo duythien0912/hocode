@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"hocode.books"}],"uuid":"295df26701de4d9a978a8bff8e25461d"}

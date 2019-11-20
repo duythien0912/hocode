@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"hocode.user_minitask"}],"uuid":"feb3879c3aa74f1e893d6f55f0857147"}
