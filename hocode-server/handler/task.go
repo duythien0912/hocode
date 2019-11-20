@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
@@ -175,6 +176,8 @@ func (h *Handler) CreateTask(c echo.Context) (err error) {
 	// Connect to DB
 	db := h.DB.Clone()
 	defer db.Close()
+
+	// TODO: update total_minitask in collection "Course"
 
 	// Save in database
 	tn.Timestamp = time.Now()

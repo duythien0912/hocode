@@ -46,7 +46,7 @@ export const ModelCourseCreate = props => (
             <TextInput                source="course_name"            />
             {/* <BooleanInput                source="del"            /> */}
             {/* <TextInput                source="id"            /> */}
-            <TextInput                source="tasks"            />
+            {/* <TextInput                source="tasks"            /> */}
             {/* <TextInput                source="timestamp"            /> */}
         </SimpleForm></Create>
 );
@@ -58,7 +58,7 @@ export const ModelCourseEdit = props => (
             <TextInput                source="course_name"            />
             {/* <BooleanInput                source="del"            /> */}
             <TextInput                source="id"            />
-            <TextInput                source="tasks"            />
+            {/* <TextInput                source="tasks"            /> */}
             {/* <TextInput                source="timestamp"            /> */}
         </SimpleForm></Edit>
 );
