@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	code "github.com/duythien0912/hocode/handler/code"
+	"github.com/duythien0912/hocode/handler/code"
 	model "github.com/duythien0912/hocode/models"
 
 	"fmt"

@@ -22,13 +22,14 @@ import (
 // @Router /minitasks [get]
 func (h *Handler) Minitasks(c echo.Context) (err error) {
 
-	mta := []*model.MiniTask{}
+	var mta []*model.MiniTask
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
 	db := h.DB.Clone()
 	defer db.Close()
+
 
 	if err = db.DB("hocode").C("minitasks").
 		Find(bson.M{"del": bson.M{"$ne": true}}).

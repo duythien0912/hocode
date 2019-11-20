@@ -21,7 +21,8 @@ import (
 // @Router /books [get]
 func (h *Handler) GetBooks(c echo.Context) (err error) {
 
-	bk := []*model.Book{}
+	var bk []*model.Book
+
 
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))

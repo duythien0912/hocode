@@ -37,8 +37,10 @@ func main() {
 	e.Use(middleware.CORS())
 
 	// mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode
-	db, err := mgo.Dial("mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode")
+	//_, err := mgo.Dial("mongodb://admin:adminadmin1@ds021984.mlab.com:21984/hocode")
+	db, err := mgo.Dial("mongodb://admin:adminadmin1@ds233500.mlab.com:33500/hocode2")
 	if err != nil {
+		log.Info("Connect mongodb error")
 		e.Logger.Fatal(err)
 	} else {
 		log.Info("Connect mongodb success")

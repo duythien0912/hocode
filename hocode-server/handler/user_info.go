@@ -294,7 +294,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
 
 		// Cộng điểm cho user
-		mtf := &model.MiniTask{}
+		mtf := &model.MiniTask {}
 
 		if err = db.DB("hocode").C("minitasks").
 			// FindId(bson.ObjectIdHex(bodyUC.MiniTaskID)).
