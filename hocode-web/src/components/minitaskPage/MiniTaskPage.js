@@ -186,7 +186,15 @@ class MiniTaskPage extends Component {
               1}", ${unit_test.expected_output}, s.${
               minitask.name_func
             }(${inputsFormat}),0);\n  }\n`;
-          } else {
+          } 
+          else if(minitask.output_type_func === "String"){
+            junit4 += ` @Test\n    public void myTestFunction${index +
+              1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
+              1}", "${unit_test.expected_output}", s.${
+              minitask.name_func
+            }(${inputsFormat}),0);\n  }\n`;
+          }
+          else {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
               1}", ${unit_test.expected_output}, s.${

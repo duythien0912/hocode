@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import { MenuItemLink, getResources, Responsive } from 'react-admin';
 import ListIcon from '@material-ui/icons/ViewList';
 import { titleCase } from './utils';
+import { Link} from "react-router-dom";
+import MenuItem from "@material-ui/core/MenuItem";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const ICONS = {
     books: <ListIcon />,
@@ -14,10 +17,19 @@ const ICONS = {
     events: <ListIcon />,
     minitasks: <ListIcon />,
     tasks: <ListIcon />,
+    profile:<ListIcon/>
 };
 
 const Menu = ({ resources, onMenuClick, logout }) => (
     <div>
+             <Link to={`/profile`} style={{textDecoration:"none"}}>
+            <MenuItem
+             
+            >
+              <ArrowBackIcon style={{ fontSize: 16,color:"#f50057" }} />
+              <p style={{ fontSize: 12, marginLeft: "3px",color:"#f50057" }}>Quay lại trang Profile</p>
+            </MenuItem>
+          </Link>
         {resources
             ? resources.map(resource => resource.hasList ? (
                     <MenuItemLink
