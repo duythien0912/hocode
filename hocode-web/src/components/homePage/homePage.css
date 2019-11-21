@@ -8,6 +8,7 @@
 }
 @media only screen and (max-width: 600px) {
     .containerMain{
+        height: inherit!important;
         background-image: url("/backgroundHomeMobile.png"),linear-gradient(to right bottom, rgb(6, 6, 38) 0%, rgb(87, 133, 180) 100%);
     }
     .HeaderLeftHome{
@@ -20,4 +21,12 @@
         align-items: center;
         justify-content: center!important;
     }
+  }
+
+  @media only screen and (max-width: 320px) {
+    .containerMain{
+        height: unset!important;
+        background-image: url("/backgroundHomeMobile.png"),linear-gradient(to right bottom, rgb(6, 6, 38) 0%, rgb(87, 133, 180) 100%);
+    }
+
   }

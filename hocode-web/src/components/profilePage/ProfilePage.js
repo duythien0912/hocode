@@ -50,7 +50,7 @@ const styles = theme => ({
     marginTop: "65px",
     overflowY: "auto",
     flexShrink: 0,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       display: "block"
     },
     background: "white"
@@ -182,7 +182,7 @@ class ProfilePage extends React.Component {
           </Link>
           {this.props.user.role === "mod" ||
             this.props.user.role === "admin" ? (
-            <Link to={`${url}/admin`}>
+            <Link to={`/admin`}>
             <MenuItem
               selected={pathname === `${url}/admin`}
               onClick={this.onClickMenuItem(1)}
@@ -275,9 +275,9 @@ class ProfilePage extends React.Component {
               <TaskBody location={this.props.location} />
             </Route>
             <Route path={`${path}/print`}>In chứng chỉ</Route>
-            <Route path={`${path}/admin`}>
+            {/* <Route path={`${path}/admin`}>
               <ReactAdmin />
-            </Route>
+            </Route> */}
             <Route path={`${path}/account`}>
               <Account />
             </Route>
@@ -286,11 +286,11 @@ class ProfilePage extends React.Component {
                 <CreateMiniTask  location={this.props.location}/>
               </Paper>
             </Route>
-            <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
+            {/* <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
               <Paper style={{ padding: 10 }}>
                 <MinitaskEdit location={this.props.location} />
               </Paper>
-            </Route>
+            </Route> */}
           </Switch>
         </main>
       </div>

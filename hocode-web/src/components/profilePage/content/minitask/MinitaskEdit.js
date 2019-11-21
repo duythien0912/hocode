@@ -91,12 +91,13 @@ class MinitaskEdit extends Component {
   }
 
   componentDidMount() {
-    let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
+   // let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
 
-    const currentParams = getParams(location.pathname);
-    console.log(currentParams);
+    //const currentParams = getParams(location.pathname);
+   // console.log(currentParams);
+
     axios
-      .get(`https://hocodevn.com/api/v1/minitasks/${currentParams.minitasksId}`)
+      .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitasksId}`)
       .then(res => {
         console.log(res.data);
         const minitask = res.data;
