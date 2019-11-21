@@ -155,9 +155,9 @@ class MinitaskEdit extends Component {
 
   // create a new minitask
   async handleSubmit() {
-    let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
+  //  let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
 
-    const currentParams = getParams(location.pathname);
+   // const currentParams = getParams(location.pathname);
     const template_code = `public ${this.state.output_type_func} ${
       this.state.name_func
     }(${this.state.inputList
@@ -184,7 +184,7 @@ class MinitaskEdit extends Component {
       input_list:this.state.inputList
     };
     axios
-      .put(`https://hocodevn.com/api/v1/curd/minitasks/${currentParams.minitasksId}`, newMiniTask)
+      .put(`https://hocodevn.com/api/v1/curd/minitasks/${this.props.minitasksId}`, newMiniTask)
       .then(function(response) {
         toast("Sửa bài thành công!", {
           containerId: "B"
