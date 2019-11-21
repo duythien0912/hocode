@@ -157,7 +157,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <AppsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tổng quan</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tổng quan</p>
             </MenuItem>
           </Link>
 
@@ -167,7 +167,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <ImportContactsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Khóa học</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Khóa học</p>
             </MenuItem>
           </Link>
 
@@ -177,7 +177,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <CardMembershipIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Chứng chỉ</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Chứng chỉ</p>
             </MenuItem>
           </Link>
           {this.props.user.role === "mod" ||
@@ -188,7 +188,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <BallotIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Admin</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Admin</p>
             </MenuItem>
           </Link>
           ):(<React.Fragment></React.Fragment>)}
@@ -199,7 +199,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <AccountCircleIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tài khoản</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tài khoản</p>
             </MenuItem>
           </Link>
         </MenuList>

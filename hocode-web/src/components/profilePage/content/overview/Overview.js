@@ -204,8 +204,9 @@ class Overview extends React.Component {
                       direction="column"
                       style={{ alignItems: "center" }}
                     >
-                      <Grid item style={{ fontWeight: "bold" }}>
-                        {event.title}
+                      <Grid item style={{ }}>
+                      <a href={event.link} style={{fontWeight: "bold",textAlign:"center",textDecoration:"none"}} >{event.title}</a>
+                        
                       </Grid>
                       <Grid item style={{ textAlign: "justify", padding: 10 }}>
                         {" "}

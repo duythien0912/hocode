@@ -1,0 +1,11 @@
+@media only screen and (max-width: 600px) {
+    .dangBaiTap {
+      font-size: 9px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .dangBaiTap {
+      font-size: 7px;
+    }
+  }

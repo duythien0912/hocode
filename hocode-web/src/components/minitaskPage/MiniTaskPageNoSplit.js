@@ -154,13 +154,26 @@ class MiniTaskPage extends Component {
               inputs += `${input.value},`;
             }
           });
-
           let inputsFormat = inputs.substring(0, inputs.length - 1);
-          junit4 += ` @Test\n    public void myTestFunction${index +
-            1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
-            1}", new ${minitask.output_type_func} ${
-            unit_test.expected_output
-          }, s.${minitask.name_func}(${inputsFormat}));\n  }\n`;
+
+          if (minitask.output_type_func === "double[]") {
+            junit4 += ` @Test\n    public void myTestFunction${index +
+              1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
+              1}", ${unit_test.expected_output}, s.${
+              minitask.name_func
+            }(${inputsFormat}),0);\n  }\n`;
+          }
+          else{
+
+            junit4 += ` @Test\n    public void myTestFunction${index +
+              1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
+              1}", new ${minitask.output_type_func} ${
+              unit_test.expected_output
+            }, s.${minitask.name_func}(${inputsFormat}));\n  }\n`;
+          }
+
+          
+        
         });
         junit4 += `}`;
       } else {
@@ -188,7 +201,7 @@ class MiniTaskPage extends Component {
               1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
               1}", "${unit_test.expected_output}", s.${
               minitask.name_func
-            }(${inputsFormat}),0);\n  }\n`;
+            }(${inputsFormat}));\n  }\n`;
           }
            else {
             junit4 += ` @Test\n    public void myTestFunction${index +
