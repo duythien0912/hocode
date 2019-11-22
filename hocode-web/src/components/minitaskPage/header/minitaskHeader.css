@@ -6,6 +6,7 @@
     background: white;
     width: 100%;
     position: relative;
+    min-height: 50px;
 }
 .minitaskName_mobi{
     display: none;
@@ -74,9 +75,15 @@
 .logo{
     padding:0px 10px;
 }
+.logo1{
+    padding:0px 10px;
+}
 
-
+.nav-wrapper .desktop-hide1{
+    display: none;
+}
 @media screen and (max-width:860px){
+    .right-menu { align-items: flex-start;}
     .minitaskName_mobi{
         display: block;
         position: absolute;
@@ -84,33 +91,42 @@
         left: 50%;
         transform: translate(-50%,-50%);
     }
+    .logo{
+        display: none;
+    }
+    .nav-wrapper .desktop-hide1{
+        display: block;
+    }
     .miniTask_name{
         display: none !important;
     }
     .nav-wrapper{
         position: fixed;
         top:0;
-        right: 0;
+        left: 0;
         width: 80vw;
         height: 100vh;
         background: #eef;
         transition: all 0.2s ease;
         flex-direction: column;
         margin: 0px;
-        align-items: flex-end;
-        padding-top:50%;
         padding-right: 20px;
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(-100%);
+        padding-left: 20px;
+        padding-top: 50px;
+        align-items: flex-start;
         
 
     }
 
     .nav-wrapper .left-menu{
         flex-grow: 0;
+        margin-left: 10px;
     }
     .nav-wrapper .right-menu{
         flex-direction: column;
+        margin-left: 10px;
     }
     .nav-wrapper .right-menu .code-point{
         display: none;
@@ -127,6 +143,7 @@
         
 
     }
+ 
     .nav-wrapper .right-menu  .desktop-hide a {
         text-decoration: none;
         color:#595959;
@@ -137,7 +154,7 @@
     .nav-btn{
         position: fixed;
         right:10px;
-        top:10px;
+        left:10px;
         display: block;
         width: 48px;
         height: 48px;
