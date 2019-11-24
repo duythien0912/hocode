@@ -11,11 +11,30 @@ import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+
 const styles = {
   paper: {
     padding: 16,
     marginTop:16
-  }
+  },
+  card: {
+    maxWidth: "100%",
+  },
+  media: {
+    // width: "100%",
+
+    height: 180,
+  },
+
 };
 
 class Overview extends React.Component {
@@ -190,6 +209,31 @@ class Overview extends React.Component {
                       marginBottom: 10
                     }}
                   >
+
+{/* <Card className={classes.card}>
+      <CardActionArea >
+        <CardMedia
+          className={classes.media}
+          image={event.image}
+          title="Contemplative Reptile"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+          {event.title}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+          {event.content}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions style={{justifyContent: 'center'}}>
+        <Button size="small" color="primary">
+          Chi tiết
+        </Button>
+      </CardActions>
+    </Card> */}
+ 
+
                     <img
                       style={{
                         width: "100%",

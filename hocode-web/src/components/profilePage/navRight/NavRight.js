@@ -2,6 +2,7 @@ import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
 
 import Divider from "@material-ui/core/Divider";
 import { connect } from "react-redux";
@@ -51,9 +52,7 @@ class NavRight extends React.Component {
             />
           </Grid>
           <Grid item style={{ flexGrow: 1 }}>
-            <div >
-              Xin chào {this.props.user.firstname} !!!{" "}
-            </div>{" "}
+            <div>Xin chào {this.props.user.firstname} !!! </div>{" "}
           </Grid>
         </Grid>
         <Divider light />
@@ -68,20 +67,30 @@ class NavRight extends React.Component {
           <React.Fragment>
             {this.state.daily_minitasks.map(daily_minitask => {
               return (
-                <Grid container className={classes.dailychallenge} key={daily_minitask.id} >
-                  
-                  
+                <Grid
+                  container
+                  className={classes.dailychallenge}
+                  key={daily_minitask.id}
+                >
                   <Grid item>
-                    {daily_minitask.avatar === undefined?<img
-                      alt="Remy Sharp"
-                      src="https://loremflickr.com/320/240"
-                      style={{ width: "50px", height: "50px" }}
-                    />:<img
-                    alt="Remy Sharp"
-                    src={daily_minitask.avatar}
-                    style={{ width: "50px", height: "50px" }}
-                  />}
-                   
+                    {daily_minitask.avatar === undefined ? (
+                      <img
+                        alt="Remy Sharp"
+                        src="https://loremflickr.com/320/240"
+                        style={{ width: "50px", height: "50px" }}
+                      />
+                    ) : (
+                      <Avatar variant="rounded" className={classes.rounded}>
+
+                      <img
+                        alt="Remy Sharp"
+                        src={daily_minitask.avatar}
+                        style={{ width: "40px", height: "40px",   objectFit:"cover",
+                      }}
+                      />
+                            </Avatar>
+
+                    )}
                   </Grid>
                   <Grid item style={{ flexGrow: 1 }}>
                     <div
@@ -91,7 +100,13 @@ class NavRight extends React.Component {
                         margin: "0 10px"
                       }}
                     >
-                      <Link to={`/tasks/${daily_minitask.id}`} style={{textDecoration:'none'}}> {daily_minitask.mini_task_name}</Link>
+                      <Link
+                        to={`/tasks/${daily_minitask.id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        {" "}
+                        {daily_minitask.mini_task_name}
+                      </Link>
                     </div>
                     <div
                       style={{
@@ -100,7 +115,7 @@ class NavRight extends React.Component {
                         margin: "0 10px"
                       }}
                     >
-                     Code Point: {daily_minitask.code_point}
+                      Code Point: {daily_minitask.code_point}
                     </div>
                   </Grid>
                 </Grid>
@@ -120,8 +135,5 @@ const mapStateToProps = state => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    { getUser }
-  )(NavRight)
+  connect(mapStateToProps, { getUser })(NavRight)
 );
