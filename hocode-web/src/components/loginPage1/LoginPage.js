@@ -145,7 +145,7 @@ class LoginPage extends React.Component {
                 <img
                   src={process.env.PUBLIC_URL + "/logo.png"}
                   alt=""
-                  style={{ height: "40px" }}
+                  style={{ height: "80px" }}
                 ></img>
               </Link>
             </div>
@@ -187,19 +187,18 @@ class LoginPage extends React.Component {
               value={this.state.password}
             />
             <Grid container>
-            <Grid item xs>
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    color="primary"
-                    onChange={this.handleChange("remember")}
-                    checked={this.state.remember}
-                  />
-                }
-                label="Lưu tài khoản"
-              />
+              <Grid item xs>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="remember"
+                      color="primary"
+                      onChange={this.handleChange("remember")}
+                      checked={this.state.remember}
+                    />
+                  }
+                  label="Lưu tài khoản"
+                />
               </Grid>
               <Button variant="contained" onClick={this.onSubmitTest}>
                 Tài khoản test
@@ -218,13 +217,39 @@ class LoginPage extends React.Component {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Quên tài khoản
+                  {/* Quên tài khoản */}
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  {"Bạn chưa có tài khoản, Đăng ký ngay"}
+                  {"Nếu bạn chưa có tài khoản, Hãy Đăng ký ngay"}
                 </Link>
+              </Grid>
+            </Grid>
+
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2"></Link>
+              </Grid>
+
+              <Grid item>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScGsL9g_Hot55sUbVHb0O7uBsWtkBrDE65fmETvflcxvuCdvw/viewform?usp=sf_link"
+                  variant="body2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ref={element => {
+                    if (element)
+                      element.style.setProperty(
+                        "color",
+                        "#ff5722",
+                        "important"
+                      );
+                  }}
+                  style={{ textDecoration: "none", color: "#ff5722!important" }}
+                >
+                  Đăng ký trở thành giáo viên
+                </a>
               </Grid>
             </Grid>
           </form>

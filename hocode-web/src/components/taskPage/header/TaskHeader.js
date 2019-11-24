@@ -25,7 +25,7 @@ class TaskHeader extends Component {
           <i />
         </label>
         <div className="logo">
-          <a href="/giang">
+          <a href="/">
             <img
               src={require("./logo.png")}
               alt=""

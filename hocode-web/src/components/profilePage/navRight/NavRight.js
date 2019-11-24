@@ -57,7 +57,7 @@ class NavRight extends React.Component {
         </Grid>
         <Divider light />
         <div
-          style={{ margin: "50px 0 10px 0", fontSize: "15px", fontWeight: 600 }}
+          style={{ margin: "20px 0 10px 0", fontSize: "15px", fontWeight: 600 }}
         >
           Thách thức hằng ngày
         </div>

@@ -224,14 +224,14 @@ class SignUpPage extends React.Component {
             <img
               src={process.env.PUBLIC_URL + "/logo.png"}
               alt=""
-              style={{ height: "40px" }}
+              style={{ height: "80px" }}
             ></img>
           </Link>
         </div>
           </Box>
 
           <Typography component="h1" variant="h5">
-            Sign up
+            Đăng ký
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <Grid container spacing={2}>

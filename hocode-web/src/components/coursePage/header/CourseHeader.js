@@ -29,7 +29,7 @@ class CourseHeader extends Component {
           <i />
         </label>
         <div className="logo">
-          <a href="/giang">
+          <a href="/">
             <img
               src={require("./logo.png")}
               alt=""
@@ -48,7 +48,7 @@ class CourseHeader extends Component {
               <div className="nameMenu">{this.props.user.firstname}</div>
               <ul className="nameSubmenu">
                   <li><a href="giang">Thông tin cá nhân</a></li>
-                  <li><a href="/giang" onClick={this.onLogout}>Đăng xuất</a></li>
+                  <li><a href="/" onClick={this.onLogout}>Đăng xuất</a></li>
               </ul>
             </div>
             <div className="desktop-hide"> {/*hide when screen is destop */}
