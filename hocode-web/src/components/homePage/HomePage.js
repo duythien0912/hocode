@@ -1,13 +1,45 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
+
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Container from "@material-ui/core/Container";
 
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import "./homePage.css";
-const styles = {};
+const styles = {
+  cardGrid: {
+    paddingTop: 32,
+    paddingBottom: 32
+  },
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column"
+  }
+};
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="/">
+        Hocodevn.com
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const cards = [1, 2, 3];
+
 class CourseBody extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
@@ -20,6 +52,8 @@ class CourseBody extends Component {
     }
   }
   render() {
+    const { classes } = this.props;
+
     return (
       <Grid
         className="containerMain"
@@ -79,7 +113,7 @@ class CourseBody extends Component {
                       color: "white",
                       fontWeight: 600,
                       fontSize: "16px",
-                      boxShadow: "none",
+                      boxShadow: "none"
                     }}
                     variant="contained"
                   >
@@ -117,51 +151,66 @@ class CourseBody extends Component {
             }}
             container
           >
-            <Grid item xs={12} sm={6} md={6} style={{ padding: 40 }}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={6}
+              style={{ padding: 40, paddingTop: 0, paddingBottom: 100 }}
+            >
               <div>
                 {/* <h3 style={{ textAlign: "center" }}> */}
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom style={{ color: "#009688",  }}>
-
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                  style={{ color: "#009688" }}
+                >
                   {/* WELLCOME TO{" "} */}
                   {/* <span style={{ color: "#009688",  }}> */}
-                    WELLCOME TO HOCODE 
+                  WELLCOME TO HOCODE
                   {/* </span> */}
-                  </Typography>
+                </Typography>
 
                 {/* </h3> */}
               </div>
               <div>
-              <Typography variant="h5" align="center" color="textSecondary" paragraph>
-
-                {/* <p style={{ textAlign: "center" }}> */}
+                <Typography
+                  variant="h5"
+                  align="center"
+                  color="textSecondary"
+                  paragraph
+                >
+                  {/* <p style={{ textAlign: "center" }}> */}
                   Học và rèn luyện khả năng lập trình. Còn chần chờ gì nữa, hãy
                   tham gia ngay.
-                {/* </p> */}
+                  {/* </p> */}
                 </Typography>
 
-          <Grid container spacing={2} justify="center">
-                <Grid item>
-                <Link to="/profile"                   style={{ textDecoration: "none",  }}
->
-                  <Button variant="contained" color="primary" style={{
-                      color: "white",
-                      fontWeight: 600,
-                      boxShadow: "none",
-                      fontSize: "16px",
-                      padding: "8px 32px",
-
-
-                  }}>
-                    Bắt đầu
-                  </Button>
-                  </Link>
-
+                <Grid container spacing={2} justify="center">
+                  <Grid item>
+                    <Link to="/profile" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                          color: "white",
+                          fontWeight: 600,
+                          boxShadow: "none",
+                          fontSize: "16px",
+                          padding: "8px 32px"
+                        }}
+                      >
+                        Bắt đầu
+                      </Button>
+                    </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
               </div>
-            </Grid>
 
-           
+            </Grid>
           </Grid>
 
           {/* <Grid 
@@ -186,6 +235,8 @@ class CourseBody extends Component {
                 }}
               ></img>
             </Grid> */}
+
+          <Copyright />
         </Grid>
       </Grid>
     );
@@ -196,3 +247,31 @@ const mapStateToProps = state => ({
   auth: state.rootReducer.auth
 });
 export default withStyles(styles)(connect(mapStateToProps, {})(CourseBody));
+
+
+
+// <Container className={classes.cardGrid} maxWidth="md">
+// {/* End hero unit */}
+// <Grid container spacing={4}>
+//   {cards.map(card => (
+//     <Grid item key={card} xs={12} sm={6} md={4}>
+//       <Card className={classes.card}>
+//         <CardMedia
+//           className={classes.cardMedia}
+//           image="https://source.unsplash.com/random"
+//           title="Image title"
+//         />
+//         <CardContent className={classes.cardContent}>
+//           <Typography gutterBottom variant="h5" component="h2">
+//             Heading
+//           </Typography>
+//           <Typography>
+//             This is a media card. You can use this section to
+//             describe the content.
+//           </Typography>
+//         </CardContent>
+//       </Card>
+//     </Grid>
+//   ))}
+// </Grid>
+// </Container>
