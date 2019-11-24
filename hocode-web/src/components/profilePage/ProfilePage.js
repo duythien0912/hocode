@@ -50,7 +50,7 @@ const styles = theme => ({
     marginTop: "65px",
     overflowY: "auto",
     flexShrink: 0,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       display: "block"
     },
     background: "white"
@@ -157,7 +157,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <AppsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tổng quan</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tổng quan</p>
             </MenuItem>
           </Link>
 
@@ -167,7 +167,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <ImportContactsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Khóa học</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Khóa học</p>
             </MenuItem>
           </Link>
 
@@ -177,18 +177,18 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <CardMembershipIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Chứng chỉ</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Chứng chỉ</p>
             </MenuItem>
           </Link>
           {this.props.user.role === "mod" ||
             this.props.user.role === "admin" ? (
-            <Link to={`${url}/admin`}>
+            <Link to={`/admin`}>
             <MenuItem
               selected={pathname === `${url}/admin`}
               onClick={this.onClickMenuItem(1)}
             >
               <BallotIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Admin</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Admin</p>
             </MenuItem>
           </Link>
           ):(<React.Fragment></React.Fragment>)}
@@ -199,7 +199,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <AccountCircleIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 12, marginLeft: "3px" }}>Tài khoản</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tài khoản</p>
             </MenuItem>
           </Link>
         </MenuList>
@@ -275,9 +275,9 @@ class ProfilePage extends React.Component {
               <TaskBody location={this.props.location} />
             </Route>
             <Route path={`${path}/print`}>In chứng chỉ</Route>
-            <Route path={`${path}/admin`}>
+            {/* <Route path={`${path}/admin`}>
               <ReactAdmin />
-            </Route>
+            </Route> */}
             <Route path={`${path}/account`}>
               <Account />
             </Route>
@@ -286,11 +286,11 @@ class ProfilePage extends React.Component {
                 <CreateMiniTask  location={this.props.location}/>
               </Paper>
             </Route>
-            <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
+            {/* <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
               <Paper style={{ padding: 10 }}>
                 <MinitaskEdit location={this.props.location} />
               </Paper>
-            </Route>
+            </Route> */}
           </Switch>
         </main>
       </div>

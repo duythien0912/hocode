@@ -3,6 +3,7 @@
  * When regenerated the changes will be lost.
 **/
 import React from 'react';
+import MinitaskEdit from "../../../profilePage/content/minitask/MinitaskEdit";
 
 import {
     Create,
@@ -76,7 +77,11 @@ export const ModelMinitaskCreate = props => (
 
 export const ModelMinitaskEdit = props => {
     console.log(props.id);
-    window.location.replace(`/profile/minitasks/${props.id}/edit`)
+    //window.location.replace(`/profile/minitasks/${props.id}/edit`)
+    return (
+        <MinitaskEdit minitasksId={props.id}/>
+
+    );
     // return (
     // <Edit  {...props} title="ModelMinitask Edit">
     //     <SimpleForm toolbar={<ModelMinitaskEditToolbar />}>

@@ -25,7 +25,7 @@ import rootReducer from "../reducers";
 
 const initialState = {};
 
-const history = createBrowserHistory({ basename: '/profile/admin' });
+const history = createBrowserHistory({ basename: '/admin' });
 
 const createAdminStore = ({
   authProvider,

@@ -537,6 +537,7 @@ class CreateMiniTaskBody extends Component {
                           </Grid>
                           <Grid item xs={12} sm={12} md={12}>
                             <input
+                              
                               className="output_createminitask"
                               value={unit_test.expected_output}
                               onChange={e =>

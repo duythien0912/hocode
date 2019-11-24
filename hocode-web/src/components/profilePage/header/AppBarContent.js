@@ -13,6 +13,7 @@ import Avatar from "@material-ui/core/Avatar";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import Fab from "@material-ui/core/Fab";
 import NavigationIcon from "@material-ui/icons/Navigation";
+import "./appbarcontent.css"
 //import IconButton from "@material-ui/core/IconButton";
 const styles = theme => ({
   searchComponent: {
@@ -79,14 +80,14 @@ class AppBarContent extends React.Component {
                   aria-label="like"
                   style={{
                     height: "32px",
-                    fontSize: 12,
+                    fontSize: "10px",
                     background: "#dbe4f8",
                     color: "#1f74be",
                     marginLeft: 10
                   }}
                 >
-                  <NavigationIcon style={{ fontSize: 16, marginRight: 2 }} />
-                  Đăng bài tập
+                  <NavigationIcon style={{ fontSize: 14, marginRight: 2 }} />
+                 <div  className ="dangBaiTap">Đăng bài tập</div> 
                 </Fab>
               </Link>
             ) : (
