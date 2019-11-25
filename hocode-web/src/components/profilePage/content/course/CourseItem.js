@@ -16,6 +16,7 @@ class CourseItem extends Component {
   render() {
     const { classes,course } = this.props;
     return (
+      
       <Grid
       container
       direction="column"
@@ -64,6 +65,7 @@ class CourseItem extends Component {
         </Grid>
       </Grid>
     </Grid>
+   
     );
   }
 }

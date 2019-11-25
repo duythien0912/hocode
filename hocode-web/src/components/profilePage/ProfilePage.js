@@ -8,7 +8,6 @@ import MenuList from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AppsIcon from "@material-ui/icons/Apps";
 import CardMembershipIcon from "@material-ui/icons/CardMembership";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
@@ -18,12 +17,13 @@ import { Link, Route, Switch } from "react-router-dom";
 import Account from "./content/account/Account";
 import CourseBody from "./content/course/CourseBody1";
 import CreateMiniTask from "./content/minitask/CreateMiniTaskBody";
-import MinitaskEdit from "./content/minitask/MinitaskEdit";
+//import MinitaskEdit from "./content/minitask/MinitaskEdit";
 import Overview from "./content/overview/Overview";
 import TaskBody from "./content/task/TaskBody";
 import AppBarContent from "./header/AppBarContent";
 import NavRight from "./navRight/NavRight";
-import ReactAdmin from "../adminPage/hocode/ReactAdmin";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+//import ReactAdmin from "../adminPage/hocode/ReactAdmin";
 import BallotIcon from '@material-ui/icons/Ballot';
 import "./profilepage.css";
 import { connect } from "react-redux";
@@ -157,7 +157,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <AppsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tổng quan</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Trang chủ</p>
             </MenuItem>
           </Link>
 
@@ -191,15 +191,15 @@ class ProfilePage extends React.Component {
               <p style={{ fontSize: 14, marginLeft: "3px" }}>Admin</p>
             </MenuItem>
           </Link>
-          ):(<React.Fragment></React.Fragment>)}
+          ):("")}
   
           <Link to={`${url}/account`}>
             <MenuItem
               selected={pathname === `${url}/account`}
               onClick={this.onClickMenuItem(1)}
             >
-              <AccountCircleIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Tài khoản</p>
+              <AccountBoxIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Thông tin cá nhân</p>
             </MenuItem>
           </Link>
         </MenuList>

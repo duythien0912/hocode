@@ -13,7 +13,7 @@ import Avatar from "@material-ui/core/Avatar";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import Fab from "@material-ui/core/Fab";
 import NavigationIcon from "@material-ui/icons/Navigation";
-import "./appbarcontent.css"
+import "./appbarcontent.css";
 //import IconButton from "@material-ui/core/IconButton";
 const styles = theme => ({
   searchComponent: {
@@ -87,7 +87,7 @@ class AppBarContent extends React.Component {
                   }}
                 >
                   <NavigationIcon style={{ fontSize: 14, marginRight: 2 }} />
-                 <div  className ="dangBaiTap">Đăng bài tập</div> 
+                  <div className="dangBaiTap">Đăng bài tập</div>
                 </Fab>
               </Link>
             ) : (
@@ -95,7 +95,12 @@ class AppBarContent extends React.Component {
             )}
           </div>
           <div
-            style={{ flexGrow: 1, display: "flex", justifyContent: "flex-end",alignItems:"center" }}
+            style={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center"
+            }}
           >
             <div
               style={{
@@ -105,15 +110,15 @@ class AppBarContent extends React.Component {
                 marginLeft: 10
               }}
             >
+              Code point: {this.props.user.codepoint}
               <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
-              {this.props.user.codepoint}
             </div>
             <div
               style={{
                 color: "#595959",
                 fontFamily: "Yanone Kaffeesatz, sans-serif",
                 fontSize: "20px",
-               
+
                 padding: "5px"
               }}
             >

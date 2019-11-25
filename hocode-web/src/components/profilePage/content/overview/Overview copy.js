@@ -4,21 +4,26 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+
+import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 const styles = {
   paper: {
     padding: 16,
-    marginTop: 16,
-    minHeight: 300
+    marginTop: 16
   },
   card: {
     maxWidth: "100%"
@@ -38,8 +43,7 @@ class Overview extends React.Component {
       isLoading: true,
       courses: [],
       events: [],
-      books: [],
-      daily_minitask: {}
+      books: []
     };
     this.getApi = this.getApi.bind(this);
   }
@@ -60,11 +64,6 @@ class Overview extends React.Component {
         const books = res.data;
         console.log(books);
         this.setState({ books });
-      }),
-      axios.get(`https://hocodevn.com/api/v1/dailyminitask`).then(res => {
-        const daily_minitasks = res.data;
-        console.log(daily_minitasks);
-        this.setState({ daily_minitasks: daily_minitasks });
       })
     ]);
     this.setState({ isLoading: false });
@@ -103,85 +102,22 @@ class Overview extends React.Component {
               <Paper className={classes.paper}>
                 <Grid container style={{ marginBottom: 15 }}>
                   <Grid item style={{ flexGrow: 1 }}>
-                    <div style={{ fontWeight: "bold" }}>Gần đây</div>{" "}
+                    <div style={{ fontWeight: "bold" }}>Kết quả học tập</div>{" "}
                   </Grid>
-                </Grid>
-                {this.state.courses.length === 0 ? (
-                  
-                    <div
-                      style={{
-                       
-                      }}
-                    >
-                      Bạn chưa thực hiện bài tập nào.
+                  <Grid item>
+                    <div style={{ fontSize: 12, color: "#4978cc" }}>
+                      Tích lũy:{" "}
+                      <EmojiNatureIcon
+                        style={{ fontSize: 16, marginRight: 1 }}
+                      />
+                      {this.props.user.codepoint}
                     </div>
-                  
-                ) : (
-                  this.state.courses.map(course => {
-                    return (
-                      <React.Fragment key={course.course_id}>
-                        <Grid container style={{ alignItems: "center" }}>
-                          <Grid item>
-                            <img
-                              className={classes.img}
-                              style={{
-                                width: "50px",
-                                height: "50px",
-                                objectFit: "cover",
-                                borderRadius: "8px"
-                              }}
-                              alt="complex"
-                              src={course.background_image}
-                            />
-                          </Grid>
-                          <Grid item style={{ flexGrow: 1, padding: 10 }}>
-                            <div style={{ fontWeight: "bold" }}>
-                              <Link
-                                className="item"
-                                key={course.course_id}
-                                style={{ textDecoration: "none" }}
-                                to={`${url}/courses/${course.course_id}/tasks`}
-                              >
-                                {course.course_name}
-                              </Link>
-                            </div>
-                            <div style={{ color: "#9d9d9d" }}>
-                              {course.completed_tasks_count}/
-                              {course.total_tasks_count}
-                            </div>
-                          </Grid>
-                          <Grid item>
-                            <LinearProgress
-                              variant="determinate"
-                              value={
-                                (course.completed_tasks_count /
-                                  course.total_tasks_count) *
-                                100
-                              }
-                              style={{ width: 115 }}
-                            />
-                          </Grid>
-                        </Grid>
-                        <Divider style={{ margin: "auto" }} />{" "}
-                      </React.Fragment>
-                    );
-                  })
-                )}
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={7} md={7}>
-              <Paper className={classes.paper}>
-                <Grid container style={{ marginBottom: 15 }}>
-                  <Grid item style={{ flexGrow: 1 }}>
-                    <div style={{ fontWeight: "bold" }}>
-                      Thách thức hằng ngày
-                    </div>{" "}
                   </Grid>
                 </Grid>
 
-                {this.state.daily_minitasks.map(daily_minitask => {
+                {this.state.courses.map(course => {
                   return (
-                    <React.Fragment key={daily_minitask.id}>
+                    <React.Fragment key={course.course_id}>
                       <Grid container style={{ alignItems: "center" }}>
                         <Grid item>
                           <img
@@ -193,27 +129,33 @@ class Overview extends React.Component {
                               borderRadius: "8px"
                             }}
                             alt="complex"
-                            src={daily_minitask.avatar}
+                            src={course.background_image}
                           />
                         </Grid>
                         <Grid item style={{ flexGrow: 1, padding: 10 }}>
                           <div style={{ fontWeight: "bold" }}>
                             <Link
                               className="item"
+                              key={course.course_id}
                               style={{ textDecoration: "none" }}
-                              to={`${url}/tasks/${daily_minitask.id}`}
+                              to={`${url}/courses/${course.course_id}/tasks`}
                             >
-                              {daily_minitask.mini_task_name}
+                              {course.course_name}
                             </Link>
                           </div>
                           <div style={{ color: "#9d9d9d" }}>
-                            Code Point: {daily_minitask.code_point}
+                            {course.completed_tasks_count}/
+                            {course.total_tasks_count}
                           </div>
                         </Grid>
                         <Grid item>
                           <LinearProgress
                             variant="determinate"
-                            value={(1 / 1) * 100}
+                            value={
+                              (course.completed_tasks_count /
+                                course.total_tasks_count) *
+                              100
+                            }
                             style={{ width: 115 }}
                           />
                         </Grid>
@@ -223,9 +165,55 @@ class Overview extends React.Component {
                   );
                 })}
               </Paper>
+              <Paper className={classes.paper}>
+                <div style={{ fontWeight: "bold" }}>Sách đề xuất</div>{" "}
+                <Grid container spacing={3}>
+                  {this.state.books.map(book => {
+                    return (
+                      <React.Fragment key={book.id}>
+                        <Grid item xs={12} sm={12} md={12}>
+                          <Grid
+                            style={{
+                              border: "1px solid #0000001f",
+                              borderRadius: "4px",
+                              marginTop: 10,
+                              marginBottom: 10
+                            }}
+                          >
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "100",
+                                objectFit: "cover"
+                              }}
+                              alt="complex"
+                              src={book.image}
+                            />
+                            <Grid
+                              container
+                              direction="column"
+                              style={{ alignItems: "center" }}
+                            >
+                              <Grid item style={{ fontWeight: "bold" }}>
+                                {book.title}
+                              </Grid>
+                              <Grid
+                                item
+                                style={{ textAlign: "justify", padding: 10 }}
+                              >
+                                {" "}
+                                {book.content}
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </React.Fragment>
+                    );
+                  })}
+                </Grid>
+              </Paper>
             </Grid>
-
-            <Grid item xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={7} md={7}>
               <Paper className={classes.paper}>
                 <div style={{ fontWeight: "bold" }}>Sự kiện nổi bật</div>{" "}
                 {this.state.events.map(event => {
@@ -247,7 +235,11 @@ class Overview extends React.Component {
                             style={{ textDecoration: "none" }}
                           >
                             <CardActionArea>
-    
+                              {/* <CardMedia
+          className={classes.media}
+          image={event.image}
+          title="Contemplative Reptile"
+        /> */}
                               <img
                                 style={{
                                   width: "100%",
@@ -275,8 +267,33 @@ class Overview extends React.Component {
                               </CardContent>
                             </CardActionArea>
                           </a>
-                        </Card>           
+                        </Card>
+
+                        {/* <img
+                      style={{
+                        width: "100%",
+                        height: "100",
+                        objectFit: "cover"
+                      }}
+                      alt="complex"
+                      src={event.image}
+                    />
+                    <Grid
+                      container
+                      direction="column"
+                      style={{ alignItems: "center" }}
+                    >
+                      <Grid item style={{ }}>
+                      <a href={event.link} style={{fontWeight: "bold",textAlign:"center",textDecoration:"none"}} >{event.title}</a>
+                        
                       </Grid>
+                      <Grid item style={{ textAlign: "justify", padding: 10 }}>
+                        {" "}
+                        {event.content}
+                      </Grid> */}
+                        {/* </Grid> */}
+                      </Grid>
+                      {/* <Divider style={{ width: 100, margin: "auto" }} /> */}
                     </React.Fragment>
                   );
                 })}

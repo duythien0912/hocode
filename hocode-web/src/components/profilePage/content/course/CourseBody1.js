@@ -57,9 +57,11 @@ class CourseBody extends Component {
                 loading={isLoading}
               />
             </div> : (<React.Fragment><Grid item xs={12} sm={12} style={{ padding: "0px 60px" }}>
-          <div className = "gallery" >
-          {courses.map((course)=><Link className = "item"key={course.id} style={{textDecoration:'none'}}to={`${url}/courses/${course.id}/tasks`}><CourseItem course={course}/></Link>)}
-          </div>
+         <Grid container spacing={2}>
+
+         
+          {courses.map((course)=><Grid key={course.id} item xs={12} sm={4} md={4}><Link  style={{textDecoration:'none'}}to={`${url}/courses/${course.id}/tasks`}><CourseItem course={course}/></Link></Grid>)}
+          </Grid>
         </Grid></React.Fragment>)}  
       </Grid>
     );
