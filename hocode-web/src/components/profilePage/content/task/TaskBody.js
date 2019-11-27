@@ -8,11 +8,10 @@ import HashLoader from "react-spinners/HashLoader";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
-import FolderIcon from '@material-ui/icons/Folder';
 import LaptopIcon from "@material-ui/icons/Laptop";
 import Rating from "@material-ui/lab/Rating";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+
 const styles = {
   card: {
     height: 150,
@@ -36,7 +35,8 @@ class TaskBody extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isLoading: true
+      isLoading: true,
+      course:{}
     };
   }
   componentDidMount() {
@@ -54,6 +54,16 @@ class TaskBody extends Component {
         let tasks1 = tasks.reverse();
         this.setState({ tasks: tasks1, isLoading: false });
       });
+      axios
+      .get(
+        `https://hocodevn.com/api/v1/courses/${currentParams.courseId}`
+      )
+      .then(res => {
+       
+        const course = res.data;
+      console.log(course)
+        this.setState({ course: course});
+      });
 
     /* setTimeout(()=>{
             console.log(this.state.tasks)
@@ -61,7 +71,7 @@ class TaskBody extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { tasks } = this.state;
+    const { tasks,course} = this.state;
     const { isLoading } = this.state;
     return (
       <Grid container className={classes.TasksContainer} justify="center">
@@ -92,14 +102,12 @@ class TaskBody extends Component {
                 <Grid container style={{ padding: 30 }}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5" component="h3">
-                      JAVA FUNDAMENTALS
+                      {course.course_name}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <p>
-                      Learn to program in the Java programming language. This
-                      course assumes no prior programming knowledge, just a
-                      desire to learn to program.
+                     {course.course_desc}
                     </p>
                   </Grid>
                   <Grid item xs={12} sm={12} container style={{justifyContent:"space-around"}}>
@@ -116,14 +124,16 @@ class TaskBody extends Component {
                         variant="body2"
                         color="textSecondary"
                         component="p"
+                        style={{marginLeft:4}}
                       >
                         {/* {course.total_minitask} */}
-                        doannv2
+                        {course.user_create!==""?course.user_create:"Hocode"}
+                        
                       </Typography>
                     </Grid>
           
                     <Grid
-                      item
+                    
                       style={{
                         display: "flex",
                         alignItems: "center",
@@ -135,9 +145,11 @@ class TaskBody extends Component {
                         variant="body2"
                         color="textSecondary"
                         component="p"
+                        style={{marginLeft:4}}
                       >
                         {/* {course.total_minitask} */}
-                        61 bài học
+                        {course.total_minitask} bài học
+                        
                       </Typography>
                     </Grid>
                     <Grid
@@ -148,11 +160,12 @@ class TaskBody extends Component {
                         justifyContent: "flex-start"
                       }}
                     >
-                      <Rating name="a" value={100} read-only="true" precision={0.1} size="large" />
+                      <Rating name="a" value={course.rating_value} read-only="true" precision={0.1} size="large" />
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
+                        style={{marginLeft:4}}
                       >
                         {/* {course.total_minitask} */}
                         Đánh giá(131)
@@ -168,6 +181,14 @@ class TaskBody extends Component {
                         justifyContent: "flex-start"
                       }}
                     >
+                       <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        style={{marginRight:4}}
+                      >
+                        Tình trạng: 
+                      </Typography>
                       <CircularProgress variant="determinate" value={100} />
                     
                     </Grid>
