@@ -1,6 +1,9 @@
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
+import Paper from "@material-ui/core/Paper";
+import { connect } from "react-redux";
+import Typography from "@material-ui/core/Typography";
 const styles = {};
 
 class PrintBody extends Component {
@@ -31,28 +34,77 @@ class PrintBody extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { isLoading } = this.state;
+    //   const { isLoading } = this.state;
     return (
-      <Grid
-        container
-        className={classes.TasksContainer}
-        justify="center"
-      >
-          <div
-            className="sweet-loading"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              height: "100vh"
-            }}
-          >
-          In chứng chỉ
-          </div>
+      <Grid container spacing={7} style={{ height: "100%" }}>
+        <Grid item xs={12} sm={4} md={4}>
+          <Paper>
+            <Grid container direction="column" alignItems="center" spacing={2}>
+              <Grid item container style={{ justifyContent: "center" }}>
+                <Grid item xs={4} sm={4} md={4}>
+                  <img
+                    style={{ width: "100%", borderRadius: "50%" }}
+                    alt="avatar"
+                    src={this.props.user.avatar}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  style={{ color: "#4978cc" }}
+                >
+                  {this.props.user.lastname} {this.props.user.firstname}
+                </Typography>
+              </Grid>
+              <Grid item style={{ textAlign: "center" }}>
+                <Typography variant="h5" style={{ color: "#4978cc" }}>
+                  {this.props.user.codepoint}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  style={{ marginLeft: 4, color: "#4978cc" }}
+                >
+                  {/* {course.total_minitask} */}
+                  Điểm tích lũy
+                </Typography>
+              </Grid>
+
+              <Grid item style={{ textAlign: "center" }}>
+                <Typography variant="h5" style={{ color: "#4978cc" }}>
+                  1
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  style={{ marginLeft: 4, color: "#4978cc" }}
+                >
+                  {/* {course.total_minitask} */}
+                  Bài tập đã hoàn thành
+                </Typography>
+              </Grid>
+           
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={8} md={8}>
+          Danh sách task
+        </Grid>
       </Grid>
     );
   }
 }
 
-export default withStyles(styles)(PrintBody);
+const mapStateToProps = state => ({
+  auth: state.rootReducer.auth,
+  errors: state.rootReducer.errors,
+  user: state.rootReducer.user
+});
+
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, {})(PrintBody)
+);

@@ -23,9 +23,7 @@ const ICONS = {
 const Menu = ({ resources, onMenuClick, logout }) => (
     <div>
              <Link to={`/profile`} style={{textDecoration:"none"}}>
-            <MenuItem
-             
-            >
+            <MenuItem>
               <ArrowBackIcon style={{ fontSize: 16,color:"#1f74be" }} />
               <p style={{ fontSize: 12, marginLeft: "3px",color:"#1f74be" }}>Quay lại trang Profile</p>
             </MenuItem>
