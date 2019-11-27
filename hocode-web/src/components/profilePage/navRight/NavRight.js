@@ -96,6 +96,7 @@ class NavRight extends React.Component {
     const itemCard = (listitem, type, time) => (
       <Grid
         xs
+        item
         style={{
           flexDirection: "column",
           justifyContent: "center",
