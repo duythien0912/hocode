@@ -26,8 +26,20 @@ const styles = {
   }
 };
 
+
+const titleCase = string => {
+  return string
+    .toLowerCase()
+    .split(" ")
+    .map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+};
+
 class TaskItem extends Component {
   renderLevelMinitaskChip(minitask) {
+    minitask.level = titleCase(minitask.level);
     if (minitask.level === "easy") {
       return (
         <Chip
@@ -73,39 +85,53 @@ class TaskItem extends Component {
             <div style={{ flexGrow: 1 }}> {minitask.mini_task_name}</div>
           </Tooltip>
           <Tooltip title="Code point" placement="top">
-          <div
-            style={{
-              fontSize: 12,
-              margin: "0px 4px",
-              color: "#4978cc",
-              marginLeft: 10
-            }}
-          >
-            {minitask.code_point}
-            <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
-          </div>
+            <div
+              style={{
+                fontSize: 12,
+                margin: "0px 4px",
+                color: "#4978cc",
+                marginLeft: 10,
+                height: 30
+              }}
+              className="centerDiv"
+            >
+              <div>
+                <p
+                  style={{
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    lineHeight: "30px",
+                    margin: 0
+                  }}
+                >
+                  {minitask.code_point}
+                </p>
+              </div>
+              <div>
+                <EmojiNatureIcon style={{ fontSize: 24, marginRight: 1 }} />
+              </div>
+            </div>
           </Tooltip>
           <Tooltip title="Độ khó" placement="top">
-            <div className="level-minitask" style={{ marginLeft: 10 }}>
-              {" "}
+            <div className="level-minitask" style={{ marginLeft: 0 }}>
               {this.renderLevelMinitaskChip(minitask)}
             </div>
           </Tooltip>
           <Tooltip title="Hoàn thành" placement="top">
-          <div
-            style={{
-              width: "20px",
-              display: "flex",
-              alignItems: "center",
-              marginLeft: 10
-            }}
-          >
-            <img
-              style={{ width: "100%" }}
-              src={require("../icons/hoanthanh.svg")}
-              alt="Kiwi standing on oval"
-            />
-          </div>
+            <div
+              style={{
+                width: "20px",
+                display: "flex",
+                alignItems: "center",
+                marginLeft: 10
+              }}
+            >
+              <img
+                style={{ width: "100%" }}
+                src={require("../icons/hoanthanh.svg")}
+                alt="Kiwi standing on oval"
+              />
+            </div>
           </Tooltip>
         </Link>
       );

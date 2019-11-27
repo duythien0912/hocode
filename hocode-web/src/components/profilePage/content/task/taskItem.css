@@ -1,13 +1,14 @@
-.unlock:hover .hidden{
-    display: block !important;
+.unlock:hover .hidden {
+  display: block !important;
 }
-.unlock:hover{
-    width: 50px;
+.unlock:hover {
+  width: 50px;
 }
-.unlock{
-    transition: 2s;
+.unlock {
+  transition: 2s;
 }
 
-.level-minitask .MuiChip-label{
-    font-size:12px!important ;
+.level-minitask .MuiChip-label {
+  font-size: 12px !important ;
+  font-weight: bold;
 }
