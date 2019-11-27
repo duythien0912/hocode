@@ -5,17 +5,23 @@ import TaskItem from "./TaskItem";
 import axios from "axios";
 import { matchPath } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import Card from '@material-ui/core/Card';
-
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
+import FolderIcon from '@material-ui/icons/Folder';
+import LaptopIcon from "@material-ui/icons/Laptop";
+import Rating from "@material-ui/lab/Rating";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 const styles = {
   card: {
     height: 150,
-    width: "100%",
+    width: "100%"
   },
 
   TasksContainer: {
     // paddingTop: 30,
-    
+
     minHeight: "100vh"
   }
 };
@@ -30,7 +36,7 @@ class TaskBody extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isLoading: true,
+      isLoading: true
     };
   }
   componentDidMount() {
@@ -46,7 +52,7 @@ class TaskBody extends Component {
         console.log(res.data);
         const tasks = res.data;
         let tasks1 = tasks.reverse();
-        this.setState({ tasks:tasks1, isLoading: false });
+        this.setState({ tasks: tasks1, isLoading: false });
       });
 
     /* setTimeout(()=>{
@@ -58,9 +64,8 @@ class TaskBody extends Component {
     const { tasks } = this.state;
     const { isLoading } = this.state;
     return (
-      
       <Grid container className={classes.TasksContainer} justify="center">
-    {/* <Card className={classes.card}>
+        {/* <Card className={classes.card}>
 </Card> */}
         {isLoading ? (
           <div
@@ -80,13 +85,104 @@ class TaskBody extends Component {
               loading={isLoading}
             />
           </div>
-        ):(
-        <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
-          {tasks.reverse().map(task => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-        </Grid>)}
+        ) : (
+          <React.Fragment>
+            <Grid item xs={12} sm={12} style={{ margin: 30 }}>
+              <Paper>
+                <Grid container style={{ padding: 30 }}>
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h5" component="h3">
+                      JAVA FUNDAMENTALS
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <p>
+                      Learn to program in the Java programming language. This
+                      course assumes no prior programming knowledge, just a
+                      desire to learn to program.
+                    </p>
+                  </Grid>
+                  <Grid item xs={12} sm={12} container style={{justifyContent:"space-around"}}>
+                    <Grid
+                      item
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start"
+                      }}
+                    >
+                      <Avatar className={classes.smallAvatar}>D</Avatar>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {/* {course.total_minitask} */}
+                        doannv2
+                      </Typography>
+                    </Grid>
+          
+                    <Grid
+                      item
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start"
+                      }}
+                    >
+                      <LaptopIcon/>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {/* {course.total_minitask} */}
+                        61 bài học
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start"
+                      }}
+                    >
+                      <Rating name="a" value={100} read-only="true" precision={0.1} size="large" />
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {/* {course.total_minitask} */}
+                        Đánh giá(131)
+                      </Typography>
+                    </Grid>
+                    
+                    
+                    <Grid
+                      item
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start"
+                      }}
+                    >
+                      <CircularProgress variant="determinate" value={100} />
+                    
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
 
+            <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
+              {tasks.reverse().map(task => (
+                <TaskItem key={task.id} task={task} />
+              ))}
+            </Grid>
+          </React.Fragment>
+        )}
       </Grid>
     );
   }
