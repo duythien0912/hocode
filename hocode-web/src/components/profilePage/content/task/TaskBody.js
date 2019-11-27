@@ -134,7 +134,7 @@ class TaskBody extends Component {
                     xs={12}
                     sm={12}
                     container
-                    style={{ justifyContent: "space-around" }}
+                    style={{ justifyContent: "space-between" }}
                   >
                     <Grid
                       item
