@@ -26,7 +26,7 @@ const Menu = ({ resources, onMenuClick, logout }) => (
       <MenuItem>
         <ArrowBackIcon style={{ fontSize: 16, color: "#1f74be" }} />
         <p style={{ fontSize: 12, marginLeft: "3px", color: "#1f74be" }}>
-          Quay lại trang Profile
+          Quay lại trang chủ
         </p>
       </MenuItem>
     </Link>
@@ -36,7 +36,7 @@ const Menu = ({ resources, onMenuClick, logout }) => (
             <MenuItemLink
               key={resource.name}
               to={`/${resource.name}`}
-              primaryText={`${titleCase(resource.name)}`}
+              primaryText={`${changeIDToName(titleCase(resource.name))}`}
               onClick={onMenuClick}
               leftIcon={ICONS[resource.name]}
             />
@@ -46,6 +46,32 @@ const Menu = ({ resources, onMenuClick, logout }) => (
     <Responsive small={logout} medium={null} />
   </div>
 );
+
+const changeIDToName = name => {
+  var title = "";
+  switch (name) {
+    case "Books":
+      title = "Sách lập trình";
+      break;
+    case "Events":
+      title = "Sự kiện";
+      break;
+    case "Courses":
+      title = "Chủ đề";
+      break;
+    case "Tasks":
+      title = "Chủ đề con";
+      break;
+    case "Minitasks":
+      title = "Bài học";
+      break;
+    default:
+      title = name;
+      break;
+  }
+
+  return title;
+};
 
 const mapStateToProps = state => ({
   resources: getResources(state)

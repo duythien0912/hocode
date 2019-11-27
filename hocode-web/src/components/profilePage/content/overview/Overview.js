@@ -79,7 +79,7 @@ class Overview extends React.Component {
     const { classes } = this.props;
     let url = this.props.url;
     return (
-      <Grid container spacing={3} style={{ height: "100%" }}>
+      <Grid container spacing={3} style={{ height: "100vh" }}>
         {isLoading ? (
           <div
             className="sweet-loading"
@@ -226,7 +226,7 @@ class Overview extends React.Component {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12}>
+            {/* <Grid item xs={12} sm={12} md={12}>
               <Paper className={classes.paper}>
                 <div style={{ fontWeight: "bold" }}>Sự kiện nổi bật</div>{" "}
                 {this.state.events.map(event => {
@@ -282,7 +282,7 @@ class Overview extends React.Component {
                   );
                 })}
               </Paper>
-            </Grid>
+            </Grid> */}
           </React.Fragment>
         )}
       </Grid>
