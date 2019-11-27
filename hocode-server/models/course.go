@@ -13,10 +13,13 @@ type (
 		// Name            string     `json:"name" bson:"name"`
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
-		TotalMinitask   int        `json:"total_minitask" bson:"total_minitask"`
-		Tasks           []*Task    `json:"tasks" bson:"tasks"`
-		Timestamp       time.Time  `json:"timestamp" bson:"timestamp"`
-		Del             bool       `json:"del" bson:"del"`
+		UserCreate      string     `json:"user_create" bson:"user_create"`
+		CourseDesc      string     `json:"course_desc" bson:"course_desc"`
+
+		TotalMinitask int       `json:"total_minitask" bson:"total_minitask"`
+		Tasks         []*Task   `json:"tasks" bson:"tasks"`
+		Timestamp     time.Time `json:"timestamp" bson:"timestamp"`
+		Del           bool      `json:"del" bson:"del"`
 	}
 )
 type (

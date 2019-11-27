@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
@@ -157,6 +158,12 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 
 	bk.Tasks = []*model.Task{}
 
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	name := claims["name"].(string)
+
+	bk.UserCreate = name
+
 	_, errUs := db.DB(config.NameDb).C("course").UpsertId(bk.ID, bk)
 	if errUs != nil {
 		// return echo.ErrInternalServerError
@@ -204,6 +211,11 @@ func (h *Handler) CreateCourses(c echo.Context) (err error) {
 	// if err = db.DB(config.NameDb).C("course").Insert(bk); err != nil {
 	// 	return echo.ErrInternalServerError
 	// }
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	name := claims["name"].(string)
+
+	bk.UserCreate = name
 
 	_, errUs := db.DB(config.NameDb).C("course").UpsertId(bk.ID, bk)
 	if errUs != nil {
