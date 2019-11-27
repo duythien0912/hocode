@@ -167,7 +167,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <ImportContactsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Khóa học</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Chủ đề</p>
             </MenuItem>
           </Link>
 
@@ -177,7 +177,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <CardMembershipIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Chứng chỉ</p>
+              <p style={{ fontSize: 14, marginLeft: "3px" }}>Nhật ký hoạt động</p>
             </MenuItem>
           </Link>
           {this.props.user.role === "mod" ||

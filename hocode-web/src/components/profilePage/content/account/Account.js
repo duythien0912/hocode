@@ -235,7 +235,7 @@ class Account extends React.Component {
         ) : (
           <React.Fragment>
             <Grid item xs={12} sm={5} md={5}>
-              <Paper style={{ padding: 16 }}>
+              <Paper style={{ padding: 16, minHeight:300,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
                 <div style={{ fontWeight: "bold" }}>Thông tin cá nhân</div>{" "}
                 <div>
                   Họ và tên: {this.props.user.lastname}{" "}
