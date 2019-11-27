@@ -1,14 +1,14 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
-import { NotFound } from 'react-admin';
-import Card from '@material-ui/core/Card';
-import { Title, Resource } from 'react-admin';
+// import React from 'react';
+// import { Route } from 'react-router-dom';
+// import { NotFound } from 'react-admin';
+// import Card from '@material-ui/core/Card';
+// import { Title, Resource } from 'react-admin';
 
-import {
-    ModelEventList,
-    ModelEventCreate,
-    ModelEventEdit,
-} from './resources/ModelEvent';
+// import {
+//     ModelEventList,
+//     ModelEventCreate,
+//     ModelEventEdit,
+// } from './resources/ModelEvent';
 
 
 // import catchAll from './catchAll';

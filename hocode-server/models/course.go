@@ -14,6 +14,8 @@ type (
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
 		UserCreate      string     `json:"user_create" bson:"user_create"`
+		Rating          []*int     `json:"rating" bson:"rating"`
+		RatingValue     float64    `json:"rating_value" bson:"rating_value"`
 		CourseDesc      string     `json:"course_desc" bson:"course_desc"`
 
 		TotalMinitask int       `json:"total_minitask" bson:"total_minitask"`
