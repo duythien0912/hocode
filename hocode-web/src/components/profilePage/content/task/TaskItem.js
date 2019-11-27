@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
+import Chip from '@material-ui/core/Chip';
+import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
+import Tooltip from '@material-ui/core/Tooltip';
 import "./taskItem.css";
 
 const styles = {
@@ -20,9 +23,30 @@ const styles = {
     borderRadius: "9px",
     boxShadow:
       "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)"
-  }
+  },
+
 };
+
 class TaskItem extends Component {
+  renderLevelMinitaskChip(minitask){
+    if(minitask.level === "easy"){
+      return(
+        
+        <Chip  style={{background:"#76d38e",color:"white"}} size="small" label={`${minitask.level}`}/>
+   
+      )
+    }
+    else if(minitask.level === "medium"){
+      return(
+        <Chip style={{background:"#1d97c6",color:"white"}} size="small" label={`${minitask.level}`}/>
+      )
+    }
+    else{
+      return(
+        <Chip style={{background:"red",color:"white"}} size="small"   label={`${minitask.level}`}/>
+      )
+    }
+  }
   renderMiniItem(minitask) {
     //miniItemStatus
 
@@ -34,12 +58,25 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`
+            fontFamily: `'Yanone Kaffeesatz', sans-serif`,
+            alignItems:"center"
           }}
         >
-          <div></div>
+          
           <div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div>
-          <div style={{ width: "1em" }}>
+          <div
+              style={{
+                fontSize: 12,
+                margin: "0px 4px",
+                color: "#4978cc",
+                marginLeft: 10
+              }}
+            >
+              {minitask.code_point}
+              <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
+            </div>
+            <Tooltip title="Độ khó" placement="top"><div className="level-minitask" style={{marginLeft:10 }}> {this.renderLevelMinitaskChip(minitask)}</div></Tooltip>
+          <div style={{ width: "1.5em",display:"flex", alignItems:"center",marginLeft:10 }}>
             <img
               style={{ width: "100%" }}
               src={require("../icons/hoanthanh.svg")}
@@ -81,22 +118,37 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`
+            fontFamily: `'Yanone Kaffeesatz', sans-serif`,
+            alignItems:"center"
           }}
         >
-          <div></div>
-          <div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div>
-          <div style={{ width: "1em" }}>
+          
+          <Tooltip title="Tên bài thực hành" placement="top"><div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div></Tooltip>
+          <Tooltip title="Code point" placement="top"><div
+              style={{
+                fontSize: 12,
+                margin: "0px 4px",
+                color: "#4978cc",
+                marginLeft: 10
+              }}
+            >
+              {minitask.code_point}
+              <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
+            </div></Tooltip>
+            <Tooltip title="Độ khó" placement="top"><div className="level-minitask" style={{marginLeft:10 }}> {this.renderLevelMinitaskChip(minitask)}</div></Tooltip>
+            <Tooltip title="Chưa hoàn thành" placement="top"><div style={{ width: "1.5em", display:"flex", alignItems:"center",marginLeft:10}}>
             <img
               style={{
                 width: "100%",
                 backgroundColor: "#F5F5F5",
-                borderRadius: "50%"
+                borderRadius: "50%",
+                
               }}
               src={require("../icons/chuahoanthanh.svg")}
               alt="Kiwi standing on oval"
             />
           </div>
+          </Tooltip>
         </Link>
       );
     } else if (minitask.status === "yeucaumokhoa") {

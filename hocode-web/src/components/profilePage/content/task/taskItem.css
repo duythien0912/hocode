@@ -7,3 +7,7 @@
 .unlock{
     transition: 2s;
 }
+
+.level-minitask .MuiChip-label{
+    font-size:12px!important ;
+}

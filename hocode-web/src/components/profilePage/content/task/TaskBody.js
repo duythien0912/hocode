@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/styles";
 import TaskItem from "./TaskItem";
 import axios from "axios";
 import { matchPath } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 const styles = {
   TasksContainer: {
     paddingTop: 30,
@@ -21,7 +22,8 @@ class TaskBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      tasks: [],
+      isLoading: true,
     };
   }
   componentDidMount() {
@@ -34,9 +36,10 @@ class TaskBody extends Component {
         `https://hocodevn.com/api/v1/auth/courses/${currentParams.courseId}/tasks`
       )
       .then(res => {
+        console.log(res.data);
         const tasks = res.data;
         let tasks1 = tasks.reverse();
-        this.setState({ tasks:tasks1 });
+        this.setState({ tasks:tasks1, isLoading: false });
       });
 
     /* setTimeout(()=>{
@@ -46,13 +49,34 @@ class TaskBody extends Component {
   render() {
     const { classes } = this.props;
     const { tasks } = this.state;
+    const { isLoading } = this.state;
     return (
+      
       <Grid container className={classes.TasksContainer} justify="center">
+        {isLoading ? (
+          <div
+            className="sweet-loading"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "100vh"
+            }}
+          >
+            <HashLoader
+              sizeUnit={"px"}
+              size={50}
+              color={"#AEA8A8"}
+              loading={isLoading}
+            />
+          </div>
+        ):(
         <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
           {tasks.reverse().map(task => (
             <TaskItem key={task.id} task={task} />
           ))}
-        </Grid>
+        </Grid>)}
       </Grid>
     );
   }
