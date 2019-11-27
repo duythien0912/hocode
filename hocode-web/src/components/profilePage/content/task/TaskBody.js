@@ -5,9 +5,16 @@ import TaskItem from "./TaskItem";
 import axios from "axios";
 import { matchPath } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+import Card from '@material-ui/core/Card';
+
 const styles = {
+  card: {
+    height: 150,
+    width: "100%",
+  },
+
   TasksContainer: {
-    paddingTop: 30,
+    // paddingTop: 30,
     
     minHeight: "100vh"
   }
@@ -53,6 +60,8 @@ class TaskBody extends Component {
     return (
       
       <Grid container className={classes.TasksContainer} justify="center">
+    {/* <Card className={classes.card}>
+</Card> */}
         {isLoading ? (
           <div
             className="sweet-loading"
@@ -77,6 +86,7 @@ class TaskBody extends Component {
             <TaskItem key={task.id} task={task} />
           ))}
         </Grid>)}
+
       </Grid>
     );
   }

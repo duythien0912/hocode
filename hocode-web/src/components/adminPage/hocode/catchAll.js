@@ -4,7 +4,6 @@
  **/
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { NotFound } from "react-admin";
 
 class catchAll extends Component {
   render() {

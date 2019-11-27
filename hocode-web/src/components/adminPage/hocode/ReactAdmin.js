@@ -47,7 +47,7 @@ import { history } from '../../../js/store/store'
 const ReactAdmin = () => (
     
     <Admin
-        appLayout={MyLayout}
+    layout={MyLayout}
         authProvider={authProvider}
         catchAll={catchAll}
         customRoutes={customRoutes}
