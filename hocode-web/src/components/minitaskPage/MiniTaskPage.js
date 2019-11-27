@@ -13,6 +13,9 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
+
+import js_beautify from "js-beautify";
+
 import {
   submitUpdateMinitask,
   setUndefinedNextMinitask
@@ -108,6 +111,15 @@ class MiniTaskPage extends Component {
     this.setState({ userCode: value });
   }
 
+  beautifyCode(value) {
+    var formatCode = js_beautify(value,  { max_preserve_newlines: 2 });
+    console.log(formatCode);
+
+    this.setState((state, props) => ({
+      userCode: formatCode
+    }));
+  }
+
   resetCode() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -165,13 +177,9 @@ class MiniTaskPage extends Component {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
               1}", new ${minitask.output_type_func} ${
-                unit_test.expected_output
-              }, s.${
-              minitask.name_func
-            }(${inputsFormat}),0);\n  }\n`;
-          }
-          else{
-
+              unit_test.expected_output
+            }, s.${minitask.name_func}(${inputsFormat}),0);\n  }\n`;
+          } else {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertArrayEquals("test ${index +
               1}", new ${minitask.output_type_func} ${
@@ -199,15 +207,13 @@ class MiniTaskPage extends Component {
               1}", ${unit_test.expected_output}, s.${
               minitask.name_func
             }(${inputsFormat}),0);\n  }\n`;
-          } 
-          else if(minitask.output_type_func === "String"){
+          } else if (minitask.output_type_func === "String") {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
               1}", "${unit_test.expected_output}", s.${
               minitask.name_func
             }(${inputsFormat}));\n  }\n`;
-          }
-          else {
+          } else {
             junit4 += ` @Test\n    public void myTestFunction${index +
               1}(){\n    Solution s = new Solution();\n  assertEquals("test ${index +
               1}", ${unit_test.expected_output}, s.${
@@ -446,12 +452,38 @@ class MiniTaskPage extends Component {
                                 <button
                                   onClick={this.resetCode}
                                   style={{
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     padding: "6px 8px",
-                                    cursor: "pointer"
+                                    cursor: "pointer",
+                                    background: "#ef5350",
+                                    fontWeight: "bold",
+
                                   }}
                                 >
                                   Reset code
+                                </button>
+                              </div>
+                              <div
+                                className="reset_code"
+                                style={{
+                                  position: "absolute",
+                                  bottom: 10,
+                                  right: 110,
+                                  zIndex: 9
+                                }}
+                              >
+                                <button
+                                  onClick={() => this.beautifyCode(this.state.userCode)}
+                                  style={{
+                                    fontSize: 12,
+                                    padding: "6px 8px",
+                                    cursor: "pointer",
+                                    background: "#3d5afe",
+                                    fontWeight: "bold",
+                                
+                                  }}
+                                >
+                                  Beautifier code
                                 </button>
                               </div>
                             </div>
