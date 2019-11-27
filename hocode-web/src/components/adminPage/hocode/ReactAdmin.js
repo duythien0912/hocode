@@ -47,7 +47,7 @@ import { history } from '../../../js/store/store'
 const ReactAdmin = () => (
     
     <Admin
-    layout={MyLayout}
+        appLayout={MyLayout}
         authProvider={authProvider}
         catchAll={catchAll}
         customRoutes={customRoutes}
@@ -65,30 +65,33 @@ const ReactAdmin = () => (
             edit={ ModelBookEdit }
         />
         <Resource
+            name="events"
+            list={ ModelEventList }
+            create={ ModelEventCreate }
+            edit={ ModelEventEdit }
+        />
+
+        <Resource
             name="courses"
 
             list={ ModelCourseList }
             create={ ModelCourseCreate }
             edit={ ModelCourseEdit }
         />
-        <Resource
-            name="events"
-            list={ ModelEventList }
-            create={ ModelEventCreate }
-            edit={ ModelEventEdit }
+   <Resource
+            name="tasks"
+            list={ ModelTaskList }
+            create={ ModelTaskCreate }
+            edit={ ModelTaskEdit }
         />
+
         <Resource
             name="minitasks"
             list={ ModelMinitaskList }
             create={ ModelMinitaskCreate }
             edit={ ModelMinitaskEdit }
         />
-        <Resource
-            name="tasks"
-            list={ ModelTaskList }
-            create={ ModelTaskCreate }
-            edit={ ModelTaskEdit }
-        />
+     
     </Admin>
 );
 

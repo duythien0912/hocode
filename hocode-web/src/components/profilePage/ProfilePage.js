@@ -197,7 +197,7 @@ class ProfilePage extends React.Component {
               >
                 <CardMembershipIcon style={{ fontSize: 16 }} />
                 <p style={{ fontSize: 14, marginLeft: "8px" }}>
-                  Nhật ký hoạt động
+                  Nhật ký luyện tập
                 </p>
               </MenuItem>
             </Link>
