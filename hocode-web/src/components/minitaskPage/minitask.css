@@ -1,146 +1,141 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
-.fit{
-    position: absolute;
-    top:0;
-    left:0;
-    right: 0;
-    bottom:0;
+.fit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
-.layout-code{
-    display: flex;
-    flex-direction: column;
-    
+.layout-code {
+  display: flex;
+  flex-direction: column;
 }
-.layout-code-header{
-    display: flex;
+.layout-code-header {
+  display: flex;
 }
-.layout-code-body{
-    position: relative;
-    flex-grow: 1;
-    
+.layout-code-body {
+  position: relative;
+  flex-grow: 1;
 }
 
-.split-panel{
-    overflow: hidden;
+.split-panel {
+  overflow: hidden;
 }
-.stretch{
-    display: flex;
-    align-items: stretch;
+.stretch {
+  display: flex;
+  align-items: stretch;
 }
-.split-panel-first{
-    padding: 10px;
-    background: #f5f5f5;
-    overflow: hidden;
-    height: 100%;
+.split-panel-first {
+  padding: 10px;
+  background: #f5f5f5;
+  overflow: hidden;
+  height: 100%;
 }
-.split-panel-second{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-
-.coding-area{
-    flex-grow:1;
-    background: #f5f5f5;
-
-}
-.splitHorizontal{
-    display: flex;
-    width: 100%;
+.split-panel-second {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.splitHorizontal .gutter{
-    background: #ffffff;
-    cursor: ew-resize;
+.coding-area {
+  flex-grow: 1;
+  background: #f5f5f5;
+}
+.splitHorizontal {
+  display: flex;
+  width: 100%;
 }
 
-.splitVertical{
-    height: 100%;
-}
-.splitVertical .gutter{
-    background: #ffffff;
-    cursor: n-resize;
+.splitHorizontal .gutter {
+  background: #ffffff;
+  cursor: ew-resize;
 }
 
-.codeEditor{
-   overflow: hidden;
-   position: relative;
-   top:0;
-   left: 0;
+.splitVertical {
+  height: 100%;
 }
-.resultPanel{
-    overflow: hidden;
-}
-.codeEditor .reset_code button{
-   background: #8291a3;    
-   border: none;
-   color: white;
-   padding: 3px 5px;
-   text-align: center;
-   text-decoration: none;
-   display: inline-block;
-   border-radius: 4px;
-   
+.splitVertical .gutter {
+  background: #ffffff;
+  cursor: n-resize;
 }
 
-.execute_btn{
-    background: #2680EB;    
-    border: none;
-    color: #FFFFFF;
-    padding: 6px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 4px;
-    font-size: 12px;
-    cursor: pointer;
+.codeEditor {
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.resultPanel {
+  overflow: hidden;
+}
+.codeEditor .reset_code button {
+  background: #8291a3;
+  border: none;
+  color: white;
+  padding: 3px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
 }
 
-.disable_btn{
-    opacity: 0.5;
-    cursor: auto!important;
-}
-.submitCode_btn{
-    background: #4DBF9D;    
-    border: none;
-    color: #FFFFFF;
-    padding: 6px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 4px;
-    font-size: 12px;
-    cursor: pointer;
+.execute_btn {
+  background: #2680eb;
+  border: none;
+  color: #ffffff;
+  padding: 6px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
-.resultPanel .MuiTab-wrapper{
-    font-family: "Share Tech Mono", monospace !important;
+.disable_btn {
+  opacity: 0.5;
+  cursor: auto !important;
+}
+.submitCode_btn {
+  background: #4dbf9d;
+  border: none;
+  color: #ffffff;
+  padding: 6px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
-.hidden_alert{
-    visibility: hidden!important;
+.resultPanel .MuiTab-wrapper {
+  /* font-family: "Share Tech Mono", monospace !important; */
+  font-family: "Nunito Sans", sans-serif;
 }
 
-.cancelCodeBtn{
-    padding: 4px 8px;
-    border: none;
-    background: #dd4545;
-    color: white;
-    border-radius: 4px;
-    margin: 5px;
-    cursor: pointer;
+.hidden_alert {
+  visibility: hidden !important;
 }
-.comfirmFesetCodeBtn{
-    padding: 4px 8px;
-    border: none;
-    background: #39a383;
-    color: white;
-    border-radius: 4px;
-    margin: 5px;
-    cursor: pointer;
 
+.cancelCodeBtn {
+  padding: 4px 8px;
+  border: none;
+  background: #dd4545;
+  color: white;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
+}
+.comfirmFesetCodeBtn {
+  padding: 4px 8px;
+  border: none;
+  background: #39a383;
+  color: white;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
 }

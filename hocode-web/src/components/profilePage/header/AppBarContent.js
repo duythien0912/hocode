@@ -127,7 +127,7 @@ class AppBarContent extends React.Component {
             <div
               style={{
                 color: "#595959",
-                fontFamily: "Yanone Kaffeesatz, sans-serif",
+                // fontFamily: "Yanone Kaffeesatz, sans-serif",
                 fontSize: "20px",
 
                 padding: "5px"

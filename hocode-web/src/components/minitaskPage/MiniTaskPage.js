@@ -5,6 +5,8 @@ import MiniTaskHeader from "./header/MiniTaskHeader";
 import CodeEditor from "./body/CodeEditor";
 import ResultPanel from "./body/ResultPanel";
 import TestsPanel from "./body/TestsPanel";
+import Snackbar from '@material-ui/core/Snackbar';
+
 import "./minitask.css";
 //import MediaQuery from "react-responsive";
 import axios from "axios";
@@ -30,7 +32,8 @@ class MiniTaskPage extends Component {
       result: {},
       userCode: "",
       isLoading: false,
-      isLoadingComponent: true
+      isLoadingComponent: true,
+      open: false
     };
 
     this.executeCode = this.executeCode.bind(this);
@@ -112,13 +115,22 @@ class MiniTaskPage extends Component {
   }
 
   beautifyCode(value) {
-    var formatCode = js_beautify(value,  { max_preserve_newlines: 2 });
-    console.log(formatCode);
+    var formatCode = js_beautify(value, { max_preserve_newlines: 2 });
+    // console.log(formatCode);
 
     this.setState((state, props) => ({
       userCode: formatCode
     }));
+    this.handleClickSnack();
   }
+
+  handleClickSnack = () => {
+    this.setState({ open: true });
+  };
+
+  handleCloseSnack = () => {
+    this.setState({ open: false });
+  };
 
   resetCode() {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -369,6 +381,20 @@ class MiniTaskPage extends Component {
     return (
       <React.Fragment>
         <div className="fit layout-code">
+          <Snackbar
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            key={`bottom,center`}
+            open={this.state.open}
+            onClose={this.handleCloseSnack}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            className="success"
+            autoHideDuration={2000}
+
+            // style={{    backgroundColor: "#43a047"            }}
+            message={<span id="message-id">Thành công</span>}
+          />
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
@@ -456,8 +482,7 @@ class MiniTaskPage extends Component {
                                     padding: "6px 8px",
                                     cursor: "pointer",
                                     background: "#ef5350",
-                                    fontWeight: "bold",
-
+                                    fontWeight: "bold"
                                   }}
                                 >
                                   Reset code
@@ -473,14 +498,15 @@ class MiniTaskPage extends Component {
                                 }}
                               >
                                 <button
-                                  onClick={() => this.beautifyCode(this.state.userCode)}
+                                  onClick={() =>
+                                    this.beautifyCode(this.state.userCode)
+                                  }
                                   style={{
                                     fontSize: 12,
                                     padding: "6px 8px",
                                     cursor: "pointer",
                                     background: "#3d5afe",
-                                    fontWeight: "bold",
-                                
+                                    fontWeight: "bold"
                                   }}
                                 >
                                   Beautifier code

@@ -5,6 +5,7 @@ import "codemirror/addon/hint/show-hint.css";
 
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
+import "codemirror/theme/darcula.css";
 import "codemirror/theme/neat.css";
 
 import "codemirror/mode/clike/clike.js";
@@ -20,11 +21,13 @@ import "codemirror/addon/hint/anyword-hint.js";
 class CodeEditor extends Component {
   render() {
     return (
+
       <CodeMirror
+      className="CodeMirrorCustom"
         value={this.props.userCode}
         options={{
           mode: "text/x-java", 
-          theme: "material",
+          theme: "darcula",
           lineNumbers: true,
           highlightSelectionMatches: true,
           indentUnit: 4,
@@ -36,11 +39,13 @@ class CodeEditor extends Component {
           autocorrect: true,
           extraKeys: { "Ctrl-Space": "autocomplete" }
         }}
+        
         MarkText={{
           from: { line: 0, ch: 1 },
           to: { line: 3, ch: 1 },
           css: "font-size:5px"
         }}
+        
         onBeforeChange={(editor, data, value) => {
           this.props.updateUserCode(value); // update state usercode in component minitaskpage
         }}

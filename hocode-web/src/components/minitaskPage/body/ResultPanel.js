@@ -48,7 +48,7 @@ function LinkTab(props) {
   return (
     <Tab
     
-      style={{ minHeight: "100%" }}
+      style={{ minHeight: "100%", minWidth: "200px" }}
       component="a"
       onClick={event => {
         event.preventDefault();
