@@ -76,8 +76,8 @@ const StyledMenuItem = withStyles(theme => ({
         </StyledMenuItem>
         <StyledMenuItem>
             <AccountBoxIcon style={{fontSize:16}}/> 
-            <Link to="/profile/account">
-            <p style={{ fontSize: 12, marginLeft: "3px", textDecoration: "none" }}>Thông tin cá nhân</p>
+            <Link to="/profile/account" style={{textDecoration: "none"}}>
+            <p style={{ fontSize: 12, marginLeft: "3px" }}>Thông tin cá nhân</p>
           </Link>
         </StyledMenuItem>
 

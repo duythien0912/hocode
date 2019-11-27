@@ -221,8 +221,8 @@ class LoginPage extends React.Component {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Nếu bạn chưa có tài khoản, Hãy Đăng ký ngay"}
+                <Link href="/signup" variant="body1" >
+                  {"Nếu bạn chưa có tài khoản, Hãy đăng ký ngay"}
                 </Link>
               </Grid>
             </Grid>
@@ -233,23 +233,26 @@ class LoginPage extends React.Component {
               </Grid>
 
               <Grid item>
+              <Typography variant="subtitle1">
+
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLScGsL9g_Hot55sUbVHb0O7uBsWtkBrDE65fmETvflcxvuCdvw/viewform?usp=sf_link"
-                  variant="body2"
+                  // variant="subtitle1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  ref={element => {
-                    if (element)
-                      element.style.setProperty(
-                        "color",
-                        "#ff5722",
-                        "important"
-                      );
-                  }}
+                  // ref={element => {
+                  //   if (element)
+                  //     element.style.setProperty(
+                  //       "color",
+                  //       "#ff5722",
+                  //       "important"
+                  //     );
+                  // }}
                   style={{ textDecoration: "none", color: "#ff5722!important" }}
                 >
                   Đăng ký trở thành giáo viên
                 </a>
+                </Typography>
               </Grid>
             </Grid>
           </form>

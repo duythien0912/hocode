@@ -76,7 +76,8 @@ function CustomizedMenus(props) {
         </StyledMenuItem>
         <StyledMenuItem>
           <AccountBoxIcon style={{ fontSize: 16 }} />
-          <Link to="/profile/account" onClick={()=>{setAnchorEl(null)}}>
+          
+          <Link to="/profile/account" style={{textDecoration: "none"}} onClick={()=>{setAnchorEl(null)}}>
             <p style={{ fontSize: 12, marginLeft: "3px", textDecoration: "none" }}>Thông tin cá nhân</p>
           </Link>
         </StyledMenuItem>

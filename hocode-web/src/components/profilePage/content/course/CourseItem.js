@@ -47,7 +47,7 @@ class CourseItem extends Component {
               textTransform: "uppercase",
               color: "#595959",
               fontWeight: "bold",
-              fontFamily: `'Yanone Kaffeesatz', sans-serif`
+              // fontFamily: `'Yanone Kaffeesatz', sans-serif`
             }}
           >
             {course.course_name}
@@ -57,7 +57,7 @@ class CourseItem extends Component {
               margin: "5px 0",
               textAlign: "center",
               color: "#909090",
-              fontFamily: `'Yanone Kaffeesatz', sans-serif`
+              // fontFamily: `'Yanone Kaffeesatz', sans-serif`
             }}
           >
             
