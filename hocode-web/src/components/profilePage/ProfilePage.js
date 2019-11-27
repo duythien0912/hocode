@@ -47,9 +47,9 @@ const styles = theme => ({
     width: "225px",
     height: "calc(100vh - 65px)",
     display: "none",
-    padding: "16px 16px 16px 16px",
+    padding: "16px 32px",
     position: "sticky",
-    marginTop: "65px",
+    // marginTop: "65px",
     overflowY: "auto",
     flexShrink: 0,
     [theme.breakpoints.up("md")]: {

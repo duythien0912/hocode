@@ -5,17 +5,19 @@ import TaskItem from "./TaskItem";
 import axios from "axios";
 import { matchPath } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import Card from '@material-ui/core/Card';
+import Card from "@material-ui/core/Card";
 
 const styles = {
   card: {
-    height: 150,
+    // height: 150,
     width: "100%",
+    marginBottom: "30px",
+
   },
 
   TasksContainer: {
     // paddingTop: 30,
-    
+
     minHeight: "100vh"
   }
 };
@@ -30,7 +32,7 @@ class TaskBody extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isLoading: true,
+      isLoading: true
     };
   }
   componentDidMount() {
@@ -46,7 +48,7 @@ class TaskBody extends Component {
         console.log(res.data);
         const tasks = res.data;
         let tasks1 = tasks.reverse();
-        this.setState({ tasks:tasks1, isLoading: false });
+        this.setState({ tasks: tasks1, isLoading: false });
       });
 
     /* setTimeout(()=>{
@@ -58,10 +60,11 @@ class TaskBody extends Component {
     const { tasks } = this.state;
     const { isLoading } = this.state;
     return (
-      
       <Grid container className={classes.TasksContainer} justify="center">
-    {/* <Card className={classes.card}>
-</Card> */}
+        <Card className={classes.card}>
+Thuật toán căn bản
+          
+        </Card>
         {isLoading ? (
           <div
             className="sweet-loading"
@@ -80,13 +83,13 @@ class TaskBody extends Component {
               loading={isLoading}
             />
           </div>
-        ):(
-        <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
-          {tasks.reverse().map(task => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-        </Grid>)}
-
+        ) : (
+          <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
+            {tasks.reverse().map(task => (
+              <TaskItem key={task.id} task={task} />
+            ))}
+          </Grid>
+        )}
       </Grid>
     );
   }
