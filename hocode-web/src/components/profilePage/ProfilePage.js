@@ -5,6 +5,7 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -27,6 +28,8 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import BallotIcon from '@material-ui/icons/Ballot';
 import "./profilepage.css";
 import { connect } from "react-redux";
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import { logoutUser } from "../../js/actions/authActions";
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -118,6 +121,14 @@ class ProfilePage extends React.Component {
       });
     };
   }
+  onLogout = e => {
+    e.preventDefault();
+    console.log(this.props);
+    this.props.logoutUser();
+    const { history } = this.props;
+    history.push("/login");
+  };
+
   render() {
     const { classes, theme, container } = this.props;
     const { mobileOpen } = this.state;
@@ -129,7 +140,7 @@ class ProfilePage extends React.Component {
     } = this.props;
 
     const drawer = (
-      <div>
+      <div style={{    height: "100%",     overflow: "hidden"    }} >
         <div
           className={classes.toolbar}
           style={{
@@ -150,14 +161,21 @@ class ProfilePage extends React.Component {
         </div>
         </div>
 
-        <MenuList className="menuLeftDrawer">
+        <MenuList className="menuLeftDrawer" style={{    height: "100%",         }} >
+        <Grid
+  container
+  direction="column"
+  // justify="center"
+  // alignItems="center"
+  style={{    height: "100%",         }}
+        >
           <Link to={`${url}/overview`}>
             <MenuItem
               selected={pathname === `${url}/overview`}
               onClick={this.onClickMenuItem(1)}
             >
               <AppsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Trang chủ</p>
+              <p style={{ fontSize: 14, marginLeft: "8px" }}>Trang chủ</p>
             </MenuItem>
           </Link>
 
@@ -167,7 +185,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <ImportContactsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Chủ đề</p>
+              <p style={{ fontSize: 14, marginLeft: "8px" }}>Chủ đề</p>
             </MenuItem>
           </Link>
 
@@ -177,7 +195,7 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <CardMembershipIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Nhật ký hoạt động</p>
+              <p style={{ fontSize: 14, marginLeft: "8px" }}>Nhật ký hoạt động</p>
             </MenuItem>
           </Link>
           {this.props.user.role === "mod" ||
@@ -188,12 +206,12 @@ class ProfilePage extends React.Component {
               onClick={this.onClickMenuItem(1)}
             >
               <BallotIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "3px" }}>Admin</p>
+              <p style={{ fontSize: 14, marginLeft: "8px" }}>Admin</p>
             </MenuItem>
           </Link>
           ):("")}
   
-          <Link to={`${url}/account`}>
+          {/* <Link to={`${url}/account`}>
             <MenuItem
               selected={pathname === `${url}/account`}
               onClick={this.onClickMenuItem(1)}
@@ -201,7 +219,29 @@ class ProfilePage extends React.Component {
               <AccountBoxIcon style={{ fontSize: 16 }} />
               <p style={{ fontSize: 14, marginLeft: "3px" }}>Thông tin cá nhân</p>
             </MenuItem>
-          </Link>
+          </Link> */}
+
+<Grid item xs style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    marginBottom: "65px",
+
+
+}}>
+<Link to={`${url}/account`}>
+            <MenuItem
+              selected={pathname === `${url}/account`}
+              onClick={this.onLogout}
+            >
+              <PowerSettingsNewIcon style={{ fontSize: 16 }} />
+              <p style={{ fontSize: 14, marginLeft: "8px" }}>Đăng xuất</p>
+            </MenuItem>
+          </Link>        </Grid>
+
+
+      
+          </Grid>
         </MenuList>
       </div>
     );
@@ -302,9 +342,10 @@ class ProfilePage extends React.Component {
 const mapStateToProps = state => ({
   auth: state.rootReducer.auth,
   errors: state.rootReducer.errors,
-  user: state.rootReducer.user
+  user: state.rootReducer.user,
+  
 });
 
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, {})(ProfilePage)
+  connect(mapStateToProps, { logoutUser, })(ProfilePage)
 );
