@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	config "github.com/duythien0912/hocode/config"
+	"github.com/duythien0912/hocode/config"
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2/bson"

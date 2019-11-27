@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/duythien0912/hocode/config"
 
+	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
