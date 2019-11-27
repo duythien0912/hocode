@@ -41,9 +41,9 @@ class PrintBody extends Component {
           <Paper>
             <Grid container direction="column" alignItems="center" spacing={2}>
               <Grid item container style={{ justifyContent: "center" }}>
-                <Grid item xs={4} sm={4} md={4}>
+                <Grid item xs={4} sm={4} md={4} style={{display:"flex",justifyContent:"center"}}>
                   <img
-                    style={{ width: "100%", borderRadius: "50%" }}
+                    style={{ width: "100px",height:"100px", borderRadius: "50%" }}
                     alt="avatar"
                     src={this.props.user.avatar}
                   />

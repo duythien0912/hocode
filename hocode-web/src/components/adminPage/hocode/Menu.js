@@ -21,28 +21,6 @@ const ICONS = {
 };
 
 const Menu = ({ resources, onMenuClick, logout }) => (
-<<<<<<< HEAD
-    <div>
-             <Link to={`/profile`} style={{textDecoration:"none"}}>
-            <MenuItem>
-              <ArrowBackIcon style={{ fontSize: 16,color:"#1f74be" }} />
-              <p style={{ fontSize: 12, marginLeft: "3px",color:"#1f74be" }}>Quay lại trang Profile</p>
-            </MenuItem>
-          </Link>
-        {resources
-            ? resources.map(resource => resource.hasList ? (
-                    <MenuItemLink
-                        key={resource.name}
-                        to={`/${resource.name}`}
-                        primaryText={`${titleCase(resource.name)}`}
-                        onClick={onMenuClick}
-                        leftIcon={ICONS[resource.name]}
-                    />
-                ) : null)
-            : ''}
-        <Responsive small={logout} medium={null} />
-    </div>
-=======
   <div>
     <Link to={`/profile`} style={{ textDecoration: "none" }}>
       <MenuItem>
@@ -67,7 +45,6 @@ const Menu = ({ resources, onMenuClick, logout }) => (
       : ""}
     <Responsive small={logout} medium={null} />
   </div>
->>>>>>> a104aeb7401d66f437ddcc4a37b55a64b5c3d420
 );
 
 const changeIDToName = name => {
