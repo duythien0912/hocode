@@ -26,7 +26,7 @@ import ModelCourseFilter from "../filters/ModelCourseFilter";
 export const ModelCourseList = props => (
   <List
     {...props}
-    title="ModelCourse List"
+    title="Danh sách Chủ đề"
     filters={<ModelCourseFilter />}
     bulkActionButtons={false}
   >
@@ -48,27 +48,27 @@ export const ModelCourseList = props => (
 );
 
 export const ModelCourseCreate = props => (
-  <Create {...props} title="ModelCourse Create">
+  <Create {...props} title="Tạo Chủ đề">
     <SimpleForm redirect="show">
-      <TextInput source="background_image" />
-      <TextInput source="course_name" />
-      <TextInput multiline source="course_desc" />
+      <TextInput resettable source="course_name" />
+      <TextInput resettable source="background_image" />
+      <TextInput resettable multiline source="course_desc" />
       {/* <BooleanInput                source="del"            /> */}
-      {/* <TextInput                source="id"            /> */}
-      {/* <TextInput                source="tasks"            /> */}
-      {/* <TextInput                source="timestamp"            /> */}
+      {/* <TextInput resettable                source="id"            /> */}
+      {/* <TextInput resettable                source="tasks"            /> */}
+      {/* <TextInput resettable                source="timestamp"            /> */}
     </SimpleForm>
   </Create>
 );
 
 export const ModelCourseEdit = props => (
-  <Edit {...props} title="ModelCourse Edit">
+  <Edit {...props} title="Sửa Chủ đề">
     <SimpleForm toolbar={<ModelCourseEditToolbar />}>
-      <TextInput source="background_image" />
-      <TextInput source="course_name" />
-      <TextInput multiline source="course_desc" />
+      <TextInput resettable source="id" disabled />
+      <TextInput resettable source="course_name" />
+      <TextInput resettable source="background_image" />
+      <TextInput resettable multiline source="course_desc" />
       {/* <BooleanInput                source="del"            /> */}
-      <TextInput source="id" />
       {/* <TextInput                source="tasks"            /> */}
       {/* <TextInput                source="timestamp"            /> */}
     </SimpleForm>

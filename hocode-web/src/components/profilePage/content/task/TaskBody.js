@@ -10,7 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import LaptopIcon from "@material-ui/icons/Laptop";
 import Rating from "@material-ui/lab/Rating";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { randomColor } from "../course/CourseItem";
 
 const styles = {
   card: {
@@ -36,7 +38,7 @@ class TaskBody extends Component {
     this.state = {
       tasks: [],
       isLoading: true,
-      course:{}
+      course: {}
     };
   }
   componentDidMount() {
@@ -54,24 +56,45 @@ class TaskBody extends Component {
         let tasks1 = tasks.reverse();
         this.setState({ tasks: tasks1, isLoading: false });
       });
-      axios
-      .get(
-        `https://hocodevn.com/api/v1/courses/${currentParams.courseId}`
-      )
+    axios
+      .get(`https://hocodevn.com/api/v1/courses/${currentParams.courseId}`)
       .then(res => {
-       
         const course = res.data;
-      console.log(course)
-        this.setState({ course: course});
+        console.log(course);
+        this.setState({ course: course });
       });
 
     /* setTimeout(()=>{
             console.log(this.state.tasks)
         },2000)*/
   }
+
+  onClickRating(val) {
+    let location = this.props.location;
+
+    const currentParams = getParams(location.pathname);
+
+    var newcourse = this.state.course;
+    if (newcourse.rating === null) newcourse.rating = [];
+    newcourse.rating.push(val);
+    newcourse.rating_value = average(newcourse.rating);
+    // console.log(newcourse);
+    this.setState({ course: newcourse });
+
+    axios
+      .put(
+        `https://hocodevn.com/api/v1/curd/courses/${currentParams.courseId}`,
+        newcourse
+      )
+      .then(res => {
+        // const course = res.data;
+        // this.setState({ course: course });
+      });
+  }
+
   render() {
     const { classes } = this.props;
-    const { tasks,course} = this.state;
+    const { tasks, course } = this.state;
     const { isLoading } = this.state;
     return (
       <Grid container className={classes.TasksContainer} justify="center">
@@ -97,7 +120,7 @@ class TaskBody extends Component {
           </div>
         ) : (
           <React.Fragment>
-            <Grid item xs={12} sm={12} style={{ margin: 30 }}>
+            <Grid item xs={12} sm={12} style={{ marginBottom: 30 }}>
               <Paper>
                 <Grid container style={{ padding: 30 }}>
                   <Grid item xs={12} sm={12}>
@@ -106,11 +129,15 @@ class TaskBody extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                    <p>
-                     {course.course_desc}
-                    </p>
+                    <p>{course.course_desc}</p>
                   </Grid>
-                  <Grid item xs={12} sm={12} container style={{justifyContent:"space-around"}}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    container
+                    style={{ justifyContent: "space-between" }}
+                  >
                     <Grid
                       item
                       style={{
@@ -119,37 +146,44 @@ class TaskBody extends Component {
                         justifyContent: "flex-start"
                       }}
                     >
-                      <Avatar className={classes.smallAvatar}>D</Avatar>
+                      <Avatar
+                        className={classes.smallAvatar}
+                        style={{ backgroundColor: randomColor() }}
+                      >
+                        {" "}
+                        {course.user_create
+                          ? course.user_create.charAt(0).toUpperCase()
+                          : "H"}
+                      </Avatar>
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
-                        style={{marginLeft:4}}
+                        style={{ marginLeft: 4 }}
                       >
                         {/* {course.total_minitask} */}
-                        {course.user_create!==""?course.user_create:"Hocode"}
-                        
+                        {course.user_create !== ""
+                          ? course.user_create
+                          : "Hocode"}
                       </Typography>
                     </Grid>
-          
+
                     <Grid
-                    
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "flex-start"
                       }}
                     >
-                      <LaptopIcon/>
+                      <LaptopIcon />
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
-                        style={{marginLeft:4}}
+                        style={{ marginLeft: 4 }}
                       >
                         {/* {course.total_minitask} */}
                         {course.total_minitask} bài học
-                        
                       </Typography>
                     </Grid>
                     <Grid
@@ -160,19 +194,27 @@ class TaskBody extends Component {
                         justifyContent: "flex-start"
                       }}
                     >
-                      <Rating name="a" value={course.rating_value} read-only="true" precision={0.1} size="large" />
+                      <Rating
+                        name="a"
+                        value={course.rating_value}
+                        read-only="true"
+                        precision={0.5}
+                        size="large"
+                        onChange={(event, newValue) => {
+                          this.onClickRating(newValue);
+                        }}
+                      />
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
-                        style={{marginLeft:4}}
+                        style={{ marginLeft: 4 }}
                       >
                         {/* {course.total_minitask} */}
-                        Đánh giá(131)
+                        Đánh giá({course.rating ? course.rating.length : 0})
                       </Typography>
                     </Grid>
-                    
-                    
+
                     <Grid
                       item
                       style={{
@@ -181,16 +223,15 @@ class TaskBody extends Component {
                         justifyContent: "flex-start"
                       }}
                     >
-                       <Typography
+                      <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
-                        style={{marginRight:4}}
+                        style={{ marginRight: 4 }}
                       >
-                        Tình trạng: 
+                        Tình trạng:
                       </Typography>
                       <CircularProgress variant="determinate" value={100} />
-                    
                     </Grid>
                   </Grid>
                 </Grid>
@@ -198,7 +239,7 @@ class TaskBody extends Component {
             </Grid>
 
             <Grid item xs={12} sm={6} style={{ padding: "0px 10px" }}>
-              {tasks.reverse().map(task => (
+              {tasks.map(task => (
                 <TaskItem key={task.id} task={task} />
               ))}
             </Grid>
@@ -208,5 +249,7 @@ class TaskBody extends Component {
     );
   }
 }
+
+const average = list => list.reduce((prev, curr) => prev + curr) / list.length;
 
 export default withStyles(styles)(TaskBody);

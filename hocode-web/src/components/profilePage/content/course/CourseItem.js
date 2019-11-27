@@ -1,5 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
-import { deepOrange } from "@material-ui/core/colors";
+import { deepOrange, deepPurple, green, pink } from "@material-ui/core/colors";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +8,15 @@ import Rating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
 import "./hover.css";
+
+const randomColor = () => {
+  var listColor = [deepOrange[500], deepPurple[500], green[500], pink[500]];
+  var color = listColor[Math.floor(Math.random() * listColor.length)];
+
+  return color;
+};
+
+export { randomColor };
 
 const styles = {
   courseItem: {
@@ -22,11 +31,10 @@ const styles = {
     height: "24px",
     width: "24px",
     marginRight: "4px",
-    backgroundColor: deepOrange[500],
+    // backgroundColor: randomColor(),
     // fontSize: "0.8rem",
     fontSize: "1rem",
-    fontWeight:"600",
-
+    fontWeight: "600"
   }
 };
 class CourseItem extends Component {
@@ -94,7 +102,13 @@ class CourseItem extends Component {
                 // fontFamily: `'Yanone Kaffeesatz', sans-serif`
               }}
             >
-              <Rating name="read-only" value={course.rating_value} read-only precision={0.1} size="large" />{" "}
+              <Rating
+                name="read-only"
+                value={course.rating_value}
+                read-only
+                precision={0.1}
+                size="large"
+              />{" "}
               <Typography
                 variant="body1"
                 color="textSecondary"
@@ -135,8 +149,13 @@ class CourseItem extends Component {
                     justifyContent: "flex-start"
                   }}
                 >
-                  <Avatar className={classes.smallAvatar}>
-                    {course.user_create ? course.user_create.charAt(0).toUpperCase() : "H"}
+                  <Avatar
+                    className={classes.smallAvatar}
+                    style={{ backgroundColor: randomColor() }}
+                  >
+                    {course.user_create
+                      ? course.user_create.charAt(0).toUpperCase()
+                      : "H"}
                   </Avatar>
                   <Typography
                     variant="body2"

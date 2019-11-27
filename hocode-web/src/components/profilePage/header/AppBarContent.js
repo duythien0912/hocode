@@ -72,7 +72,13 @@ class AppBarContent extends React.Component {
             this.props.user.role === "admin" ? (
               <Link
                 to="/profile/minitasks/createminitask"
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none",
+              
+              
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
               >
                 <Fab
                   //className={classes.mobileHide}
@@ -107,11 +113,16 @@ class AppBarContent extends React.Component {
                 fontSize: 12,
                 margin: "0px 4px",
                 color: "#4978cc",
-                marginLeft: 10
+                marginLeft: 10,
+                display: "flex",
+                alignItems: "center",
               }}
             >
+              <div>
               Code point: {this.props.user.codepoint}
-              <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
+</div>              <div>
+              <EmojiNatureIcon style={{ fontSize: 24, marginRight: 1 }} />
+              </div>
             </div>
             <div
               style={{

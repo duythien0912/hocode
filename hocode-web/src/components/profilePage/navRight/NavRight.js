@@ -100,10 +100,12 @@ class NavRight extends React.Component {
         style={{
           flexDirection: "column",
           justifyContent: "center",
-          display: "flex",
-
+          display: "flex"
         }}
       >
+        {type == "books" ? "Sách lập trình" : ""}
+        {type == "events" ? "Sự kiện nổi bật" : ""}
+
         <Carousel indicators={false} interval={time}>
           {/* <Typography gutterBottom variant="h5" component="h2">
             Sách đề xuất
@@ -244,12 +246,18 @@ class NavRight extends React.Component {
           container
           direction="column"
           justify="center"
-          alignItems="center"
+          // alignItems="center"
           style={{ height: "100%" }}
         >
-          {itemCard(this.state.books, "books", 8000)}
-          <Divider></Divider>
-          {itemCard(this.state.events, "events", 12000)}
+          {typeof this.state.books !== "undefined" &&
+          this.state.books.length > 0
+            ? itemCard(this.state.books, "books", 8000)
+            : null}
+
+          {typeof this.state.events !== "undefined" &&
+          this.state.events.length > 0
+            ? itemCard(this.state.events, "events", 12000)
+            : null}
 
           {/* <Grid style={{ flexGrow: 1 }}>
             <Grid item xs={12} sm={12} md={12}>

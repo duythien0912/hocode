@@ -95,9 +95,10 @@ class CreateMiniTaskBody extends Component {
           return { value: task.id, label: task.task_name };
         })
       });
+      console.log(courses);
       this.setState({
         course_id: courses[0].id,
-        task_id: courses[0].tasks[0].id
+        task_id: courses[0].tasks.length == 0 ? "" : courses[0].tasks[0].id
       });
     });
   }
