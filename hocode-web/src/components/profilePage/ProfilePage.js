@@ -172,7 +172,7 @@ class ProfilePage extends React.Component {
           >
             <Link to={`${url}/overview`}>
               <MenuItem
-                selected={pathname === `${url}/overview`}
+                selected={pathname === `${url}/overview` || pathname === `${url}` || pathname === `${url}/`}
                 onClick={this.onClickMenuItem(1)}
               >
                 <AppsIcon style={{ fontSize: 16 }} />
