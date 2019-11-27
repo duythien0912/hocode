@@ -94,7 +94,7 @@ class TaskItem extends Component {
           <Tooltip title="Hoàn thành" placement="top">
           <div
             style={{
-              width: "1.5em",
+              width: "20px",
               display: "flex",
               alignItems: "center",
               marginLeft: 10
@@ -171,7 +171,7 @@ class TaskItem extends Component {
           <Tooltip title="Chưa hoàn thành" placement="top">
             <div
               style={{
-                width: "1.5em",
+                width: "20px",
                 display: "flex",
                 alignItems: "center",
                 marginLeft: 10
