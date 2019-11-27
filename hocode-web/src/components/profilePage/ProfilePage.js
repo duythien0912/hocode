@@ -11,11 +11,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppsIcon from "@material-ui/icons/Apps";
 //import ReactAdmin from "../adminPage/hocode/ReactAdmin";
-import BallotIcon from '@material-ui/icons/Ballot';
+import BallotIcon from "@material-ui/icons/Ballot";
 import CardMembershipIcon from "@material-ui/icons/CardMembership";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import MenuIcon from "@material-ui/icons/Menu";
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import React from "react";
 import { connect } from "react-redux";
 import { Link, Route, Switch } from "react-router-dom";
@@ -25,6 +25,7 @@ import CourseBody from "./content/course/CourseBody1";
 import CreateMiniTask from "./content/minitask/CreateMiniTaskBody";
 //import MinitaskEdit from "./content/minitask/MinitaskEdit";
 import Overview from "./content/overview/Overview";
+import PrintBody from "./content/print/PrintBody";
 import TaskBody from "./content/task/TaskBody";
 import AppBarContent from "./header/AppBarContent";
 import NavRight from "./navRight/NavRight";
@@ -139,78 +140,83 @@ class ProfilePage extends React.Component {
     } = this.props;
 
     const drawer = (
-      <div style={{    height: "100%",     overflow: "hidden"    }} >
+      <div style={{ height: "100%", overflow: "hidden" }}>
         <div
           className={classes.toolbar}
           style={{
             borderBottom: "1px solid rgba(76, 87, 102, .1)",
             minHeight: 65,
-            display:"flex",
-            alignItems:"center",justifyContent:"center"
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
-            <div className="logo">
-          <Link to="/profile">
-            <img
-              src={process.env.PUBLIC_URL + "/logo.png"}
-              alt=""
-              style={{ height: "40px" }}
-            ></img>
-          </Link>
+          <div className="logo">
+            <Link to="/profile">
+              <img
+                src={process.env.PUBLIC_URL + "/logo.png"}
+                alt=""
+                style={{ height: "40px" }}
+              ></img>
+            </Link>
+          </div>
         </div>
-        </div>
 
-        <MenuList className="menuLeftDrawer" style={{    height: "100%",         }} >
-        <Grid
-  container
-  direction="column"
-  // justify="center"
-  // alignItems="center"
-  style={{    height: "100%",         }}
-        >
-          <Link to={`${url}/overview`}>
-            <MenuItem
-              selected={pathname === `${url}/overview`}
-              onClick={this.onClickMenuItem(1)}
-            >
-              <AppsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "8px" }}>Trang chủ</p>
-            </MenuItem>
-          </Link>
+        <MenuList className="menuLeftDrawer" style={{ height: "100%" }}>
+          <Grid
+            container
+            direction="column"
+            // justify="center"
+            // alignItems="center"
+            style={{ height: "100%" }}
+          >
+            <Link to={`${url}/overview`}>
+              <MenuItem
+                selected={pathname === `${url}/overview`}
+                onClick={this.onClickMenuItem(1)}
+              >
+                <AppsIcon style={{ fontSize: 16 }} />
+                <p style={{ fontSize: 14, marginLeft: "8px" }}>Trang chủ</p>
+              </MenuItem>
+            </Link>
 
-          <Link to={`${url}/course`}>
-            <MenuItem
-              selected={pathname === `${url}/course`}
-              onClick={this.onClickMenuItem(1)}
-            >
-              <ImportContactsIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "8px" }}>Chủ đề</p>
-            </MenuItem>
-          </Link>
+            <Link to={`${url}/course`}>
+              <MenuItem
+                selected={pathname === `${url}/course`}
+                onClick={this.onClickMenuItem(1)}
+              >
+                <ImportContactsIcon style={{ fontSize: 16 }} />
+                <p style={{ fontSize: 14, marginLeft: "8px" }}>Chủ đề</p>
+              </MenuItem>
+            </Link>
 
-          <Link to={`${url}/print`}>
-            <MenuItem
-              selected={pathname === `${url}/print`}
-              onClick={this.onClickMenuItem(1)}
-            >
-              <CardMembershipIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "8px" }}>Nhật ký hoạt động</p>
-            </MenuItem>
-          </Link>
-          {this.props.user.role === "mod" ||
+            <Link to={`${url}/print`}>
+              <MenuItem
+                selected={pathname === `${url}/print`}
+                onClick={this.onClickMenuItem(1)}
+              >
+                <CardMembershipIcon style={{ fontSize: 16 }} />
+                <p style={{ fontSize: 14, marginLeft: "8px" }}>
+                  Nhật ký hoạt động
+                </p>
+              </MenuItem>
+            </Link>
+            {this.props.user.role === "mod" ||
             this.props.user.role === "admin" ? (
-            <Link to={`/admin`}>
-            <MenuItem
-              selected={pathname === `${url}/admin`}
-              onClick={this.onClickMenuItem(1)}
-            >
-              <BallotIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "8px" }}>Admin</p>
-            </MenuItem>
-          </Link>
-          ):("")}
-  
-          {/* <Link to={`${url}/account`}>
+              <Link to={`/admin`}>
+                <MenuItem
+                  selected={pathname === `${url}/admin`}
+                  onClick={this.onClickMenuItem(1)}
+                >
+                  <BallotIcon style={{ fontSize: 16 }} />
+                  <p style={{ fontSize: 14, marginLeft: "8px" }}>Admin</p>
+                </MenuItem>
+              </Link>
+            ) : (
+              ""
+            )}
+
+            {/* <Link to={`${url}/account`}>
             <MenuItem
               selected={pathname === `${url}/account`}
               onClick={this.onClickMenuItem(1)}
@@ -220,26 +226,26 @@ class ProfilePage extends React.Component {
             </MenuItem>
           </Link> */}
 
-<Grid item xs style={{
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    marginBottom: "65px",
-
-
-}}>
-<Link to={`${url}/account`}>
-            <MenuItem
-              selected={pathname === `${url}/account`}
-              onClick={this.onLogout}
+            <Grid
+              item
+              xs
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                marginBottom: "65px"
+              }}
             >
-              <PowerSettingsNewIcon style={{ fontSize: 16 }} />
-              <p style={{ fontSize: 14, marginLeft: "8px" }}>Đăng xuất</p>
-            </MenuItem>
-          </Link>        </Grid>
-
-
-      
+              <Link to={`${url}/account`}>
+                <MenuItem
+                  selected={pathname === `${url}/account`}
+                  onClick={this.onLogout}
+                >
+                  <PowerSettingsNewIcon style={{ fontSize: 16 }} />
+                  <p style={{ fontSize: 14, marginLeft: "8px" }}>Đăng xuất</p>
+                </MenuItem>
+              </Link>{" "}
+            </Grid>
           </Grid>
         </MenuList>
       </div>
@@ -313,7 +319,9 @@ class ProfilePage extends React.Component {
             <Route path={`${path}/courses/:courseId/tasks`}>
               <TaskBody location={this.props.location} />
             </Route>
-            <Route path={`${path}/print`}>In chứng chỉ</Route>
+            <Route path={`${path}/print`}>
+              <PrintBody />
+            </Route>
             {/* <Route path={`${path}/admin`}>
               <ReactAdmin />
             </Route> */}
@@ -322,7 +330,7 @@ class ProfilePage extends React.Component {
             </Route>
             <Route exact path={`${path}/minitasks/createminitask`}>
               <Paper style={{ padding: 10 }}>
-                <CreateMiniTask  location={this.props.location}/>
+                <CreateMiniTask location={this.props.location} />
               </Paper>
             </Route>
             {/* <Route exact path={`${path}/minitasks/:minitasksId/edit`}>
@@ -337,14 +345,12 @@ class ProfilePage extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => ({
   auth: state.rootReducer.auth,
   errors: state.rootReducer.errors,
-  user: state.rootReducer.user,
-  
+  user: state.rootReducer.user
 });
 
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, { logoutUser, })(ProfilePage)
+  connect(mapStateToProps, { logoutUser })(ProfilePage)
 );
