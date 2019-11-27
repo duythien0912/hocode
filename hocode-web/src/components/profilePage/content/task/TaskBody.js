@@ -79,14 +79,16 @@ class TaskBody extends Component {
     newcourse.rating.push(val);
     newcourse.rating_value = average(newcourse.rating);
     // console.log(newcourse);
+    this.setState({ course: newcourse });
+
     axios
       .put(
         `https://hocodevn.com/api/v1/curd/courses/${currentParams.courseId}`,
         newcourse
       )
       .then(res => {
-        const course = res.data;
-        this.setState({ course: course });
+        // const course = res.data;
+        // this.setState({ course: course });
       });
   }
 
