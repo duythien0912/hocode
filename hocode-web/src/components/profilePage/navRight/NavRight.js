@@ -9,9 +9,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
-
+import Paper from "@material-ui/core/Paper";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import Carousel from "react-material-ui-carousel";
 
 //import { Link } from "react-router-dom";
 
@@ -23,6 +24,7 @@ class NavRight extends React.Component {
       daily_minitask: {},
       isLoading: true,
       books: [],
+      events: [],
       openDialogReadmore: false,
       bookcontent: ""
     };
@@ -33,6 +35,11 @@ class NavRight extends React.Component {
         const books = res.data;
         console.log(books);
         this.setState({ books });
+      }),
+      axios.get(`https://hocodevn.com/api/v1/events`).then(res => {
+        const events = res.data;
+        console.log(events);
+        this.setState({ events });
       })
     ]);
     this.setState({ isLoading: false });
@@ -59,67 +66,67 @@ class NavRight extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Grid>
+        <Grid style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontWeight: "bold" }}>Sách đề xuất</div>
 
-          <Grid container spacing={3}>
-            {this.state.books.map(book => {
-              return (
-                <React.Fragment key={book.id}>
-                  <Grid item xs={12} sm={12} md={12}>
-                    <Grid
-                      style={{
-                        border: "1px solid #0000001f",
-                        borderRadius: "4px",
-                        marginTop: 10,
-                        marginBottom: 10
-                      }}
-                    >
-                      <Card className={classes.card}>
-                        <CardActionArea
-                          onClick={() => {
-                            this.handleClickDialogReadmoreOpen(book.content);
-                          }}
-                        >
-                          <img
-                            style={{
-                              width: "100%",
-                              height: "100",
-                              objectFit: "cover"
+          <Grid container spacing={3} style={{ flexGrow: 1 }}>
+            <Carousel>
+              {this.state.books.map(book => {
+                return (
+                  <React.Fragment key={book.id}>
+                    <Grid item xs={12} sm={12} md={12}>
+                      <Grid
+                        style={{
+                          marginTop: 10,
+                          marginBottom: 10
+                        }}
+                      >
+                        <Card className={classes.card}>
+                          <CardActionArea
+                            onClick={() => {
+                              this.handleClickDialogReadmoreOpen(book.content);
                             }}
-                            alt="complex"
-                            src={book.image}
-                          />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="h2"
-                            >
-                              {book.title}
-                            </Typography>
+                          >
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "100",
+                                objectFit: "cover"
+                              }}
+                              alt="complex"
+                              src={book.image}
+                            />
+                            <CardContent>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h2"
+                              >
+                                {book.title}
+                              </Typography>
 
-                            {book.content.length > 100 ? (
-                              <React.Fragment>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                                >
-                                  {this.limitText(book.content, 100)}...
-                                </Typography>
-                              </React.Fragment>
-                            ) : (
-                              book.content
-                            )}
-                          </CardContent>
-                        </CardActionArea>
-                      </Card>
+                              {book.content.length > 100 ? (
+                                <React.Fragment>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {this.limitText(book.content, 100)}...
+                                  </Typography>
+                                </React.Fragment>
+                              ) : (
+                                book.content
+                              )}
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </React.Fragment>
-              );
-            })}
+                  </React.Fragment>
+                );
+              })}
+            </Carousel>
             <Dialog
               open={this.state.openDialogReadmore}
               onClose={this.handleDialogReadmoreClose}
@@ -130,6 +137,66 @@ class NavRight extends React.Component {
                 </DialogContentText>
               </DialogContent>
             </Dialog>
+          </Grid>
+          <Grid style={{ flexGrow: 1 }}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Paper className={classes.paper}>
+                <div style={{ fontWeight: "bold" }}>Sự kiện nổi bật</div>{" "}
+                <Carousel>
+                  {this.state.events.map(event => {
+                    return (
+                      <React.Fragment key={event.id}>
+                        <Grid
+                          style={{
+                            border: "1px solid #0000001f",
+                            borderRadius: "4px",
+                            marginTop: 10,
+                            marginBottom: 10
+                          }}
+                        >
+                          <Card className={classes.card}>
+                            <a
+                              href={event.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <CardActionArea>
+                                <img
+                                  style={{
+                                    width: "100%",
+                                    height: "100",
+                                    objectFit: "cover"
+                                  }}
+                                  alt="complex"
+                                  src={event.image}
+                                />
+                                <CardContent>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                  >
+                                    {event.title}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {event.content}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </a>
+                          </Card>
+                        </Grid>
+                      </React.Fragment>
+                    );
+                  })}
+                </Carousel>
+              </Paper>
+            </Grid>
           </Grid>
         </Grid>
       </React.Fragment>
