@@ -24,7 +24,8 @@ import (
 // @Router /certs [get]
 func (h *Handler) GetListCerts(c echo.Context) (err error) {
 
-	var bk []*model.Cert
+	// var bk []*model.Cert
+	bk := []model.Cert{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -42,6 +43,7 @@ func (h *Handler) GetListCerts(c echo.Context) (err error) {
 		All(&bk); err != nil {
 		return
 	}
+
 	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)
@@ -114,7 +116,7 @@ func (h *Handler) UpdateCerts(c echo.Context) (err error) {
 	}
 
 	// Validation
-	if bk.UserID == "" || bk.ConfigID == ""  {
+	if bk.UserID == "" || bk.ConfigID == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid title or image fields"}
 	}
 
@@ -162,7 +164,7 @@ func (h *Handler) CreateCerts(c echo.Context) (err error) {
 	}
 
 	// Validation
-	if bk.UserID == "" || bk.ConfigID == ""  {
+	if bk.UserID == "" || bk.ConfigID == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid title or image fields"}
 	}
 
