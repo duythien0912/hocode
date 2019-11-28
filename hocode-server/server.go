@@ -169,6 +169,12 @@ func main() {
 	rs.POST("/events", h.CreateEvents)
 	rs.DELETE("/events/:id", h.DeleteEvents)
 
+	rs.GET("/certs", h.GetListCerts)
+	rs.GET("/certs/:id", h.GetOneCerts)
+	rs.PUT("/certs/:id", h.UpdateCerts)
+	rs.POST("/certs", h.CreateCerts)
+	rs.DELETE("/certs/:id", h.DeleteCerts)
+
 	r.POST("/createevent", h.CreateEvents)
 	r.POST("/createbook", h.CreateBook)
 	r.POST("/courses", h.CreateCourse)
