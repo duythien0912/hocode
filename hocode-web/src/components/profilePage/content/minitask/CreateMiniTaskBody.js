@@ -19,6 +19,11 @@ const options = [
   { value: "String[]", label: "String Array" },
   { value: "int[]", label: "Interger Array" }
 ];
+const optionsLevel =[
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
+]
 const styles = {
   CreateMiniTaskBodyContainer: {
     minHeight: "100vh",
@@ -42,7 +47,7 @@ class CreateMiniTaskBody extends Component {
       status: "yeucaumokhoa",
       vitri: false,
       mini_task_desc: "",
-      level: "hard",
+      level: "easy",
       user_code: "",
       /*unit_tests: [
         {
@@ -68,6 +73,7 @@ class CreateMiniTaskBody extends Component {
     this.output_type_func = React.createRef();
     this.courses_ref = React.createRef();
     this.tasks_ref = React.createRef();
+    this.level_ref = React.createRef();
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
 
     this.onSelectChange = this.onSelectChange.bind(this);
@@ -79,6 +85,7 @@ class CreateMiniTaskBody extends Component {
     this.updateTemplateCode = this.updateTemplateCode.bind(this);
     this.handleRemoveInput = this.handleRemoveInput.bind(this);
     this.handleRemoveUnitTest = this.handleRemoveUnitTest.bind(this);
+    this.onLevelSelectChange = this.onLevelSelectChange.bind(this);
   }
 
   componentDidMount() {
@@ -145,7 +152,7 @@ class CreateMiniTaskBody extends Component {
       status: "chuahoanthanh",
       vitri: false,
       mini_task_desc: this.state.mini_task_desc,
-      level: "hard",
+      level: this.state.level,
       code_point: parseInt(this.state.code_point),
       input_list: this.state.inputList
     };
@@ -168,6 +175,7 @@ class CreateMiniTaskBody extends Component {
     this.setState({
       [name]: select_value.value
     });
+    
   }
   async onCoursesSelectChange(select_value) {
     // mấy chỗ select này coi chừng sai :v
@@ -194,6 +202,13 @@ class CreateMiniTaskBody extends Component {
     this.setState({
       [name]: select_value.value
     });
+  }
+  onLevelSelectChange(select_value) {
+    const name = this.level_ref.current.props.name; //get name of select tag
+    this.setState({
+      [name]: select_value.value
+    });
+    console.log(name,select_value)
   }
   // update template code when typing
   updateTemplateCode(value) {
@@ -284,7 +299,7 @@ class CreateMiniTaskBody extends Component {
               {this.state.coursesOption[0] !== undefined ? (
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={6}>
-                    <div>Chọn khóa học:</div>
+                    <div>Chọn chủ đề:</div>
                     <Select
                       styles={selectStyles}
                       options={this.state.coursesOption}
@@ -296,7 +311,7 @@ class CreateMiniTaskBody extends Component {
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={6}>
-                    <div>Chọn task:</div>
+                    <div>Chọn chủ đề con:</div>
                     <Select
                       styles={selectStyles}
                       options={this.state.tasksOption}
@@ -312,7 +327,7 @@ class CreateMiniTaskBody extends Component {
               )}
 
               <Grid container spacing={2}>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}> 
                   <div>Tên bài tập:</div>
                   <input
                     name="name"
@@ -320,7 +335,7 @@ class CreateMiniTaskBody extends Component {
                     onChange={this.handleSimpleInputChange}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>Tên Function:</div>
                   <input
                     name="name_func"
@@ -328,13 +343,24 @@ class CreateMiniTaskBody extends Component {
                     onChange={this.handleSimpleInputChange}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>Code point:</div>
                   <input
                     name="code_point"
                     className="input-createminitask"
                     onChange={this.handleSimpleInputChange}
                   />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <div>Chọn độ khó:</div>
+                  <Select
+                      styles={selectStyles}
+                      options={optionsLevel}
+                      ref={this.level_ref}
+                      name="level"
+                      defaultValue={optionsLevel[0]}
+                      onChange={this.onLevelSelectChange}
+                    />
                 </Grid>
               </Grid>
               <Grid container>
@@ -412,7 +438,7 @@ class CreateMiniTaskBody extends Component {
                           </Grid>
                           <Grid item container xs={12} sm={5} spacing={1}>
                             <Grid item xs={12} sm={12}>
-                              kiểu tham số:
+                              kKiểu tham số:
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Select

@@ -40,7 +40,8 @@ const titleCase = string => {
 class TaskItem extends Component {
   renderLevelMinitaskChip(minitask) {
     minitask.level = titleCase(minitask.level);
-    if (minitask.level === "easy") {
+    console.log(minitask.level)
+    if (minitask.level === "Easy") {
       return (
         <Chip
           style={{ background: "#76d38e", color: "white" }}
@@ -48,7 +49,7 @@ class TaskItem extends Component {
           label={`${minitask.level}`}
         />
       );
-    } else if (minitask.level === "medium") {
+    } else if (minitask.level === "Medium") {
       return (
         <Chip
           style={{ background: "#1d97c6", color: "white" }}

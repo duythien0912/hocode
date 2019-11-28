@@ -175,7 +175,7 @@ class Overview extends React.Component {
                 <Grid container style={{ marginBottom: 15 }}>
                   <Grid item style={{ flexGrow: 1 }}>
                     <div style={{ fontWeight: "bold" }}>
-                      Thách thức hằng ngày
+                      Thách thức mới
                     </div>{" "}
                   </Grid>
                 </Grid>
@@ -202,7 +202,7 @@ class Overview extends React.Component {
                             <Link
                               className="item"
                               style={{ textDecoration: "none" }}
-                              to={`${url}/tasks/${daily_minitask.id}`}
+                              to={`/tasks/${daily_minitask.id}`}
                             >
                               {daily_minitask.mini_task_name}
                             </Link>

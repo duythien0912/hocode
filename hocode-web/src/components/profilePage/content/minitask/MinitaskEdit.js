@@ -20,6 +20,11 @@ const options = [
   { value: "String[]", label: "String Array" },
   { value: "int[]", label: "Interger Array" }
 ];
+const optionsLevel =[
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
+]
 const styles = {
   CreateMiniTaskBodyContainer: {
     minHeight: "100vh",
@@ -49,7 +54,7 @@ class MinitaskEdit extends Component {
       status: "yeucaumokhoa",
       vitri: false,
       mini_task_desc: "",
-      level: "hard",
+      level: "",
       user_code: "",
       /*unit_tests: [
         {
@@ -77,6 +82,7 @@ class MinitaskEdit extends Component {
     this.output_type_func = React.createRef();
     this.courses_ref = React.createRef();
     this.tasks_ref = React.createRef();
+    this.level_ref = React.createRef();
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
 
     this.onSelectChange = this.onSelectChange.bind(this);
@@ -88,6 +94,7 @@ class MinitaskEdit extends Component {
     this.updateTemplateCode = this.updateTemplateCode.bind(this);
     this.handleRemoveInput = this.handleRemoveInput.bind(this);
     this.handleRemoveUnitTest = this.handleRemoveUnitTest.bind(this);
+    this.onLevelSelectChange = this.onLevelSelectChange.bind(this);
   }
 
   componentDidMount() {
@@ -179,7 +186,7 @@ class MinitaskEdit extends Component {
       status: "chuahoanthanh",
       vitri: false,
       mini_task_desc: this.state.mini_task_desc,
-      level: "hard",
+      level: this.state.level,
       code_point: parseInt(this.state.code_point),
       input_list:this.state.inputList
     };
@@ -228,6 +235,13 @@ class MinitaskEdit extends Component {
     this.setState({
       [name]: select_value.value
     });
+  }
+  onLevelSelectChange(select_value) {
+    const name = this.level_ref.current.props.name; //get name of select tag
+    this.setState({
+      [name]: select_value.value
+    });
+    console.log(name,select_value)
   }
   // update template code when typing
   updateTemplateCode(value) {
@@ -318,7 +332,7 @@ class MinitaskEdit extends Component {
               {this.state.coursesOption[0] !== undefined ? (
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={6}>
-                    <div>Chọn khóa học:</div>
+                    <div>Chọn chủ đề:</div>
                     <Select
                       styles={selectStyles}
                       options={this.state.coursesOption}
@@ -330,7 +344,7 @@ class MinitaskEdit extends Component {
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={6}>
-                    <div>Chọn task:</div>
+                    <div>Chọn chủ đề con:</div>
                     <Select
                       styles={selectStyles}
                       options={this.state.tasksOption}
@@ -346,7 +360,7 @@ class MinitaskEdit extends Component {
               )}
 
               <Grid container spacing={2}>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>Tên bài tập:</div>
                   <input
                     name="name"
@@ -355,7 +369,7 @@ class MinitaskEdit extends Component {
                     value={this.state.name}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>Tên Function:</div>
                   <input
                     name="name_func"
@@ -364,7 +378,7 @@ class MinitaskEdit extends Component {
                     value={this.state.name_func}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>Code point:</div>
                   <input
                     name="code_point"
@@ -372,6 +386,16 @@ class MinitaskEdit extends Component {
                     onChange={this.handleSimpleInputChange}
                     value={this.state.code_point}
                   />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <div>Chọn độ khó:</div>
+                  <Select
+                      styles={selectStyles}
+                      options={optionsLevel}
+                      ref={this.level_ref}
+                      name="level"
+                      onChange={this.onLevelSelectChange}
+                    />
                 </Grid>
               </Grid>
               <Grid container>

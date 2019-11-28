@@ -247,7 +247,7 @@ class NavRight extends React.Component {
           direction="column"
           justify="center"
           // alignItems="center"
-          style={{ height: "100%" }}
+          style={{ height: "100%",flexWrap:"unset" }}
         >
           {typeof this.state.books !== "undefined" &&
           this.state.books.length > 0

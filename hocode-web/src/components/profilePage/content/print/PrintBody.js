@@ -4,13 +4,16 @@ import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import Divider from "@material-ui/core/Divider";
 const styles = {};
 
 class PrintBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [],
+      minitasks: [],
+
       isLoading: true
     };
   }
@@ -41,9 +44,19 @@ class PrintBody extends Component {
           <Paper>
             <Grid container direction="column" alignItems="center" spacing={2}>
               <Grid item container style={{ justifyContent: "center" }}>
-                <Grid item xs={4} sm={4} md={4} style={{display:"flex",justifyContent:"center"}}>
+                <Grid
+                  item
+                  xs={4}
+                  sm={4}
+                  md={4}
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
                   <img
-                    style={{ width: "100px",height:"100px", borderRadius: "50%" }}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%"
+                    }}
                     alt="avatar"
                     src={this.props.user.avatar}
                   />
@@ -87,12 +100,71 @@ class PrintBody extends Component {
                   Bài tập đã hoàn thành
                 </Typography>
               </Grid>
-           
             </Grid>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={8} md={8}>
-          Danh sách task
+          <Paper style={{ minHeight: "50%",display:"flex",flexDirection:"column" }}>
+            <Grid container spacing={2} style={{ paddingLeft: 10 }}>
+              <Grid item style={{ flexGrow: 1 }}>
+                <div style={{ fontWeight: "bold" }}>
+                  Danh sách bài tập đã hoàn thành
+                </div>{" "}
+              </Grid>
+            </Grid>
+
+            {this.state.minitasks.length !== 0 ? (
+              this.state.minitasks.map(minitask => {
+                return (
+                  <React.Fragment key={minitask.id}>
+                    <Grid container style={{ alignItems: "center" }}>
+                      <Grid item>
+                        <img
+                          className={classes.img}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            objectFit: "cover",
+                            borderRadius: "8px"
+                          }}
+                          alt="complex"
+                          src={minitask.avatar}
+                        />
+                      </Grid>
+                      <Grid item style={{ flexGrow: 1, padding: 10 }}>
+                        <div style={{ fontWeight: "bold" }}>
+                          <Link
+                            className="item"
+                            style={{ textDecoration: "none" }}
+                            to={`/tasks/${minitask.id}`}
+                          >
+                            {minitask.mini_task_name}
+                          </Link>
+                        </div>
+                        <div style={{ color: "#9d9d9d" }}>
+                          Code Point: {minitask.code_point}
+                        </div>
+                      </Grid>
+                    </Grid>
+                    <Divider style={{ margin: "auto" }} />{" "}
+                  </React.Fragment>
+                );
+              })
+            ) : (
+              <Grid container justify="center" alignItems="center" style={{flexGrow:1}}>
+                <Grid item>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    style={{ marginLeft: 4 }}
+                  >
+                    Bạn chưa hoàn thành bài tập nào.
+                  </Typography>
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
         </Grid>
       </Grid>
     );
