@@ -42,6 +42,12 @@ import {
   ModelTaskEdit
 } from "./resources/ModelTask";
 
+import {
+  ModelCertList,
+  ModelCertCreate,
+  ModelCertEdit
+} from "./resources/ModelCert";
+
 import { history } from "../../../js/store/store";
 
 const ReactAdmin = () => (
@@ -87,6 +93,13 @@ const ReactAdmin = () => (
       list={ModelMinitaskList}
       create={ModelMinitaskCreate}
       edit={ModelMinitaskEdit}
+    />
+
+    <Resource
+      name="certs"
+      list={ModelCertList}
+      create={ModelCertCreate}
+      edit={ModelCertEdit}
     />
   </Admin>
 );

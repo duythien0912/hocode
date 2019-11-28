@@ -10,14 +10,21 @@ import { titleCase } from "./utils";
 import { Link } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import EventIcon from '@material-ui/icons/Event';
+import GestureIcon from '@material-ui/icons/Gesture';
+import SportsVolleyballIcon from '@material-ui/icons/SportsVolleyball';
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 
 const ICONS = {
-  books: <ListIcon />,
-  courses: <ListIcon />,
-  events: <ListIcon />,
-  minitasks: <ListIcon />,
-  tasks: <ListIcon />,
-  profile: <ListIcon />
+  books: <MenuBookIcon />,
+  events: <EventIcon />,
+  courses: <GestureIcon />,
+  tasks: <SportsSoccerIcon />,
+  minitasks: <SportsVolleyballIcon />,
+  profile: <ListIcon />,
+  certs: <CardGiftcardIcon />,
 };
 
 const Menu = ({ resources, onMenuClick, logout }) => (
@@ -64,6 +71,9 @@ const changeIDToName = name => {
       break;
     case "Minitasks":
       title = "Bài học";
+      break;
+    case "Certs":
+      title = "Chứng chỉ";
       break;
     default:
       title = name;
