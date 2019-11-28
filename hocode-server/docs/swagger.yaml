@@ -24,9 +24,47 @@ definitions:
       title:
         type: string
     type: object
+  model.Cert:
+    properties:
+      config_id:
+        type: string
+      del:
+        type: boolean
+      electronic_signature:
+        type: string
+      id:
+        type: string
+      search_id:
+        type: string
+      status:
+        type: string
+      timestamp:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model.Config:
+    properties:
+      del:
+        type: boolean
+      electronic_signature:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      name_site:
+        type: string
+      review_point:
+        type: integer
+      timestamp:
+        type: string
+    type: object
   model.Course:
     properties:
       background_image:
+        type: string
+      course_desc:
         type: string
       course_name:
         type: string
@@ -34,6 +72,12 @@ definitions:
         type: boolean
       id:
         type: string
+      rating:
+        items:
+          type: number
+        type: array
+      rating_value:
+        type: number
       task_solved:
         $ref: '#/definitions/model.TaskSolved'
         description: Name            string     json:"name" bson:"name"
@@ -43,6 +87,10 @@ definitions:
           $ref: '#/definitions/model.Task'
         type: array
       timestamp:
+        type: string
+      total_minitask:
+        type: integer
+      user_create:
         type: string
     type: object
   model.CourseInfo:
@@ -86,6 +134,14 @@ definitions:
       value:
         type: string
     type: object
+  model.InputList:
+    properties:
+      input_name:
+        description: ID             bson.ObjectId json:"id" bson:"_id,omitempty"
+        type: string
+      input_type:
+        type: string
+    type: object
   model.MiniTask:
     properties:
       avatar:
@@ -96,6 +152,10 @@ definitions:
         type: boolean
       id:
         type: string
+      input_list:
+        items:
+          $ref: '#/definitions/model.InputList'
+        type: array
       level:
         type: string
       mini_task_desc:
@@ -129,6 +189,18 @@ definitions:
         type: string
       status:
         type: string
+    type: object
+  model.ReviewCertOut:
+    properties:
+      cert:
+        $ref: '#/definitions/model.Cert'
+        type: object
+      config:
+        $ref: '#/definitions/model.Config'
+        type: object
+      user:
+        $ref: '#/definitions/model.User'
+        type: object
     type: object
   model.Task:
     properties:
@@ -253,6 +325,23 @@ info:
   title: Hocode API
   version: "1.0"
 paths:
+  /auth/reviewcert:
+    get:
+      consumes:
+      - application/json
+      description: Review cert for user
+      operationId: review_cert
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ReviewCertOut'
+            type: object
+      summary: Review Cert by user
+      tags:
+      - ReviewCert
   /auth/updateusercourse:
     post:
       consumes:
@@ -400,6 +489,237 @@ paths:
       summary: UpdateBooks Book
       tags:
       - Books
+  /cert/search/:
+    get:
+      consumes:
+      - application/json
+      description: get certs by SearchID
+      operationId: cert_search_id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: One Certs by Search ID
+      tags:
+      - Certs
+  /certs:
+    get:
+      consumes:
+      - application/json
+      description: get certs <a href="/api/v1/certs?page=1&limit=5">/api/v1/certs?page=1&limit=5</a>
+      operationId: cert_list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Cert'
+            type: array
+      summary: List Certs
+      tags:
+      - Certs
+    post:
+      consumes:
+      - application/json
+      description: Create Cert
+      operationId: cert_create
+      parameters:
+      - description: Create Cert
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Cert'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: Create Cert
+      tags:
+      - Certs
+  /certs/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Cert
+      operationId: cert_delete
+      parameters:
+      - description: Delete Cert
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Cert'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: Delete Cert
+      tags:
+      - Certs
+    get:
+      consumes:
+      - application/json
+      description: get certs <a href="/api/v1/certs?page=1&limit=5">/api/v1/certs?page=1&limit=5</a>
+      operationId: cert_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: One Certs
+      tags:
+      - Certs
+    put:
+      consumes:
+      - application/json
+      description: Update Cert
+      operationId: cert_update
+      parameters:
+      - description: Update Cert
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Cert'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: UpdateCerts Cert
+      tags:
+      - Certs
+  /configs:
+    get:
+      consumes:
+      - application/json
+      description: get configs <a href="/api/v1/configs?page=1&limit=5">/api/v1/configs?page=1&limit=5</a>
+      operationId: config_list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Config'
+            type: array
+      summary: List Configs
+      tags:
+      - Configs
+    post:
+      consumes:
+      - application/json
+      description: Create Config
+      operationId: config_create
+      parameters:
+      - description: Create Config
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Config'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Config'
+            type: object
+      summary: Create Config
+      tags:
+      - Configs
+  /configs/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Config
+      operationId: config_delete
+      parameters:
+      - description: Delete Config
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Config'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Config'
+            type: object
+      summary: Delete Config
+      tags:
+      - Configs
+    get:
+      consumes:
+      - application/json
+      description: get configs <a href="/api/v1/configs?page=1&limit=5">/api/v1/configs?page=1&limit=5</a>
+      operationId: config_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Config'
+            type: object
+      summary: One Configs
+      tags:
+      - Configs
+    put:
+      consumes:
+      - application/json
+      description: Update Config
+      operationId: config_update
+      parameters:
+      - description: Update Config
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Config'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Config'
+            type: object
+      summary: UpdateConfigs Config
+      tags:
+      - Configs
   /courses:
     get:
       consumes:
@@ -549,7 +869,7 @@ paths:
             items:
               $ref: '#/definitions/model.Task'
             type: array
-      summary: Get Task By Courses ID
+      summary: Get Task By Courses ID Auth
       tags:
       - Courses
   /createbook:
@@ -576,6 +896,23 @@ paths:
       summary: Create Book
       tags:
       - Books
+  /curd/config/byname/:
+    get:
+      consumes:
+      - application/json
+      description: get configs
+      operationId: config_one_by_name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Config'
+            type: object
+      summary: One Configs by name
+      tags:
+      - Configs
   /events:
     get:
       consumes:
@@ -830,7 +1167,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
-      operationId: tasks_list
+      operationId: task_list
       produces:
       - application/json
       responses:
@@ -840,14 +1177,13 @@ paths:
             items:
               $ref: '#/definitions/model.Task'
             type: array
-      summary: List Tasks
+      summary: List Task
       tags:
       - Tasks
     post:
       consumes:
       - application/json
       description: Create Task
-      operationId: tasks_create
       parameters:
       - description: Create Task
         in: body

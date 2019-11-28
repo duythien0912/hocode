@@ -109,11 +109,26 @@ func main() {
 	r.GET("/books", h.GetBooks)
 	r.GET("/events", h.GetListEvents)
 
+	r.GET("/cert/search/:id", h.SearchCertsByID)
+
 	curd := e.Group("/api/v1/curd")
 
 	curd.Use(middleware.JWT([]byte("secret")))
 
 	// CURD
+	curd.GET("/config", h.GetListConfigs)
+	curd.GET("/config/byname/:id", h.GetConfigByName)
+	curd.GET("/config/:id", h.GetOneConfigs)
+	curd.PUT("/config/:id", h.UpdateConfigs)
+	curd.POST("/config", h.CreateConfigs)
+	curd.DELETE("/config/:id", h.DeleteConfigs)
+
+	curd.GET("/cert", h.GetListCerts)
+	curd.GET("/cert/:id", h.GetOneCerts)
+	curd.PUT("/cert/:id", h.UpdateCerts)
+	curd.POST("/cert", h.CreateCerts)
+	curd.DELETE("/cert/:id", h.DeleteCerts)
+
 	curd.GET("/books", h.GetListBooks)
 	curd.GET("/books/:id", h.GetOneBooks)
 	curd.PUT("/books/:id", h.UpdateBooks)
@@ -162,6 +177,9 @@ func main() {
 
 	rs.Use(middleware.JWT([]byte("secret")))
 	rs.GET("", h.TestAuth)
+
+	rs.GET("/reviewcert", h.ReviewCert)
+
 	rs.GET("/userinfo", h.GetUserData)
 	rs.POST("/userinfoupdate", h.UpdataUserData)
 

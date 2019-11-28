@@ -18,6 +18,31 @@
     "host": "hocodevn.com",
     "basePath": "/api/v1",
     "paths": {
+        "/auth/reviewcert": {
+            "get": {
+                "description": "Review cert for user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ReviewCert"
+                ],
+                "summary": "Review Cert by user",
+                "operationId": "review_cert",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ReviewCertOut"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/updateusercourse": {
             "post": {
                 "description": "UpdateUserCourse",
@@ -235,6 +260,345 @@
                 }
             }
         },
+        "/cert/search/": {
+            "get": {
+                "description": "get certs by SearchID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "One Certs by Search ID",
+                "operationId": "cert_search_id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            }
+        },
+        "/certs": {
+            "get": {
+                "description": "get certs \u003ca href=\"/api/v1/certs?page=1\u0026limit=5\"\u003e/api/v1/certs?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "List Certs",
+                "operationId": "cert_list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Cert"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Cert",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "Create Cert",
+                "operationId": "cert_create",
+                "parameters": [
+                    {
+                        "description": "Create Cert",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            }
+        },
+        "/certs/": {
+            "get": {
+                "description": "get certs \u003ca href=\"/api/v1/certs?page=1\u0026limit=5\"\u003e/api/v1/certs?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "One Certs",
+                "operationId": "cert_one",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Cert",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "UpdateCerts Cert",
+                "operationId": "cert_update",
+                "parameters": [
+                    {
+                        "description": "Update Cert",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Cert",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "Delete Cert",
+                "operationId": "cert_delete",
+                "parameters": [
+                    {
+                        "description": "Delete Cert",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs": {
+            "get": {
+                "description": "get configs \u003ca href=\"/api/v1/configs?page=1\u0026limit=5\"\u003e/api/v1/configs?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "List Configs",
+                "operationId": "config_list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Config"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Config",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "Create Config",
+                "operationId": "config_create",
+                "parameters": [
+                    {
+                        "description": "Create Config",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs/": {
+            "get": {
+                "description": "get configs \u003ca href=\"/api/v1/configs?page=1\u0026limit=5\"\u003e/api/v1/configs?page=1\u0026limit=5\u003c/a\u003e",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "One Configs",
+                "operationId": "config_one",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Config",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "UpdateConfigs Config",
+                "operationId": "config_update",
+                "parameters": [
+                    {
+                        "description": "Update Config",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Config",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "Delete Config",
+                "operationId": "config_delete",
+                "parameters": [
+                    {
+                        "description": "Delete Config",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
+                        }
+                    }
+                }
+            }
+        },
         "/courses": {
             "get": {
                 "description": "get courses \u003ca href=\"/api/v1/courses?page=1\u0026limit=5\"\u003e/api/v1/courses?page=1\u0026limit=5\u003c/a\u003e",
@@ -437,7 +801,7 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Get Task By Courses ID",
+                "summary": "Get Task By Courses ID Auth",
                 "parameters": [
                     {
                         "type": "integer",
@@ -491,6 +855,31 @@
                         "schema": {
                             "type": "object",
                             "$ref": "#/definitions/model.Book"
+                        }
+                    }
+                }
+            }
+        },
+        "/curd/config/byname/": {
+            "get": {
+                "description": "get configs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "One Configs by name",
+                "operationId": "config_one_by_name",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Config"
                         }
                     }
                 }
@@ -875,8 +1264,8 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "List Tasks",
-                "operationId": "tasks_list",
+                "summary": "List Task",
+                "operationId": "task_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -901,7 +1290,6 @@
                     "Tasks"
                 ],
                 "summary": "Create Task",
-                "operationId": "tasks_create",
                 "parameters": [
                     {
                         "description": "Create Task",
@@ -1191,10 +1579,68 @@
                 }
             }
         },
+        "model.Cert": {
+            "type": "object",
+            "properties": {
+                "config_id": {
+                    "type": "string"
+                },
+                "del": {
+                    "type": "boolean"
+                },
+                "electronic_signature": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "search_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Config": {
+            "type": "object",
+            "properties": {
+                "del": {
+                    "type": "boolean"
+                },
+                "electronic_signature": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "name_site": {
+                    "type": "string"
+                },
+                "review_point": {
+                    "type": "integer"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Course": {
             "type": "object",
             "properties": {
                 "background_image": {
+                    "type": "string"
+                },
+                "course_desc": {
                     "type": "string"
                 },
                 "course_name": {
@@ -1205,6 +1651,15 @@
                 },
                 "id": {
                     "type": "string"
+                },
+                "rating": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "rating_value": {
+                    "type": "number"
                 },
                 "task_solved": {
                     "description": "Name            string     json:\"name\" bson:\"name\"",
@@ -1218,6 +1673,12 @@
                     }
                 },
                 "timestamp": {
+                    "type": "string"
+                },
+                "total_minitask": {
+                    "type": "integer"
+                },
+                "user_create": {
                     "type": "string"
                 }
             }
@@ -1285,6 +1746,18 @@
                 }
             }
         },
+        "model.InputList": {
+            "type": "object",
+            "properties": {
+                "input_name": {
+                    "description": "ID             bson.ObjectId json:\"id\" bson:\"_id,omitempty\"",
+                    "type": "string"
+                },
+                "input_type": {
+                    "type": "string"
+                }
+            }
+        },
         "model.MiniTask": {
             "type": "object",
             "properties": {
@@ -1299,6 +1772,12 @@
                 },
                 "id": {
                     "type": "string"
+                },
+                "input_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.InputList"
+                    }
                 },
                 "level": {
                     "type": "string"
@@ -1349,6 +1828,23 @@
                 },
                 "status": {
                     "type": "string"
+                }
+            }
+        },
+        "model.ReviewCertOut": {
+            "type": "object",
+            "properties": {
+                "cert": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Cert"
+                },
+                "config": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Config"
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.User"
                 }
             }
         },
