@@ -116,18 +116,18 @@ func main() {
 	curd.Use(middleware.JWT([]byte("secret")))
 
 	// CURD
-	curd.GET("/config", h.GetListConfigs)
-	curd.GET("/config/byname/:id", h.GetConfigByName)
-	curd.GET("/config/:id", h.GetOneConfigs)
-	curd.PUT("/config/:id", h.UpdateConfigs)
-	curd.POST("/config", h.CreateConfigs)
-	curd.DELETE("/config/:id", h.DeleteConfigs)
+	curd.GET("/configs", h.GetListConfigs)
+	curd.GET("/configs/byname/:id", h.GetConfigByName)
+	curd.GET("/configs/:id", h.GetOneConfigs)
+	curd.PUT("/configs/:id", h.UpdateConfigs)
+	curd.POST("/configs", h.CreateConfigs)
+	curd.DELETE("/configs/:id", h.DeleteConfigs)
 
-	curd.GET("/cert", h.GetListCerts)
-	curd.GET("/cert/:id", h.GetOneCerts)
-	curd.PUT("/cert/:id", h.UpdateCerts)
-	curd.POST("/cert", h.CreateCerts)
-	curd.DELETE("/cert/:id", h.DeleteCerts)
+	curd.GET("/certs", h.GetListCerts)
+	curd.GET("/certs/:id", h.GetOneCerts)
+	curd.PUT("/certs/:id", h.UpdateCerts)
+	curd.POST("/certs", h.CreateCerts)
+	curd.DELETE("/certs/:id", h.DeleteCerts)
 
 	curd.GET("/books", h.GetListBooks)
 	curd.GET("/books/:id", h.GetOneBooks)
@@ -168,12 +168,6 @@ func main() {
 	rs.PUT("/events/:id", h.UpdateEvents)
 	rs.POST("/events", h.CreateEvents)
 	rs.DELETE("/events/:id", h.DeleteEvents)
-
-	rs.GET("/certs", h.GetListCerts)
-	rs.GET("/certs/:id", h.GetOneCerts)
-	rs.PUT("/certs/:id", h.UpdateCerts)
-	rs.POST("/certs", h.CreateCerts)
-	rs.DELETE("/certs/:id", h.DeleteCerts)
 
 	r.POST("/createevent", h.CreateEvents)
 	r.POST("/createbook", h.CreateBook)
