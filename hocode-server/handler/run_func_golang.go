@@ -19,7 +19,7 @@ var pack = `package code
 //e.GET("/show", show)
 func (h *Handler) RunGolang(c echo.Context) (err error) {
 	// Get team and member from the query string
-	co := &model.Code{}
+	co := model.Code{}
 
 	if err = c.Bind(co); err != nil {
 		return

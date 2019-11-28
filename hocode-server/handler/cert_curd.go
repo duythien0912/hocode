@@ -61,7 +61,7 @@ func (h *Handler) GetListCerts(c echo.Context) (err error) {
 // @Router /certs/:id [get]
 func (h *Handler) GetOneCerts(c echo.Context) (err error) {
 
-	bk := &model.Cert{}
+	bk := model.Cert{}
 
 	id := c.Param("id")
 
@@ -101,7 +101,7 @@ func (h *Handler) GetOneCerts(c echo.Context) (err error) {
 // @Router /certs/:id [put]
 func (h *Handler) UpdateCerts(c echo.Context) (err error) {
 
-	bk := &model.Cert{
+	bk := model.Cert{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -152,7 +152,7 @@ func (h *Handler) UpdateCerts(c echo.Context) (err error) {
 // @Router /certs [post]
 func (h *Handler) CreateCerts(c echo.Context) (err error) {
 
-	bk := &model.Cert{
+	bk := model.Cert{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -200,7 +200,7 @@ func (h *Handler) CreateCerts(c echo.Context) (err error) {
 // @Router /certs/:id [delete]
 func (h *Handler) DeleteCerts(c echo.Context) (err error) {
 
-	bk := &model.Cert{
+	bk := model.Cert{
 		// ID: bson.NewObjectId(),
 	}
 

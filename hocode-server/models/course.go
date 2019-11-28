@@ -14,12 +14,12 @@ type (
 		TaskSolved      TaskSolved `json:"task_solved" bson:"task_solved"`
 		BackgroundImage string     `json:"background_image" bson:"background_image"`
 		UserCreate      string     `json:"user_create" bson:"user_create"`
-		Rating          []*float64 `json:"rating" bson:"rating"`
+		Rating          []float64 `json:"rating" bson:"rating"`
 		RatingValue     float64    `json:"rating_value" bson:"rating_value"`
 		CourseDesc      string     `json:"course_desc" bson:"course_desc"`
 
 		TotalMinitask int       `json:"total_minitask" bson:"total_minitask"`
-		Tasks         []*Task   `json:"tasks" bson:"tasks"`
+		Tasks         []Task   `json:"tasks" bson:"tasks"`
 		Timestamp     time.Time `json:"timestamp" bson:"timestamp"`
 		Del           bool      `json:"del" bson:"del"`
 	}

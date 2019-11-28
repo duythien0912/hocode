@@ -73,7 +73,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 // @Router /tasks/{id} [get]
 func (h *Handler) TaskByID(c echo.Context) (err error) {
 
-	tf := &model.Task{}
+	tf := model.Task{}
 
 	id := c.Param("id")
 
@@ -100,7 +100,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 	}
 
 	mta := []model.MiniTask{}
-	userMiniTask := &model.UserMiniTask{}
+	userMiniTask := model.UserMiniTask{}
 
 	db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{
@@ -157,7 +157,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 // @Router /tasks [post]
 func (h *Handler) CreateTask(c echo.Context) (err error) {
 
-	tn := &model.Task{
+	tn := model.Task{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(tn); err != nil {

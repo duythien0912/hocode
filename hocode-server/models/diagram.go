@@ -24,7 +24,7 @@ package model
 // 	CourseName string
 // 	BackgroundImage string
 // 	TotalMinitask   int
-// 	// Tasks   []*Task
+// 	// Tasks   []Task
 // 	Timestamp       int
 // 	Del     bool
 // }
@@ -34,7 +34,7 @@ package model
 // 	TaskName        string
 // 	BackgroundImage string
 // 	CourseId        string
-// 	// Minitasks       []*MiniTask
+// 	// Minitasks       []MiniTask
 // 	Timestamp       int
 // 	Del     bool
 // }
@@ -53,9 +53,9 @@ package model
 // 	Level        string
 // 	Avatar       string
 // 	TemplateCode string
-// 	// UnitTests    []*UnitTest
+// 	// UnitTests    []UnitTest
 
-// 	// InputList []*InputList
+// 	// InputList []InputList
 
 // 	TaskId    string
 // 	Timestamp int
@@ -68,7 +68,7 @@ package model
 // }
 
 // Table UnitTest {
-// 	// Inputs []*Input
+// 	// Inputs []Input
 // 	ExpectedOutput string
 // }
 

@@ -14,7 +14,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// var p = &model.Course{
+// var p = model.Course{
 // 	ID:         bson.NewObjectId(),
 // 	CourseName: "Certificate",
 // 	TaskSolved: model.TaskSolved{
@@ -88,7 +88,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 // @Success 200 {object} model.Course
 // @Router /courses/{id} [get]
 func (h *Handler) CourseByID(c echo.Context) (err error) {
-	course := &model.Course{}
+	course := model.Course{}
 
 	id := c.Param("id")
 
@@ -157,7 +157,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 			Sort("-timestamp").
 			All(&mta)
 
-		// userMiniTask := &model.UserMiniTask{}
+		// userMiniTask := model.UserMiniTask{}
 
 		// if err = db.DB(config.NameDb).C("user_minitask").
 		// 	Find(bson.M{
@@ -240,7 +240,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 			Sort("-timestamp").
 			All(&mta)
 
-		userMiniTask := &model.UserMiniTask{}
+		userMiniTask := model.UserMiniTask{}
 
 		if err = db.DB(config.NameDb).C("user_minitask").
 			Find(bson.M{
@@ -300,7 +300,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 // @Router /courses [post]
 func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
-	pn := &model.Course{
+	pn := model.Course{
 		// ID: bson.NewObjectId(),
 	}
 

@@ -60,7 +60,7 @@ func (h *Handler) GetListCourses(c echo.Context) (err error) {
 // @Router /courses/:id [get]
 func (h *Handler) GetOneCourses(c echo.Context) (err error) {
 
-	bk := &model.Course{}
+	bk := model.Course{}
 
 	id := c.Param("id")
 
@@ -100,7 +100,7 @@ func (h *Handler) GetOneCourses(c echo.Context) (err error) {
 // @Router /courses/:id [put]
 func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 
-	bk := &model.Course{
+	bk := model.Course{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -186,7 +186,7 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 // @Router /courses [post]
 func (h *Handler) CreateCourses(c echo.Context) (err error) {
 
-	bk := &model.Course{
+	bk := model.Course{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -239,7 +239,7 @@ func (h *Handler) CreateCourses(c echo.Context) (err error) {
 // @Router /courses/:id [delete]
 func (h *Handler) DeleteCourses(c echo.Context) (err error) {
 
-	bk := &model.Course{
+	bk := model.Course{
 		// ID: bson.NewObjectId(),
 	}
 

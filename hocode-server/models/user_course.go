@@ -38,9 +38,9 @@ type (
 
 type (
 	UserCourseOut struct {
-		UserCourse   *UserCourse   `json:"user_course" bson:"user_course"`
-		UserMiniTask *UserMiniTask `json:"user_minitask" bson:"user_minitask"`
-		NextMiniTask *MiniTask     `json:"next_minitask" bson:"next_minitask"`
-		CodePoint    int           `json:"codepoint" bson:"codepoint"`
+		UserCourse   UserCourse   `json:"user_course" bson:"user_course"`
+		UserMiniTask UserMiniTask `json:"user_minitask" bson:"user_minitask"`
+		NextMiniTask MiniTask     `json:"next_minitask" bson:"next_minitask"`
+		CodePoint    int          `json:"codepoint" bson:"codepoint"`
 	}
 )

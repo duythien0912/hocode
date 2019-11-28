@@ -59,7 +59,7 @@ func (h *Handler) GetListConfigs(c echo.Context) (err error) {
 // @Router /configs/:id [get]
 func (h *Handler) GetOneConfigs(c echo.Context) (err error) {
 
-	bk := &model.Config{}
+	bk := model.Config{}
 
 	id := c.Param("id")
 
@@ -99,7 +99,7 @@ func (h *Handler) GetOneConfigs(c echo.Context) (err error) {
 // @Router /configs/:id [put]
 func (h *Handler) UpdateConfigs(c echo.Context) (err error) {
 
-	bk := &model.Config{
+	bk := model.Config{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -150,7 +150,7 @@ func (h *Handler) UpdateConfigs(c echo.Context) (err error) {
 // @Router /configs [post]
 func (h *Handler) CreateConfigs(c echo.Context) (err error) {
 
-	bk := &model.Config{
+	bk := model.Config{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -198,7 +198,7 @@ func (h *Handler) CreateConfigs(c echo.Context) (err error) {
 // @Router /configs/:id [delete]
 func (h *Handler) DeleteConfigs(c echo.Context) (err error) {
 
-	bk := &model.Config{
+	bk := model.Config{
 		// ID: bson.NewObjectId(),
 	}
 

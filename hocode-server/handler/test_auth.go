@@ -39,7 +39,7 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	ur := &model.User{}
+	ur := model.User{}
 
 	if err = db.DB(config.NameDb).C("users").
 		// FindId(bson.ObjectIdHex(ID)).
@@ -67,7 +67,7 @@ func (h *Handler) GetUserData(c echo.Context) (err error) {
 
 func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 
-	urN := &model.User{}
+	urN := model.User{}
 
 	if err = c.Bind(urN); err != nil {
 		return err
@@ -83,7 +83,7 @@ func (h *Handler) UpdataUserData(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	urO := &model.User{}
+	urO := model.User{}
 
 	if err = db.DB(config.NameDb).C("users").
 		Find(bson.M{

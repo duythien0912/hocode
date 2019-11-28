@@ -36,7 +36,7 @@ func (h *Handler) Profile(c echo.Context) (err error) {
 
 func (h *Handler) ProfileByID(c echo.Context) (err error) {
 
-	tf := &model.Profile{}
+	tf := model.Profile{}
 
 	id := c.Param("id")
 
@@ -58,7 +58,7 @@ func (h *Handler) ProfileByID(c echo.Context) (err error) {
 
 func (h *Handler) CreateProfile(c echo.Context) (err error) {
 
-	tn := &model.Profile{
+	tn := model.Profile{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(tn); err != nil {
