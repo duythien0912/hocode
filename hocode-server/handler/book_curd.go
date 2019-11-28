@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -23,7 +24,7 @@ import (
 // @Router /books [get]
 func (h *Handler) GetListBooks(c echo.Context) (err error) {
 
-	var bk []model.Book
+	var bk []*model.Book
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -58,7 +59,7 @@ func (h *Handler) GetListBooks(c echo.Context) (err error) {
 // @Router /books/:id [get]
 func (h *Handler) GetOneBooks(c echo.Context) (err error) {
 
-	bk := model.Book{}
+	bk := &model.Book{}
 
 	id := c.Param("id")
 
@@ -98,7 +99,7 @@ func (h *Handler) GetOneBooks(c echo.Context) (err error) {
 // @Router /books/:id [put]
 func (h *Handler) UpdateBooks(c echo.Context) (err error) {
 
-	bk := model.Book{
+	bk := &model.Book{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -149,7 +150,7 @@ func (h *Handler) UpdateBooks(c echo.Context) (err error) {
 // @Router /books [post]
 func (h *Handler) CreateBooks(c echo.Context) (err error) {
 
-	bk := model.Book{
+	bk := &model.Book{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -197,7 +198,7 @@ func (h *Handler) CreateBooks(c echo.Context) (err error) {
 // @Router /books/:id [delete]
 func (h *Handler) DeleteBooks(c echo.Context) (err error) {
 
-	bk := model.Book{
+	bk := &model.Book{
 		// ID: bson.NewObjectId(),
 	}
 

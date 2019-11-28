@@ -1,9 +1,10 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
@@ -13,7 +14,7 @@ import (
 )
 
 func (h *Handler) Login(c echo.Context) (err error) {
-	ur := model.User{}
+	ur := &model.User{}
 
 	if err = c.Bind(ur); err != nil {
 		return err
@@ -84,7 +85,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 }
 
 func (h *Handler) SignUp(c echo.Context) (err error) {
-	ur := model.User{}
+	ur := &model.User{}
 
 	if err = c.Bind(ur); err != nil {
 		return err
@@ -105,7 +106,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	urF := model.User{}
+	urF := &model.User{}
 
 	if err = db.DB(config.NameDb).C("users").
 		Find(bson.M{"email": ur.Email, "del": bson.M{"$ne": true}}).One(urF); err != nil {

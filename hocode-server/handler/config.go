@@ -23,7 +23,7 @@ import (
 // @Router /curd/config/byname/:id [get]
 func (h *Handler) GetConfigByName(c echo.Context) (err error) {
 
-	bk := model.Config{}
+	bk := &model.Config{}
 
 	id := c.Param("id")
 

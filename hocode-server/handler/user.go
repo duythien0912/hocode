@@ -1,9 +1,10 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -26,7 +27,7 @@ func (h *Handler) SaveUser(c echo.Context) (err error) {
 // @Router /users [get]
 func (h *Handler) GetUser(c echo.Context) (err error) {
 
-	courses := []model.User{}
+	courses := []*model.User{}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 

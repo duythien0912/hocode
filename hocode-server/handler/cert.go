@@ -25,7 +25,7 @@ import (
 // @Router /cert/search/:id [get]
 func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 
-	bk := model.Cert{}
+	bk := &model.Cert{}
 
 	id := c.Param("id")
 
@@ -71,7 +71,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	ur := model.User{}
+	ur := &model.User{}
 
 	if err = db.DB(config.NameDb).C("users").
 		// FindId(bson.ObjectIdHex(ID)).
@@ -87,7 +87,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 		return
 	}
 
-	configApp := model.Config{}
+	configApp := &model.Config{}
 
 	if err = db.DB(config.NameDb).C("configs").
 		// FindId(bson.ObjectIdHex(id)).
@@ -106,7 +106,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 		return
 	}
 
-	bk := model.Cert{}
+	bk := &model.Cert{}
 
 	if ur.CodePoint >= configApp.ReviewPoint {
 
@@ -124,7 +124,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 
 	}
 
-	reviewCertOut := model.ReviewCertOut{
+	reviewCertOut := &model.ReviewCertOut{
 		User: ur, Config: configApp, Cert: bk,
 	}
 

@@ -24,7 +24,7 @@ import (
 // @Router /minitasks [get]
 func (h *Handler) Minitasks(c echo.Context) (err error) {
 
-	var mta []model.MiniTask
+	var mta []*model.MiniTask
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
@@ -57,7 +57,7 @@ func (h *Handler) Minitasks(c echo.Context) (err error) {
 // @Router /minitasks/{id} [get]
 func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 
-	mtf := model.MiniTask{}
+	mtf := &model.MiniTask{}
 
 	id := c.Param("id")
 
@@ -91,7 +91,7 @@ func (h *Handler) MinitasksByID(c echo.Context) (err error) {
 // @Router /minitasks [post]
 func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
-	mtn := model.MiniTask{
+	mtn := &model.MiniTask{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(mtn); err != nil {
@@ -120,7 +120,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 	if mtn.TaskId != "" {
 
-		tf := model.Task{}
+		tf := &model.Task{}
 
 		db.DB(config.NameDb).C("tasks").
 			Find(bson.M{
@@ -130,7 +130,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 
 		if tf.CourseId != "" {
 
-			listtaskf := []model.Task{}
+			listtaskf := []*model.Task{}
 
 			if err = db.DB(config.NameDb).C("tasks").
 				Find(bson.M{
@@ -142,7 +142,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 				return
 			}
 
-			co := model.Course{}
+			co := &model.Course{}
 
 			db.DB(config.NameDb).C("course").
 				Find(bson.M{
@@ -168,7 +168,7 @@ func (h *Handler) CreateMinitast(c echo.Context) (err error) {
 			// Save in database
 			co.Timestamp = time.Now()
 
-			co.Tasks = []model.Task{}
+			co.Tasks = []*model.Task{}
 
 			db.DB(config.NameDb).C("course").UpsertId(co.ID, co)
 
@@ -191,7 +191,7 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 	if errorLimit != nil {
 		limit = 4
 	}
-	mta := []model.MiniTask{}
+	mta := []*model.MiniTask{}
 
 	// Connect to DB
 	db := h.DB.Clone()
@@ -208,7 +208,7 @@ func (h *Handler) DailyMiniTask(c echo.Context) (err error) {
 
 	for i := 0; i < len(mta); i++ {
 
-		tf := model.Task{}
+		tf := &model.Task{}
 
 		if err = db.DB(config.NameDb).C("tasks").
 			// FindId(bson.ObjectIdHex(mta[i].TaskId)).

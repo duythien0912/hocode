@@ -25,7 +25,7 @@ import (
 // @Router /courses [get]
 func (h *Handler) GetListCourses(c echo.Context) (err error) {
 
-	bk := []model.Course{}
+	bk := []*model.Course{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -60,7 +60,7 @@ func (h *Handler) GetListCourses(c echo.Context) (err error) {
 // @Router /courses/:id [get]
 func (h *Handler) GetOneCourses(c echo.Context) (err error) {
 
-	bk := model.Course{}
+	bk := &model.Course{}
 
 	id := c.Param("id")
 
@@ -100,7 +100,7 @@ func (h *Handler) GetOneCourses(c echo.Context) (err error) {
 // @Router /courses/:id [put]
 func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 
-	bk := model.Course{
+	bk := &model.Course{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -126,7 +126,7 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 	// 	return echo.ErrInternalServerError
 	// }
 
-	listtaskf := []model.Task{}
+	listtaskf := []*model.Task{}
 
 	if err = db.DB(config.NameDb).C("tasks").
 		Find(bson.M{
@@ -156,7 +156,7 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 	// Save in database
 	bk.Timestamp = time.Now()
 
-	bk.Tasks = []model.Task{}
+	bk.Tasks = []*model.Task{}
 
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
@@ -186,7 +186,7 @@ func (h *Handler) UpdateCourses(c echo.Context) (err error) {
 // @Router /courses [post]
 func (h *Handler) CreateCourses(c echo.Context) (err error) {
 
-	bk := model.Course{
+	bk := &model.Course{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -239,7 +239,7 @@ func (h *Handler) CreateCourses(c echo.Context) (err error) {
 // @Router /courses/:id [delete]
 func (h *Handler) DeleteCourses(c echo.Context) (err error) {
 
-	bk := model.Course{
+	bk := &model.Course{
 		// ID: bson.NewObjectId(),
 	}
 

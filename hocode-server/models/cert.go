@@ -21,8 +21,8 @@ type (
 
 type (
 	ReviewCertOut struct {
-		User   User   `json:"user" bson:"user"`
-		Config Config `json:"config" bson:"config"`
-		Cert   Cert   `json:"cert" bson:"cert"`
+		User   *User   `json:"user" bson:"user"`
+		Config *Config `json:"config" bson:"config"`
+		Cert   *Cert   `json:"cert" bson:"cert"`
 	}
 )

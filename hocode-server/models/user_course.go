@@ -10,7 +10,7 @@ type (
 	UserCourse struct {
 		ID         bson.ObjectId `json:"id" bson:"_id"`
 		UserID     string        `json:"user_id" bson:"user_id"`
-		CourseInfo []CourseInfo  `json:"course_info" bson:"course_info"`
+		CourseInfo []*CourseInfo `json:"course_info" bson:"course_info"`
 		Timestamp  time.Time     `json:"timestamp" bson:"timestamp"`
 		Del        bool          `json:"del" bson:"del"`
 	}
@@ -38,9 +38,9 @@ type (
 
 type (
 	UserCourseOut struct {
-		UserCourse   UserCourse   `json:"user_course" bson:"user_course"`
-		UserMiniTask UserMiniTask `json:"user_minitask" bson:"user_minitask"`
-		NextMiniTask MiniTask     `json:"next_minitask" bson:"next_minitask"`
-		CodePoint    int          `json:"codepoint" bson:"codepoint"`
+		UserCourse   *UserCourse   `json:"user_course" bson:"user_course"`
+		UserMiniTask *UserMiniTask `json:"user_minitask" bson:"user_minitask"`
+		NextMiniTask *MiniTask     `json:"next_minitask" bson:"next_minitask"`
+		CodePoint    int           `json:"codepoint" bson:"codepoint"`
 	}
 )

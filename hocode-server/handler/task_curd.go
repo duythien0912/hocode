@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -23,7 +24,7 @@ import (
 // @Router /tasks [get]
 func (h *Handler) GetListTasks(c echo.Context) (err error) {
 
-	bk := []model.Task{}
+	bk := []*model.Task{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -58,7 +59,7 @@ func (h *Handler) GetListTasks(c echo.Context) (err error) {
 // @Router /tasks/:id [get]
 func (h *Handler) GetOneTasks(c echo.Context) (err error) {
 
-	bk := model.Task{}
+	bk := &model.Task{}
 
 	id := c.Param("id")
 
@@ -98,7 +99,7 @@ func (h *Handler) GetOneTasks(c echo.Context) (err error) {
 // @Router /tasks/:id [put]
 func (h *Handler) UpdateTasks(c echo.Context) (err error) {
 
-	bk := model.Task{
+	bk := &model.Task{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -149,7 +150,7 @@ func (h *Handler) UpdateTasks(c echo.Context) (err error) {
 // @Router /tasks [post]
 func (h *Handler) CreateTasks(c echo.Context) (err error) {
 
-	bk := model.Task{
+	bk := &model.Task{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -197,7 +198,7 @@ func (h *Handler) CreateTasks(c echo.Context) (err error) {
 // @Router /tasks/:id [delete]
 func (h *Handler) DeleteTasks(c echo.Context) (err error) {
 
-	bk := model.Task{
+	bk := &model.Task{
 		// ID: bson.NewObjectId(),
 	}
 

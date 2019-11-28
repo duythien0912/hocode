@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -23,7 +24,7 @@ import (
 // @Router /events [get]
 func (h *Handler) GetListEvents(c echo.Context) (err error) {
 
-	bk := []model.Event{}
+	bk := []*model.Event{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -58,7 +59,7 @@ func (h *Handler) GetListEvents(c echo.Context) (err error) {
 // @Router /events/:id [get]
 func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 
-	bk := model.Event{}
+	bk := &model.Event{}
 
 	id := c.Param("id")
 
@@ -98,7 +99,7 @@ func (h *Handler) GetOneEvents(c echo.Context) (err error) {
 // @Router /events/:id [put]
 func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 
-	bk := model.Event{
+	bk := &model.Event{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -149,7 +150,7 @@ func (h *Handler) UpdateEvents(c echo.Context) (err error) {
 // @Router /events [post]
 func (h *Handler) CreateEvents(c echo.Context) (err error) {
 
-	bk := model.Event{
+	bk := &model.Event{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -197,7 +198,7 @@ func (h *Handler) CreateEvents(c echo.Context) (err error) {
 // @Router /events/:id [delete]
 func (h *Handler) DeleteEvents(c echo.Context) (err error) {
 
-	bk := model.Event{
+	bk := &model.Event{
 		// ID: bson.NewObjectId(),
 	}
 

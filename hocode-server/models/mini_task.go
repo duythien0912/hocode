@@ -21,10 +21,10 @@ type (
 		Level        string      `json:"level" bson:"level"`
 		Avatar       string      `json:"avatar" bson:"avatar"`
 		TemplateCode string      `json:"template_code" bson:"template_code"`
-		UnitTests    []UnitTest `json:"unit_tests" bson:"unit_tests"`
+		UnitTests    []*UnitTest `json:"unit_tests" bson:"unit_tests"`
 		// input_list:[{input_name:"param1",input_type:"int"}]
 
-		InputList []InputList `json:"input_list" bson:"input_list"`
+		InputList []*InputList `json:"input_list" bson:"input_list"`
 
 		TaskId    string    `json:"task_id" bson:"task_id"`
 		Timestamp time.Time `json:"timestamp" bson:"timestamp"`
@@ -43,7 +43,7 @@ type (
 type (
 	UnitTest struct {
 		// ID             bson.ObjectId `json:"id" bson:"_id,omitempty"`
-		Inputs         []Input `json:"inputs" bson:"inputs"`
+		Inputs         []*Input `json:"inputs" bson:"inputs"`
 		ExpectedOutput string   `json:"expected_output" bson:"expected_output"`
 	}
 )

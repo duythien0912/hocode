@@ -8,11 +8,11 @@ import (
 
 type (
 	UserMiniTask struct {
-		ID           bson.ObjectId  `json:"id" bson:"_id"`
-		UserID       string         `json:"user_id" bson:"user_id"`
-		MiniTaskInfo []MiniTaskInfo `json:"course_info" bson:"course_info"`
-		Timestamp    time.Time      `json:"timestamp" bson:"timestamp"`
-		Del          bool           `json:"del" bson:"del"`
+		ID           bson.ObjectId   `json:"id" bson:"_id"`
+		UserID       string          `json:"user_id" bson:"user_id"`
+		MiniTaskInfo []*MiniTaskInfo `json:"course_info" bson:"course_info"`
+		Timestamp    time.Time       `json:"timestamp" bson:"timestamp"`
+		Del          bool            `json:"del" bson:"del"`
 	}
 )
 

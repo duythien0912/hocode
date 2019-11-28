@@ -37,7 +37,7 @@ import (
 // @Router /courses [get]
 func (h *Handler) Courses(c echo.Context) (err error) {
 
-	courses := []model.Course{}
+	courses := []*model.Course{}
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
@@ -56,7 +56,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 	}
 
 	for i := 0; i < len(courses); i++ {
-		mta := []model.Task{}
+		mta := []*model.Task{}
 
 		db.DB(config.NameDb).C("tasks").
 			Find(bson.M{
@@ -88,7 +88,7 @@ func (h *Handler) Courses(c echo.Context) (err error) {
 // @Success 200 {object} model.Course
 // @Router /courses/{id} [get]
 func (h *Handler) CourseByID(c echo.Context) (err error) {
-	course := model.Course{}
+	course := &model.Course{}
 
 	id := c.Param("id")
 
@@ -123,7 +123,7 @@ func (h *Handler) CourseByID(c echo.Context) (err error) {
 // @Success 200 {array} model.Task
 // @Router /courses/{id}/tasks [get]
 func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
-	ta := []model.Task{}
+	ta := []*model.Task{}
 
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
@@ -147,7 +147,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 	}
 
 	for i := 0; i < len(ta); i++ {
-		mta := []model.MiniTask{}
+		mta := []*model.MiniTask{}
 
 		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
@@ -157,7 +157,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 			Sort("-timestamp").
 			All(&mta)
 
-		// userMiniTask := model.UserMiniTask{}
+		// userMiniTask := &model.UserMiniTask{}
 
 		// if err = db.DB(config.NameDb).C("user_minitask").
 		// 	Find(bson.M{
@@ -206,7 +206,7 @@ func (h *Handler) TaskByCoursesID(c echo.Context) (err error) {
 // @Success 200 {array} model.Task
 // @Router /courses/{id}/tasks [get]
 func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
-	ta := []model.Task{}
+	ta := []*model.Task{}
 
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
@@ -230,7 +230,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 	}
 
 	for i := 0; i < len(ta); i++ {
-		mta := []model.MiniTask{}
+		mta := []*model.MiniTask{}
 
 		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
@@ -240,7 +240,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 			Sort("-timestamp").
 			All(&mta)
 
-		userMiniTask := model.UserMiniTask{}
+		userMiniTask := &model.UserMiniTask{}
 
 		if err = db.DB(config.NameDb).C("user_minitask").
 			Find(bson.M{
@@ -300,7 +300,7 @@ func (h *Handler) AuthTaskByCoursesID(c echo.Context) (err error) {
 // @Router /courses [post]
 func (h *Handler) CreateCourse(c echo.Context) (err error) {
 
-	pn := model.Course{
+	pn := &model.Course{
 		// ID: bson.NewObjectId(),
 	}
 

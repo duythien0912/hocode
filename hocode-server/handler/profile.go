@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -14,7 +15,7 @@ import (
 
 func (h *Handler) Profile(c echo.Context) (err error) {
 
-	ta := []model.Profile{}
+	ta := []*model.Profile{}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 
@@ -36,7 +37,7 @@ func (h *Handler) Profile(c echo.Context) (err error) {
 
 func (h *Handler) ProfileByID(c echo.Context) (err error) {
 
-	tf := model.Profile{}
+	tf := &model.Profile{}
 
 	id := c.Param("id")
 
@@ -58,7 +59,7 @@ func (h *Handler) ProfileByID(c echo.Context) (err error) {
 
 func (h *Handler) CreateProfile(c echo.Context) (err error) {
 
-	tn := model.Profile{
+	tn := &model.Profile{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(tn); err != nil {

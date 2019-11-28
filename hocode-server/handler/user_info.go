@@ -24,7 +24,7 @@ import (
 // @Router /auth/usercourse [get]
 func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 
-	uc := model.UserCourse{}
+	uc := &model.UserCourse{}
 
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
@@ -41,7 +41,7 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 		One(&uc); err != nil {
 		if err == mgo.ErrNotFound {
 			// return echo.ErrNotFound
-			uc.CourseInfo = []model.CourseInfo{}
+			uc.CourseInfo = []*model.CourseInfo{}
 			return c.JSON(http.StatusOK, uc)
 		}
 
@@ -63,13 +63,13 @@ func (h *Handler) GetUserCourse(c echo.Context) (err error) {
 // @Router /auth/updateusercourse [post]
 func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
-	uc := model.UserCourse{}
+	uc := &model.UserCourse{}
 
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userID := claims["id"].(string)
 
-	bodyUC := model.BodyUC{}
+	bodyUC := &model.BodyUC{}
 
 	if err = c.Bind(bodyUC); err != nil {
 		return
@@ -90,7 +90,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	db := h.DB.Clone()
 	defer db.Close()
 
-	taskf := model.Task{}
+	taskf := &model.Task{}
 
 	if err = db.DB(config.NameDb).C("tasks").
 		// FindId(bson.ObjectIdHex(bodyUC.TaskID)).
@@ -108,7 +108,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-	mta := []model.MiniTask{}
+	mta := []*model.MiniTask{}
 
 	db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{
@@ -149,7 +149,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	}
 
 	// get title from course
-	course := model.Course{}
+	course := &model.Course{}
 
 	if err = db.DB(config.NameDb).C("course").
 		// FindId(bson.ObjectIdHex(bodyUC.CourseID)).
@@ -165,7 +165,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-	// taskf := model.Task{}
+	// taskf := &model.Task{}
 
 	// if err = db.DB(config.NameDb).C("tasks").
 	// 	Find(bson.M{
@@ -180,7 +180,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 	// 	return
 	// }
 
-	userMiniTask := model.UserMiniTask{}
+	userMiniTask := &model.UserMiniTask{}
 
 	userMiniTask.UserID = userID
 
@@ -209,7 +209,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 			}
 		}
 	}
-	ur := model.User{}
+	ur := &model.User{}
 
 	if err = db.DB(config.NameDb).
 		C("users").
@@ -232,12 +232,12 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		userMiniTask.MiniTaskInfo[uMiniTaskLocationC].MiniTaskID = bodyUC.MiniTaskID
 
 	} else {
-		miniTaskIn := model.MiniTaskInfo{}
+		miniTaskIn := &model.MiniTaskInfo{}
 		miniTaskIn.Status = "hoanthanh"
 		miniTaskIn.MiniTaskID = bodyUC.MiniTaskID
 
 		// Cộng điểm cho user
-		mtf := model.MiniTask{}
+		mtf := &model.MiniTask{}
 
 		if err = db.DB(config.NameDb).C("minitasks").
 			// FindId(bson.ObjectIdHex(bodyUC.MiniTaskID)).
@@ -299,7 +299,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	// db.getCollection("minitasks").find({_id: {$gt: ObjectId("5d9b6ff5fe6e2b038fe5a409") }}).limit(1)
 
-	nextMiniTask := model.MiniTask{}
+	nextMiniTask := &model.MiniTask{}
 
 	// nextMiniTask.Timestamp = time.Now()
 	// if err = db.DB(config.NameDb).C("minitasks").
@@ -348,7 +348,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		}
 
 	} else {
-		courseInfo := model.CourseInfo{}
+		courseInfo := &model.CourseInfo{}
 
 		courseInfo.CourseID = bodyUC.CourseID
 		courseInfo.CourseName = course.CourseName
@@ -404,7 +404,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 	}
 
-	userCourseOut := model.UserCourseOut{
+	userCourseOut := &model.UserCourseOut{
 		UserCourse:   uc,
 		UserMiniTask: userMiniTask,
 		NextMiniTask: nextMiniTask,
@@ -417,7 +417,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 
 func (h *Handler) NextMiniTask(c echo.Context) (err error) {
 
-	bodyUC := model.BodyUC{}
+	bodyUC := &model.BodyUC{}
 
 	if err = c.Bind(bodyUC); err != nil {
 		return
@@ -428,7 +428,7 @@ func (h *Handler) NextMiniTask(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid minitask_id fields"}
 	}
 
-	nextMiniTask := model.MiniTask{}
+	nextMiniTask := &model.MiniTask{}
 
 	db := h.DB.Clone()
 	defer db.Close()

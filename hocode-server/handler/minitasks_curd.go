@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/duythien0912/hocode/config"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/duythien0912/hocode/config"
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
@@ -23,7 +24,7 @@ import (
 // @Router /minitasks [get]
 func (h *Handler) GetListMiniTasks(c echo.Context) (err error) {
 
-	bk := []model.MiniTask{}
+	bk := []*model.MiniTask{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -59,7 +60,7 @@ func (h *Handler) GetListMiniTasks(c echo.Context) (err error) {
 // @Router /minitasks/:id [get]
 func (h *Handler) GetOneMiniTasks(c echo.Context) (err error) {
 
-	bk := model.MiniTask{}
+	bk := &model.MiniTask{}
 
 	id := c.Param("id")
 
@@ -99,7 +100,7 @@ func (h *Handler) GetOneMiniTasks(c echo.Context) (err error) {
 // @Router /minitasks/:id [put]
 func (h *Handler) UpdateMiniTasks(c echo.Context) (err error) {
 
-	bk := model.MiniTask{
+	bk := &model.MiniTask{
 		// ID: bson.NewObjectId(),
 	}
 
@@ -150,7 +151,7 @@ func (h *Handler) UpdateMiniTasks(c echo.Context) (err error) {
 // @Router /minitasks [post]
 func (h *Handler) CreateMiniTasks(c echo.Context) (err error) {
 
-	bk := model.MiniTask{
+	bk := &model.MiniTask{
 		// ID: bson.NewObjectId(),
 	}
 	if err = c.Bind(bk); err != nil {
@@ -198,7 +199,7 @@ func (h *Handler) CreateMiniTasks(c echo.Context) (err error) {
 // @Router /minitasks/:id [delete]
 func (h *Handler) DeleteMiniTasks(c echo.Context) (err error) {
 
-	bk := model.MiniTask{
+	bk := &model.MiniTask{
 		// ID: bson.NewObjectId(),
 	}
 
