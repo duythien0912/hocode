@@ -24,7 +24,7 @@ import (
 // @Router /certs [get]
 func (h *Handler) GetListCerts(c echo.Context) (err error) {
 
-	// var bk []*model.Cert
+	// var bk []model.Cert
 	bk := []model.Cert{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))

@@ -23,7 +23,7 @@ import (
 // @Router /events [get]
 func (h *Handler) GetListEvents(c echo.Context) (err error) {
 
-	bk := []*model.Event{}
+	bk := []model.Event{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))

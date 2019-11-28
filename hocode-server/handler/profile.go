@@ -14,7 +14,7 @@ import (
 
 func (h *Handler) Profile(c echo.Context) (err error) {
 
-	ta := []*model.Profile{}
+	ta := []model.Profile{}
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 

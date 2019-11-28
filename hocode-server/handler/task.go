@@ -25,7 +25,7 @@ import (
 // @Router /tasks [get]
 func (h *Handler) Task(c echo.Context) (err error) {
 
-	ta := []*model.Task{}
+	ta := []model.Task{}
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	limit, _ := strconv.Atoi(c.QueryParam("limit"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
@@ -44,7 +44,7 @@ func (h *Handler) Task(c echo.Context) (err error) {
 	}
 
 	for i := 0; i < len(ta); i++ {
-		mta := []*model.MiniTask{}
+		mta := []model.MiniTask{}
 
 		db.DB(config.NameDb).C("minitasks").
 			Find(bson.M{
@@ -99,7 +99,7 @@ func (h *Handler) TaskByID(c echo.Context) (err error) {
 		return
 	}
 
-	mta := []*model.MiniTask{}
+	mta := []model.MiniTask{}
 	userMiniTask := &model.UserMiniTask{}
 
 	db.DB(config.NameDb).C("minitasks").

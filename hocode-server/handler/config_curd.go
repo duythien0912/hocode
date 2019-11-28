@@ -24,7 +24,7 @@ import (
 // @Router /configs [get]
 func (h *Handler) GetListConfigs(c echo.Context) (err error) {
 
-	var bk []*model.Config
+	var bk []model.Config
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))

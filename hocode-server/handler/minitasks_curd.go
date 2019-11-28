@@ -23,7 +23,7 @@ import (
 // @Router /minitasks [get]
 func (h *Handler) GetListMiniTasks(c echo.Context) (err error) {
 
-	bk := []*model.MiniTask{}
+	bk := []model.MiniTask{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))

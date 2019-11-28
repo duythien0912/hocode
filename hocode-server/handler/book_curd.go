@@ -23,7 +23,7 @@ import (
 // @Router /books [get]
 func (h *Handler) GetListBooks(c echo.Context) (err error) {
 
-	var bk []*model.Book
+	var bk []model.Book
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))

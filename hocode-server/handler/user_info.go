@@ -108,7 +108,7 @@ func (h *Handler) UpdateUserCourse(c echo.Context) (err error) {
 		return
 	}
 
-	mta := []*model.MiniTask{}
+	mta := []model.MiniTask{}
 
 	db.DB(config.NameDb).C("minitasks").
 		Find(bson.M{

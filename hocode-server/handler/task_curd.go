@@ -23,7 +23,7 @@ import (
 // @Router /tasks [get]
 func (h *Handler) GetListTasks(c echo.Context) (err error) {
 
-	bk := []*model.Task{}
+	bk := []model.Task{}
 
 	// page, _ := strconv.Atoi(c.QueryParam("page"))
 	offset, _ := strconv.Atoi(c.QueryParam("offset"))
