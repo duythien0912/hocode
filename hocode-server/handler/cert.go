@@ -115,7 +115,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 		bk.UserID = ur.ID.Hex()
 		bk.ConfigID = configApp.ID.Hex()
 		bk.Status = "Active"
-		id, _ := gonanoid.Generate("abcde", 6)
+		id, _ := gonanoid.Generate(ur.ID.Hex(), 6)
 		bk.SearchID  = id
 
 
