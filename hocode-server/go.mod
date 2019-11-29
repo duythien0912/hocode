@@ -11,6 +11,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0
 	github.com/mailru/easyjson v0.7.0 // indirect
+	github.com/matoous/go-nanoid v1.1.0
 	github.com/pkg/errors v0.8.1
 	github.com/swaggo/swag v1.6.3
 	golang.org/x/crypto v0.0.0-20190923035154-9ee001bba392 // indirect

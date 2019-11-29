@@ -12,6 +12,8 @@ import (
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/matoous/go-nanoid"
+
 )
 
 // Certs godoc
@@ -113,6 +115,9 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 		bk.UserID = ur.ID.Hex()
 		bk.ConfigID = configApp.ID.Hex()
 		bk.Status = "Active"
+		id, _ := gonanoid.Generate("abcde", 6)
+		bk.SearchID  = id
+
 
 		bk.Timestamp = time.Now()
 
