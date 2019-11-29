@@ -10,10 +10,9 @@ import (
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
+	"github.com/matoous/go-nanoid"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"github.com/matoous/go-nanoid"
-
 )
 
 // Certs godoc
@@ -111,13 +110,12 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 	bk := &model.Cert{}
 
 	if ur.CodePoint >= configApp.ReviewPoint {
-
+		bk.ID = bson.NewObjectId()
 		bk.UserID = ur.ID.Hex()
 		bk.ConfigID = configApp.ID.Hex()
 		bk.Status = "Active"
-		id, _ := gonanoid.Generate(ur.ID.Hex(), 6)
-		bk.SearchID  = id
-
+		id, _ := gonanoid.Generate(bk.ID.Hex(), 6)
+		bk.SearchID = id
 
 		bk.Timestamp = time.Now()
 
