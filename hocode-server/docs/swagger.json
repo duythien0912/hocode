@@ -260,31 +260,6 @@
                 }
             }
         },
-        "/cert/search/": {
-            "get": {
-                "description": "get certs by SearchID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Certs"
-                ],
-                "summary": "One Certs by Search ID",
-                "operationId": "cert_search_id",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/model.Cert"
-                        }
-                    }
-                }
-            }
-        },
         "/certs": {
             "get": {
                 "description": "get certs \u003ca href=\"/api/v1/certs?page=1\u0026limit=5\"\u003e/api/v1/certs?page=1\u0026limit=5\u003c/a\u003e",
@@ -431,6 +406,31 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Cert"
+                        }
+                    }
+                }
+            }
+        },
+        "/certs/search/": {
+            "get": {
+                "description": "get certs by SearchID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Certs"
+                ],
+                "summary": "One Certs by Search ID",
+                "operationId": "cert_search_id",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -860,7 +860,7 @@
                 }
             }
         },
-        "/curd/config/byname/": {
+        "/curd/configs/byname/": {
             "get": {
                 "description": "get configs",
                 "consumes": [
@@ -1264,8 +1264,8 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "List Task",
-                "operationId": "task_list",
+                "summary": "List Tasks",
+                "operationId": "tasks_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1290,6 +1290,7 @@
                     "Tasks"
                 ],
                 "summary": "Create Task",
+                "operationId": "tasks_create",
                 "parameters": [
                     {
                         "description": "Create Task",

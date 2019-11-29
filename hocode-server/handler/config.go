@@ -20,7 +20,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} model.Config
-// @Router /curd/config/byname/:id [get]
+// @Router /curd/configs/byname/:id [get]
 func (h *Handler) GetConfigByName(c echo.Context) (err error) {
 
 	bk := &model.Config{}

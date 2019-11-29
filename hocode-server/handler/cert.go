@@ -23,7 +23,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} model.Cert
-// @Router /cert/search/:id [get]
+// @Router /certs/search/:id [get]
 func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 
 	bk := &model.Cert{}

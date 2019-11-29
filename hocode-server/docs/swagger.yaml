@@ -489,23 +489,6 @@ paths:
       summary: UpdateBooks Book
       tags:
       - Books
-  /cert/search/:
-    get:
-      consumes:
-      - application/json
-      description: get certs by SearchID
-      operationId: cert_search_id
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Cert'
-            type: object
-      summary: One Certs by Search ID
-      tags:
-      - Certs
   /certs:
     get:
       consumes:
@@ -611,6 +594,23 @@ paths:
             $ref: '#/definitions/model.Cert'
             type: object
       summary: UpdateCerts Cert
+      tags:
+      - Certs
+  /certs/search/:
+    get:
+      consumes:
+      - application/json
+      description: get certs by SearchID
+      operationId: cert_search_id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Cert'
+            type: object
+      summary: One Certs by Search ID
       tags:
       - Certs
   /configs:
@@ -896,7 +896,7 @@ paths:
       summary: Create Book
       tags:
       - Books
-  /curd/config/byname/:
+  /curd/configs/byname/:
     get:
       consumes:
       - application/json
@@ -1167,7 +1167,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
-      operationId: task_list
+      operationId: tasks_list
       produces:
       - application/json
       responses:
@@ -1177,13 +1177,14 @@ paths:
             items:
               $ref: '#/definitions/model.Task'
             type: array
-      summary: List Task
+      summary: List Tasks
       tags:
       - Tasks
     post:
       consumes:
       - application/json
       description: Create Task
+      operationId: tasks_create
       parameters:
       - description: Create Task
         in: body
