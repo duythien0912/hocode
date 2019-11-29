@@ -18,25 +18,34 @@ import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 
 const ICONS = {
-  books: <MenuBookIcon />,
-  events: <EventIcon />,
-  courses: <GestureIcon />,
-  tasks: <SportsSoccerIcon />,
-  minitasks: <SportsVolleyballIcon />,
-  profile: <ListIcon />,
-  certs: <CardGiftcardIcon />,
+  books: <MenuBookIcon style={{marginRight: 1}} />,
+  events: <EventIcon style={{marginRight: 1}} />,
+  courses: <GestureIcon style={{marginRight: 1}} />,
+  tasks: <SportsSoccerIcon style={{marginRight: 1}} />,
+  minitasks: <SportsVolleyballIcon style={{marginRight: 1}} />,
+  profile: <ListIcon style={{marginRight: 1}} />,
+  certs: <CardGiftcardIcon style={{marginRight: 1}} />,
 };
 
 const Menu = ({ resources, onMenuClick, logout }) => (
   <div>
     <Link to={`/profile`} style={{ textDecoration: "none" }}>
       <MenuItem>
-        <ArrowBackIcon style={{ fontSize: 16, color: "#1f74be" }} />
-        <p style={{ fontSize: 12, marginLeft: "3px", color: "#1f74be" }}>
+        <ArrowBackIcon style={{ fontSize: 23, color: "#1f74be" }} />
+        <p style={{ fontSize: 14, marginLeft: "1.2em", color: "#1f74be" }}>
           Quay lại trang chủ
         </p>
-      </MenuItem>
+      </MenuItem> 
+      
     </Link>
+    {/* <MenuItemLink
+              key="goHome"
+              to={`/profile`}
+              primaryText={`Quay lại trang chủ`}
+              onClick={onMenuClick}
+              leftIcon={<ArrowBackIcon/>}
+              className="MenuItemLinkBack"
+            /> */}
     {resources
       ? resources.map(resource =>
           resource.hasList ? (
