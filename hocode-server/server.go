@@ -109,7 +109,7 @@ func main() {
 	r.GET("/books", h.GetBooks)
 	r.GET("/events", h.GetListEvents)
 
-	r.GET("/cert/search/:id", h.SearchCertsByID)
+	r.GET("/certs/search/:id", h.SearchCertsByID)
 
 	curd := e.Group("/api/v1/curd")
 
