@@ -94,7 +94,7 @@ class MiniTaskHeader extends Component {
               {this.props.user.firstname}
             </div>
 
-            <div className="nav_usermenu" style={{display: "flex"}}>
+            <div className="nav_usermenu ">
               <UserMenu />
             </div>
             <div className="desktop-hide">

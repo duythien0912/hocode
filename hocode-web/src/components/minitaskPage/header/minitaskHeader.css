@@ -85,6 +85,9 @@
 .nav-wrapper .desktop-hide1 {
   display: none;
 }
+.nav-wrapper .right-menu .nav_usermenu {
+  display: flex;
+}
 @media screen and (max-width: 860px) {
   .right-menu {
     align-items: flex-start;
@@ -97,7 +100,7 @@
     transform: translate(-50%, -50%);
   }
   .logo {
-    display: none;
+    display: none!important;
   }
   .nav-wrapper .desktop-hide1 {
     display: block;

@@ -9,11 +9,8 @@ import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-
+import Chip from "@material-ui/core/Chip";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = {
   paper: {
@@ -30,6 +27,15 @@ const styles = {
     height: 180,
     objectFit: "cover"
   }
+};
+const titleCase = string => {
+  return string
+    .toLowerCase()
+    .split(" ")
+    .map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
 };
 
 class Overview extends React.Component {
@@ -74,10 +80,41 @@ class Overview extends React.Component {
     this.getApi();
   }
 
+  renderLevelMinitaskChip(minitask) {
+    minitask.level = titleCase(minitask.level);
+    console.log(minitask.level);
+    if (minitask.level === "Easy") {
+      return (
+        <Chip
+          style={{ background: "#76d38e", color: "white" }}
+          size="small"
+          label={`${minitask.level}`}
+        />
+      );
+    } else if (minitask.level === "Medium") {
+      return (
+        <Chip
+          style={{ background: "#1d97c6", color: "white" }}
+          size="small"
+          label={`${minitask.level}`}
+        />
+      );
+    } else {
+      return (
+        <Chip
+          style={{ background: "red", color: "white" }}
+          size="small"
+          label={`${minitask.level}`}
+        />
+      );
+    }
+  }
+
   render() {
     const { isLoading } = this.state;
     const { classes } = this.props;
     let url = this.props.url;
+
     return (
       <Grid container spacing={3} style={{ height: "100vh" }}>
         {isLoading ? (
@@ -108,20 +145,15 @@ class Overview extends React.Component {
                   </Grid>
                 </Grid>
                 {this.state.courses.length === 0 ? (
-                  
-                    <div
-                      style={{
-                       
-                      }}
-                    >
-                      Bạn chưa thực hiện bài tập nào.
-                    </div>
-                  
+                  <div style={{}}>Bạn chưa thực hiện bài tập nào.</div>
                 ) : (
                   this.state.courses.map(course => {
                     return (
                       <React.Fragment key={course.course_id}>
-                        <Grid container style={{ alignItems: "center", flexWrap:"unset"}}>
+                        <Grid
+                          container
+                          style={{ alignItems: "center", flexWrap: "unset" }}
+                        >
                           <Grid item>
                             <img
                               className={classes.img}
@@ -136,31 +168,40 @@ class Overview extends React.Component {
                             />
                           </Grid>
                           <Grid item style={{ flexGrow: 1, padding: 10 }}>
-                            <div style={{ fontWeight: "bold" }}>
-                              <Link
-                                className="item"
-                                key={course.course_id}
-                                style={{ textDecoration: "none" }}
-                                to={`${url}/courses/${course.course_id}/tasks`}
-                              >
-                                {course.course_name}
-                              </Link>
-                            </div>
-                            <div style={{ color: "#9d9d9d" }}>
-                              {course.completed_tasks_count}/
-                              {course.total_tasks_count}
-                            </div>
+                            <Tooltip title="Tên chủ đề" placement="top">
+                              <div style={{ fontWeight: "bold" }}>
+                                <Link
+                                  className="item"
+                                  key={course.course_id}
+                                  style={{ textDecoration: "none" }}
+                                  to={`${url}/courses/${course.course_id}/tasks`}
+                                >
+                                  {course.course_name}
+                                </Link>
+                              </div>
+                            </Tooltip>
+                            <Tooltip
+                              title="Số lượng bài học đã hoàn thành"
+                              placement="top"
+                            >
+                              <div style={{ color: "#9d9d9d" }}>
+                                {course.completed_tasks_count}/
+                                {course.total_tasks_count}
+                              </div>
+                            </Tooltip>
                           </Grid>
                           <Grid item>
-                            <LinearProgress
-                              variant="determinate"
-                              value={
-                                (course.completed_tasks_count /
-                                  course.total_tasks_count) *
-                                100
-                              }
-                              style={{ width: 115 }}
-                            />
+                            <Tooltip title="Tiến độ" placement="top">
+                              <LinearProgress
+                                variant="determinate"
+                                value={
+                                  (course.completed_tasks_count /
+                                    course.total_tasks_count) *
+                                  100
+                                }
+                                style={{ width: 115 }}
+                              />
+                            </Tooltip>
                           </Grid>
                         </Grid>
                         <Divider style={{ margin: "auto" }} />{" "}
@@ -174,16 +215,17 @@ class Overview extends React.Component {
               <Paper className={classes.paper}>
                 <Grid container style={{ marginBottom: 15 }}>
                   <Grid item style={{ flexGrow: 1 }}>
-                    <div style={{ fontWeight: "bold" }}>
-                      Thách thức mới
-                    </div>{" "}
+                    <div style={{ fontWeight: "bold" }}>Thách thức mới</div>{" "}
                   </Grid>
                 </Grid>
 
                 {this.state.daily_minitasks.map(daily_minitask => {
                   return (
                     <React.Fragment key={daily_minitask.id}>
-                      <Grid container style={{ alignItems: "center" }}>
+                      <Grid
+                        container
+                        style={{ alignItems: "center", flexWrap: "unset" }}
+                      >
                         <Grid item>
                           <img
                             className={classes.img}
@@ -207,16 +249,62 @@ class Overview extends React.Component {
                               {daily_minitask.mini_task_name}
                             </Link>
                           </div>
-                          <div style={{ color: "#9d9d9d" }}>
-                            Code Point: {daily_minitask.code_point}
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <Tooltip title="Code point" placement="top">
+                              <div style={{ color: "#9d9d9d" }}>
+                                {daily_minitask.code_point}
+                              </div>
+                            </Tooltip>
+                            <Tooltip title="Độ khó" placement="top">
+                              <div style={{ marginLeft: 10 }}>
+                                {this.renderLevelMinitaskChip(daily_minitask)}
+                              </div>
+                            </Tooltip>
                           </div>
                         </Grid>
                         <Grid item>
-                          <LinearProgress
-                            variant="determinate"
-                            value={(1 / 1) * 100}
-                            style={{ width: 115 }}
-                          />
+                          {daily_minitask.status === "hoanthanh" ? (
+                            <Tooltip title="Đã hoàn thành" placement="top">
+                              {" "}
+                              <div
+                                style={{
+                                  width: "20px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  marginLeft: 10
+                                }}
+                              >
+                                <img
+                                  style={{ width: "100%" }}
+                                  src={require("../icons/hoanthanh.svg")}
+                                  alt="Kiwi standing on oval"
+                                />
+                              </div>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip title="Chưa hoàn thành" placement="top">
+                              <div
+                                style={{
+                                  width: "20px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  marginLeft: 10
+                                }}
+                              >
+                                <img
+                                  style={{
+                                    width: "100%",
+                                    backgroundColor: "#F5F5F5",
+                                    borderRadius: "50%"
+                                  }}
+                                  src={require("../icons/chuahoanthanh.svg")}
+                                  alt="Kiwi standing on oval"
+                                />
+                              </div>
+                            </Tooltip>
+                          )}
                         </Grid>
                       </Grid>
                       <Divider style={{ margin: "auto" }} />{" "}
