@@ -1,5 +1,25 @@
 
-.react_mde_custom .editor-preview h1,h2,h3,h4,h5,h6{
+.react_mde_custom .editor-preview h1{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+.react_mde_custom .editor-preview h2{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+.react_mde_custom .editor-preview h3{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+.react_mde_custom .editor-preview h4{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+.react_mde_custom .editor-preview h5{
+    color: #44BFA3;
+    font-size: 1.4em;
+}
+.react_mde_custom .editor-preview h6{
     color: #44BFA3;
     font-size: 1.4em;
 }

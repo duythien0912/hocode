@@ -104,7 +104,7 @@ class Overview extends React.Component {
               <Paper className={classes.paper}>
                 <Grid container style={{ marginBottom: 15 }}>
                   <Grid item style={{ flexGrow: 1 }}>
-                    <div style={{ fontWeight: "bold" }}>Gần đây</div>{" "}
+                    <div style={{ fontWeight: "bold" }}>Chủ đề gần đây</div>{" "}
                   </Grid>
                 </Grid>
                 {this.state.courses.length === 0 ? (
@@ -121,7 +121,7 @@ class Overview extends React.Component {
                   this.state.courses.map(course => {
                     return (
                       <React.Fragment key={course.course_id}>
-                        <Grid container style={{ alignItems: "center" }}>
+                        <Grid container style={{ alignItems: "center", flexWrap:"unset"}}>
                           <Grid item>
                             <img
                               className={classes.img}

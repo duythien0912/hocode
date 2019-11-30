@@ -32,6 +32,7 @@
     "react-simplemde-editor": "^4.1.0",
     "react-spinners": "^0.6.1",
     "react-split": "^2.0.7",
+    "react-to-print": "^2.5.0",
     "react-toastify": "^5.4.0",
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",

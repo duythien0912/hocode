@@ -320,7 +320,7 @@ class ProfilePage extends React.Component {
               <TaskBody location={this.props.location} />
             </Route>
             <Route path={`${path}/print`}>
-              <PrintBody />
+              <PrintBody  userData={this.props.user}/>
             </Route>
             {/* <Route path={`${path}/admin`}>
               <ReactAdmin />
