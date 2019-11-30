@@ -26,7 +26,7 @@ import (
 // @Router /certs/search/:id [get]
 func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 
-	bk := &model.Cert{}
+	bk := []*model.Cert{}
 
 	id := c.Param("id")
 
@@ -38,7 +38,7 @@ func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 			"search_id": id,
 			"del":       bson.M{"$ne": true},
 		}).
-		One(&bk); err != nil {
+		All(&bk); err != nil {
 		if err == mgo.ErrNotFound {
 			// return echo.ErrNotFound
 			return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
@@ -48,7 +48,7 @@ func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 		return
 	}
 
-	c.Response().Header().Set("x-total-count", strconv.Itoa(1))
+	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)
 
