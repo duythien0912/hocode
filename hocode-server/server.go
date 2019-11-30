@@ -202,6 +202,8 @@ func main() {
 
 	ra.GET("/usercourse", h.GetUserCourse)
 
+	ra.GET("/completeminitask", h.Minitasks)
+
 	ra.POST("/updateusercourse", h.UpdateUserCourse)
 
 	ra.POST("/nextminitask", h.NextMiniTask)
