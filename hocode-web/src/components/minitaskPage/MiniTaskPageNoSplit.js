@@ -12,8 +12,9 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HashLoader from "react-spinners/HashLoader";
-
+import js_beautify from "js-beautify";
 import { connect } from "react-redux";
+import Snackbar from '@material-ui/core/Snackbar';
 import {
   submitUpdateMinitask,
   setUndefinedNextMinitask
@@ -29,6 +30,7 @@ class MiniTaskPage extends Component {
       userCode: "",
       isLoading: false,
       isLoadingComponent: true
+      ,open: false
     };
 
     this.executeCode = this.executeCode.bind(this);
@@ -102,7 +104,22 @@ class MiniTaskPage extends Component {
     // is props of <codeEditor/> to update usercode wwhen edit in editor
     this.setState({ userCode: value });
   }
+  handleClickSnack = () => {
+    this.setState({ open: true });
+  };
 
+  handleCloseSnack = () => {
+    this.setState({ open: false });
+  };
+  beautifyCode(value) {
+    var formatCode = js_beautify(value, { max_preserve_newlines: 2 });
+    // console.log(formatCode);
+
+    this.setState((state, props) => ({
+      userCode: formatCode
+    }));
+    this.handleClickSnack();
+  }
   resetCode() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -358,7 +375,22 @@ class MiniTaskPage extends Component {
 
     return (
       <React.Fragment>
+
         <div className="fit layout-code">
+        <Snackbar
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            key={`bottom,center`}
+            open={this.state.open}
+            onClose={this.handleCloseSnack}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            className="success"
+            autoHideDuration={2000}
+
+            // style={{    backgroundColor: "#43a047"            }}
+            message={<span id="message-id">Thành công</span>}
+          />
           {/* fit->  postion: absolute, top, bottom,left, right:0 ****   .layout-code{ display: flex;flex-direction: column;
         } */}
           <div className="layout-code-header">
@@ -421,14 +453,40 @@ class MiniTaskPage extends Component {
                         <button
                           onClick={this.resetCode}
                           style={{
-                            fontSize: 10,
+                            fontSize: 12,
                             padding: "6px 8px",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            background: "#ef5350",
+                            fontWeight: "bold"
                           }}
                         >
                           Reset code
                         </button>
                       </div>
+                      <div
+                                className="reset_code"
+                                style={{
+                                  position: "absolute",
+                                  bottom: 10,
+                                  right: 110,
+                                  zIndex: 9
+                                }}
+                              >
+                                <button
+                                  onClick={() =>
+                                    this.beautifyCode(this.state.userCode)
+                                  }
+                                  style={{
+                                    fontSize: 12,
+                                    padding: "6px 8px",
+                                    cursor: "pointer",
+                                    background: "#3d5afe",
+                                    fontWeight: "bold"
+                                  }}
+                                >
+                                  Beautifier code
+                                </button>
+                              </div>
                     </div>
 
                     <div className="resultPanel">
