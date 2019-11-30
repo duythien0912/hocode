@@ -87,8 +87,7 @@ class MiniTaskHeader extends Component {
               className="code-point"
               style={{ fontSize: 14, margin: "0px 4px", color: "#4978cc" }}
             >
-              <EmojiNatureIcon style={{ fontSize: 16, marginRight: 1 }} />
-              {this.props.user.codepoint}
+              Code point: {this.props.user.codepoint}
             </div>
             <div className="nav-name" style={{ fontSize: 14 }}>
               {this.props.user.firstname}

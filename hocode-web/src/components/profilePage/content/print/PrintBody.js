@@ -26,7 +26,8 @@ class PrintBody extends Component {
       isLoading: true,
       certificate: {},
       review_point: 0,
-      user_codepoint: 0
+      user_codepoint: 0,
+      isLoadingCert:false,
     };
   }
 
@@ -56,11 +57,13 @@ class PrintBody extends Component {
     this.getApi();
   }
   getCertificate = async () => {
+    this.setState({ isLoadingCert:true});
     await Promise.all([
       axios.get(`https://hocodevn.com/api/v1/auth/reviewcert`).then(res => {
         const certificate = res.data;
         console.log(res.data);
         this.setState({ certificate });
+        this.setState({ isLoadingCert:false});
       })
     ]);
     this.setState({
@@ -68,6 +71,7 @@ class PrintBody extends Component {
     });
   };
   handleDialogCertificateOpen = () => {
+
     this.getCertificate();
   };
 
@@ -189,7 +193,7 @@ class PrintBody extends Component {
                         variant="contained"
                         onClick={this.handleDialogCertificateOpen}
                       >
-                        Xem chứng chỉ
+                        Xét chứng chỉ
                       </Button>
                     )}
                   </Grid>
@@ -277,23 +281,8 @@ class PrintBody extends Component {
               open={this.state.openDialogCertificate}
               onClose={this.handleDialogCertificateClose}
               aria-labelledby="customized-dialog-title"
-            >
-              <DialogTitle
-                id="customized-dialog-title"
-                onClose={this.handleDialogCertificateClose}
-              >
-                <Grid
-                    
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <ReactToPrint
-                      trigger={() => (
-                        <Button variant="contained">In chứng chỉ</Button>
-                      )}
-                      content={() => this.CertificateRef}
-                    />
-                  </Grid>
-              </DialogTitle>
+            > {this.state.isLoadingCert === true?<div>loading</div>:(<>
+       
 
               <DialogContent dividers>
                 <Grid container spacing={2}>
@@ -312,6 +301,24 @@ class PrintBody extends Component {
                   </Grid>
                 </Grid>
               </DialogContent>
+              <DialogTitle
+                id="customized-dialog-title"
+                onClose={this.handleDialogCertificateClose}
+              >
+                <Grid
+                    
+                    style={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <ReactToPrint
+                      trigger={() => (
+                        <Button variant="contained">In chứng chỉ</Button>
+                      )}
+                      content={() => this.CertificateRef}
+                    />
+                  </Grid>
+              </DialogTitle>
+            </>)}
+              
             </Dialog>
           </Grid>
         )}

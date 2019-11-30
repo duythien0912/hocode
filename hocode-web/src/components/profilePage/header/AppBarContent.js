@@ -121,7 +121,7 @@ class AppBarContent extends React.Component {
               <div>
               Code point: {this.props.user.codepoint}
 </div>              <div>
-              <EmojiNatureIcon style={{ fontSize: 24, marginRight: 1 }} />
+              
               </div>
             </div>
             <div
