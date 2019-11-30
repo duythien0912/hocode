@@ -78,7 +78,7 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`,
+            
             alignItems: "center"
           }}
         >
@@ -144,7 +144,7 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`
+          
           }}
         >
           <div></div>
@@ -169,7 +169,7 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`,
+            
             alignItems: "center"
           }}
         >
@@ -224,7 +224,7 @@ class TaskItem extends Component {
             display: "flex",
             textDecoration: "none",
             color: "#595959",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`
+            
           }}
         >
           <div></div>
@@ -256,7 +256,7 @@ class TaskItem extends Component {
             textTransform: "uppercase",
             color: "#595959",
             fontWeight: "bold",
-            fontFamily: `'Yanone Kaffeesatz', sans-serif`,
+           
             marginBottom: "50px",
             fontSize:'2em'
           }}
