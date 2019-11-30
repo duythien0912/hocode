@@ -30,8 +30,6 @@ definitions:
         type: string
       del:
         type: boolean
-      electronic_signature:
-        type: string
       id:
         type: string
       search_id:
@@ -39,6 +37,8 @@ definitions:
       status:
         type: string
       timestamp:
+        description: ElectronicSignature string        json:"electronic_signature"
+          bson:"electronic_signature"
         type: string
       user_id:
         type: string
@@ -325,6 +325,23 @@ info:
   title: Hocode API
   version: "1.0"
 paths:
+  /auth/completeminitask:
+    get:
+      consumes:
+      - application/json
+      operationId: user_complete_minitask
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MiniTask'
+            type: array
+      summary: Get complete user minitask
+      tags:
+      - UserMiniTask
   /auth/reviewcert:
     get:
       consumes:
@@ -1167,7 +1184,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
-      operationId: tasks_list
+      operationId: task_list
       produces:
       - application/json
       responses:
@@ -1177,14 +1194,13 @@ paths:
             items:
               $ref: '#/definitions/model.Task'
             type: array
-      summary: List Tasks
+      summary: List Task
       tags:
       - Tasks
     post:
       consumes:
       - application/json
       description: Create Task
-      operationId: tasks_create
       parameters:
       - description: Create Task
         in: body

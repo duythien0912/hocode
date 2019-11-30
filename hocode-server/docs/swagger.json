@@ -18,6 +18,32 @@
     "host": "hocodevn.com",
     "basePath": "/api/v1",
     "paths": {
+        "/auth/completeminitask": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserMiniTask"
+                ],
+                "summary": "Get complete user minitask",
+                "operationId": "user_complete_minitask",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.MiniTask"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/reviewcert": {
             "get": {
                 "description": "Review cert for user",
@@ -1264,8 +1290,8 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "List Tasks",
-                "operationId": "tasks_list",
+                "summary": "List Task",
+                "operationId": "task_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1290,7 +1316,6 @@
                     "Tasks"
                 ],
                 "summary": "Create Task",
-                "operationId": "tasks_create",
                 "parameters": [
                     {
                         "description": "Create Task",
@@ -1589,9 +1614,6 @@
                 "del": {
                     "type": "boolean"
                 },
-                "electronic_signature": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -1602,6 +1624,7 @@
                     "type": "string"
                 },
                 "timestamp": {
+                    "description": "ElectronicSignature string        json:\"electronic_signature\" bson:\"electronic_signature\"",
                     "type": "string"
                 },
                 "user_id": {
