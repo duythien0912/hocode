@@ -6,6 +6,7 @@ import TaskPage from "./components/taskPage/TaskPage";
 import MiniTaskPage from "./components/minitaskPage/MinitaskPageResponsive";
 import HomePage from "./components/homePage/HomePage";
 import SignUpPage from "./components/signUpPage1/SignUpPage";
+import SearchCertPage from "./components/searchCertPage/SearchCertPage";
 import ReactMde from "./components/minitaskPage/ReactMde";
 import CreateMiniTask from "./components/createMinitaskPage/CreateMiniTaskPage";
 import ReactAdmin from "./components/adminPage/hocode/ReactAdmin";
@@ -17,9 +18,6 @@ import { setCurrentUser, logoutUser } from "./js/actions/authActions";
 import setAuthToken from "./js/utils/setAuthToken";
 import PrivateRoute from "./private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
-
-
-
 
 // Check for token to keep user logged in/ xet khi load lai trang
 if (localStorage.AuthToken) {
@@ -40,38 +38,38 @@ if (localStorage.AuthToken) {
 }
 
 function App() {
-  
   return (
-    <Provider
-      store={store}
+    <Provider store={store}>
+      <Provider
+        // store={store}
+        store={store}
       >
-    <Provider
-      // store={store}
-      store={store}
-
-    >
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/home" exact component={HomePage} />
-            <Route path="/login" exact component={LoginPage} />
-            <Route path="/signup" exact component={SignUpPage} />
-            <Route path="/reactmde" exact component={ReactMde} />
-            <PrivateRoute path="/courses" exact component={CoursePage} />
-            <PrivateRoute
-              path="/courses/:courseId/tasks"
-              component={TaskPage}
-            />
-            <PrivateRoute path="/tasks/:minitaskId" component={MiniTaskPage} />
-            <Route path="/createminitask" exact component={CreateMiniTask} />
-            <Route path="/admin"  component={ReactAdmin} />
-            <PrivateRoute path="/profile" component={ProfilePage} />
-            <Route render={() => <div>404 Page Not Found</div>} />
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+        <Router>
+          <div className="App">
+            <Switch>
+              <Route path="/" exact component={HomePage} />
+              <Route path="/home" exact component={HomePage} />
+              <Route path="/login" exact component={LoginPage} />
+              <Route path="/signup" exact component={SignUpPage} />
+              <Route path="/reactmde" exact component={ReactMde} />
+              <Route path="/searchcert" component={SearchCertPage} />
+              <PrivateRoute path="/courses" exact component={CoursePage} />
+              <PrivateRoute
+                path="/courses/:courseId/tasks"
+                component={TaskPage}
+              />
+              <PrivateRoute
+                path="/tasks/:minitaskId"
+                component={MiniTaskPage}
+              />
+              <Route path="/createminitask" exact component={CreateMiniTask} />
+              <PrivateRoute path="/admin" component={ReactAdmin} />
+              <PrivateRoute path="/profile" component={ProfilePage} />
+              <Route render={() => <div>404 Page Not Found</div>} />
+            </Switch>
+          </div>
+        </Router>
+      </Provider>
     </Provider>
   );
 }

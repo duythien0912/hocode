@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { connect } from "react-redux";
 import { loginUser } from "../../js/actions/authActions";
@@ -82,6 +83,7 @@ class LoginPage extends React.Component {
       email: "",
       password: "",
       remember: true,
+      isLoading: false,
       errors: {}
     };
   }
@@ -116,16 +118,24 @@ class LoginPage extends React.Component {
     });
   };
 
-  onSubmit = e => {
+  onSubmit  = async e =>  {
     e.preventDefault();
 
+    this.setState({isLoading: true});
     const userData = {
       email: this.state.email,
       password: this.state.password,
       remember: this.state.remember
     };
 
-    this.props.loginUser(userData);
+var loginF = Promise.all([this.props.loginUser(userData)]);
+
+loginF.then((val) => {
+  this.setState({isLoading: false});
+
+});
+
+
   };
   render() {
     const { errors } = this.state;
@@ -212,7 +222,10 @@ class LoginPage extends React.Component {
               color="primary"
               className={classes.submit}
             >
-              Đăng nhập
+              {this.state.isLoading ? <CircularProgress size={22} color="#fff" style={{ margin: 2, }} /> : "Đăng nhập" }
+             
+              
+
             </Button>
             <Grid container>
               <Grid item xs>

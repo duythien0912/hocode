@@ -19,7 +19,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 // Login - get user token
 export const loginUser = userData => dispatch => {
-  axios
+  return axios
     .post("https://hocodevn.com/api/v1/login", userData)
     .then(res => {
       // Save to localStorage

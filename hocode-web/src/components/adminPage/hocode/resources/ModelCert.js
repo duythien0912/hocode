@@ -171,7 +171,7 @@ class ModelCertList extends Component {
                     component="label"
                     fullWidth
                   >
-                    Upload File
+                    Tải Chữ Ký
                     <input
                       id="electronic_signature"
                       type="file"
@@ -272,9 +272,9 @@ class ModelCertCreate extends Component {
     return (
       <Create {...this.props} title="Tạo Chứng chỉ">
         <SimpleForm redirect="show">
-          <TextInput source="user_name" />
+          <TextInput source="user_id" />
           <TextInput source="status" />
-          <TextInput source="time" />
+          {/* <TextInput source="time" /> */}
           {/* {this.state.isLoading ? (
             <Skeleton />
           ) : (
@@ -319,9 +319,9 @@ class ModelCertEdit extends Component {
           <TextInput resettable source="id" disabled />
           {/* <TextInput source="task_name" />
           <TextInput source="background_image" /> */}
-          <TextInput source="user_name" />
+          <TextInput source="user_id" />
           <TextInput source="status" />
-          <TextInput source="time" />
+          {/* <TextInput source="time" /> */}
 
           {/* {this.state.isLoading ? (
             <Skeleton />
