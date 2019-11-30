@@ -57,6 +57,9 @@ class PrintBody extends Component {
     this.getApi();
   }
   getCertificate = async () => {
+    this.setState({
+      openDialogCertificate: true
+    });
     this.setState({ isLoadingCert:true});
     await Promise.all([
       axios.get(`https://hocodevn.com/api/v1/auth/reviewcert`).then(res => {
@@ -66,9 +69,7 @@ class PrintBody extends Component {
         this.setState({ isLoadingCert:false});
       })
     ]);
-    this.setState({
-      openDialogCertificate: true
-    });
+   
   };
   handleDialogCertificateOpen = () => {
 
@@ -191,6 +192,7 @@ class PrintBody extends Component {
                     ) : (
                       <Button
                         variant="contained"
+                        style={{background:"#1ECD97",color:"#fff"}} 
                         onClick={this.handleDialogCertificateOpen}
                       >
                         Xét chứng chỉ
@@ -281,7 +283,24 @@ class PrintBody extends Component {
               open={this.state.openDialogCertificate}
               onClose={this.handleDialogCertificateClose}
               aria-labelledby="customized-dialog-title"
-            > {this.state.isLoadingCert === true?<div>loading</div>:(<>
+            > {this.state.isLoadingCert === true? <div
+              className="sweet-loading"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100vw",
+                height: "100vh",
+                overflow:"hidden"
+              }}
+            >
+              <HashLoader
+                sizeUnit={"px"}
+                size={50}
+                color={"#AEA8A8"}
+                loading={this.state.isLoadingCert}
+              />
+            </div>:(<>
        
 
               <DialogContent dividers>
@@ -311,7 +330,7 @@ class PrintBody extends Component {
                   >
                     <ReactToPrint
                       trigger={() => (
-                        <Button variant="contained">In chứng chỉ</Button>
+                        <Button style={{background:"#1ECD97",color:"#fff"}} variant="contained">In chứng chỉ</Button>
                       )}
                       content={() => this.CertificateRef}
                     />

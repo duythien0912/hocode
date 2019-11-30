@@ -49,9 +49,9 @@ const styles = theme => ({
     height: "calc(100vh - 65px)",
     display: "none",
     padding: "16px 32px",
-    position: "sticky",
+    position: "relative", // sticky
     // marginTop: "65px",
-    overflowY: "auto",
+    overflow:"hidden",
     flexShrink: 0,
     [theme.breakpoints.up("md")]: {
       display: "block"

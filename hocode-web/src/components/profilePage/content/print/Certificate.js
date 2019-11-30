@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
-
+import "./certificate.css"
 import { connect } from "react-redux";
 const styles = {};
 

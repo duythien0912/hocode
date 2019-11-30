@@ -97,14 +97,14 @@ class NavRight extends React.Component {
       <Grid
         xs
         item
-        style={{
-          flexDirection: "column",
-          justifyContent: "center",
-          display: "flex"
-        }}
+        // style={{
+        //   flexDirection: "column",
+        //   justifyContent: "center",
+        //   display: "flex"
+        // }}
       >
-        {type == "books" ? "Sách lập trình" : ""}
-        {type == "events" ? "Sự kiện nổi bật" : ""}
+        <p style={{fontWeight:"bold"}}>{type === "books" ? "Sách lập trình" : ""} {type === "events" ? "Sự kiện nổi bật" : ""}</p>
+        
 
         <Carousel indicators={false} interval={time}>
           {/* <Typography gutterBottom variant="h5" component="h2">
@@ -123,14 +123,14 @@ class NavRight extends React.Component {
                     <Card className={classes.card}>
                       <CardActionArea
                         onClick={() => {
-                          if (type == "books") {
+                          if (type === "books") {
                             this.handleClickDialogReadmoreOpen(
                               book.content,
                               book.image,
                               book.title
                             );
                           }
-                          if (type == "events") {
+                          if (type === "events") {
                             window.open(book.link, "_blank");
                           }
                         }}
@@ -143,7 +143,7 @@ class NavRight extends React.Component {
                         <div
                           style={{
                             width: "100%",
-                            height: type == "books" ? "200px" : "60px",
+                            height: type === "books" ? "200px" : "60px",
                             // objectFit: "cover",
                             background: `url(${book.image}) no-repeat center`,
                             backgroundSize: "cover"
