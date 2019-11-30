@@ -109,23 +109,56 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 
 	bk := &model.Cert{}
 
-	if ur.CodePoint >= configApp.ReviewPoint {
-		bk.ID = bson.NewObjectId()
-		bk.UserID = ur.ID.Hex()
-		bk.ConfigID = configApp.ID.Hex()
-		bk.Status = "Active"
-		id, _ := gonanoid.Generate(bk.ID.Hex(), 6)
-		bk.SearchID = id
+	if err = db.DB(config.NameDb).C("certs").
+		// FindId(bson.ObjectIdHex(id)).
+		Find(bson.M{
+			"user_id":   ur.ID.Hex(),
+			"config_id": configApp.ID.Hex(),
+			"del":       bson.M{"$ne": true},
+		}).
+		One(&bk); err != nil {
+		if err == mgo.ErrNotFound {
+			// return echo.ErrNotFound
+			// return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
 
-		bk.Timestamp = time.Now()
-
-		_, errUs := db.DB(config.NameDb).C("certs").Upsert(bson.M{"user_id": bk.UserID, "config_id": bk.ConfigID}, bk)
-		if errUs != nil {
-			// return echo.ErrInternalServerError
-			return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
 		}
 
+		// returns
 	}
+
+	// bk.ID = bson.NewObjectId()
+	if bk.ID == "" {
+		bk.ID = bson.NewObjectId()
+		id, _ := gonanoid.Generate(bk.ID.Hex(), 8)
+		bk.SearchID = id
+	}
+	bk.UserID = ur.ID.Hex()
+	bk.ConfigID = configApp.ID.Hex()
+	if ur.CodePoint >= configApp.ReviewPoint {
+
+		bk.Status = "Active"
+
+	} else {
+		bk.Status = "Inactive"
+
+	}
+
+	bk.Timestamp = time.Now()
+
+	_, errUs := db.DB(config.NameDb).C("certs").UpsertId(bk.ID, bk)
+	if errUs != nil {
+		// return echo.ErrInternalServerError
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
+	}
+
+	// else {
+	// 	_, errUs := db.DB(config.NameDb).C("certs").Insert(bson.M{"user_id": bk.UserID, "config_id": bk.ConfigID}, bk)
+	// 	if errUs != nil {
+	// 		// return echo.ErrInternalServerError
+	// 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
+	// 	}
+
+	// }
 
 	reviewCertOut := &model.ReviewCertOut{
 		User: ur, Config: configApp, Cert: bk,

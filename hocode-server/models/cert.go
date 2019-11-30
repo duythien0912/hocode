@@ -13,7 +13,7 @@ type (
 		SearchID            string        `json:"search_id" bson:"search_id"`
 		ConfigID            string        `json:"config_id" bson:"config_id"`
 		Status              string        `json:"status" bson:"status"`
-		ElectronicSignature string        `json:"electronic_signature" bson:"electronic_signature"`
+		// ElectronicSignature string        `json:"electronic_signature" bson:"electronic_signature"`
 		Timestamp           time.Time     `json:"timestamp" bson:"timestamp"`
 		Del                 bool          `json:"del" bson:"del"`
 	}
