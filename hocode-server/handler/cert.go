@@ -10,7 +10,7 @@ import (
 
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
-	"github.com/matoous/go-nanoid"
+	gonanoid "github.com/matoous/go-nanoid"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -35,8 +35,10 @@ func (h *Handler) SearchCertsByID(c echo.Context) (err error) {
 	if err = db.DB(config.NameDb).C("certs").
 		// FindId(bson.ObjectIdHex(id)).
 		Find(bson.M{
-			"search_id": id,
-			"del":       bson.M{"$ne": true},
+			"search_id": bson.RegEx{Pattern: id, Options: "i"},
+			// "search_id": bson.M{"$regex": id},
+			// "search_id": id,
+			"del": bson.M{"$ne": true},
 		}).
 		All(&bk); err != nil {
 		if err == mgo.ErrNotFound {
