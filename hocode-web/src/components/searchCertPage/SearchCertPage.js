@@ -271,7 +271,7 @@ class SearchCertPage extends React.Component {
                     {this.state.rows.map(row => (
                       <TableRow key={row.id}>
                         <TableCell component="th" scope="row" >
-                          {row.user_id}
+                          {row.search_id}
                         </TableCell>
                         <TableCell align="right">{row.status}</TableCell>
                         <TableCell align="right">{Date(row.timestamp).toLocaleString("vi")}</TableCell>
