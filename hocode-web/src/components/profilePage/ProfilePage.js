@@ -34,7 +34,8 @@ import "./profilepage.css";
 const drawerWidth = 240;
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    background:"#fff"
   },
   drawerMain: {
     [theme.breakpoints.up("sm")]: {
