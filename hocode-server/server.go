@@ -225,14 +225,26 @@ func main() {
 
 	e.File("/swagger.yaml", "docs/swagger.yaml")
 
-	e.File("/", "static/docs.html")
+	e.File("/docs", "static/docs.html")
 
-	e.File("/docs", "static/dist/index.html")
+	e.File("/docs2", "static/dist/index.html")
 	e.File("/swagger-ui.css", "static/dist/swagger-ui.css")
 	e.File("/swagger-ui-bundle.js", "static/dist/swagger-ui-bundle.js")
 	e.File("/swagger-ui-standalone-preset.js", "static/dist/swagger-ui-standalone-preset.js")
 
-	e.File("*", "static/index.html")
+	// e.File("*", "static/index.html")
+
+	// e.Static("/", "web/")
+	e.Use(middleware.Static("/web"))
+	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
+		Root: "web",
+		// Browse: true,
+		Index: "index.html",
+	}))
+
+	e.File("/", "web/index.html")
+	e.File("*", "web/index.html")
+
 	e.Use(ServerHeader)
 	e.Logger.Fatal(e.Start(":8081"))
 }

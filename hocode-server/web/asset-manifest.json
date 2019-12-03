@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fbf2f263.chunk.css",
+    "main.js": "/static/js/main.bd4c54ff.chunk.js",
+    "main.js.map": "/static/js/main.bd4c54ff.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d5fd15bb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d5fd15bb.js.map",
+    "static/css/2.a4431b25.chunk.css": "/static/css/2.a4431b25.chunk.css",
+    "static/js/2.e7637d2b.chunk.js": "/static/js/2.e7637d2b.chunk.js",
+    "static/js/2.e7637d2b.chunk.js.map": "/static/js/2.e7637d2b.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.6f0e5f710b82057ff8ea7733e24b1b82.js": "/precache-manifest.6f0e5f710b82057ff8ea7733e24b1b82.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.a4431b25.chunk.css.map": "/static/css/2.a4431b25.chunk.css.map",
+    "static/css/main.fbf2f263.chunk.css.map": "/static/css/main.fbf2f263.chunk.css.map",
+    "static/media/chuahoanthanh.svg": "/static/media/chuahoanthanh.a6ac73da.svg",
+    "static/media/giphy.gif": "/static/media/giphy.eb842a55.gif",
+    "static/media/hoanthanh.svg": "/static/media/hoanthanh.c18c22ed.svg",
+    "static/media/logo.png": "/static/media/logo.b54be03d.png",
+    "static/media/padlock-unlock.svg": "/static/media/padlock-unlock.f593928a.svg",
+    "static/media/play-button.svg": "/static/media/play-button.8b3ac6fe.svg",
+    "static/media/user.svg": "/static/media/user.316d47a9.svg"
+  }
+}
