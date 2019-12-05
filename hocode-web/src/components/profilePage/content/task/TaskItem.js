@@ -85,7 +85,7 @@ class TaskItem extends Component {
           <Tooltip title="Tên bài tập" placement="top-start">
             <div style={{ flexGrow: 1 }}> {minitask.mini_task_name}</div>
           </Tooltip>
-          <Tooltip title="Code point" placement="top">
+          <Tooltip title="Số đậu" placement="top">
             <div
               style={{
                 fontSize: 12,
@@ -176,7 +176,7 @@ class TaskItem extends Component {
           <Tooltip title="Tên bài thực hành" placement="top-start">
             <div style={{ flexGrow: 1 }}>{minitask.mini_task_name}</div>
           </Tooltip>
-          <Tooltip title="Code point" placement="top">
+          <Tooltip title="Số đậu" placement="top">
             <div
               style={{
                 fontSize: 12,

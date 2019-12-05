@@ -252,9 +252,9 @@ class Overview extends React.Component {
                           <div
                             style={{ display: "flex", alignItems: "center" }}
                           >
-                            <Tooltip title="Code point" placement="top">
+                            <Tooltip title="Số đậu" placement="top">
                               <div style={{ color: "#9d9d9d" }}>
-                                Code point: {daily_minitask.code_point}
+                                Số đậu: {daily_minitask.code_point}
                               </div>
                             </Tooltip>
                             <Tooltip title="Độ khó" placement="top">

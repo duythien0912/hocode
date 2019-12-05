@@ -119,7 +119,7 @@ class AppBarContent extends React.Component {
               }}
             >
               <div>
-              Code point: {this.props.user.codepoint}
+              Số đậu: {this.props.user.codepoint}
 </div>              <div>
               
               </div>
