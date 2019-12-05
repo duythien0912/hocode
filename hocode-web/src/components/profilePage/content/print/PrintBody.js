@@ -27,7 +27,7 @@ class PrintBody extends Component {
       certificate: {},
       review_point: 0,
       user_codepoint: 0,
-      isLoadingCert:false,
+      isLoadingCert: false
     };
   }
 
@@ -60,25 +60,85 @@ class PrintBody extends Component {
     this.setState({
       openDialogCertificate: true
     });
-    this.setState({ isLoadingCert:true});
+    this.setState({ isLoadingCert: true });
     await Promise.all([
       axios.get(`https://hocodevn.com/api/v1/auth/reviewcert`).then(res => {
         const certificate = res.data;
         console.log(res.data);
         this.setState({ certificate });
-        this.setState({ isLoadingCert:false});
+        this.setState({ isLoadingCert: false });
       })
     ]);
-   
   };
   handleDialogCertificateOpen = () => {
-
     this.getCertificate();
   };
 
   handleDialogCertificateClose = () => {
     this.setState({ openDialogCertificate: false });
   };
+
+  renderDialog = (certificate) =>{
+    if(certificate.cert !== undefined){
+     if(certificate.cert.status === "Inactive"){
+       return (
+        <DialogContent dividers>
+        <Typography
+        variant="body2"
+        color="textSecondary"
+        component="p"
+        style={{ marginLeft: 4, textAlign: "center" }}
+      >
+        Bạn sẽ nhận được chứng chỉ nếu số đậu của bạn lớn hơn{" "}
+        {this.state.review_point}
+      </Typography>
+      </DialogContent>
+       )
+     }
+     else{
+       return(      <>
+
+        <DialogContent dividers>
+          
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sm={12}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Certificate
+                ref={el => (this.CertificateRef = el)}
+                Certificate={this.state.certificate}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogTitle
+          id="customized-dialog-title"
+          onClose={this.handleDialogCertificateClose}
+        >
+          <Grid
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <ReactToPrint
+              trigger={() => (
+                <Button
+                  style={{ background: "#1ECD97", color: "#fff" }}
+                  variant="contained"
+                >
+                  In chứng chỉ
+                </Button>
+              )}
+              content={() => this.CertificateRef}
+            />
+          </Grid>
+        </DialogTitle>
+      </>)
+     }
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -162,7 +222,7 @@ class PrintBody extends Component {
                     </Typography>
                   </Grid>
 
-                  <Grid item style={{ textAlign: "center" }}>
+                  <Grid item style={{ textAlign: "center", marginTop:"20px" }}>
                     <Typography variant="h5" style={{ color: "#4978cc" }}>
                       {this.state.minitasks.length}
                     </Typography>
@@ -177,27 +237,26 @@ class PrintBody extends Component {
                     </Typography>
                   </Grid>
 
-                  <Grid item style={{ marginTop: 40 }}>
-                    {this.state.user_codepoint < this.state.review_point ? (
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                        style={{ marginLeft: 4, textAlign: "center" }}
-                      >
-                        Bạn sẽ nhận được chứng chỉ nếu code point của bạn lớn
-                        hơn
-                        {this.state.review_point}
-                      </Typography>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        style={{background:"#1ECD97",color:"#fff"}} 
-                        onClick={this.handleDialogCertificateOpen}
-                      >
-                        Xét chứng chỉ
-                      </Button>
-                    )}
+                  <Grid item style={{ textAlign: "center", marginTop:"20px" }}>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      style={{ marginLeft: 4, textAlign: "center" }}
+                    >
+                      Bạn sẽ nhận được chứng chỉ nếu số đậu của bạn lớn hơn{" "}
+                      {this.state.review_point}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item style={{ textAlign: "center" }}>
+                    <Button
+                      variant="contained"
+                      style={{ background: "#1ECD97", color: "#fff" }}
+                      onClick={this.handleDialogCertificateOpen}
+                    >
+                      Xét chứng chỉ
+                    </Button>
                   </Grid>
                 </Grid>
               </Paper>
@@ -215,7 +274,7 @@ class PrintBody extends Component {
                   <Grid item style={{ flexGrow: 1 }}>
                     <div style={{ fontWeight: "bold" }}>
                       Danh sách bài tập đã hoàn thành
-                    </div>{" "}
+                    </div>{""}
                   </Grid>
                 </Grid>
                 <Grid container style={{ padding: 30 }}>
@@ -283,61 +342,31 @@ class PrintBody extends Component {
               open={this.state.openDialogCertificate}
               onClose={this.handleDialogCertificateClose}
               aria-labelledby="customized-dialog-title"
-            > {this.state.isLoadingCert === true? <div
-              className="sweet-loading"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100vw",
-                height: "100vh",
-                overflow:"hidden"
-              }}
             >
-              <HashLoader
-                sizeUnit={"px"}
-                size={50}
-                color={"#AEA8A8"}
-                loading={this.state.isLoadingCert}
-              />
-            </div>:(<>
-       
-
-              <DialogContent dividers>
-                <Grid container spacing={2}>
-                  
-                  <Grid
-                    item
-                    xs={12}
-                    md={12}
-                    sm={12}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <Certificate
-                      ref={el => (this.CertificateRef = el)}
-                      Certificate={this.state.certificate}
-                    />
-                  </Grid>
-                </Grid>
-              </DialogContent>
-              <DialogTitle
-                id="customized-dialog-title"
-                onClose={this.handleDialogCertificateClose}
-              >
-                <Grid
-                    
-                    style={{ display: "flex", justifyContent: "flex-end" }}
-                  >
-                    <ReactToPrint
-                      trigger={() => (
-                        <Button style={{background:"#1ECD97",color:"#fff"}} variant="contained">In chứng chỉ</Button>
-                      )}
-                      content={() => this.CertificateRef}
-                    />
-                  </Grid>
-              </DialogTitle>
-            </>)}
-              
+              {" "}
+              {this.state.isLoadingCert === true ? (
+                <div
+                  className="sweet-loading"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100vw",
+                    height: "100vh",
+                    overflow: "hidden"
+                  }}
+                >
+                  <HashLoader
+                    sizeUnit={"px"}
+                    size={50}
+                    color={"#AEA8A8"}
+                    loading={this.state.isLoadingCert}
+                  />
+                </div>
+              ) : ( 
+                
+                this.renderDialog(this.state.certificate)
+              )}
             </Dialog>
           </Grid>
         )}

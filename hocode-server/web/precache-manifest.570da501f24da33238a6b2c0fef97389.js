@@ -1,5 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
+<<<<<<< HEAD:hocode-server/web/precache-manifest.570da501f24da33238a6b2c0fef97389.js
     "revision": "66d7fbf52fdb3fb2b1f52aaca604dbf2",
     "url": "/index.html"
   },
@@ -18,6 +19,26 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a7fae3472486a20a9851",
     "url": "/static/js/main.e167d41e.chunk.js"
+=======
+    "revision": "6a374dac5905f0285b6528c452efe305",
+    "url": "/index.html"
+  },
+  {
+    "revision": "b843c82a98f81108f899",
+    "url": "/static/css/2.571d32b4.chunk.css"
+  },
+  {
+    "revision": "7467bcfe850202df3fea",
+    "url": "/static/css/main.2648b3a4.chunk.css"
+  },
+  {
+    "revision": "b843c82a98f81108f899",
+    "url": "/static/js/2.5224b4c9.chunk.js"
+  },
+  {
+    "revision": "7467bcfe850202df3fea",
+    "url": "/static/js/main.5873821c.chunk.js"
+>>>>>>> 91803922e8295fb96c7e8dbe1e6c9a66b09d0c91:hocode-web/build/precache-manifest.9eb3ad96616d41539a1a5e9f2a08c2ac.js
   },
   {
     "revision": "accb3400b7c5210f7cea",

@@ -87,7 +87,7 @@ class MiniTaskHeader extends Component {
               className="code-point"
               style={{ fontSize: 14, margin: "0px 4px", color: "#4978cc" }}
             >
-              Số đậu: {this.props.user.codepoint}
+              Số Đậu: {this.props.user.codepoint}
             </div>
             <div className="nav-name" style={{ fontSize: 14 }}>
               {this.props.user.firstname}
