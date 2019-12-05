@@ -248,7 +248,7 @@ class PrintBody extends Component {
                                 </Link>
                               </div>
                               <div style={{ color: "#9d9d9d" }}>
-                                Code Point: {minitask.code_point}
+                                Số đậu: {minitask.code_point}
                               </div>
                             </Grid>
                           </Grid>

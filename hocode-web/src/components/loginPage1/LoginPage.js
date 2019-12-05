@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -67,7 +67,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://hocode-11412.web.app/">
+      <Link color="inherit" to="/">
         hocodevn.com
       </Link>{" "}
       {new Date().getFullYear()}
@@ -229,12 +229,12 @@ loginF.then((val) => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="#" variant="body2">
                   {/* Quên tài khoản */}
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body1" >
+                <Link to="/signup" variant="body1" >
                   {"Nếu bạn chưa có tài khoản, Hãy đăng ký ngay"}
                 </Link>
               </Grid>
@@ -242,7 +242,7 @@ loginF.then((val) => {
 
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2"></Link>
+                <Link to="#" variant="body2"></Link>
               </Grid>
 
               <Grid item>

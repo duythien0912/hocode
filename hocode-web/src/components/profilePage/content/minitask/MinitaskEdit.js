@@ -379,7 +379,7 @@ class MinitaskEdit extends Component {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
-                  <div>Code point:</div>
+                  <div>Số đậu:</div>
                   <input
                     name="code_point"
                     className="input-createminitask"

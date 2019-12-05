@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -68,7 +68,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://hocode-11412.web.app/">
+      <Link color="inherit" to="/">
         hocodevn.com
       </Link>{" "}
       {new Date().getFullYear()}
@@ -329,7 +329,7 @@ class SignUpPage extends React.Component {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link to="/login" variant="body2">
                   Bạn đã có tài khoản rồi, Đăng nhập ngay
                 </Link>
               </Grid>
