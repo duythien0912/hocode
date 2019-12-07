@@ -1054,7 +1054,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
       operationId: minitask_list
       produces:
       - application/json
@@ -1065,18 +1065,17 @@ paths:
             items:
               $ref: '#/definitions/model.MiniTask'
             type: array
-      summary: List MiniTasks
+      summary: List Minitasks
       tags:
-      - MiniTasks
+      - Minitasks
     post:
       consumes:
       - application/json
       description: Create MiniTask
-      operationId: minitask_create
       parameters:
       - description: Create MiniTask
         in: body
-        name: minitask
+        name: task
         required: true
         schema:
           $ref: '#/definitions/model.MiniTask'
@@ -1089,9 +1088,9 @@ paths:
           schema:
             $ref: '#/definitions/model.MiniTask'
             type: object
-      summary: Create MiniTask
+      summary: Create Minitast
       tags:
-      - MiniTasks
+      - Minitasks
   /minitasks/:
     delete:
       consumes:
@@ -1311,7 +1310,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: get users
+      description: get users <a href="/api/v1/users?page=1&limit=5">/api/v1/users?page=1&limit=5</a>
+      operationId: user_list
       produces:
       - application/json
       responses:
@@ -1321,9 +1321,98 @@ paths:
             items:
               $ref: '#/definitions/model.User'
             type: array
-      summary: List users
+      summary: List Users
       tags:
-      - users
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Create User
+      operationId: user_create
+      parameters:
+      - description: Create User
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+            type: object
+      summary: Create User
+      tags:
+      - Users
+  /users/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User
+      operationId: user_delete
+      parameters:
+      - description: Delete User
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+            type: object
+      summary: Delete User
+      tags:
+      - Users
+    get:
+      consumes:
+      - application/json
+      description: get users <a href="/api/v1/users?page=1&limit=5">/api/v1/users?page=1&limit=5</a>
+      operationId: user_one
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+            type: object
+      summary: One Users
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Update User
+      operationId: user_update
+      parameters:
+      - description: Update User
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+            type: object
+      summary: UpdateUsers User
+      tags:
+      - Users
   /users/{id}:
     delete:
       consumes:
