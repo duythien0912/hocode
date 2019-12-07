@@ -63,29 +63,29 @@ func main() {
 	e.GET("/health_check", h.HealthCheck)
 	e.GET("/health_check2", h.HealthCheck)
 
-	e.GET("/users", h.GetUser)
-	e.GET("/users/:id", h.GetUserByID)
-	e.POST("/users", h.SaveUser)
-	e.PUT("/users/:id", h.UpdateUser)
-	e.DELETE("/users/:id", h.DeleteUser)
+	// e.GET("/users", h.GetUser)
+	// e.GET("/users/:id", h.GetUserByID)
+	// e.POST("/users", h.SaveUser)
+	// e.PUT("/users/:id", h.UpdateUser)
+	// e.DELETE("/users/:id", h.DeleteUser)
 
-	e.GET("/show", h.Show)
+	// e.GET("/show", h.Show)
 
-	e.GET("/courses", h.Courses)
-	e.GET("/courses/:id", h.CourseByID)
-	e.GET("/courses/:id/tasks", h.TaskByCoursesID)
-	e.POST("/courses", h.CreateCourse)
+	// e.GET("/courses", h.Courses)
+	// e.GET("/courses/:id", h.CourseByID)
+	// e.GET("/courses/:id/tasks", h.TaskByCoursesID)
+	// e.POST("/courses", h.CreateCourse)
 
-	e.GET("/tasks", h.Task)
-	e.GET("/tasks/:id", h.TaskByID)
-	e.POST("/tasks", h.CreateTask)
+	// e.GET("/tasks", h.Task)
+	// e.GET("/tasks/:id", h.TaskByID)
+	// e.POST("/tasks", h.CreateTask)
 
-	e.GET("/minitasks", h.Minitasks)
-	e.GET("/minitasks/:id", h.MinitasksByID)
-	e.POST("/minitasks", h.CreateMinitast)
+	// e.GET("/minitasks", h.Minitasks)
+	// e.GET("/minitasks/:id", h.MinitasksByID)
+	// e.POST("/minitasks", h.CreateMinitast)
 
-	e.GET("/profile", h.Profile)
-	e.POST("/profile", h.CreateProfile)
+	// e.GET("/profile", h.Profile)
+	// e.POST("/profile", h.CreateProfile)
 
 	r := e.Group("/api/v1")
 
