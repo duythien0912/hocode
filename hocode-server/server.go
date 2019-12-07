@@ -135,6 +135,12 @@ func main() {
 	curd.POST("/books", h.CreateBooks)
 	curd.DELETE("/books/:id", h.DeleteBooks)
 
+	curd.GET("/users", h.GetListUsers)
+	curd.GET("/users/:id", h.GetOneUsers)
+	curd.PUT("/users/:id", h.UpdateUsers)
+	curd.POST("/users", h.CreateUsers)
+	curd.DELETE("/users/:id", h.DeleteUsers)
+
 	curd.GET("/events", h.GetListEvents)
 	curd.GET("/events/:id", h.GetOneEvents)
 	curd.PUT("/events/:id", h.UpdateEvents)
