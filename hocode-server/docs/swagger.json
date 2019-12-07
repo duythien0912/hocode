@@ -638,7 +638,7 @@
                     "Courses"
                 ],
                 "summary": "List Courses",
-                "operationId": "coursesx_list",
+                "operationId": "course_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -663,7 +663,6 @@
                     "Courses"
                 ],
                 "summary": "Create Course",
-                "operationId": "coursesx_create",
                 "parameters": [
                     {
                         "description": "Create Course",
@@ -1090,7 +1089,7 @@
         },
         "/minitasks": {
             "get": {
-                "description": "get List Minitasks \u003ca href=\"/api/v1/minitasks?page=1\u0026limit=5\"\u003e/api/v1/minitasks?page=1\u0026limit=5\u003c/a\u003e",
+                "description": "get minitasks \u003ca href=\"/api/v1/minitasks?page=1\u0026limit=5\"\u003e/api/v1/minitasks?page=1\u0026limit=5\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -1098,9 +1097,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Minitasks"
+                    "MiniTasks"
                 ],
-                "summary": "List Minitasks",
+                "summary": "List MiniTasks",
                 "operationId": "minitask_list",
                 "responses": {
                     "200": {
@@ -1123,13 +1122,14 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Minitasks"
+                    "MiniTasks"
                 ],
-                "summary": "Create Minitast",
+                "summary": "Create MiniTask",
+                "operationId": "minitask_create",
                 "parameters": [
                     {
                         "description": "Create MiniTask",
-                        "name": "task",
+                        "name": "minitask",
                         "in": "body",
                         "required": true,
                         "schema": {

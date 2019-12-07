@@ -42,6 +42,12 @@ func (h *Handler) GetListUsers(c echo.Context) (err error) {
 		All(&bk); err != nil {
 		return
 	}
+	for i := 0; i < len(bk); i++ {
+		if bk[i].Avatar == "" {
+			bk[i].Avatar = "https://ui-avatars.com/api/?name=" + bk[i].FirstName + "+" + bk[i].LastName
+		}
+	}
+
 	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)

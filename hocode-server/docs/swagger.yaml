@@ -742,7 +742,7 @@ paths:
       consumes:
       - application/json
       description: get courses <a href="/api/v1/courses?page=1&limit=5">/api/v1/courses?page=1&limit=5</a>
-      operationId: coursesx_list
+      operationId: course_list
       produces:
       - application/json
       responses:
@@ -759,7 +759,6 @@ paths:
       consumes:
       - application/json
       description: Create Course
-      operationId: coursesx_create
       parameters:
       - description: Create Course
         in: body
@@ -1054,7 +1053,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      description: get minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
       operationId: minitask_list
       produces:
       - application/json
@@ -1065,17 +1064,18 @@ paths:
             items:
               $ref: '#/definitions/model.MiniTask'
             type: array
-      summary: List Minitasks
+      summary: List MiniTasks
       tags:
-      - Minitasks
+      - MiniTasks
     post:
       consumes:
       - application/json
       description: Create MiniTask
+      operationId: minitask_create
       parameters:
       - description: Create MiniTask
         in: body
-        name: task
+        name: minitask
         required: true
         schema:
           $ref: '#/definitions/model.MiniTask'
@@ -1088,9 +1088,9 @@ paths:
           schema:
             $ref: '#/definitions/model.MiniTask'
             type: object
-      summary: Create Minitast
+      summary: Create MiniTask
       tags:
-      - Minitasks
+      - MiniTasks
   /minitasks/:
     delete:
       consumes:
