@@ -82,7 +82,7 @@ class TaskItem extends Component {
             alignItems: "center"
           }}
         >
-          <Tooltip title="Tên bài tập" placement="top-start">
+          <Tooltip title="Tên bài thực hành" placement="top-start">
             <div style={{ flexGrow: 1 }}> {minitask.mini_task_name}</div>
           </Tooltip>
           <Tooltip title="Số đậu" placement="top">

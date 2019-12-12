@@ -145,7 +145,7 @@ class Overview extends React.Component {
                   </Grid>
                 </Grid>
                 {this.state.courses.length === 0 ? (
-                  <div style={{}}>Bạn chưa thực hiện bài tập nào.</div>
+                  <div style={{}}>Bạn chưa thực hiện bài thực hành nào.</div>
                 ) : (
                   this.state.courses.map(course => {
                     return (

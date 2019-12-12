@@ -23,18 +23,22 @@ export const loginUser = userData => dispatch => {
     .post("https://hocodevn.com/api/v1/login", userData)
     .then(res => {
       // Save to localStorage
-      
+
       // Set token to localStorage
       const { token } = res.data;
+
+      const decoded = jwt_decode(token);
       if (userData.remember) {
         localStorage.setItem("AuthToken", token);
+
         localStorage.setItem("token", token);
+        localStorage.setItem("permissions", decoded.data.role);
+
         setAuthToken(token); // set token ở header
         // get user
       }
 
-      const decoded = jwt_decode(token);
-      console.log(decoded)
+      console.log(decoded);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -56,9 +60,10 @@ export const setCurrentUser = user => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
-
   // Remove token from local storage
   localStorage.removeItem("AuthToken");
+  localStorage.removeItem("token");
+  localStorage.removeItem("permissions");
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false

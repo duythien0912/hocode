@@ -70,10 +70,6 @@ const StyledMenuItem = withStyles(theme => ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem onClick={props.logoutUser}>
-            <ExitToAppIcon style={{fontSize:16}}/> 
-            <p style={{fontSize:12,marginLeft:"3px"}}>Đăng xuất</p>
-        </StyledMenuItem>
         <StyledMenuItem>
             <AccountBoxIcon style={{fontSize:16}}/> 
             <Link to="/profile/account" style={{textDecoration: "none"}}>
@@ -81,6 +77,10 @@ const StyledMenuItem = withStyles(theme => ({
           </Link>
         </StyledMenuItem>
 
+        <StyledMenuItem onClick={props.logoutUser}>
+            <ExitToAppIcon style={{fontSize:16}}/> 
+            <p style={{fontSize:12,marginLeft:"3px"}}>Đăng xuất</p>
+        </StyledMenuItem>
       </StyledMenu>
     </div>
   );

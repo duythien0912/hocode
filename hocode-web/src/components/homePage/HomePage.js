@@ -1,8 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
+import SearchIcon from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -34,7 +33,7 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3];
+// const cards = [1, 2, 3];
 
 class CourseBody extends Component {
   componentDidMount() {
@@ -48,7 +47,7 @@ class CourseBody extends Component {
     }
   }
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     return (
       <Grid
@@ -211,7 +210,7 @@ class CourseBody extends Component {
                 >
                   {/* <p style={{ textAlign: "center" }}> */}
                   Học và rèn luyện khả năng lập trình với hơn{" "}
-                  <span className="span-red MuiTypography-h5">30</span> bài tập{" "}
+                  <span className="span-red MuiTypography-h5">30</span> bài thực hành{" "}
                   <span className="span-red MuiTypography-h5">JAVA</span>. Còn
                   chần chờ gì nữa, hãy tham gia ngay.
                   {/* </p> */}

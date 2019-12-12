@@ -233,7 +233,7 @@ class PrintBody extends Component {
                       style={{ marginLeft: 4, color: "#4978cc" }}
                     >
                       {/* {course.total_minitask} */}
-                      Bài tập đã hoàn thành
+                      Bài thực hành đã hoàn thành
                     </Typography>
                   </Grid>
 
@@ -273,7 +273,7 @@ class PrintBody extends Component {
                 <Grid container style={{ padding: 10 }}>
                   <Grid item style={{ flexGrow: 1 }}>
                     <div style={{ fontWeight: "bold" }}>
-                      Danh sách bài tập đã hoàn thành
+                      Danh sách bài thực hành đã hoàn thành
                     </div>{""}
                   </Grid>
                 </Grid>
@@ -329,7 +329,7 @@ class PrintBody extends Component {
                           component="p"
                           style={{ marginLeft: 4 }}
                         >
-                          Bạn chưa hoàn thành bài tập nào.
+                          Bạn chưa hoàn thành bài thực hành nào.
                         </Typography>
                       </Grid>
                     </Grid>

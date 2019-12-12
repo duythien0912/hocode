@@ -1,18 +1,17 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/styles";
-import TaskItem from "./TaskItem";
-import axios from "axios";
-import { matchPath } from "react-router-dom";
-import HashLoader from "react-spinners/HashLoader";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import LaptopIcon from "@material-ui/icons/Laptop";
 import Rating from "@material-ui/lab/Rating";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { withStyles } from "@material-ui/styles";
+import axios from "axios";
+import React, { Component } from "react";
+import { matchPath } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 import { randomColor } from "../course/CourseItem";
+import TaskItem from "./TaskItem";
+
 
 const styles = {
   card: {
@@ -215,7 +214,7 @@ class TaskBody extends Component {
                       </Typography>
                     </Grid>
 
-                    <Grid
+                    {/* <Grid
                       item
                       style={{
                         display: "flex",
@@ -232,7 +231,7 @@ class TaskBody extends Component {
                         Tình trạng:
                       </Typography>
                       <CircularProgress variant="determinate" value={100} />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
               </Paper>

@@ -48,6 +48,12 @@ import {
   ModelCertEdit
 } from "./resources/ModelCert";
 
+import {
+  ModelUserList,
+  ModelUserCreate,
+  ModelUserEdit
+} from "./resources/ModelUser";
+
 import { history } from "../../../js/store/store";
 
 const ReactAdmin = () => (
@@ -61,48 +67,82 @@ const ReactAdmin = () => (
     theme={theme}
     history={history}
     locale="vi"
+    // logoutButton={null}
   >
-    <Resource
-      name="books"
-      list={ModelBookList}
-      create={ModelBookCreate}
-      edit={ModelBookEdit}
-    />
-    <Resource
-      name="events"
-      list={ModelEventList}
-      create={ModelEventCreate}
-      edit={ModelEventEdit}
-    />
+    {_ => {
+      const permissionslocal = localStorage.getItem("permissions");
 
-    <Resource
-      name="courses"
-      list={ModelCourseList}
-      create={ModelCourseCreate}
-      edit={ModelCourseEdit}
-    />
-    <Resource
-      name="tasks"
-      list={ModelTaskList}
-      create={ModelTaskCreate}
-      edit={ModelTaskEdit}
-    />
+      return [
+        permissionslocal === "admin" ? (
+          <Resource
+            name="books"
+            list={ModelBookList}
+            create={ModelBookCreate}
+            edit={ModelBookEdit}
+          />
+        ) : null,
 
-    <Resource
-      name="minitasks"
-      list={ModelMinitaskList}
-      create={ModelMinitaskCreate}
-      edit={ModelMinitaskEdit}
-    />
+        permissionslocal === "admin" ? (
+          <Resource
+            name="events"
+            list={ModelEventList}
+            create={ModelEventCreate}
+            edit={ModelEventEdit}
+          />
+        ) : null,
 
-    <Resource
-      name="certs"
-      list={ModelCertList}
-      create={ModelCertCreate}
-      edit={ModelCertEdit}
-    />
+        <Resource
+          name="courses"
+          list={ModelCourseList}
+          create={ModelCourseCreate}
+          edit={ModelCourseEdit}
+        />,
+        <Resource
+          name="tasks"
+          list={ModelTaskList}
+          create={ModelTaskCreate}
+          edit={ModelTaskEdit}
+        />,
+
+        <Resource
+          name="minitasks"
+          list={ModelMinitaskList}
+          create={ModelMinitaskCreate}
+          edit={ModelMinitaskEdit}
+        />,
+
+        permissionslocal === "admin" ? (
+          <Resource
+            name="users"
+            list={ModelUserList}
+            create={ModelUserCreate}
+            edit={ModelUserEdit}
+          />
+        ) : null,
+
+        permissionslocal === "admin" ? (
+          <Resource
+            name="certs"
+            list={ModelCertList}
+            create={ModelCertCreate}
+            edit={ModelCertEdit}
+          />
+        ) : null
+      ];
+    }}
   </Admin>
 );
 
 export default ReactAdmin;
+
+// const mapStateToProps = state => ({
+//   auth: state.rootReducer.auth,
+//   errors: state.rootReducer.errors,
+//   user: state.rootReducer.user
+// });
+
+// export default withStyles(styles, { withTheme: true })(
+//   connect(mapStateToProps, { logoutUser })(ProfilePage)
+// );
+
 /** End of Generated Code **/

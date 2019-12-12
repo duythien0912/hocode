@@ -3,29 +3,17 @@
  * When regenerated the changes will be lost.
  **/
 import React from "react";
-import MinitaskEdit from "../../../profilePage/content/minitask/MinitaskEdit";
-import CreateMiniTaskBody from "../../../profilePage/content/minitask/CreateMiniTaskBody";
-
 import {
-  Create,
-  Datagrid,
-  TextField,
-  NumberField,
-  BooleanInput,
-  SimpleForm,
-  List,
-  TextInput,
-  //   Edit,
-  NumberInput,
+Datagrid, DeleteButton,
   //  BooleanField,
-  EditButton,
-  DeleteButton
+  EditButton, List, NumberField, TextField
 } from "react-admin";
+import CreateMiniTaskBody from "../../../profilePage/content/minitask/CreateMiniTaskBody";
+import MinitaskEdit from "../../../profilePage/content/minitask/MinitaskEdit";
 //import { permitted } from '../utils';
-
 //import ModelMinitaskEditToolbar from '../customActions/ModelMinitaskEditToolbar';
-
 import ModelMinitaskFilter from "../filters/ModelMinitaskFilter";
+
 //import { getLocationHref } from '@sentry/utils';
 
 export const ModelMinitaskList = props => (

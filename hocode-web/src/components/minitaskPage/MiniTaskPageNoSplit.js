@@ -326,7 +326,7 @@ class MiniTaskPage extends Component {
 
             Swal.fire({
               type: "success",
-              title: `Chúc mừng, bạn đã hoàn thành bài tập này`,
+              title: `Chúc mừng, bạn đã hoàn thành bài thực hành này`,
               width: 600,
               padding: "3em",
               customClass: "hidden_alert",
@@ -337,7 +337,7 @@ class MiniTaskPage extends Component {
                 no-repeat
               `
             });
-            toast("Chúc mừng, bạn đã hoàn thành bài tập này!", {
+            toast("Chúc mừng, bạn đã hoàn thành bài thực hành này!", {
               containerId: "B"
             });
           }

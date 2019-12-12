@@ -16,6 +16,7 @@ import GestureIcon from '@material-ui/icons/Gesture';
 import SportsVolleyballIcon from '@material-ui/icons/SportsVolleyball';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 const ICONS = {
   books: <MenuBookIcon style={{marginRight: 1}} />,
@@ -25,6 +26,7 @@ const ICONS = {
   minitasks: <SportsVolleyballIcon style={{marginRight: 1}} />,
   profile: <ListIcon style={{marginRight: 1}} />,
   certs: <CardGiftcardIcon style={{marginRight: 1}} />,
+  users: <SupervisorAccountIcon style={{marginRight: 1}} />,
 };
 
 const Menu = ({ resources, onMenuClick, logout }) => (
@@ -83,6 +85,9 @@ const changeIDToName = name => {
       break;
     case "Certs":
       title = "Chứng chỉ";
+      break;
+    case "Users":
+      title = "Người dùng";
       break;
     default:
       title = name;

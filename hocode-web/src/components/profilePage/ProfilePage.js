@@ -210,7 +210,7 @@ class ProfilePage extends React.Component {
                   onClick={this.onClickMenuItem(1)}
                 >
                   <BallotIcon style={{ fontSize: 16 }} />
-                  <p style={{ fontSize: 14, marginLeft: "8px" }}>Admin</p>
+                  <p style={{ fontSize: 14, marginLeft: "8px" }}>Quản lý</p>
                 </MenuItem>
               </Link>
             ) : (

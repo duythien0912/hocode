@@ -1,8 +1,8 @@
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
-import "./certificate.css"
 import { connect } from "react-redux";
+import "./certificate.css";
 const styles = {};
 
 class Certificate extends Component {
@@ -25,7 +25,7 @@ class Certificate extends Component {
         },2000)*/
   }
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     const Certificate = this.props.Certificate;
 
     //   const { isLoading } = this.state;

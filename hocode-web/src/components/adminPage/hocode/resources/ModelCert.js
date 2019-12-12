@@ -2,35 +2,26 @@
  * Generated ModelCert.js code. Edit at own risk.
  * When regenerated the changes will be lost.
  **/
-import React, { Component } from "react";
-import {
-  Create,
-  Datagrid,
-  TextField,
-  //   BooleanInput,
-  SimpleForm,
-  List,
-  TextInput,
-  Edit,
-  //  BooleanField,
-  EditButton,
-  DeleteButton,
-  ImageField,
-  SelectInput
-} from "react-admin";
-import Skeleton from "@material-ui/lab/Skeleton";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import Card from '@material-ui/core/Card';
 import Grid from "@material-ui/core/Grid";
 import MUITextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
-import Card from '@material-ui/core/Card';
-
+import Skeleton from "@material-ui/lab/Skeleton";
 import axios from "axios";
+import React, { Component } from "react";
+import {
+Create, Datagrid, DeleteButton, Edit,
+  //  BooleanField,
+  EditButton, List,
+  //   BooleanInput,
+  SimpleForm, TextField, TextInput
+} from "react-admin";
 //import { permitted } from '../utils';
-
 import ModelCertEditToolbar from "../customActions/ModelCertEditToolbar";
-
 import ModelCertFilter from "../filters/ModelCertFilter";
+
+
 
 
 class ModelCertList extends Component {
@@ -262,12 +253,12 @@ class ModelCertCreate extends Component {
   }
 
   render() {
-    var choicesCourse = this.state.course.map(val => {
-      var rObj = {};
-      rObj["id"] = val.id;
-      rObj["name"] = val.course_name;
-      return rObj;
-    });
+    // var choicesCourse = this.state.course.map(val => {
+    //   var rObj = {};
+    //   rObj["id"] = val.id;
+    //   rObj["name"] = val.course_name;
+    //   return rObj;
+    // });
 
     return (
       <Create {...this.props} title="Tạo Chứng chỉ">
@@ -306,12 +297,12 @@ class ModelCertEdit extends Component {
   }
 
   render() {
-    var choicesCourse = this.state.course.map(val => {
-      var rObj = {};
-      rObj["id"] = val.id;
-      rObj["name"] = val.course_name;
-      return rObj;
-    });
+    // var choicesCourse = this.state.course.map(val => {
+    //   var rObj = {};
+    //   rObj["id"] = val.id;
+    //   rObj["name"] = val.course_name;
+    //   return rObj;
+    // });
 
     return (
       <Edit {...this.props} title="Sửa Chứng chỉ">

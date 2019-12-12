@@ -32,7 +32,7 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles(theme => ({
   root: {
     minHeight: "unset",
-    height:"25px",
+    height: "25px",
     "&:focus": {
       // backgroundColor: "red",
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
@@ -70,16 +70,31 @@ function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+    
+        <StyledMenuItem>
+          <AccountBoxIcon style={{ fontSize: 16 }} />
+
+          <Link
+            to="/profile/account"
+            style={{ textDecoration: "none" }}
+            onClick={() => {
+              setAnchorEl(null);
+            }}
+          >
+            <p
+              style={{
+                fontSize: 12,
+                marginLeft: "3px",
+                textDecoration: "none"
+              }}
+            >
+              Thông tin cá nhân
+            </p>
+          </Link>
+        </StyledMenuItem>
         <StyledMenuItem onClick={props.logoutUser}>
           <ExitToAppIcon style={{ fontSize: 16 }} />
           <p style={{ fontSize: 12, marginLeft: "3px" }}>Đăng xuất</p>
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <AccountBoxIcon style={{ fontSize: 16 }} />
-          
-          <Link to="/profile/account" style={{textDecoration: "none"}} onClick={()=>{setAnchorEl(null)}}>
-            <p style={{ fontSize: 12, marginLeft: "3px", textDecoration: "none" }}>Thông tin cá nhân</p>
-          </Link>
         </StyledMenuItem>
       </StyledMenu>
     </div>
@@ -92,7 +107,4 @@ const mapStateToProps = state => ({
   user: state.rootReducer.user
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(CustomizedMenus);
+export default connect(mapStateToProps, { logoutUser })(CustomizedMenus);
