@@ -62,18 +62,18 @@ const ReactAdmin = () => (
     history={history}
     locale="vi"
   >
-    <Resource
+    {/* <Resource
       name="books"
       list={ModelBookList}
       create={ModelBookCreate}
       edit={ModelBookEdit}
-    />
-    <Resource
+    /> */}
+    {/* <Resource
       name="events"
       list={ModelEventList}
       create={ModelEventCreate}
       edit={ModelEventEdit}
-    />
+    /> */}
 
     <Resource
       name="courses"
@@ -95,12 +95,12 @@ const ReactAdmin = () => (
       edit={ModelMinitaskEdit}
     />
 
-    <Resource
+    {/* <Resource
       name="certs"
       list={ModelCertList}
       create={ModelCertCreate}
       edit={ModelCertEdit}
-    />
+    /> */}
   </Admin>
 );
 

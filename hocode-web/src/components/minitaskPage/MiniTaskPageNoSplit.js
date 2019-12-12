@@ -242,7 +242,7 @@ class MiniTaskPage extends Component {
     //console.log(this.state.userCode);
     let junit4 = this.createFileTest(minitask);
 
-    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+    let code = `import java.lang.Math; \n public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
       isLoading: true
     }));
@@ -291,7 +291,7 @@ class MiniTaskPage extends Component {
     //console.log(this.state.userCode);
     let junit4 = this.createFileTest(minitask);
 
-    let code = `public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
+    let code = `import java.lang.Math; \n public class Solution {\n    public Solution(){}\n    ${this.state.userCode}\n    }`;
     this.setState((state, props) => ({
       isLoading: true
     }));
