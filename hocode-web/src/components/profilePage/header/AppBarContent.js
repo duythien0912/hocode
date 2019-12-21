@@ -1,19 +1,18 @@
-import React from "react";
-
+import Avatar from "@material-ui/core/Avatar";
+import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
+import NavigationIcon from "@material-ui/icons/Navigation";
+import React from "react";
 import { connect } from "react-redux";
-import { getUser } from "../../../js/actions/userAction";
 //import Typography from "@material-ui/core/Typography";
 //import Paper from "@material-ui/core/Paper";
 //import InputBase from "@material-ui/core/InputBase";
 //import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
-import UserMenu from "./UserMenu";
-import Avatar from "@material-ui/core/Avatar";
-import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
-import Fab from "@material-ui/core/Fab";
-import NavigationIcon from "@material-ui/icons/Navigation";
+import { getUser } from "../../../js/actions/userAction";
 import "./appbarcontent.css";
+import UserMenu from "./UserMenu";
+
 //import IconButton from "@material-ui/core/IconButton";
 const styles = theme => ({
   searchComponent: {
@@ -93,7 +92,7 @@ class AppBarContent extends React.Component {
                   }}
                 >
                   <NavigationIcon style={{ fontSize: 14, marginRight: 2 }} />
-                  <div className="dangBaiTap">Đăng bài tập</div>
+                  <div className="dangBaiTap">Đăng bài thực hành</div>
                 </Fab>
               </Link>
             ) : (

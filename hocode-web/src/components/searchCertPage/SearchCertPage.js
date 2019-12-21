@@ -1,27 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import SearchIcon from "@material-ui/icons/Search";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-
-import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { withStyles } from "@material-ui/styles";
+import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { fade } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+import { withStyles } from "@material-ui/styles";
 import Axios from "axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React from "react";
+import { Link } from "react-router-dom";
+
 
 const styles = theme => ({
   root: {
@@ -115,7 +108,7 @@ class SearchCertPage extends React.Component {
   };
 
   render() {
-    const { errors } = this.state;
+    // const { errors } = this.state;
     const { classes } = this.props;
 
     return (
@@ -296,7 +289,7 @@ class SearchCertPage extends React.Component {
                 ) : (
                   <> </>
                 )}
-                {this.state.rows.length == 0 && !this.state.isLoading ? (
+                {this.state.rows.length === 0 && !this.state.isLoading ? (
                   <div
                     style={{
                       display: "flex",

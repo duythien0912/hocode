@@ -173,12 +173,12 @@ class CreateMiniTaskBody extends Component {
     return (
       <React.Fragment>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div>Tạo bài tập</div>
+          <div>Tạo bài thực hành</div>
         </div>
         <Grid container className={classes.CreateMiniTaskBodyContainer}>
           <Grid item xs={12} sm={6} md={6}>
             <div className={classes.CreateMiniTaskLeftBodyContainer}>
-              <div>Tên bài tập:</div>
+              <div>Tên bài thực hành:</div>
               <input
                 name="name"
                 className="input-createminitask"

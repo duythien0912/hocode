@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/styles";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { connect } from "react-redux";
 import { loginUser } from "../../js/actions/authActions";
@@ -113,29 +113,26 @@ class LoginPage extends React.Component {
 
   onSubmitTest = e => {
     this.setState({
-      email: "giang12",
-      password: "giang12"
+      email: "thiennd@gmail.com",
+      password: "Thien123"
     });
   };
 
-  onSubmit  = async e =>  {
+  onSubmit = async e => {
     e.preventDefault();
 
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     const userData = {
       email: this.state.email,
       password: this.state.password,
       remember: this.state.remember
     };
 
-var loginF = Promise.all([this.props.loginUser(userData)]);
+    var loginF = Promise.all([this.props.loginUser(userData)]);
 
-loginF.then((val) => {
-  this.setState({isLoading: false});
-
-});
-
-
+    loginF.then(val => {
+      this.setState({ isLoading: false });
+    });
   };
   render() {
     const { errors } = this.state;
@@ -210,11 +207,18 @@ loginF.then((val) => {
                   label="Lưu tài khoản"
                 />
               </Grid>
-              <Button variant="contained" onClick={this.onSubmitTest}>
-                Tài khoản test
-              </Button>
+              {/* <Button variant="contained" onClick={this.onSubmitTest}>
+                Tài khoản admin test
+              </Button> */}
+              {/* <Button variant="contained" onClick={this.onSubmitTest}>
+                Tài khoản mod test
+              </Button> */}
             </Grid>
 
+            <Button fullWidth variant="contained" onClick={this.onSubmitTest}>
+              Tài khoản admin test
+            </Button>
+            
             <Button
               type="submit"
               fullWidth
@@ -222,11 +226,17 @@ loginF.then((val) => {
               color="primary"
               className={classes.submit}
             >
-              {this.state.isLoading ? <CircularProgress size={22} color="#fff" style={{ margin: 2, }} /> : "Đăng nhập" }
-             
-              
-
+              {this.state.isLoading ? (
+                <CircularProgress
+                  size={22}
+                  color="#fff"
+                  style={{ margin: 2 }}
+                />
+              ) : (
+                "Đăng nhập"
+              )}
             </Button>
+
             <Grid container>
               <Grid item xs>
                 <Link to="#" variant="body2">
@@ -234,7 +244,7 @@ loginF.then((val) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body1" >
+                <Link to="/signup" variant="body1">
                   {"Nếu bạn chưa có tài khoản, Hãy đăng ký ngay"}
                 </Link>
               </Grid>
@@ -246,25 +256,27 @@ loginF.then((val) => {
               </Grid>
 
               <Grid item>
-              <Typography variant="subtitle1">
-
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScGsL9g_Hot55sUbVHb0O7uBsWtkBrDE65fmETvflcxvuCdvw/viewform?usp=sf_link"
-                  // variant="subtitle1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  // ref={element => {
-                  //   if (element)
-                  //     element.style.setProperty(
-                  //       "color",
-                  //       "#ff5722",
-                  //       "important"
-                  //     );
-                  // }}
-                  style={{ textDecoration: "none", color: "#ff5722!important" }}
-                >
-                  Đăng ký trở thành giáo viên
-                </a>
+                <Typography variant="subtitle1">
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLScGsL9g_Hot55sUbVHb0O7uBsWtkBrDE65fmETvflcxvuCdvw/viewform?usp=sf_link"
+                    // variant="subtitle1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    // ref={element => {
+                    //   if (element)
+                    //     element.style.setProperty(
+                    //       "color",
+                    //       "#ff5722",
+                    //       "important"
+                    //     );
+                    // }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#ff5722!important"
+                    }}
+                  >
+                    Đăng ký trở thành giáo viên
+                  </a>
                 </Typography>
               </Grid>
             </Grid>

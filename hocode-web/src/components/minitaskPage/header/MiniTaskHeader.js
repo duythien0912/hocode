@@ -1,14 +1,13 @@
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import PersonIcon from "@material-ui/icons/Person";
 import React, { Component } from "react";
-import "./minitaskHeader.css";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { logoutUser } from "../../../js/actions/authActions";
 import { getUser } from "../../../js/actions/userAction";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import "./minitaskHeader.css";
 import UserMenu from "./UserMenu";
-import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import PersonIcon from "@material-ui/icons/Person";
 class MiniTaskHeader extends Component {
   onLogout = e => {
     e.preventDefault();

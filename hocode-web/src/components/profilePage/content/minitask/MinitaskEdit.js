@@ -5,13 +5,14 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { Component } from "react";
-import { matchPath } from "react-router-dom";
 import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
 import CodeEditor from "./CodeEditor";
 import "./createminitaskbody.css";
 import ReactMde from "./ReactMde";
 import ShowUnitTest from "./ShowUnitTest";
+
+
 const options = [
   { value: "int", label: "Interger" },
   { value: "String", label: "String" },
@@ -20,11 +21,11 @@ const options = [
   { value: "String[]", label: "String Array" },
   { value: "int[]", label: "Interger Array" }
 ];
-const optionsLevel =[
+const optionsLevel = [
   { value: "easy", label: "Easy" },
   { value: "medium", label: "Medium" },
-  { value: "hard", label: "Hard" },
-]
+  { value: "hard", label: "Hard" }
+];
 const styles = {
   CreateMiniTaskBodyContainer: {
     minHeight: "100vh",
@@ -35,12 +36,12 @@ const styles = {
   }
 };
 
-const getParams = pathname => {
-  const minitask = matchPath(pathname, {
-    path: `/profile/minitasks/:minitasksId/edit`
-  });
-  return (minitask && minitask.params) || {};
-};
+// const getParams = pathname => {
+//   const minitask = matchPath(pathname, {
+//     path: `/profile/minitasks/:minitasksId/edit`
+//   });
+//   return (minitask && minitask.params) || {};
+// };
 // custom react select style
 const selectStyles = { menu: styles => ({ ...styles, zIndex: 999 }) };
 class MinitaskEdit extends Component {
@@ -76,8 +77,12 @@ class MinitaskEdit extends Component {
       course_id: "", // ban đầu khi gọi api thì set state để cái này có giá trị mặc định
       task_id: "",
       code_point: 0,
-      course: {value: "", label: ""},
-      task:{value: "", label: ""}
+      course: { value: "", label: "" },
+      task: { value: "", label: "" },
+      output_type_func_select: options[0],
+      level_ref_select: optionsLevel[0],
+      courses_option_select: { value: "", label: "" },
+      task_option_select: { value: "", label: "" }
     };
     this.output_type_func = React.createRef();
     this.courses_ref = React.createRef();
@@ -98,22 +103,31 @@ class MinitaskEdit extends Component {
   }
 
   componentDidMount() {
-   // let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
+    // let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
 
     //const currentParams = getParams(location.pathname);
-   // console.log(currentParams);
-
+    // console.log(currentParams);
+    let minitask;
     axios
       .get(`https://hocodevn.com/api/v1/minitasks/${this.props.minitasksId}`)
       .then(res => {
         console.log(res.data);
-        const minitask = res.data;
+        minitask = res.data;
+
+        const found = options.find(
+          element => element.value === minitask.output_type_func
+        );
+        const found2 = optionsLevel.find(
+          element => element.value === minitask.level
+        );
+
         this.setState({
           template_code: minitask.template_code,
           unit_tests: minitask.unit_tests,
           task_id: minitask.task_id,
           name: minitask.mini_task_name,
           name_func: minitask.name_func,
+
           output_type_func: minitask.output_type_func,
           point_unlock: minitask.point_unlock,
           status: minitask.status,
@@ -121,9 +135,11 @@ class MinitaskEdit extends Component {
           mini_task_desc: minitask.mini_task_desc,
           level: minitask.level,
           code_point: minitask.code_point,
-          inputList: minitask.input_list || []
+          inputList: minitask.input_list || [],
+
+          output_type_func_select: found,
+          level_ref_select: found2
         });
-        
       });
     axios.get(`https://hocodevn.com/api/v1/courses`).then(res => {
       const courses = res.data;
@@ -131,12 +147,51 @@ class MinitaskEdit extends Component {
       const coursesoption = coursesFilter.map(course => {
         return { value: course.id, label: course.course_name };
       });
+      // const tasksoption = courses[0].tasks.map(task => {
+      //   return { value: task.id, label: task.task_name };
+      // });
+      const tasksfulloption = [];
+
+      /* eslint-disable array-callback-return */
+
+      for ( let i = 0; i < courses.length; i++) {
+        courses[i].tasks.map(tas => {
+          tasksfulloption.push({
+            value: tas.id,
+            label: tas.task_name,
+            courses: { value: courses[i].id, label: courses[i].course_name, },
+            tasksoption: courses[i].tasks.map((task) => {
+              return { value: task.id, label: task.task_name };
+            }),
+          });
+        });
+      }
+      /* eslint-enable array-callback-return */
+
+      // courses.map(cou => {
+      //   cou.tasks.map(tas => {
+      //     tasksfulloption.push({ value: tas.id, label: tas.task_name });
+      //   });
+      // });
+
+      // if (minitask !== null) {
+      // const foundCourse = coursesoption.find(
+      //   element => element.value === minitask.course_id
+      // );
+      const foundTask = tasksfulloption.find(
+        element => element.value === minitask.task_id
+      );
+      // }
+
+      console.log(tasksfulloption);
+      console.log(foundTask);
+
       this.setState({
         courses: coursesFilter,
         coursesOption: coursesoption,
-        tasksOption: courses[0].tasks.map(task => {
-          return { value: task.id, label: task.task_name };
-        })
+        tasksOption: foundTask.tasksoption,
+        courses_option_select: foundTask.courses,
+        task_option_select: foundTask
       });
     });
   }
@@ -162,9 +217,9 @@ class MinitaskEdit extends Component {
 
   // create a new minitask
   async handleSubmit() {
-  //  let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
+    //  let location = this.props.location; // cant use this.props.match to get param in url, => pass 'location' from profile page and use matchparam to get param
 
-   // const currentParams = getParams(location.pathname);
+    // const currentParams = getParams(location.pathname);
     const template_code = `public ${this.state.output_type_func} ${
       this.state.name_func
     }(${this.state.inputList
@@ -188,16 +243,18 @@ class MinitaskEdit extends Component {
       mini_task_desc: this.state.mini_task_desc,
       level: this.state.level,
       code_point: parseInt(this.state.code_point),
-      input_list:this.state.inputList
+      input_list: this.state.inputList
     };
     axios
-      .put(`https://hocodevn.com/api/v1/curd/minitasks/${this.props.minitasksId}`, newMiniTask)
+      .put(
+        `https://hocodevn.com/api/v1/curd/minitasks/${this.props.minitasksId}`,
+        newMiniTask
+      )
       .then(function(response) {
         toast("Sửa bài thành công!", {
           containerId: "B"
         });
         console.log(response);
-
       });
     console.log(newMiniTask);
   }
@@ -227,13 +284,18 @@ class MinitaskEdit extends Component {
       tasksOption: course.tasks.map(task => {
         return { value: task.id, label: task.task_name };
       }),
-      task_id: course.tasks[0].id
+      task_id: course.tasks[0].id,
+      courses_option_select: select_value,
+
     });
+
   }
   onTasksSelectChange(select_value) {
     const name = this.tasks_ref.current.props.name; //get name of select tag
     this.setState({
-      [name]: select_value.value
+      [name]: select_value.value,
+      task_option_select: select_value
+
     });
   }
   onLevelSelectChange(select_value) {
@@ -241,7 +303,7 @@ class MinitaskEdit extends Component {
     this.setState({
       [name]: select_value.value
     });
-    console.log(name,select_value)
+    console.log(name, select_value);
   }
   // update template code when typing
   updateTemplateCode(value) {
@@ -319,7 +381,7 @@ class MinitaskEdit extends Component {
     return (
       <React.Fragment>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div>Sửa bài tập</div>
+          <div>Sửa bài thực hành</div>
         </div>
 
         <Grid
@@ -340,6 +402,7 @@ class MinitaskEdit extends Component {
                       name="course_id"
                       //defaultValue={this.state.coursesOption[0]}
                       onChange={this.onCoursesSelectChange}
+                      value={this.state.courses_option_select}
                     />
                   </Grid>
 
@@ -352,6 +415,7 @@ class MinitaskEdit extends Component {
                       name="task_id"
                       //defaultValue={this.state.tasksOption[0]}
                       onChange={this.onTasksSelectChange}
+                      value={this.state.task_option_select}
                     />
                   </Grid>
                 </Grid>
@@ -361,7 +425,7 @@ class MinitaskEdit extends Component {
 
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
-                  <div>Tên bài tập:</div>
+                  <div>Tên bài thực hành:</div>
                   <input
                     name="name"
                     className="input-createminitask"
@@ -382,6 +446,7 @@ class MinitaskEdit extends Component {
                   <div>Số đậu:</div>
                   <input
                     name="code_point"
+                    type="number"
                     className="input-createminitask"
                     onChange={this.handleSimpleInputChange}
                     value={this.state.code_point}
@@ -390,12 +455,14 @@ class MinitaskEdit extends Component {
                 <Grid item xs={12} sm={6} md={6}>
                   <div>Chọn độ khó:</div>
                   <Select
-                      styles={selectStyles}
-                      options={optionsLevel}
-                      ref={this.level_ref}
-                      name="level"
-                      onChange={this.onLevelSelectChange}
-                    />
+                    styles={selectStyles}
+                    options={optionsLevel}
+                    value={this.state.level_ref_select}
+                    defaultValue={optionsLevel[0]}
+                    ref={this.level_ref}
+                    name="level"
+                    onChange={this.onLevelSelectChange}
+                  />
                 </Grid>
               </Grid>
               <Grid container>
@@ -410,25 +477,28 @@ class MinitaskEdit extends Component {
                     options={options}
                     ref={this.output_type_func}
                     name="output_type_func"
-                    //defaultValue={options[0]}
+                    value={this.state.output_type_func_select}
+                    defaultValue={options[0]}
                     onChange={this.onSelectChange}
-                  />
+                  >
+                    {/* {options.map(val => (
+                      <MenuItem value={val.value}>{val.label}</MenuItem>
+                    ))} */}
+                  </Select>
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item  container xs={12} md={12}>
+                <Grid item container xs={12} md={12}>
                   <Grid item xs={12} md={12}>
-                  <div style={{ marginBottom: 10, marginTop: 10 }}>
-                    Mô tả bài toán:
-                  </div>
+                    <div style={{ marginBottom: 10, marginTop: 10 }}>
+                      Mô tả bài toán:
+                    </div>
                   </Grid>
-                  
+
                   <ReactMde
                     handleMarkdownChange={this.handleMarkdownChange}
                     mini_task_desc={this.state.mini_task_desc}
                   />
-                 
-               
                 </Grid>
               </Grid>
             </Grid>
@@ -679,10 +749,10 @@ class MinitaskEdit extends Component {
           </Grid>
         </Grid>
         <ToastContainer
-            enableMultiContainer
-            containerId={"B"}
-            position={toast.POSITION.TOP_RIGHT}
-          />
+          enableMultiContainer
+          containerId={"B"}
+          position={toast.POSITION.TOP_RIGHT}
+        />
       </React.Fragment>
     );
   }

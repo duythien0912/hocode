@@ -55,14 +55,17 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			if err == mgo.ErrNotFound {
 				// return echo.ErrNotFound
 				// return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
-
+				return
 			}
 
 			return
 		}
-		if bk.ID != "" {
-			mta = append(mta, bk)
+		if bk != nil {
+			if bk.ID != "" {
+				mta = append(mta, bk)
+			}
 		}
+
 	}
 
 	for i := 0; i < len(mta); i++ {
@@ -79,12 +82,18 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			// Select(bson.M{"id": id}).
 			One(&tf); err != nil {
 			if err == mgo.ErrNotFound {
-				return echo.ErrNotFound
+				// return echo.ErrNotFound
+				return
 			}
 
 			return
 		}
-		mta[i].Avatar = tf.BackgroundImage
+		if tf != nil {
+			if tf.BackgroundImage != "" {
+				mta[i].Avatar = tf.BackgroundImage
+
+			}
+		}
 	}
 	return c.JSON(http.StatusOK, mta)
 

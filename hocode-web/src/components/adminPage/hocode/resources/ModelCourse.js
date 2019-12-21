@@ -33,6 +33,9 @@ export const ModelCourseList = props => (
     <Datagrid>
       {/* <TextField                source="id"                sortable={false}            /> */}
       <TextField source="course_name" sortable={false} />
+      {/* <TextField source="course_desc" sortable={false} /> */}
+      <TextField source="total_minitask" sortable={false} />
+      {/* <TextField source="rating_value" sortable={false} /> */}
       <ImageField
         className="thumbNailView"
         source="background_image"

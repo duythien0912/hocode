@@ -105,7 +105,7 @@ class CreateMiniTaskBody extends Component {
       console.log(courses);
       this.setState({
         course_id: courses[0].id,
-        task_id: courses[0].tasks.length == 0 ? "" : courses[0].tasks[0].id
+        task_id: courses[0].tasks.length === 0 ? "" : courses[0].tasks[0].id
       });
     });
   }
@@ -160,7 +160,7 @@ class CreateMiniTaskBody extends Component {
       .post("https://hocodevn.com/api/v1/minitasks", newMiniTask)
       .then(function(response) {
         window.location.reload();
-        toast("Tạo bài tập thành công!", {
+        toast("Tạo bài thực hành thành công!", {
           containerId: "B"
         });
         console.log(response);
@@ -286,7 +286,7 @@ class CreateMiniTaskBody extends Component {
     return (
       <React.Fragment>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div>Tạo bài tập</div>
+          <div>Tạo bài thực hành</div>
         </div>
 
         <Grid
@@ -328,7 +328,7 @@ class CreateMiniTaskBody extends Component {
 
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}> 
-                  <div>Tên bài tập:</div>
+                  <div>Tên bài thực hành:</div>
                   <input
                     name="name"
                     className="input-createminitask"

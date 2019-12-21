@@ -7,7 +7,7 @@ import { Redirect } from "react-router";
 
 class catchAll extends Component {
   render() {
-    return <Redirect push to="/books" />;
+    return <Redirect push to="/" />;
 
     // return localStorage.getItem('token') ? (
     //     <NotFound />

@@ -1,19 +1,18 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import { connect } from "react-redux";
-import { getUser } from "../../../js/actions/userAction";
-import axios from "axios";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import axios from "axios";
+import React from "react";
 import Carousel from "react-material-ui-carousel";
+import { connect } from "react-redux";
+import { getUser } from "../../../js/actions/userAction";
 
 //import { Link } from "react-router-dom";
 
