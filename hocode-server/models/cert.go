@@ -10,6 +10,7 @@ type (
 	Cert struct {
 		ID        bson.ObjectId `json:"id" bson:"_id"`
 		UserID    string        `json:"user_id" bson:"user_id"`
+		UrEmail   string        `json:"user_email" bson:"user_email"`
 		CodePoint int           `json:"codepoint" bson:"codepoint"`
 		SearchID  string        `json:"search_id" bson:"search_id"`
 		ConfigID  string        `json:"config_id" bson:"config_id"`
