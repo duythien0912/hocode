@@ -129,6 +129,31 @@
                 }
             }
         },
+        "/auth/viewcert": {
+            "get": {
+                "description": "View cert for user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ViewCertUser"
+                ],
+                "summary": "View Cert by user",
+                "operationId": "view_cert",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ReviewCertOut"
+                        }
+                    }
+                }
+            }
+        },
         "/books": {
             "get": {
                 "description": "get books \u003ca href=\"/api/v1/books?page=1\u0026limit=5\"\u003e/api/v1/books?page=1\u0026limit=5\u003c/a\u003e",
@@ -1089,7 +1114,7 @@
         },
         "/minitasks": {
             "get": {
-                "description": "get minitasks \u003ca href=\"/api/v1/minitasks?page=1\u0026limit=5\"\u003e/api/v1/minitasks?page=1\u0026limit=5\u003c/a\u003e",
+                "description": "get List Minitasks \u003ca href=\"/api/v1/minitasks?page=1\u0026limit=5\"\u003e/api/v1/minitasks?page=1\u0026limit=5\u003c/a\u003e",
                 "consumes": [
                     "application/json"
                 ],
@@ -1097,9 +1122,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "MiniTasks"
+                    "Minitasks"
                 ],
-                "summary": "List MiniTasks",
+                "summary": "List Minitasks",
                 "operationId": "minitask_list",
                 "responses": {
                     "200": {
@@ -1122,14 +1147,13 @@
                     "application/json"
                 ],
                 "tags": [
-                    "MiniTasks"
+                    "Minitasks"
                 ],
-                "summary": "Create MiniTask",
-                "operationId": "minitask_create",
+                "summary": "Create Minitast",
                 "parameters": [
                     {
                         "description": "Create MiniTask",
-                        "name": "minitask",
+                        "name": "task",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -1289,8 +1313,8 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "List Task",
-                "operationId": "task_list",
+                "summary": "List Tasks",
+                "operationId": "tasks_list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1315,6 +1339,7 @@
                     "Tasks"
                 ],
                 "summary": "Create Task",
+                "operationId": "tasks_create",
                 "parameters": [
                     {
                         "description": "Create Task",
@@ -1468,7 +1493,7 @@
         },
         "/users": {
             "get": {
-                "description": "get users \u003ca href=\"/api/v1/users?page=1\u0026limit=5\"\u003e/api/v1/users?page=1\u0026limit=5\u003c/a\u003e",
+                "description": "get users",
                 "consumes": [
                     "application/json"
                 ],
@@ -1476,10 +1501,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "users"
                 ],
-                "summary": "List Users",
-                "operationId": "user_list",
+                "summary": "List users",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1738,6 +1762,9 @@
         "model.Cert": {
             "type": "object",
             "properties": {
+                "agree": {
+                    "type": "boolean"
+                },
                 "config_id": {
                     "type": "string"
                 },

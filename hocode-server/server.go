@@ -185,6 +185,7 @@ func main() {
 	rs.GET("", h.TestAuth)
 
 	rs.GET("/reviewcert", h.ReviewCert)
+	rs.GET("/viewcert", h.ViewCertUser)
 
 	rs.GET("/userinfo", h.GetUserData)
 	rs.POST("/userinfoupdate", h.UpdataUserData)
@@ -218,6 +219,8 @@ func main() {
 
 	ra.POST("/nextminitask", h.NextMiniTask)
 	ra.GET("/tasks/:id", h.TaskByID)
+
+	ra.GET("/viewcert", h.ViewCertUser)
 
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")

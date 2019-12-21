@@ -544,7 +544,7 @@ class MiniTaskPage extends Component {
                           {renderPassedTestCount()}
                         </div>
                         <div style={{ marginLeft: 30 }}>
-                          <button
+                          {/* <button
                             className={`execute_btn ${this.state.isLoading &&
                               "disable_btn"}`}
                             style={{ display: "flex", alignItems: "center" }}
@@ -559,7 +559,7 @@ class MiniTaskPage extends Component {
                               alt=""
                               style={{ height: "10px", marginLeft: "3px" }}
                             ></img>
-                          </button>
+                          </button> */}
                         </div>
                         <div style={{ marginLeft: 10 }}>
                           <button

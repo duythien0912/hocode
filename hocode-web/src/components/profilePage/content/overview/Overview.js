@@ -264,7 +264,7 @@ class Overview extends React.Component {
                             </Tooltip>
                           </div>
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           {daily_minitask.status === "hoanthanh" ? (
                             <Tooltip title="Đã hoàn thành" placement="top">
                               {" "}
@@ -305,8 +305,8 @@ class Overview extends React.Component {
                               </div>
                             </Tooltip>
                           )}
-                        </Grid>
-                      </Grid>
+                        </Grid> */}
+                      </Grid> 
                       <Divider style={{ margin: "auto" }} />{" "}
                     </React.Fragment>
                   );

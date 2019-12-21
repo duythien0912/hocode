@@ -7,6 +7,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { logoutUser } from "../../../js/actions/authActions";
+import SearchIcon from '@material-ui/icons/Search';
 import { connect } from "react-redux";
 const StyledMenu = withStyles({
   paper: {
@@ -89,6 +90,27 @@ function CustomizedMenus(props) {
               }}
             >
               Thông tin cá nhân
+            </p>
+          </Link>
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <SearchIcon style={{ fontSize: 16 }} />
+
+          <Link
+            to="/searchcert"
+            style={{ textDecoration: "none" }}
+            onClick={() => {
+              setAnchorEl(null);
+            }}
+          >
+            <p
+              style={{
+                fontSize: 12,
+                marginLeft: "3px",
+                textDecoration: "none"
+              }}
+            >
+              Tra chứng chỉ
             </p>
           </Link>
         </StyledMenuItem>
