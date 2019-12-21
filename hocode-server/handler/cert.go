@@ -137,12 +137,9 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 	bk.UserID = ur.ID.Hex()
 	bk.ConfigID = configApp.ID.Hex()
 	if ur.CodePoint >= configApp.ReviewPoint {
-
 		bk.Status = "Active"
-
 	} else {
 		bk.Status = "Inactive"
-
 	}
 
 	bk.Timestamp = time.Now()
@@ -163,6 +160,81 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 	// }
 
 	bk.Agree = false
+
+	reviewCertOut := &model.ReviewCertOut{
+		User: ur, Config: configApp, Cert: bk,
+	}
+
+	c.Response().Header().Set("x-total-count", strconv.Itoa(1))
+
+	return c.JSON(http.StatusOK, reviewCertOut)
+
+}
+
+// ViewCertUser godoc
+// @Summary View Cert by user
+// @ID view_cert
+// @Description View cert for user
+// @Tags ViewCertUser
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} model.ViewCertUserOut
+// @Router /auth/viewcert [get]
+func (h *Handler) ViewCertUser(c echo.Context) (err error) {
+
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	ID := claims["id"].(string)
+
+	db := h.DB.Clone()
+	defer db.Close()
+
+	ur := &model.User{}
+
+	if err = db.DB(config.NameDb).C("users").
+		// FindId(bson.ObjectIdHex(ID)).
+		Find(bson.M{
+			"_id": bson.ObjectIdHex(ID),
+			"del": bson.M{"$ne": true},
+		}).
+		One(&ur); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+
+		return
+	}
+
+	configApp := &model.Config{}
+
+	// if err =
+	db.DB(config.NameDb).C("configs").
+		Find(bson.M{
+			"name_site": "hocode",
+		}).
+		One(&configApp)
+		// err != nil {
+		// if err == mgo.ErrNotFound {
+		// return c.JSON(http.StatusOK, configApp)
+
+		// }
+	// 	return
+	// }
+
+	bk := &model.Cert{}
+
+	if err = db.DB(config.NameDb).C("certs").
+		// FindId(bson.ObjectIdHex(id)).
+		Find(bson.M{
+			"user_id":   ur.ID.Hex(),
+			"config_id": configApp.ID.Hex(),
+			"del":       bson.M{"$ne": true},
+		}).
+		One(&bk); err != nil {
+		if err == mgo.ErrNotFound {
+		}
+
+	}
 
 	reviewCertOut := &model.ReviewCertOut{
 		User: ur, Config: configApp, Cert: bk,
