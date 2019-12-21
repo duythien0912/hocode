@@ -55,7 +55,7 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			if err == mgo.ErrNotFound {
 				// return echo.ErrNotFound
 				// return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
-
+				return
 			}
 
 			return
@@ -80,11 +80,12 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			One(&tf); err != nil {
 			if err == mgo.ErrNotFound {
 				// return echo.ErrNotFound
+				return
 			}
+			mta[i].Avatar = tf.BackgroundImage
 
 			return
 		}
-		mta[i].Avatar = tf.BackgroundImage
 	}
 	return c.JSON(http.StatusOK, mta)
 
