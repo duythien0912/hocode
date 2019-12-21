@@ -215,9 +215,9 @@ class LoginPage extends React.Component {
               </Button> */}
             </Grid>
 
-            <Button fullWidth variant="contained" onClick={this.onSubmitTest}>
+            {/* <Button fullWidth variant="contained" onClick={this.onSubmitTest}>
               Tài khoản admin test
-            </Button>
+            </Button> */}
             
             <Button
               type="submit"

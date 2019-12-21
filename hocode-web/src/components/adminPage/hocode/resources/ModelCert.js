@@ -4,25 +4,46 @@
  **/
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Card from '@material-ui/core/Card';
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import MUITextField from "@material-ui/core/TextField";
 import Skeleton from "@material-ui/lab/Skeleton";
 import axios from "axios";
 import React, { Component } from "react";
 import {
-Create, Datagrid, DeleteButton, Edit,
+  Create,
+  Datagrid,
+  DeleteButton,
+  Edit,
   //  BooleanField,
-  EditButton, List,
+  EditButton,
+  List,
   //   BooleanInput,
-  SimpleForm, TextField, TextInput
+  SimpleForm,
+  TextField,
+  TextInput,
+  // BooleanField,
+  // FunctionField,
+  // SelectField,
+  SelectInput
 } from "react-admin";
 //import { permitted } from '../utils';
 import ModelCertEditToolbar from "../customActions/ModelCertEditToolbar";
 import ModelCertFilter from "../filters/ModelCertFilter";
 
+import ReviewField from "../fields/ReviewField";
 
+// const choices = [
+//   { _id: "Active", status: "Đồng ý" },
+//   { _id: "Peding", status: "Đang xét duyệt" },
+//   { _id: "Inactive", status: "Từ chối" }
+// ];
 
+const choicesCourse = [
+  { id: "Active", name: "Đồng ý" },
+  { id: "Peding", name: "Đang xét duyệt" },
+  { id: "Inactive", name: "Từ chối" }
+];
 
 class ModelCertList extends Component {
   constructor() {
@@ -36,7 +57,6 @@ class ModelCertList extends Component {
       data: {}
     };
   }
-  
 
   componentDidMount() {
     axios
@@ -79,12 +99,10 @@ class ModelCertList extends Component {
     dataUpdate.review_point = parseInt(this.state.review_point);
     dataUpdate.electronic_signature = this.state.electronic_signature;
 
-    console.log(dataUpdate);
     this.setState({ isLoading: true });
     axios
       .post(`https://hocodevn.com/api/v1/curd/configs`, dataUpdate)
       .then(res => {
-        console.log(res.data);
         this.setState({
           name: res.data.name,
           review_point: res.data.review_point,
@@ -97,15 +115,14 @@ class ModelCertList extends Component {
 
   render() {
     // const matches = useMediaQuery('(min-width:600px)');
-console.log(this.props);
     return (
       <>
         <Grid container spacing={3} className="configFormContainer">
           <Grid item xs={3} className="configFormContainerItem">
-          {/* <span>{`(min-width:600px) matches: ${matches}`}</span> */}
-          <Card style={{padding: 12}}>
-            <form onSubmit={this.handleSubmit}>
-              {/* <div>
+            {/* <span>{`(min-width:600px) matches: ${matches}`}</span> */}
+            <Card style={{ padding: 12 }}>
+              <form onSubmit={this.handleSubmit}>
+                {/* <div>
                 {this.state.isLoading ? (
                   <Skeleton height={77} />
                 ) : (
@@ -121,95 +138,94 @@ console.log(this.props);
                   />
                 )}
               </div> */}
-              <div>
-                {this.state.isLoading ? (
-                  <Skeleton height={77} />
-                ) : (
-                  <MUITextField
-                    id="name"
-                    label="Tên Chứng Chỉ"
-                    margin="normal"
-                    defaultValue={this.state.name}
-                    onChange={this.handleChange}
-                    variant="outlined"
-                    fullWidth
-                  />
-                )}
-              </div>
-              <div>
-                {this.state.isLoading ? (
-                  <Skeleton height={77} />
-                ) : (
-                  <MUITextField
-                    id="review_point"
-                    label="Đậu Tốt Nghiệp"
-                    margin="normal"
-                    type="number"
-                    defaultValue={this.state.review_point}
-                    onChange={this.handleChange}
-                    variant="outlined"
-                    fullWidth
-                  />
-                )}
-              </div>
-              <div>
-                {this.state.isLoading ? (
-                  <Skeleton height={77} />
-                ) : (
-                  <Button
-                    className="MuiFormControl-marginNormal"
-                    variant="contained"
-                    component="label"
-                    fullWidth
-                  >
-                    Tải Chữ Ký
-                    <input
-                      id="electronic_signature"
-                      type="file"
-                      accept="image/*"
-                      onChange={this.onChangeImage}
-                      style={{ display: "none" }}
+                <div>
+                  {this.state.isLoading ? (
+                    <Skeleton height={77} />
+                  ) : (
+                    <MUITextField
+                      id="name"
+                      label="Tên Chứng Chỉ"
+                      margin="normal"
+                      defaultValue={this.state.name}
+                      onChange={this.handleChange}
+                      variant="outlined"
+                      fullWidth
                     />
-                  </Button>
-                )}
-              </div>
-              <div>
-              {this.state.isLoading ? (
-                  <Skeleton height={120} />
-                ) : (
-                <Avatar
-                  style={{
-                    width: "auto",
-                    height: "auto"
-                  }}
-                  className="MuiFormControl-marginNormal"
-                  src={
-                    this.state.electronic_signature
-                      ? this.state.electronic_signature
-                      : "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg"
-                  }
-                  variant="rounded"
-                  
-                ></Avatar>
-                )}
-              </div>
-              {/* <TextField
+                  )}
+                </div>
+                <div>
+                  {this.state.isLoading ? (
+                    <Skeleton height={77} />
+                  ) : (
+                    <MUITextField
+                      id="review_point"
+                      label="Đậu Tốt Nghiệp"
+                      margin="normal"
+                      type="number"
+                      defaultValue={this.state.review_point}
+                      onChange={this.handleChange}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                </div>
+                <div>
+                  {this.state.isLoading ? (
+                    <Skeleton height={77} />
+                  ) : (
+                    <Button
+                      className="MuiFormControl-marginNormal"
+                      variant="contained"
+                      component="label"
+                      fullWidth
+                    >
+                      Tải Chữ Ký
+                      <input
+                        id="electronic_signature"
+                        type="file"
+                        accept="image/*"
+                        onChange={this.onChangeImage}
+                        style={{ display: "none" }}
+                      />
+                    </Button>
+                  )}
+                </div>
+                <div>
+                  {this.state.isLoading ? (
+                    <Skeleton height={120} />
+                  ) : (
+                    <Avatar
+                      style={{
+                        width: "auto",
+                        height: "auto"
+                      }}
+                      className="MuiFormControl-marginNormal"
+                      src={
+                        this.state.electronic_signature
+                          ? this.state.electronic_signature
+                          : "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg"
+                      }
+                      variant="rounded"
+                    ></Avatar>
+                  )}
+                </div>
+                {/* <TextField
           id="standard-basic"
           className={classes.textField}
           label="Standard"
           margin="normal"
         /> */}
 
-              <Button
-                type="submit"
-                color="primary"
-                className="MuiFormControl-marginNormal"
-                style={{ backgroundColor: "#3f51b5", color: "#fff" }}
-                fullWidth
-              >
-                Lưu cài đặt
-              </Button>
-            </form>
+                <Button
+                  type="submit"
+                  color="primary"
+                  className="MuiFormControl-marginNormal"
+                  style={{ backgroundColor: "#3f51b5", color: "#fff" }}
+                  fullWidth
+                >
+                  Lưu cài đặt
+                </Button>
+              </form>
             </Card>
           </Grid>
 
@@ -223,9 +239,33 @@ console.log(this.props);
             >
               <Datagrid>
                 <TextField source="user_id" sortable={false} />
-                <TextField source="status" sortable={false} />
+                {/* <TextField source="status" sortable={false} /> */}
+                {/* <SelectField
+                  source="status"
+                  choices={choices}
+                  optionText="status"
+                  optionValue="_id"
+                /> */}
+
+                {/* <Button size="small"  variant="contained" color="primary">
+  Đồng ý
+</Button>
+<Button size="small"  variant="contained" color="secondary">
+  Từ chối
+</Button> */}
+
+                <ReviewField source="status" />
                 <TextField source="timestamp" sortable={false} />
-                
+                {/* <BooleanField source="agree" /> */}
+
+                {/* <FunctionField
+                label="Author"
+                sortBy="last_name"
+                render={record => {
+                  console.log(record);
+                  return  `${record.agree} ${record.status}`;
+                }}
+            /> */}
 
                 <EditButton />
                 <DeleteButton />
@@ -265,7 +305,8 @@ class ModelCertCreate extends Component {
       <Create {...this.props} title="Tạo Chứng chỉ">
         <SimpleForm redirect="show">
           <TextInput source="user_id" />
-          <TextInput source="status" />
+          <SelectInput source="status" choices={choicesCourse} />
+
           {/* <TextInput source="time" /> */}
           {/* {this.state.isLoading ? (
             <Skeleton />
@@ -312,7 +353,9 @@ class ModelCertEdit extends Component {
           {/* <TextInput source="task_name" />
           <TextInput source="background_image" /> */}
           <TextInput source="user_id" />
-          <TextInput source="status" />
+
+          <SelectInput source="status" choices={choicesCourse} />
+
           {/* <TextInput source="time" /> */}
 
           {/* {this.state.isLoading ? (
