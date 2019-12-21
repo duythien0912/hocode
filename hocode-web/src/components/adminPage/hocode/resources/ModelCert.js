@@ -97,7 +97,7 @@ class ModelCertList extends Component {
 
   render() {
     // const matches = useMediaQuery('(min-width:600px)');
-
+console.log(this.props);
     return (
       <>
         <Grid container spacing={3} className="configFormContainer">
@@ -142,7 +142,7 @@ class ModelCertList extends Component {
                 ) : (
                   <MUITextField
                     id="review_point"
-                    label="Point Tốt Nghiệp"
+                    label="Đậu Tốt Nghiệp"
                     margin="normal"
                     type="number"
                     defaultValue={this.state.review_point}
@@ -225,6 +225,7 @@ class ModelCertList extends Component {
                 <TextField source="user_id" sortable={false} />
                 <TextField source="status" sortable={false} />
                 <TextField source="timestamp" sortable={false} />
+                
 
                 <EditButton />
                 <DeleteButton />

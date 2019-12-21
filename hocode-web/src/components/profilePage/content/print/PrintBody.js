@@ -351,8 +351,8 @@ class PrintBody extends Component {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    width: "100vw",
-                    height: "100vh",
+                    width: "200px",
+                    height: "200px",
                     overflow: "hidden"
                   }}
                 >

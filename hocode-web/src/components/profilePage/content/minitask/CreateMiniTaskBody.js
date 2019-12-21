@@ -438,7 +438,7 @@ class CreateMiniTaskBody extends Component {
                           </Grid>
                           <Grid item container xs={12} sm={5} spacing={1}>
                             <Grid item xs={12} sm={12}>
-                              kKiểu tham số:
+                              Kiểu tham số:
                             </Grid>
                             <Grid item xs={12} sm={12}>
                               <Select

@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import {
 Create, Datagrid, DeleteButton, Edit,
   //  BooleanField,
-  EditButton, ImageField, List, NumberField, SelectInput,
+  EditButton, ImageField, List, NumberField, SelectInput, NumberInput,
   //   BooleanInput,
   SimpleForm, TextField, TextInput
 } from "react-admin";
@@ -67,7 +67,7 @@ class ModelUserCreate extends Component {
           <TextInput source="password" />
           <TextInput source="firstname" />
           <TextInput source="lastname" />
-          <TextInput source="codepoint" />
+          <NumberInput source="codepoint" />
           <TextInput source="avatar" />
           <SelectInput source="role" choices={choicesCourse} />
         </SimpleForm>
@@ -106,7 +106,7 @@ class ModelUserEdit extends Component {
           <TextInput source="password" />
           <TextInput source="firstname" />
           <TextInput source="lastname" />
-          <TextInput source="codepoint" />
+          <NumberInput source="codepoint" />
           <TextInput source="avatar" />
           {/* <ImageInput source="avatar_input" label="Avatar User" accept="image/*" onUpload={()=> console.log("onUpload")}>
             <ImageField source="src" title="title" />
