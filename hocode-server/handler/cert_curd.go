@@ -44,6 +44,25 @@ func (h *Handler) GetListCerts(c echo.Context) (err error) {
 		return
 	}
 
+	for i := 0; i < len(bk); i++ {
+		ur := &model.User{}
+
+		db.DB(config.NameDb).C("users").
+			// FindId(bson.ObjectIdHex(ID)).
+			Find(bson.M{
+				"_id": bson.ObjectIdHex(bk[i].UserID),
+				"del": bson.M{"$ne": true},
+			}).
+			One(&ur)
+		if ur != nil {
+			if ur.Email != "" {
+				bk.UserID = ur.Email
+
+			}
+		}
+
+	}
+
 	c.Response().Header().Set("x-total-count", strconv.Itoa(len(bk)))
 
 	return c.JSON(http.StatusOK, bk)
