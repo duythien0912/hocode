@@ -57,7 +57,7 @@ func (h *Handler) GetListCerts(c echo.Context) (err error) {
 		if ur != nil {
 			if ur.Email != "" {
 				bk[i].UserID = ur.Email
-
+				bk[i].CodePoint = ur.CodePoint
 			}
 		}
 
