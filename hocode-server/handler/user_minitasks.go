@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/duythien0912/hocode/config"
@@ -8,7 +9,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	model "github.com/duythien0912/hocode/models"
 	"github.com/labstack/echo"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -32,6 +32,7 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 
 	userMiniTask := &model.UserMiniTask{}
 
+	fmt.Println("[user_minitask]")
 	if err = db.DB(config.NameDb).C("user_minitask").
 		Find(bson.M{
 			"user_id": userID,
@@ -45,21 +46,16 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 	for i := 0; i < len(userMiniTask.MiniTaskInfo); i++ {
 		bk := &model.MiniTask{}
 
-		if err = db.DB(config.NameDb).C("minitasks").
+		fmt.Println("[minitasks]")
+		fmt.Println(userMiniTask.MiniTaskInfo[i].MiniTaskID)
+		db.DB(config.NameDb).C("minitasks").
 			// FindId(bson.ObjectIdHex(id)).
 			Find(bson.M{
 				"_id": bson.ObjectIdHex(userMiniTask.MiniTaskInfo[i].MiniTaskID),
 				"del": bson.M{"$ne": true},
 			}).
-			One(&bk); err != nil {
-			if err == mgo.ErrNotFound {
-				// return echo.ErrNotFound
-				// return &echo.HTTPError{Code: http.StatusBadRequest, Message: err}
-				return
-			}
+			One(&bk)
 
-			return
-		}
 		if bk != nil {
 			if bk.ID != "" {
 				mta = append(mta, bk)
@@ -72,6 +68,8 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 
 		tf := &model.Task{}
 
+		fmt.Println("[tasks]")
+		fmt.Println(mta[i].TaskId)
 		if err = db.DB(config.NameDb).C("tasks").
 			// FindId(bson.ObjectIdHex(mta[i].TaskId)).
 			Find(bson.M{
@@ -81,10 +79,10 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			// Find(bson.M{}).
 			// Select(bson.M{"id": id}).
 			One(&tf); err != nil {
-			if err == mgo.ErrNotFound {
-				// return echo.ErrNotFound
-				return
-			}
+			// if err == mgo.ErrNotFound {
+			// return echo.ErrNotFound
+			// return
+			// }
 
 			return
 		}

@@ -162,6 +162,8 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 
 	// }
 
+	bk.Agree = false
+
 	reviewCertOut := &model.ReviewCertOut{
 		User: ur, Config: configApp, Cert: bk,
 	}
