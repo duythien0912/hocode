@@ -79,7 +79,7 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			// Select(bson.M{"id": id}).
 			One(&tf); err != nil {
 			if err == mgo.ErrNotFound {
-				return echo.ErrNotFound
+				// return echo.ErrNotFound
 			}
 
 			return
