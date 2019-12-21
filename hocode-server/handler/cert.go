@@ -137,7 +137,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 	bk.UserID = ur.ID.Hex()
 	bk.ConfigID = configApp.ID.Hex()
 	if ur.CodePoint >= configApp.ReviewPoint {
-		bk.Status = "Active"
+		bk.Status = "Peding"
 	} else {
 		bk.Status = "Inactive"
 	}
@@ -178,7 +178,7 @@ func (h *Handler) ReviewCert(c echo.Context) (err error) {
 // @Tags ViewCertUser
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} model.ViewCertUserOut
+// @Success 200 {object} model.ReviewCertOut
 // @Router /auth/viewcert [get]
 func (h *Handler) ViewCertUser(c echo.Context) (err error) {
 

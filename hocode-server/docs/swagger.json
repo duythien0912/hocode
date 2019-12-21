@@ -129,6 +129,31 @@
                 }
             }
         },
+        "/auth/viewcert": {
+            "get": {
+                "description": "View cert for user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ViewCertUser"
+                ],
+                "summary": "View Cert by user",
+                "operationId": "view_cert",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ReviewCertOut"
+                        }
+                    }
+                }
+            }
+        },
         "/books": {
             "get": {
                 "description": "get books \u003ca href=\"/api/v1/books?page=1\u0026limit=5\"\u003e/api/v1/books?page=1\u0026limit=5\u003c/a\u003e",
@@ -1738,6 +1763,9 @@
         "model.Cert": {
             "type": "object",
             "properties": {
+                "agree": {
+                    "type": "boolean"
+                },
                 "config_id": {
                     "type": "string"
                 },

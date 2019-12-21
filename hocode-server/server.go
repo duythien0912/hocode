@@ -185,6 +185,7 @@ func main() {
 	rs.GET("", h.TestAuth)
 
 	rs.GET("/reviewcert", h.ReviewCert)
+	rs.GET("/viewcert", h.ViewCertUser)
 
 	rs.GET("/userinfo", h.GetUserData)
 	rs.POST("/userinfoupdate", h.UpdataUserData)

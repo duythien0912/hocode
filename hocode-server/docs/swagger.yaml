@@ -26,6 +26,8 @@ definitions:
     type: object
   model.Cert:
     properties:
+      agree:
+        type: boolean
       config_id:
         type: string
       del:
@@ -399,6 +401,23 @@ paths:
       summary: List GetUserCourse
       tags:
       - UserCourse
+  /auth/viewcert:
+    get:
+      consumes:
+      - application/json
+      description: View cert for user
+      operationId: view_cert
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ReviewCertOut'
+            type: object
+      summary: View Cert by user
+      tags:
+      - ViewCertUser
   /books:
     get:
       consumes:

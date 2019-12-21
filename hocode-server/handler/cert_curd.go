@@ -131,6 +131,13 @@ func (h *Handler) UpdateCerts(c echo.Context) (err error) {
 	// }
 
 	_, errUs := db.DB(config.NameDb).C("certs").UpsertId(bk.ID, bk)
+	if bk.Agree == true {
+		bk.Status = "Active"
+	}
+	if bk.Agree == false {
+		bk.Status = "Inactive"
+	}
+
 	if errUs != nil {
 		// return echo.ErrInternalServerError
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: errUs}
