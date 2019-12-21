@@ -1072,7 +1072,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
+      description: get List Minitasks <a href="/api/v1/minitasks?page=1&limit=5">/api/v1/minitasks?page=1&limit=5</a>
       operationId: minitask_list
       produces:
       - application/json
@@ -1083,18 +1083,17 @@ paths:
             items:
               $ref: '#/definitions/model.MiniTask'
             type: array
-      summary: List MiniTasks
+      summary: List Minitasks
       tags:
-      - MiniTasks
+      - Minitasks
     post:
       consumes:
       - application/json
       description: Create MiniTask
-      operationId: minitask_create
       parameters:
       - description: Create MiniTask
         in: body
-        name: minitask
+        name: task
         required: true
         schema:
           $ref: '#/definitions/model.MiniTask'
@@ -1107,9 +1106,9 @@ paths:
           schema:
             $ref: '#/definitions/model.MiniTask'
             type: object
-      summary: Create MiniTask
+      summary: Create Minitast
       tags:
-      - MiniTasks
+      - Minitasks
   /minitasks/:
     delete:
       consumes:
@@ -1202,7 +1201,7 @@ paths:
       consumes:
       - application/json
       description: get tasks <a href="/api/v1/tasks?page=1&limit=5">/api/v1/tasks?page=1&limit=5</a>
-      operationId: task_list
+      operationId: tasks_list
       produces:
       - application/json
       responses:
@@ -1212,13 +1211,14 @@ paths:
             items:
               $ref: '#/definitions/model.Task'
             type: array
-      summary: List Task
+      summary: List Tasks
       tags:
       - Tasks
     post:
       consumes:
       - application/json
       description: Create Task
+      operationId: tasks_create
       parameters:
       - description: Create Task
         in: body
@@ -1329,8 +1329,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get users <a href="/api/v1/users?page=1&limit=5">/api/v1/users?page=1&limit=5</a>
-      operationId: user_list
+      description: get users
       produces:
       - application/json
       responses:
@@ -1340,9 +1339,9 @@ paths:
             items:
               $ref: '#/definitions/model.User'
             type: array
-      summary: List Users
+      summary: List users
       tags:
-      - Users
+      - users
     post:
       consumes:
       - application/json
