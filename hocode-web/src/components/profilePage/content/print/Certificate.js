@@ -63,7 +63,7 @@ class Certificate extends Component {
           </Grid>
         </Grid>
         <Grid style={{position:"absolute",left:"22%",bottom:"14%",transform:"translateX(-50%)"}}>
-        {Certificate.cert === undefined ?"":Certificate.cert.timestamp}
+        {Certificate.cert === undefined ?"":new Date(Certificate.cert.timestamp).toLocaleDateString()}
         </Grid>
         <Grid style={{position:"absolute",right:"20%",bottom:"10%",transform:"translateX(50%)"}}>
         {Certificate.config === undefined ?"": <img src={Certificate.config.electronic_signature} style={{height:90}} alt="electronic_signature"/>}
