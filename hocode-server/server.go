@@ -220,6 +220,8 @@ func main() {
 	ra.POST("/nextminitask", h.NextMiniTask)
 	ra.GET("/tasks/:id", h.TaskByID)
 
+	ra.GET("/viewcert", h.ViewCertUser)
+
 	// e.Use(middleware.Static("/static"))
 	// e.Static("/", "static")
 	// e.GET("/", h.Gethome)
