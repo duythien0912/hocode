@@ -89,7 +89,7 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 			return
 		}
 		if tf != nil {
-			if tf.BackgroundImage != nil {
+			if tf.BackgroundImage != "" {
 				mta[i].Avatar = tf.BackgroundImage
 
 			}
