@@ -24,6 +24,7 @@ class PrintBody extends Component {
       minitasks: [],
       openDialogCertificate: false,
       isLoading: true,
+      certificateViewStart:{},
       certificate: {},
       review_point: 0,
       user_codepoint: 0,
@@ -49,6 +50,11 @@ class PrintBody extends Component {
         const minitasks = res.data;
         console.log(minitasks);
         this.setState({ minitasks });
+      }),
+      axios.get(`https://hocodevn.com/api/v1/auth/viewcert`).then(res => {
+        const certificate = res.data;
+        console.log(res.data); 
+        this.setState({certificateViewStart: certificate });
       })
     ]);
     this.setState({ isLoading: false });
@@ -57,30 +63,77 @@ class PrintBody extends Component {
     this.getApi();
   }
   getCertificate = async () => {
+    this.setState({ isLoadingCert: true });
     this.setState({
       openDialogCertificate: true
     });
-    this.setState({ isLoadingCert: true });
     await Promise.all([
       axios.get(`https://hocodevn.com/api/v1/auth/reviewcert`).then(res => {
         const certificate = res.data;
         console.log(res.data);
-        this.setState({ certificate });
+        this.setState({ certificateViewStart:certificate });
         this.setState({ isLoadingCert: false });
+       
       })
     ]);
   };
   handleDialogCertificateOpen = () => {
+    this.setState({
+      openDialogCertificate: true
+    });
+    //this.getCertificate();
+  };
+  handleDialogCertificateCheck = () => {
+  
     this.getCertificate();
   };
 
   handleDialogCertificateClose = () => {
     this.setState({ openDialogCertificate: false });
   };
+  renderButtonCertificate(certificateViewStart){
+    if(certificateViewStart.cert !== undefined){
+      if(certificateViewStart.cert.status === "Inactive" || certificateViewStart.cert.status === ""){
+        return (
+          <Button
+          variant="contained"
+          style={{ background: "#1ECD97", color: "#fff" }}
+         onClick={this.handleDialogCertificateCheck}
+        >
+          Xét chứng chỉ
+        </Button>
+        );
+      }
+      else if(certificateViewStart.cert.status === "Active"){
+        return (
+          <Button
+          variant="contained"
+          style={{ background: "#1ECD97", color: "#fff" }}
+          onClick={this.handleDialogCertificateOpen}
+        >
+          Xem chứng chỉ
+        </Button>
+        );
+      }
+      else{
+        return (
+          <Button
+          variant="contained"
+          style={{ background: "#1ECD97", color: "#fff" }}
+          onClick={this.handleDialogCertificateOpen}
+          disabled = {true}
+        >
+           Đang xét chứng chỉ
+        </Button>
+        );
+      }
+    }
+
+  }
 
   renderDialog = (certificate) =>{
     if(certificate.cert !== undefined){
-     if(certificate.cert.status === "Inactive"){
+     if(certificate.cert.status === "Inactive" || certificate.cert.status === "" ){
        return (
         <DialogContent dividers>
         <Typography
@@ -95,7 +148,7 @@ class PrintBody extends Component {
       </DialogContent>
        )
      }
-     else{
+     else if(certificate.cert.status === "Active"){
        return(      <>
 
         <DialogContent dividers>
@@ -110,7 +163,7 @@ class PrintBody extends Component {
             >
               <Certificate
                 ref={el => (this.CertificateRef = el)}
-                Certificate={this.state.certificate}
+                Certificate={this.state.certificateViewStart}
               />
             </Grid>
           </Grid>
@@ -137,6 +190,20 @@ class PrintBody extends Component {
         </DialogTitle>
       </>)
      }
+     else{
+      return (
+        <DialogContent dividers>
+        <Typography
+        variant="body2"
+        color="textSecondary"
+        component="p"
+        style={{ marginLeft: 4, textAlign: "center" }}
+      >
+          Đã gửi yêu cầu xét chứng chỉ.
+      </Typography>
+      </DialogContent>
+       )
+    }
     }
   }
 
@@ -250,13 +317,8 @@ class PrintBody extends Component {
                   </Grid>
 
                   <Grid item style={{ textAlign: "center" }}>
-                    <Button
-                      variant="contained"
-                      style={{ background: "#1ECD97", color: "#fff" }}
-                      onClick={this.handleDialogCertificateOpen}
-                    >
-                      Xét chứng chỉ
-                    </Button>
+                  {this.renderButtonCertificate(this.state.certificateViewStart)}
+                  
                   </Grid>
                 </Grid>
               </Paper>
@@ -365,7 +427,7 @@ class PrintBody extends Component {
                 </div>
               ) : ( 
                 
-                this.renderDialog(this.state.certificate)
+                this.renderDialog(this.state.certificateViewStart)
               )}
             </Dialog>
           </Grid>
