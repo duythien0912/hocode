@@ -60,9 +60,12 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 
 			return
 		}
-		if bk.ID != "" {
-			mta = append(mta, bk)
+		if bk != nil {
+			if bk.ID != "" {
+				mta = append(mta, bk)
+			}
 		}
+
 	}
 
 	for i := 0; i < len(mta); i++ {
@@ -82,9 +85,14 @@ func (h *Handler) GetUserCompleteMititask(c echo.Context) (err error) {
 				// return echo.ErrNotFound
 				return
 			}
-			mta[i].Avatar = tf.BackgroundImage
 
 			return
+		}
+		if tf != nil {
+			if tf.BackgroundImage != nil {
+				mta[i].Avatar = tf.BackgroundImage
+
+			}
 		}
 	}
 	return c.JSON(http.StatusOK, mta)
