@@ -1,16 +1,20 @@
+
 ![alt text](https://github.com/duythien0912/hocode/blob/master/Design/Home%20-%202.png?raw=true)
+
+## Video Demo:
+https://www.youtube.com/watch?v=KbNG9_9nBGU&feature=youtu.be
 
 ## Link Web: 
 
-https://hocode-11412.web.app/
+https://hocode-11412.web.app/ (dead)
 
 ## Link Server: 
 
-https://hocode.appspot.com
+https://hocode.appspot.com (dead)
 
 ## Link Server Chạy code test với junit4: 
 
-https://hocodevn.com/runner
+https://hocodevn.com/runner (dead)
 
 Lưu ý: Chạy post tới https://hocodevn.com/runner với body có khi truy cập vào trang trên
 
@@ -123,13 +127,3 @@ https://drive.google.com/file/d/1bxAf-DkMB73kY1Pk1cd5VJl3A9Rh-nRl/view
 
 ## Thiết kế màng hình trang chủ, trang chọn bài, trang làm bài:
 - Trong thư mục Design
-
-## Khó khăn: 
-- Chưa chắc chắn về database
-- Plan chưa rõ ràng
-
-## Tuần 2 ( 20/9 - 26/9 ) : 
-- Làm trang danh sách course và trang danh sách task (done) 
-
-## Tuần 3 ( 27/9 - 03/9 ) : 
-- Làm bài tập và server chạy code

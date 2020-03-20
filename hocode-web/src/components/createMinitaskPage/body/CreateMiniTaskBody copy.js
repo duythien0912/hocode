@@ -235,7 +235,7 @@ class CreateMiniTaskBody extends Component {
                                 value={input.input_name}
                                 onChange={e =>
                                   this.handleListInputNameChange(e, index)
-                                } // higher order function, index và e là biến vẫn được sử dụng sau khi onchange thự thi
+                                } 
                               />{" "}
                             </div>
                           </div>
@@ -252,7 +252,7 @@ class CreateMiniTaskBody extends Component {
                                     select_value,
                                     index
                                   )
-                                } // higher order function
+                                }
                               />{" "}
                             </div>
                           </div>
