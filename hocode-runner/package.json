@@ -84,7 +84,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "baconjs": "^0.7.84",
-    "bcrypt": "^0.8.7",
+    "bcrypt": "^5.0.0",
     "bignumber": "^1.1.0",
     "body-parser": "^1.15.2",
     "canvas": "^1.5.0",
